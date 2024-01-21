@@ -1,0 +1,48 @@
+[
+    {
+      "name": "Bart",
+      "png": "bucket.png",
+      "x": "1000",
+      "y": "1000",
+      "weekSchedule": [
+        {
+        "day": "MONDAY",
+        "daySchedule": [
+          {
+            "time": "8:30",
+            "x": "1000",
+            "y": "1000",
+            "animation": "MINING",
+            "map": "MAIN"
+          },
+          {
+            "time": "12:30",
+            "x": "500",
+            "y": "500",
+            "animation": "FISHING",
+            "map": "MAIN"
+          }
+        ]
+      },
+        {
+          "day": "TUESDAY",
+          "daySchedule": [
+            {
+              "time": "8:30",
+              "x": "1000",
+              "y": "1000",
+              "animation": "TUESDAY",
+              "map": "MAIN"
+            },
+            {
+              "time": "12:30",
+              "x": "500",
+              "y": "500",
+              "animation": "TUESDAY",
+              "map": "MAIN"
+            }
+          ]
+        }
+      ]
+    }
+]

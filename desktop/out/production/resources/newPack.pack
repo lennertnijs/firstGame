@@ -1,0 +1,61 @@
+
+newPack.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+map
+  rotate: false
+  xy: 1, 1095
+  size: 5000, 2500
+  orig: 5000, 2500
+  offset: 0, 0
+  index: -1
+guy
+  rotate: false
+  xy: 1, 581
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+guyleft
+  rotate: false
+  xy: 5003, 3083
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+guyright
+  rotate: false
+  xy: 1, 67
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+side
+  rotate: false
+  xy: 259, 581
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+side2
+  rotate: false
+  xy: 5003, 2569
+  size: 256, 512
+  orig: 256, 512
+  offset: 0, 0
+  index: -1
+bucket
+  rotate: false
+  xy: 5261, 3531
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+drop
+  rotate: false
+  xy: 1, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
