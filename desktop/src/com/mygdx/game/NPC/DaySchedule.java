@@ -20,6 +20,6 @@ public class DaySchedule {
     }
 
     public void addActivity(Node node){
-        activities.addNode(node);
+        activities.add(node);
     }
 }

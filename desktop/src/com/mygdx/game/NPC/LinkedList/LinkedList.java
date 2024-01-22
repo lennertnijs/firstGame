@@ -6,6 +6,8 @@ public class LinkedList {
     public LinkedList(){
     }
 
+
+
     public Node getStartNode(){
         return this.startNode;
     }
@@ -15,7 +17,7 @@ public class LinkedList {
      * The linked list does not do any sorting, so the elements should be added accordingly.
      * @param node The node to be added to the linked list
      */
-    public void addNode(Node node){
+    public void add(Node node){
         if(node == null){
             throw new IllegalArgumentException("Cannot add a null node to the linked list.");
         }
@@ -23,11 +25,11 @@ public class LinkedList {
             startNode = node;
             return;
         }
-        Node currentNode = startNode;
-        while(currentNode.hasNext()){
-            currentNode = currentNode.getNextNode();
+        Node current = startNode;
+        while(current.hasNext()){
+            current = current.next();
         }
-        currentNode.setNextNode(node);
+        current.setNext(node);
     }
 
     /**
@@ -44,11 +46,12 @@ public class LinkedList {
             if(currentNode.getTime().equals(time)){
                 return currentNode;
             }
-            currentNode = currentNode.getNextNode();
+            currentNode = currentNode.next();
         }
         if(currentNode.getTime().equals(time)){
             return currentNode;
         }
         return null;
     }
+
 }

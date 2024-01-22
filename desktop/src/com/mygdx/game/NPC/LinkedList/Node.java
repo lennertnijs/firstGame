@@ -2,11 +2,11 @@ package com.mygdx.game.NPC.LinkedList;
 
 import com.mygdx.game.NPC.Activity;
 
-public class Node {
+ public class Node {
 
     private final String time;
     private final Activity activity;
-    private Node nextNode = null;
+    private Node next = null;
 
     /**
      * Constructor for a {@code Node} for a singly linked list
@@ -26,30 +26,23 @@ public class Node {
         return this.activity;
     }
 
-    public Node getNextNode(){
-        return this.nextNode;
-    }
 
-    /**
-     * Changes the next-node reference of this node
-     * @param node The next node. Cannot be null
-     */
-    public void setNextNode(Node node){
-        if(node == null){
-            throw new IllegalArgumentException("Cannot reference a null node.");
-        }
-        this.nextNode = node;
-    }
-
-    /**
-     * @return True if the current node has a next node, false otherwise
-     */
     public boolean hasNext(){
-        if(this.nextNode != null){
-            return true;
-        }
-        return false;
+        return this.next != null;
     }
 
+    public Node next(){
+        if(this.next == null){
+            throw new IllegalArgumentException("Cannot go to the next node as it is null");
+        }
+        return this.next;
+    }
+
+    public void setNext(Node node){
+        if(node == null){
+            throw new IllegalArgumentException("Cannot set the next node to a null node.");
+        }
+        this.next = node;
+    }
 
 }

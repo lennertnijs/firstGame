@@ -45,6 +45,15 @@ public class NPCController {
         }
     }
 
+    private int newPosition(int oldPosition, int delta, int goal, boolean positiveDirection){
+        if(positiveDirection){
+            int newPosition = (oldPosition + delta) < goal ? oldPosition + delta : goal;
+            return newPosition;
+        }
+        int newPosition = goal < (oldPosition - delta) ? oldPosition - delta : goal;
+        return newPosition;
+    }
+
     public void updateNPCGoal(){
         for(NPC npc: npcList){
             WeekSchedule weekSchedule = npc.getWeekSchedule();
@@ -54,14 +63,7 @@ public class NPCController {
 
     }
 
-    private int newPosition(int oldPosition, int delta, int goal, boolean positiveDirection){
-        if(positiveDirection){
-            int newPosition = (oldPosition + delta) < goal ? oldPosition + delta : goal;
-            return newPosition;
-        }
-        int newPosition = goal < (oldPosition - delta) ? oldPosition - delta : goal;
-        return newPosition;
-    }
+
 
 
 }
