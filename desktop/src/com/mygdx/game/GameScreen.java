@@ -10,11 +10,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.ClockController;
+import com.mygdx.game.Clock.*;
+import com.mygdx.game.DAO.SeasonDAO;
 import com.mygdx.game.Graph.Graph;
 import com.mygdx.game.Graph.Vertex;
-import com.mygdx.game.NPC.Day;
+import com.mygdx.game.LinkedList.LinkedList;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.NPC.NPCController;
 
@@ -46,11 +46,9 @@ public class GameScreen implements Screen {
     NPC npc = NPC.builder().name("name").x(2000).y(2000).build();
 
     Rectangle inventorySlot;
-    Clock clock = Clock.builder().day(Day.SUNDAY).minutes(1420).build();
 
+    Clock clock = createClock();
     ClockController clockController = new ClockController();
-
-    NPCController npcController = new NPCController();
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -94,6 +92,8 @@ public class GameScreen implements Screen {
         inventorySlot.width = 128;
         inventorySlot.x = (float) 1920 /2;
         inventorySlot.y = 0;
+
+
     }
 
 
@@ -127,9 +127,9 @@ public class GameScreen implements Screen {
         }
         game.batch.draw(character, npc.getX(), npc.getY(), charac.width, charac.height);
         clockController.updateClock(clock);
-        game.font.draw(game.batch, clock.getTimeInHHMM() + clock.getDay() , 200, 200);
-
+        game.font.draw(game.batch, clock.getTimeInHHMM() + clock.getDay().getDayName() + clock.getSeason().getSeasonName() , 200, 200);
         Array<Rectangle> hitboxesRocks = new Array<>();
+
 
         Graph graph = new Graph();
         Vertex v1 = new Vertex("name1",2000, 2000);
@@ -186,6 +186,20 @@ public class GameScreen implements Screen {
     }
 
 
+    private Clock createClock(){
+        LinkedList seasons = SeasonDAO.readSeasons();
+        int minutes = 400;
+        int currentDaysInMonth = 12;
+        Day day = Day.builder().dayName(DayName.SUNDAY).build();
+        //Season dark = Season.builder().seasonName(SeasonName.DARK).lengthInDays(13).build();
+        //Season light = Season.builder().seasonName(SeasonName.LIGHT).lengthInDays(1).build();
+        Calendar calendar = new Calendar();
+        calendar.addSeason(((SeasonNode)seasons.getHead()).getSeason());
+        calendar.addSeason(((SeasonNode)seasons.getHead().next()).getSeason());
+        Clock clock = Clock.builder().calendar(calendar).currentSeason(((SeasonNode)seasons.getHead()).getSeason()).dayInCurrentSeason(currentDaysInMonth)
+                .day(day).timeInMinutes(minutes).build();
+        return clock;
+    }
     @Override
     public void resize(int width, int height) {
     }

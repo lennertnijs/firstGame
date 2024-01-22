@@ -2,12 +2,13 @@ package com.mygdx.game.NPC;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Clock.DayName;
 import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.MyGame;
 
 import java.util.ArrayList;
 
-import static com.mygdx.game.Constants.NPC_PNG_PATHNAME;
+import static com.mygdx.game.Constants.JSON_PATHNAME;
 public class NPCController {
 
     ArrayList<NPC> npcList;
@@ -26,7 +27,7 @@ public class NPCController {
      */
     public void drawNPCS(MyGame game){
         for(NPC npc: npcList){
-            String pathName = NPC_PNG_PATHNAME + npc.getPng();
+            String pathName = JSON_PATHNAME + npc.getPng();
             Texture texture = new Texture(Gdx.files.internal(pathName));
             game.batch.draw(texture, npc.getX(), npc.getY());
         }
@@ -57,7 +58,7 @@ public class NPCController {
     public void updateNPCGoal(){
         for(NPC npc: npcList){
             WeekSchedule weekSchedule = npc.getWeekSchedule();
-            DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.MONDAY);
+            DaySchedule daySchedule = weekSchedule.getDaySchedules().get(DayName.SUNDAY);
             // still need the day somewhere!
         }
 

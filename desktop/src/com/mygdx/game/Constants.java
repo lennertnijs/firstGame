@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
 public class Constants {
-    public static int MIN_TIME_MINUTES = 0;
-    public static int MAX_TIME_MINUTES = 1440-1; // Because 0 is included.
 
-    public static String NPC_PNG_PATHNAME = "images/";
+    public static int SECONDS_PER_MINUTE = 60;
+    public static int MINUTES_PER_HOUR = 60;
+    public static int HOURS_PER_DAY = 24;
+    public static int MINUTES_PER_DAY = MINUTES_PER_HOUR*HOURS_PER_DAY;
+    public static String JSON_PATHNAME = "resources/";
 }

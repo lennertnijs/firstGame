@@ -3,8 +3,9 @@ package com.mygdx.game.DAO;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.Clock.DayName;
 import com.mygdx.game.NPC.*;
-import com.mygdx.game.NPC.LinkedListForActivities.Node;
+import com.mygdx.game.LinkedList.Node;
 
 import java.util.ArrayList;
 
@@ -30,9 +31,9 @@ public class NPCDAO {
             JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
             for(JsonValue dayScheduleJSON : weekScheduleJSON){
 
-                Day day = Day.valueOf(dayScheduleJSON.getString("day"));
+                DayName dayName = DayName.valueOf(dayScheduleJSON.getString("day"));
                 JsonValue activityList = dayScheduleJSON.get("daySchedule");
-                DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(day), activityList);
+                DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(dayName), activityList);
 
                 weekSchedule.addDaySchedule(daySchedule);
             }
@@ -57,7 +58,8 @@ public class NPCDAO {
             String animation = activity.getString("animation");
             String map = activity.getString("map");
             final Activity a = Activity.builder().x(x).y(y).time(time).animation(animation).screen(map).build();
-            daySchedule.addActivity(new Node(a));
+            //fix this last line, was node(a)
+            daySchedule.addActivity(new Node());
         }
         return daySchedule;
     }

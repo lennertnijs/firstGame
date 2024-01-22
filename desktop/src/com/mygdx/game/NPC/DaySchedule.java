@@ -1,18 +1,19 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.NPC.LinkedListForActivities.LinkedList;
-import com.mygdx.game.NPC.LinkedListForActivities.Node;
+import com.mygdx.game.Clock.DayName;
+import com.mygdx.game.LinkedList.LinkedList;
+import com.mygdx.game.LinkedList.Node;
 
 public class DaySchedule {
 
-    private final Day day;
+    private final DayName dayName;
     private final LinkedList activities = new LinkedList();
-    public DaySchedule(Day day){
-        this.day = day;
+    public DaySchedule(DayName dayName){
+        this.dayName = dayName;
     }
 
-    public Day getDay(){
-        return this.day;
+    public DayName getDay(){
+        return this.dayName;
     }
 
     public LinkedList getActivities(){
