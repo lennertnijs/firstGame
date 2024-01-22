@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.NPC.*;
-import com.mygdx.game.NPC.LinkedList.Node;
+import com.mygdx.game.NPC.LinkedListForActivities.Node;
 
 import java.util.ArrayList;
 
@@ -56,8 +56,8 @@ public class NPCDAO {
             int y = activity.getInt("y");
             String animation = activity.getString("animation");
             String map = activity.getString("map");
-            final Activity a = Activity.builder().x(x).y(y).animation(animation).screen(map).build();
-            daySchedule.addActivity(new Node(time, a));
+            final Activity a = Activity.builder().x(x).y(y).time(time).animation(animation).screen(map).build();
+            daySchedule.addActivity(new Node(a));
         }
         return daySchedule;
     }

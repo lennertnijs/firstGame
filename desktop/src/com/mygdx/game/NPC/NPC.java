@@ -61,14 +61,6 @@ public class NPC {
         return name;
     }
 
-    public boolean moveUp(){
-        return y < goalY;
-    }
-
-    public boolean moveRight(){
-        return x < goalX;
-    }
-
     public static Builder builder(){
         return new NPC.Builder();
     }

@@ -1,25 +1,18 @@
-package com.mygdx.game.NPC.LinkedList;
+package com.mygdx.game.NPC.LinkedListForActivities;
 
 import com.mygdx.game.NPC.Activity;
 
  public class Node {
 
-    private final String time;
     private final Activity activity;
     private Node next = null;
 
     /**
      * Constructor for a {@code Node} for a singly linked list
-     * @param time The start time of the {@code Activity}
      * @param activity The activity
      */
-    public Node(String time, Activity activity){
-        this.time = time;
+    public Node(Activity activity){
         this.activity = activity;
-    }
-
-    public String getTime(){
-        return this.time;
     }
 
     public Activity getActivity(){

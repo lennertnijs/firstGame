@@ -4,6 +4,7 @@ public class Activity {
 
     final int x;
     final int y;
+    final String time;
     final String animation;
     final String screen;
 
@@ -14,6 +15,7 @@ public class Activity {
     public Activity(Builder builder){
         this.x = builder.x;
         this.y = builder.y;
+        this.time = builder.time;
         this.animation = builder.animation;
         this.screen = builder.screen;
     }
@@ -24,6 +26,10 @@ public class Activity {
 
     public int getY(){
         return this.y;
+    }
+
+    public String getTime(){
+        return this.time;
     }
 
     public String getAnimation(){
@@ -45,6 +51,7 @@ public class Activity {
 
         public int x;
         public int y;
+        public String time;
         public String animation;
         public String screen;
 
@@ -58,6 +65,11 @@ public class Activity {
 
         public Builder y(int y){
             this.y = y;
+            return this;
+        }
+
+        public Builder time(String time){
+            this.time = time;
             return this;
         }
 
@@ -77,7 +89,7 @@ public class Activity {
          * @return A valid {@code Activity} instance.
          */
         public Activity build(){
-            if(screen == null || animation == null){
+            if(screen == null || animation == null || time == null){
                 throw new IllegalArgumentException("No screen or animation can be null.");
             }
             return new Activity(this);

@@ -1,4 +1,4 @@
-package com.mygdx.game.NPC.LinkedList;
+package com.mygdx.game.NPC.LinkedListForActivities;
 
 public class LinkedList {
 
@@ -43,12 +43,12 @@ public class LinkedList {
         }
         Node currentNode = startNode;
         while(currentNode.hasNext()){
-            if(currentNode.getTime().equals(time)){
+            if(currentNode.getActivity().getTime().equals(time)){
                 return currentNode;
             }
             currentNode = currentNode.next();
         }
-        if(currentNode.getTime().equals(time)){
+        if(currentNode.getActivity().getTime().equals(time)){
             return currentNode;
         }
         return null;

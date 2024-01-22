@@ -1,7 +1,7 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.NPC.LinkedList.LinkedList;
-import com.mygdx.game.NPC.LinkedList.Node;
+import com.mygdx.game.NPC.LinkedListForActivities.LinkedList;
+import com.mygdx.game.NPC.LinkedListForActivities.Node;
 
 public class DaySchedule {
 

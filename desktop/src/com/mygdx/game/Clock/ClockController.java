@@ -1,7 +1,5 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Clock.Clock;
-
 public class ClockController {
 
     long lastUpdateInMillis;
@@ -16,7 +14,6 @@ public class ClockController {
      * Uses the System.currentTimeMillis() to accurately get timeframes.
      * Everytime a second has passed, one minute is added to the clock.
      * Thus, the current clock takes 24 minutes to complete a day, aka 1 minute per hour.
-     * @param clock The clock object
      */
     public void updateClock(Clock clock){
         long currentMillis = System.currentTimeMillis();
@@ -24,7 +21,7 @@ public class ClockController {
         timeElapsedInMillis += timeDifference;
         if(timeElapsedInMillis >= 1000){
             timeElapsedInMillis -= 1000;
-            clock.increaseTime(1);
+            clock.increaseTimeByMinutes(1);
         }
         lastUpdateInMillis = currentMillis;
     }

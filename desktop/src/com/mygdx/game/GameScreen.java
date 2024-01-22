@@ -12,14 +12,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.ClockController;
-import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.Graph.Graph;
 import com.mygdx.game.Graph.Vertex;
+import com.mygdx.game.NPC.Day;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.NPC.NPCController;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class GameScreen implements Screen {
@@ -46,17 +46,11 @@ public class GameScreen implements Screen {
     NPC npc = NPC.builder().name("name").x(2000).y(2000).build();
 
     Rectangle inventorySlot;
-    Clock clock = new Clock(0);
-
-    long x = System.currentTimeMillis();
-    long elapsed = 0;
-
-    float count = 0;
+    Clock clock = Clock.builder().day(Day.SUNDAY).minutes(1420).build();
 
     ClockController clockController = new ClockController();
 
     NPCController npcController = new NPCController();
-
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -92,13 +86,13 @@ public class GameScreen implements Screen {
         charac = new Rectangle();
         charac.height = 256;
         charac.width = 128;
-        charac.x = 1920/2;
+        charac.x = (float) 1920 /2;
         charac.y = 510;
 
         inventorySlot = new Rectangle();
         inventorySlot.height = 128;
         inventorySlot.width = 128;
-        inventorySlot.x = 1920/2;
+        inventorySlot.x = (float) 1920 /2;
         inventorySlot.y = 0;
     }
 
@@ -133,18 +127,17 @@ public class GameScreen implements Screen {
         }
         game.batch.draw(character, npc.getX(), npc.getY(), charac.width, charac.height);
         clockController.updateClock(clock);
-        game.font.draw(game.batch, clock.getTimeInHHMM() , 200, 200);
+        game.font.draw(game.batch, clock.getTimeInHHMM() + clock.getDay() , 200, 200);
 
         Array<Rectangle> hitboxesRocks = new Array<>();
-        long start = System.currentTimeMillis();
+
         Graph graph = new Graph();
         Vertex v1 = new Vertex("name1",2000, 2000);
         Vertex v2 = new Vertex("name2", 1000,2000);
         Vertex v3 = new Vertex("name3", 1000, 1000);
-        Vertex v4 = new Vertex("name4", 500, 500);
-        graph.addVertex(v1, new ArrayList<>(Arrays.asList(v2)));
-        graph.addVertex(v2, new ArrayList<>(Arrays.asList(v3)));
-        graph.addVertex(v3, new ArrayList<>(Arrays.asList(v1)));
+        graph.addVertex(v1, new ArrayList<>(Collections.singletonList(v2)));
+        graph.addVertex(v2, new ArrayList<>(Collections.singletonList(v3)));
+        graph.addVertex(v3, new ArrayList<>(Collections.singletonList(v1)));
 
 
         for(int i = 0; i < rocks.size ; i+= 2){
@@ -162,7 +155,7 @@ public class GameScreen implements Screen {
                 float num = yTotal/xTotal + 1;
                 int total = 3;
                 int xChange = Math.round(total/num);
-                int yChange = Math.round(total-xChange);
+                int yChange = total-xChange;
                 if(charac.x != rocks.get(i)){
                     if(charac.x < rocks.get(i)){
                         rocks.set(i, rocks.get(i)-xChange);
@@ -188,12 +181,6 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, "Text ", 0, 480);
         movementInputs();
         game.batch.end();
-
-        for(Rectangle r: hitboxesRocks){
-            if(r.overlaps(charac)){
-                // nothing
-            }
-        }
 
         camera.position.set(charac.x, charac.y, 0);
     }

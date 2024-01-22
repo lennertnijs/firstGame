@@ -5,54 +5,87 @@ import com.mygdx.game.NPC.Day;
 import static com.mygdx.game.Constants.*;
 
 public class Clock {
-    int minutes;
     Day day;
+    int minutes;
+
 
     /**
      * Constructor for a {@code Clock}.
-     * The {@code Clock} is a 24-hour round clock.
+     * The {@code Clock} is a 24-hour round clock that includes a {@code Day}.
      * The lowest value is 00:00 (midnight) and the highest value is 23:59.
-     * @param minutes The minutes at which the {@code Clock} should initiate.
-     *                To convert a HH:MM to minutes, use 60*HH + MM.
      */
-    public Clock(int minutes){
-        if(minutes < MIN_TIME_MINUTES || minutes > MAX_TIME_MINUTES){
-            throw new IllegalArgumentException("Cannot create clock with invalid time.");
-        }
-        this.minutes = minutes;
+    public Clock(Builder builder){
+        this.day = builder.day;
+        this.minutes = builder.minutes;
     }
 
-    /**
-     * @return The {@code Clock}'s time in minutes.
-     */
-    public int getTime(){
+    public Day getDay(){
+        return this.day;
+    }
+
+    public int getTimeInMinutes(){
         return this.minutes;
     }
 
     /**
-     * @return The {@code Clock}'s current time as a {@code String} in HH:MM format.
+     * @return The time in HH:MM format.
      */
     public String getTimeInHHMM(){
-        return minutes/60 + ":" + minutes%60;
+        int hrs = minutes/60;
+        int mins = minutes%60;
+        return toTwoCharacterString(hrs) + ":" + toTwoCharacterString(mins);
+    }
+
+    private String toTwoCharacterString(int number){
+        return number < 10 ? "0" + number : Integer.toString(number);
     }
 
     /**
-     * Increases the time with the given number.
-     * @param extraMinutes The time to be added to the clock.
-     *                     Cannot be negative.
-     *                     Cannot exceed MAX_TIME_MINUTES + 1. An increase of MAX_TIME_MINUTES + 1 will move time ahead
-     *                     exactly 24 hours.
+     * @param minutesToAdd Cannot be negative or MAX_TIME_MINUTES + 1.
+     *                     An increase of MAX_TIME_MINUTES + 1 will move time ahead exactly 24 hours.
      */
-    public void increaseTime(int extraMinutes){
-        if(extraMinutes < MIN_TIME_MINUTES || extraMinutes > MAX_TIME_MINUTES + 1){
-            throw new IllegalArgumentException("Invalid time to add");
-        }
-        int newTime = minutes + extraMinutes;
-        if(newTime > MAX_TIME_MINUTES){
-            this.minutes = newTime - (MAX_TIME_MINUTES + 1);
-            return;
-        }
-        this.minutes = newTime;
+    public void increaseTimeByMinutes(int minutesToAdd){
+        TimeValidator.validateTimeToAddInMinutes(minutesToAdd);
+        checkAndHandleDayChange(this.minutes + minutesToAdd);
     }
 
+    private void checkAndHandleDayChange(int newMinutes){
+        boolean dayChange = minutes > MAX_TIME_MINUTES;
+        if(dayChange){
+            this.day = day.next();
+            this.minutes = newMinutes - (MAX_TIME_MINUTES + 1);
+        }else{
+            this.minutes = newMinutes;
+        }
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+
+        private Day day;
+        private int minutes;
+
+        public Builder(){
+        }
+
+        public Builder day(Day day){
+            this.day = day;
+            return this;
+        }
+
+        public Builder minutes(int minutes){
+            this.minutes = minutes;
+            return this;
+        }
+
+        public Clock build(){
+            if(minutes < MIN_TIME_MINUTES || MAX_TIME_MINUTES < minutes){
+                throw new IllegalArgumentException("Time is invalid");
+            }
+            return new Clock(this);
+        }
+    }
 }
