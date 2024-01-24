@@ -20,7 +20,7 @@
             android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <activity android:name="android.intent.activity.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

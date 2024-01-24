@@ -56,9 +56,9 @@ public class NPCDAO {
             String time = activity.getString("time");
             int x = activity.getInt("x");
             int y = activity.getInt("y");
-            Action animation = Action.valueOf(activity.getString("animation"));
+            Activity animation = Activity.valueOf(activity.getString("animation"));
             Map map = Map.valueOf(activity.getString("map"));
-            final Activity a = Activity.builder().location(new Position2D(x, y)).timeInMinutes(1200)
+            final ActivityInstance a = ActivityInstance.builder().location(new Position2D(x, y)).timeInMinutes(1200)
                     .action(animation).map(map).build();
             //fix this last line, was node(a)
             //daySchedule.addActivity(new Node());
