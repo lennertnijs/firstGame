@@ -6,26 +6,26 @@ import java.util.Objects;
 
 public class ActivityInstance {
 
-    final Position2D location;
+    final Position2D position;
     final int timeInMinutes;
     final Activity activity;
     final Map map;
 
     public ActivityInstance(Builder builder){
-        this.location = builder.location;
+        this.position = builder.position;
         this.timeInMinutes = builder.timeInMinutes;
         this.activity = builder.activity;
         this.map = builder.map;
     }
-    public Position2D getLocation(){
-        return this.location;
+    public Position2D getPosition(){
+        return this.position;
     }
 
     public int getTimeInMinutes(){
         return this.timeInMinutes;
     }
 
-    public Activity getAction(){
+    public Activity getActivity(){
         return this.activity;
     }
 
@@ -39,7 +39,7 @@ public class ActivityInstance {
 
     public static class Builder{
 
-        private Position2D location;
+        private Position2D position;
         private int timeInMinutes;
         private Activity activity;
         private Map map;
@@ -47,8 +47,8 @@ public class ActivityInstance {
         public Builder(){
         }
 
-        public Builder location(Position2D location){
-            this.location = location;
+        public Builder position(Position2D position){
+            this.position = position;
             return this;
         }
 
@@ -57,7 +57,7 @@ public class ActivityInstance {
             return this;
         }
 
-        public Builder action(Activity activity){
+        public Builder activity(Activity activity){
             this.activity = activity;
             return this;
         }
@@ -68,7 +68,7 @@ public class ActivityInstance {
         }
 
         public ActivityInstance build(){
-            Objects.requireNonNull(location, "The location of an activity instance must not be null");
+            Objects.requireNonNull(position, "The position of an activity instance must not be null");
             Objects.requireNonNull(activity, "The activity of an activity instance must not be null");
             Objects.requireNonNull(map, "The map of an activity instance must not be null");
             return new ActivityInstance(this);
