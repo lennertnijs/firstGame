@@ -9,9 +9,9 @@ public class Entity {
     private Position2D position;
     final private String spritePath;
 
-    public Entity(Builder builder){
-        this.position = builder.position;
-        this.spritePath = builder.spritePath;
+    public Entity(Position2D position, String spritePath){
+        this.position = position;
+        this.spritePath = spritePath;
     }
 
     public Position2D getPosition() {
@@ -20,31 +20,5 @@ public class Entity {
 
     public String getSpritePath() {
         return spritePath;
-    }
-
-    public static Builder builder(){
-        return new Builder();
-    }
-
-    public static class Builder{
-
-        private Position2D position;
-        private String spritePath;
-
-        public Builder position(Position2D position){
-            this.position = position;
-            return this;
-        }
-
-        public Builder spritePath(String spritePath){
-            this.spritePath = spritePath;
-            return this;
-        }
-
-        public Entity build(){
-            Objects.requireNonNull(position);
-            Objects.requireNonNull(spritePath);
-            return new Entity(this);
-        }
     }
 }

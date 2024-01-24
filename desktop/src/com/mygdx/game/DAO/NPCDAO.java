@@ -37,7 +37,7 @@ public class NPCDAO {
 
                 weekSchedule.addDaySchedule(daySchedule);
             }
-            NPC npc = NPC.builder().position(new Position2D(x,y)).weekSchedule(weekSchedule)
+            NPC npc = NPC.builder().weekSchedule(weekSchedule)
                     .goalPosition(new Position2D(0,0)).name(name).build();
             npcs.add(npc);
         }

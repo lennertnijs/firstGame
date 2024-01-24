@@ -1,7 +1,9 @@
 package com.mygdx.game.NPC;
 
 
-public class NPC {
+import com.mygdx.game.Entity.Entity;
+
+public class NPC extends Entity {
 
     /**
      * string name
@@ -20,12 +22,15 @@ public class NPC {
      *      * spriteName
      *
      */
+
+    private Position2D position;
     private final String name;
     private Position2D goalPosition;
     private WeekSchedule weekSchedule;
     private String png;
 
     public NPC(Builder builder){
+        super(builder.position, "string");
         this.name = builder.name;
         this.weekSchedule = builder.weekSchedule;
         this.png = builder.png;
@@ -64,6 +69,8 @@ public class NPC {
     }
 
     public static class Builder{
+
+        private Position2D position;
         private String name;
         private Position2D goalPosition;
         private WeekSchedule weekSchedule;
@@ -71,6 +78,11 @@ public class NPC {
 
         private Builder(){
 
+        }
+
+        public Builder position(Position2D position){
+            this.position = position;
+            return this;
         }
 
         public Builder name(String name){

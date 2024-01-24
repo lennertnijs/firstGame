@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
 
     Array<Integer> rocks = spawnRocks();
 
-    NPC npc = NPC.builder().name("name").position(new Position2D(2000,2000)).build();
+    NPC npc = NPC.builder().position(new Position2D(2000, 2000)).name("name").build(); //2000, 2000
 
     Rectangle inventorySlot;
 
