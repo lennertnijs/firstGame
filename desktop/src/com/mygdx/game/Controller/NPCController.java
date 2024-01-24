@@ -21,7 +21,7 @@ public class NPCController {
      * Loads all the NPC data from the JSON file at creation.
      */
     public NPCController() {
-        npcList = NPCDAO.readNPCS();
+        //npcList = NPCDAO.readNPCS();
     }
 
     /**

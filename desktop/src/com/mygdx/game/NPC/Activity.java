@@ -1,11 +1,13 @@
 package com.mygdx.game.NPC;
 
+import com.mygdx.game.Map.Map;
+
 public class Activity {
 
     final Position2D location;
     final int timeInMinutes;
-    final String animation;
-    final String screen;
+    final Action action;
+    final Map map;
 
     /**
      * The {@code Activity} constructor
@@ -14,8 +16,8 @@ public class Activity {
     public Activity(Builder builder){
         this.location = builder.location;
         this.timeInMinutes = builder.timeInMinutes;
-        this.animation = builder.animation;
-        this.screen = builder.screen;
+        this.action = builder.action;
+        this.map = builder.map;
     }
     public Position2D getLocation(){
         return this.location;
@@ -25,12 +27,12 @@ public class Activity {
         return this.timeInMinutes;
     }
 
-    public String getAnimation(){
-        return this.animation;
+    public Action getAction(){
+        return this.action;
     }
 
-    public String getScreen(){
-        return this.screen;
+    public Map getMap(){
+        return this.map;
     }
 
     /**
@@ -44,8 +46,8 @@ public class Activity {
 
         private Position2D location;
         public int timeInMinutes;
-        public String animation;
-        public String screen;
+        public Action action;
+        public Map map;
 
         public Builder(){
 
@@ -61,13 +63,13 @@ public class Activity {
             return this;
         }
 
-        public Builder animation(String animation){
-            this.animation = animation;
+        public Builder action(Action action){
+            this.action = action;
             return this;
         }
 
-        public Builder screen(String screen){
-            this.screen = screen;
+        public Builder map(Map map){
+            this.map = map;
             return this;
         }
 
@@ -77,7 +79,7 @@ public class Activity {
          * @return A valid {@code Activity} instance.
          */
         public Activity build(){
-            if(screen == null || animation == null){
+            if(map == null || action == null){
                 throw new IllegalArgumentException("No screen or animation can be null.");
             }
             return new Activity(this);

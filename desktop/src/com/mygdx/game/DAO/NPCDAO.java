@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Day;
+import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
-import com.mygdx.game.LinkedList.Node;
 
 import java.util.ArrayList;
 
@@ -56,11 +56,12 @@ public class NPCDAO {
             String time = activity.getString("time");
             int x = activity.getInt("x");
             int y = activity.getInt("y");
-            String animation = activity.getString("animation");
-            String map = activity.getString("map");
-            final Activity a = Activity.builder().location(new Position2D(x, y)).timeInMinutes(1200).animation(animation).screen(map).build();
+            Action animation = Action.valueOf(activity.getString("animation"));
+            Map map = Map.valueOf(activity.getString("map"));
+            final Activity a = Activity.builder().location(new Position2D(x, y)).timeInMinutes(1200)
+                    .action(animation).map(map).build();
             //fix this last line, was node(a)
-            daySchedule.addActivity(new Node());
+            //daySchedule.addActivity(new Node());
         }
         return daySchedule;
     }

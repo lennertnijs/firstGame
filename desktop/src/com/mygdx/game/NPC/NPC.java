@@ -23,10 +23,11 @@ public class NPC extends Entity {
      *
      */
 
-    private Position2D position;
+
     private final String name;
-    private Position2D goalPosition;
     private WeekSchedule weekSchedule;
+    private Position2D goalPosition;
+
     private String png;
 
     public NPC(Builder builder){
