@@ -2,6 +2,8 @@ package com.mygdx.game.NPC;
 
 import com.mygdx.game.Map.Map;
 
+import java.util.Objects;
+
 public class ActivityInstance {
 
     final Position2D location;
@@ -9,10 +11,6 @@ public class ActivityInstance {
     final Activity activity;
     final Map map;
 
-    /**
-     * The {@code Activity} constructor
-     * Builds a valid {@code Activity} with a {@code Builder}
-     */
     public ActivityInstance(Builder builder){
         this.location = builder.location;
         this.timeInMinutes = builder.timeInMinutes;
@@ -35,9 +33,6 @@ public class ActivityInstance {
         return this.map;
     }
 
-    /**
-     * @return A static {@code Builder} for an {@code Activity}
-     */
     public static Builder builder(){
         return new Builder();
     }
@@ -45,12 +40,11 @@ public class ActivityInstance {
     public static class Builder{
 
         private Position2D location;
-        public int timeInMinutes;
-        public Activity activity;
-        public Map map;
+        private int timeInMinutes;
+        private Activity activity;
+        private Map map;
 
         public Builder(){
-
         }
 
         public Builder location(Position2D location){
@@ -73,15 +67,10 @@ public class ActivityInstance {
             return this;
         }
 
-        /**
-         * Builds a valid {@code Activity} instance.
-         *
-         * @return A valid {@code Activity} instance.
-         */
         public ActivityInstance build(){
-            if(map == null || activity == null){
-                throw new IllegalArgumentException("No screen or animation can be null.");
-            }
+            Objects.requireNonNull(location, "The location of an activity instance must not be null");
+            Objects.requireNonNull(activity, "The activity of an activity instance must not be null");
+            Objects.requireNonNull(map, "The map of an activity instance must not be null");
             return new ActivityInstance(this);
         }
     }
