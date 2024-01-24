@@ -1,17 +1,17 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.Clock.DayName;
+import com.mygdx.game.Clock.Day;
 
 import java.util.HashMap;
 
 public class WeekSchedule {
 
-    private final HashMap<DayName, DaySchedule> daySchedules = new HashMap<>();
+    private final HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
 
     public WeekSchedule(){
     }
 
-    public HashMap<DayName, DaySchedule> getDaySchedules(){
+    public HashMap<Day, DaySchedule> getDaySchedules(){
         return this.daySchedules;
     }
 

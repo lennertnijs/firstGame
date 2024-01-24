@@ -1,4 +1,6 @@
-package com.mygdx.game.Clock;
+package com.mygdx.game.Controller;
+
+import com.mygdx.game.Clock.Clock;
 
 public class ClockController {
 
@@ -21,7 +23,7 @@ public class ClockController {
         timeElapsedInMillis += timeDifference;
         if(timeElapsedInMillis >= 1000){
             timeElapsedInMillis -= 1000;
-            clock.increaseTimeByMinutes(400);
+            clock.incrementTimeByOne();
         }
         lastUpdateInMillis = currentMillis;
     }

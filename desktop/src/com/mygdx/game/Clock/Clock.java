@@ -1,37 +1,30 @@
 package com.mygdx.game.Clock;
 
-
-
 import static com.mygdx.game.ArgumentValidator.ifNullThrowError;
 import static com.mygdx.game.Constants.*;
 
 public class Clock {
 
     private final Calendar calendar;
-    private Season currentSeason;
+    private Season season;
     private Day day;
     private int timeInMinutes;
-    private int dayInCurrentSeason;
+    private int dayOfTheSeason;
 
-
-
-    /**
-     * Constructor for a {@code Clock}.
-     */
     public Clock(Builder builder){
         this.calendar = builder.calendar;
-        this.currentSeason = builder.currentSeason;
+        this.season = builder.season;
         this.day = builder.day;
         this.timeInMinutes = builder.timeInMinutes;
-        this.dayInCurrentSeason = builder.dayInCurrentSeason;
-
+        this.dayOfTheSeason = builder.dayOfTheSeason;
     }
 
     public Calendar getCalendar(){
         return this.calendar;
     }
+
     public Season getSeason(){
-        return this.currentSeason;
+        return this.season;
     }
 
     public Day getDay(){
@@ -42,24 +35,31 @@ public class Clock {
         return this.timeInMinutes;
     }
 
-    public int getDayInSeason(){
-        return this.dayInCurrentSeason;
+    public int getDayOfTheSeason(){
+        return this.dayOfTheSeason;
+    }
+
+    public int getSeasonLength(){
+        return calendar.getSeasonLength(season);
     }
 
 
     /**
-     * @return The time in HH:MM format. 0's will be added to keep the size of all numbers consistent.
+     * @return The time in HH:MM format. 0's will be added to keep the size of each of the numbers consistent.
      */
     public String getTimeInHHMM(){
-        int hours = timeInMinutes/60;
-        int minutes = timeInMinutes%60;
-        String consistentHrs = addZerosInFront(hours, numberOfDigitsInInt(HOURS_PER_DAY-1));
-        String consistentMins = addZerosInFront(minutes, numberOfDigitsInInt(MINUTES_PER_HOUR-1));
+        int hours = timeInMinutes/MINUTES_PER_HOUR;
+        int minutes = timeInMinutes%MINUTES_PER_HOUR;
+        int hourDigits = numberOfDigitsInInt(HOURS_PER_DAY-1);
+        int minuteDigits = numberOfDigitsInInt(MINUTES_PER_HOUR-1);
+        String consistentHrs = addLeadingZerosTillAppropriateLength(hours, hourDigits);
+        String consistentMins = addLeadingZerosTillAppropriateLength(minutes, minuteDigits);
         return consistentHrs + ":" + consistentMins;
     }
 
-    private String addZerosInFront(int number, int appropriateLength){
-        if(appropriateLength < numberOfDigitsInInt(number)){
+    private String addLeadingZerosTillAppropriateLength(int number, int appropriateLength){
+        int digitsInNumber = numberOfDigitsInInt(number);
+        if(appropriateLength < digitsInNumber){
             throw new IllegalArgumentException("Cannot convert a larger size number to a smaller size");
         }
         StringBuilder numberString = new StringBuilder(String.valueOf(number));
@@ -73,31 +73,44 @@ public class Clock {
         return String.valueOf(number).length();
     }
 
+
+    public void incrementTimeByOne(){
+        timeInMinutes++;
+        handleDayChange();
+        handleSeasonChange();
+    }
+    /**
+     * Increases the clock's time with the given minutes. Also takes day and season into consideration.
+     */
     public void increaseTimeByMinutes(int minutes){
-        TimeValidator.validateNumberOfMinutesToAdd(minutes);
-        this.timeInMinutes += minutes;
-        boolean dayChange = MINUTES_PER_DAY <= this.timeInMinutes;
+        validateNumberOfMinutesToAdd(minutes);
+        timeInMinutes += minutes;
+        handleDayChange();
+        handleSeasonChange();
+    }
+
+    private void validateNumberOfMinutesToAdd(int minutes){
+        if(minutes < 0 ||  minutes > MINUTES_PER_DAY ){
+            throw new IllegalArgumentException("Invalid amount of minutes to add");
+        }
+    }
+
+    private void handleDayChange(){
+        boolean dayChange = timeInMinutes >= MINUTES_PER_DAY;
         if(dayChange){
-            nextDay();
-            this.timeInMinutes -= MINUTES_PER_DAY;
-            dayInCurrentSeason += 1;
+            day = day.next();
+            timeInMinutes -= MINUTES_PER_DAY;
+            dayOfTheSeason += 1;
         }
-        boolean seasonChange = currentSeason.getLengthInDays() < dayInCurrentSeason;
+    }
+
+    private void handleSeasonChange(){
+        boolean seasonChange = dayOfTheSeason > getSeasonLength();
         while(seasonChange){
-            nextSeason();
-            seasonChange = currentSeason.getLengthInDays() < dayInCurrentSeason;
+            season = season.next();
+            dayOfTheSeason = 1;
+            seasonChange = dayOfTheSeason > getSeasonLength();
         }
-    }
-
-    private void nextDay(){
-        DayName newDayName = this.day.getDayName().next();
-        this.day = Day.builder().dayName(newDayName).build();
-    }
-
-    private void nextSeason(){
-        SeasonName nextSeasonName = this.currentSeason.getSeasonName().next();
-        dayInCurrentSeason = 1;
-        this.currentSeason = calendar.getSeasonByName(nextSeasonName);
     }
 
 
@@ -110,10 +123,10 @@ public class Clock {
 
     public static class Builder{
         private Calendar calendar;
-        private Season currentSeason;
+        private Season season;
         private Day day;
         private int timeInMinutes;
-        private int dayInCurrentSeason;
+        private int dayOfTheSeason;
 
         public Builder(){
         }
@@ -122,8 +135,8 @@ public class Clock {
             this.calendar = calendar;
             return this;
         }
-        public Builder currentSeason(Season currentSeason){
-            this.currentSeason = currentSeason;
+        public Builder season(Season season){
+            this.season = season;
             return this;
         }
 
@@ -137,8 +150,8 @@ public class Clock {
             return this;
         }
 
-        public Builder dayInCurrentSeason(int dayInCurrentSeason){
-            this.dayInCurrentSeason = dayInCurrentSeason;
+        public Builder dayOfTheSeason(int dayOfTheSeason){
+            this.dayOfTheSeason = dayOfTheSeason;
             return this;
         }
 
@@ -146,12 +159,12 @@ public class Clock {
 
         public Clock build(){
             ifNullThrowError(calendar, "Cannot create a clock if the calendar is null");
-            ifNullThrowError(currentSeason, "Cannot create a clock if the current season is null");
+            ifNullThrowError(season, "Cannot create a clock if the current season is null");
             ifNullThrowError(day, "Cannot create a clock if the current season is null");
             if(timeInMinutes < 0 || MINUTES_PER_DAY <= timeInMinutes){
                 throw new IllegalArgumentException("Clock's time is invalid");
             }
-            if(dayInCurrentSeason <= 0 || currentSeason.getLengthInDays() < dayInCurrentSeason){
+            if(dayOfTheSeason <= 0 || calendar.getSeasonLength(season) < dayOfTheSeason){
                 throw new IllegalArgumentException("Clock's current day in the current season is invalid");
             }
             return new Clock(this);

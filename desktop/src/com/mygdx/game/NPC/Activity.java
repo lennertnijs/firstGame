@@ -2,9 +2,8 @@ package com.mygdx.game.NPC;
 
 public class Activity {
 
-    final int x;
-    final int y;
-    final String time;
+    final Position2D location;
+    final int timeInMinutes;
     final String animation;
     final String screen;
 
@@ -13,23 +12,17 @@ public class Activity {
      * Builds a valid {@code Activity} with a {@code Builder}
      */
     public Activity(Builder builder){
-        this.x = builder.x;
-        this.y = builder.y;
-        this.time = builder.time;
+        this.location = builder.location;
+        this.timeInMinutes = builder.timeInMinutes;
         this.animation = builder.animation;
         this.screen = builder.screen;
     }
-
-    public int getX(){
-        return this.x;
+    public Position2D getLocation(){
+        return this.location;
     }
 
-    public int getY(){
-        return this.y;
-    }
-
-    public String getTime(){
-        return this.time;
+    public int getTimeInMinutes(){
+        return this.timeInMinutes;
     }
 
     public String getAnimation(){
@@ -49,27 +42,22 @@ public class Activity {
 
     public static class Builder{
 
-        public int x;
-        public int y;
-        public String time;
+        private Position2D location;
+        public int timeInMinutes;
         public String animation;
         public String screen;
 
         public Builder(){
 
         }
-        public Builder x(int x){
-            this.x = x;
+
+        public Builder location(Position2D location){
+            this.location = location;
             return this;
         }
 
-        public Builder y(int y){
-            this.y = y;
-            return this;
-        }
-
-        public Builder time(String time){
-            this.time = time;
+        public Builder timeInMinutes(int timeInMinutes){
+            this.timeInMinutes = timeInMinutes;
             return this;
         }
 
@@ -89,7 +77,7 @@ public class Activity {
          * @return A valid {@code Activity} instance.
          */
         public Activity build(){
-            if(screen == null || animation == null || time == null){
+            if(screen == null || animation == null){
                 throw new IllegalArgumentException("No screen or animation can be null.");
             }
             return new Activity(this);

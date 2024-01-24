@@ -1,10 +1,13 @@
-package com.mygdx.game.NPC;
+package com.mygdx.game.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Clock.DayName;
+import com.mygdx.game.Clock.Day;
 import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.MyGame;
+import com.mygdx.game.NPC.DaySchedule;
+import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.NPC.WeekSchedule;
 
 import java.util.ArrayList;
 
@@ -29,20 +32,20 @@ public class NPCController {
         for(NPC npc: npcList){
             String pathName = JSON_PATHNAME + npc.getPng();
             Texture texture = new Texture(Gdx.files.internal(pathName));
-            game.batch.draw(texture, npc.getX(), npc.getY());
+            game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY());
         }
     }
 
     public void moveNPCS(){
         for(NPC npc: npcList){
             int delta = (int) (70*Gdx.graphics.getDeltaTime());
-            boolean right = npc.getX() < npc.getGoalX();
-            boolean up = npc.getY() < npc.getGoalY();
+            boolean right = npc.getPosition().getX() < npc.getGoalPosition().getX();
+            boolean up = npc.getPosition().getY() < npc.getGoalPosition().getY();
 
-            int newX = newPosition(npc.getX(), delta, npc.getGoalX(), right);
-            int newY = newPosition(npc.getY(), delta, npc.getGoalY(), up);
-            npc.setX(newX);
-            npc.setY(newY);
+            int newX = newPosition(npc.getPosition().getX(), delta, npc.getGoalPosition().getX(), right);
+            int newY = newPosition(npc.getPosition().getY(), delta, npc.getGoalPosition().getY(), up);
+            npc.getPosition().setX(newX);
+            npc.getPosition().setY(newY);
         }
     }
 
@@ -58,7 +61,7 @@ public class NPCController {
     public void updateNPCGoal(){
         for(NPC npc: npcList){
             WeekSchedule weekSchedule = npc.getWeekSchedule();
-            DaySchedule daySchedule = weekSchedule.getDaySchedules().get(DayName.SUNDAY);
+            DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.SUNDAY);
             // still need the day somewhere!
         }
 

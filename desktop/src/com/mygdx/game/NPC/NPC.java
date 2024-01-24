@@ -1,44 +1,39 @@
 package com.mygdx.game.NPC;
 
-import com.badlogic.gdx.Gdx;
 
 public class NPC {
 
+    /**
+     * string name
+     * Week schedule -> maps each day to dayschedule
+     * LinkedList<Node> path waarbij nodes Position2D
+     * Action action (idle, mining, ...)
+     * MovementGraph movementNetwork
+     * NPC description list (unlockable)
+     * Dialogue tree
+     *
+     *
+     */
+
+    /**
+     *      * position2D position
+     *      * spriteName
+     *
+     */
     private final String name;
-    private int x;
-    private int y;
+    private Position2D goalPosition;
     private WeekSchedule weekSchedule;
     private String png;
-    private int goalX;
-    private int goalY;
 
     public NPC(Builder builder){
         this.name = builder.name;
-        this.x = builder.x;
-        this.y = builder.y;
         this.weekSchedule = builder.weekSchedule;
         this.png = builder.png;
-        this.goalX = builder.goalX;
-        this.goalY = builder.goalY;
+        this.goalPosition = builder.goalPosition;
         }
 
     public void update(){
         this.move();
-    }
-
-    public int getX(){
-        return x;
-    }
-    public void setX(int x){
-        this.x = x;
-    }
-
-    public int getY(){
-        return y;
-    }
-
-    public void setY(int y){
-        this.y = y;
     }
 
     public WeekSchedule getWeekSchedule(){
@@ -49,16 +44,16 @@ public class NPC {
         return png;
     }
 
-    public int getGoalX(){
-        return goalX;
-    }
-
-    public int getGoalY(){
-        return goalY;
+    public Position2D getGoalPosition(){
+        return this.goalPosition;
     }
 
     public String getName(){
         return name;
+    }
+
+    public void setPosition(){
+
     }
 
     public static Builder builder(){
@@ -66,20 +61,13 @@ public class NPC {
     }
 
     public void move(){
-        if(goalX != x || goalY == y ){
-            x = x - 70*Gdx.graphics.getDeltaTime() >= goalX ? (int)(x - 2000*Gdx.graphics.getDeltaTime()) : goalX;
-            y = y - 70*Gdx.graphics.getDeltaTime() >= goalY ? (int) (y - 2000*Gdx.graphics.getDeltaTime()) : goalY;
-        }
     }
 
     public static class Builder{
         private String name;
-        private int x;
-        private int y;
+        private Position2D goalPosition;
         private WeekSchedule weekSchedule;
         private String png;
-        private int goalX;
-        private int goalY;
 
         private Builder(){
 
@@ -87,16 +75,6 @@ public class NPC {
 
         public Builder name(String name){
             this.name = name;
-            return this;
-        }
-
-        public Builder x(int x){
-            this.x = x;
-            return this;
-        }
-
-        public Builder y(int y){
-            this.y = y;
             return this;
         }
 
@@ -110,13 +88,8 @@ public class NPC {
             return this;
         }
 
-        public Builder goalX(int goalX){
-            this.goalX = goalX;
-            return this;
-        }
-
-        public Builder goalY(int goalY){
-            this.goalY = goalY;
+        public Builder goalPosition(Position2D goalPosition){
+            this.goalPosition = goalPosition;
             return this;
         }
 

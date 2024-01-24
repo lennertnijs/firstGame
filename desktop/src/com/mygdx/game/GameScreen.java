@@ -11,12 +11,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.*;
-import com.mygdx.game.DAO.SeasonDAO;
+import com.mygdx.game.Controller.ClockController;
+import com.mygdx.game.DAO.CalendarDAO;
 import com.mygdx.game.Graph.Graph;
 import com.mygdx.game.Graph.Vertex;
-import com.mygdx.game.LinkedList.LinkedList;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.NPC.NPCController;
+import com.mygdx.game.NPC.Position2D;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
 
     Array<Integer> rocks = spawnRocks();
 
-    NPC npc = NPC.builder().name("name").x(2000).y(2000).build();
+    NPC npc = NPC.builder().name("name").position(new Position2D(2000,2000)).build();
 
     Rectangle inventorySlot;
 
@@ -125,9 +125,14 @@ public class GameScreen implements Screen {
         }else{
             game.batch.draw(character, charac.x, charac.y, charac.width, charac.height);
         }
-        game.batch.draw(character, npc.getX(), npc.getY(), charac.width, charac.height);
+        game.batch.draw(character, npc.getPosition().getX(), npc.getPosition().getY(), charac.width, charac.height);
         clockController.updateClock(clock);
-        game.font.draw(game.batch, clock.getTimeInHHMM() + clock.getDay().getDayName() + clock.getSeason().getSeasonName() , 200, 200);
+
+        game.font.getData().setScale(3,3);
+        game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
+        game.font.draw(game.batch, clock.getDay() + "", 1700, 725);
+        game.font.draw(game.batch, clock.getSeason() + "", 1700, 650);
+
         Array<Rectangle> hitboxesRocks = new Array<>();
 
 
@@ -187,18 +192,16 @@ public class GameScreen implements Screen {
 
 
     private Clock createClock(){
-        LinkedList seasons = SeasonDAO.readSeasons();
-        int minutes = 400;
+        Calendar calendar = CalendarDAO.readCalendar();
+        int minutes = 1420;
         int currentDaysInMonth = 12;
-        Day day = Day.builder().dayName(DayName.SUNDAY).build();
-        //Season dark = Season.builder().seasonName(SeasonName.DARK).lengthInDays(13).build();
-        //Season light = Season.builder().seasonName(SeasonName.LIGHT).lengthInDays(1).build();
-        Calendar calendar = new Calendar();
-        calendar.addSeason(((SeasonNode)seasons.getHead()).getSeason());
-        calendar.addSeason(((SeasonNode)seasons.getHead().next()).getSeason());
-        Clock clock = Clock.builder().calendar(calendar).currentSeason(((SeasonNode)seasons.getHead()).getSeason()).dayInCurrentSeason(currentDaysInMonth)
-                .day(day).timeInMinutes(minutes).build();
-        return clock;
+        return Clock.builder()
+                .calendar(calendar)
+                .season(Season.DARK)
+                .dayOfTheSeason(currentDaysInMonth)
+                .day(Day.SUNDAY)
+                .timeInMinutes(minutes)
+                .build();
     }
     @Override
     public void resize(int width, int height) {
@@ -206,7 +209,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        // use for textures etc!
+        // use for textures etc.
         // start the playback of the background music
         // when the screen is shown
         //rainMusic.play();
