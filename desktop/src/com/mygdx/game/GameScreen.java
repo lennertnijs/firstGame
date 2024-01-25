@@ -130,8 +130,8 @@ public class GameScreen implements Screen {
 
         game.font.getData().setScale(3,3);
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
-        game.font.draw(game.batch, clock.getDay() + "", 1700, 725);
-        game.font.draw(game.batch, clock.getSeason() + "", 1700, 650);
+        game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
+        game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
 
         Array<Rectangle> hitboxesRocks = new Array<>();
 
@@ -182,7 +182,7 @@ public class GameScreen implements Screen {
 
             game.batch.draw(stone, rocks.get(i), rocks.get(i+1),128, 128);
         }
-        npc.update();
+        //npc.update();
         game.font.draw(game.batch, "Text ", 0, 480);
         movementInputs();
         game.batch.end();
