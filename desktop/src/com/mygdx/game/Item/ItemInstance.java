@@ -23,22 +23,14 @@ public class ItemInstance {
         if(increase < 0){
             throw new IllegalArgumentException("The amount of an item instance must not be increased by a negative value");
         }
-        boolean biggerThanStackSize = (amount + increase) > item.getStackSize();
-        if(biggerThanStackSize){
-            return false;
-        }
-        return true;
+        return (amount + increase) <= item.getStackSize();
     }
 
     public boolean canDecreaseAmountBy(int decrease){
         if(decrease < 0){
             throw new IllegalArgumentException("The amount of an item instance must not be decreased by a negative value");
         }
-        boolean smallerThanZero = (amount - decrease) >= 0;
-        if(smallerThanZero){
-            return false;
-        }
-        return true;
+        return (amount - decrease) >= 0;
     }
 
     public void increaseAmount(int increase){
@@ -92,10 +84,10 @@ public class ItemInstance {
 
         public ItemInstance build(){
             Objects.requireNonNull(item, "The item of an item instance cannot be null");
-            if(amount <= 0){
+            if(amount <= 0 || amount > item.getStackSize()){
                 throw new IllegalArgumentException("The amount of an item instance has to be positive");
             }
-            return new ItemInstance(builder());
+            return new ItemInstance(this);
         }
     }
 }

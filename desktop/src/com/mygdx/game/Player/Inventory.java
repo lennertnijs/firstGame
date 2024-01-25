@@ -34,13 +34,14 @@ public class Inventory {
     }
 
     public boolean containsAmount(Item item, int amount){
+        Objects.requireNonNull(item, "The item to check the amount of must not be null");
         if(amount <= 0){
             throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
         }
         for(ItemInstance itemInstance : inventory.values()){
             boolean foundItem = itemInstance.getItem().equals(item);
             if(foundItem){
-                boolean sufficientAmount = itemInstance.getAmount() > amount;
+                boolean sufficientAmount = itemInstance.getAmount() >= amount;
                 if(sufficientAmount){
                     return true;
                 }
@@ -48,66 +49,6 @@ public class Inventory {
         }
         return false;
     }
-
-    public void increaseAmount(Item item, int amount){
-        if(amount <= 0){
-            throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
-        }
-        for(ItemInstance itemInstance : inventory.values()){
-            boolean foundItem = itemInstance.getItem().equals(item);
-            if(foundItem){
-                boolean sufficientAmount = itemInstance.canIncreaseAmountBy(amount);
-                if(sufficientAmount){
-                    itemInstance.increaseAmount(amount);
-                }
-            }
-        }
-        throw new IllegalArgumentException("No item was found, thus no amount increase was performed");
-    }
-
-    public void decreaseAmount(Item item, int amount){
-        if(amount <= 0){
-            throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
-        }
-        for(ItemInstance itemInstance : inventory.values()){
-            boolean foundItem = itemInstance.getItem().equals(item);
-            if(foundItem){
-                boolean sufficientAmount = itemInstance.canDecreaseAmountBy(amount);
-                if(sufficientAmount){
-                    itemInstance.decreaseAmount(amount);
-                }
-            }
-        }
-        throw new IllegalArgumentException("No item was found, thus no amount decrease was performed");
-    }
-
-    public void increaseItemInstance(int inventorySlot, int amount){
-        if(amount <= 0){
-            throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
-        }
-        ItemInstance itemInstance = inventory.get(inventorySlot);
-        Objects.requireNonNull(itemInstance, "The inventory did not find the item slot");
-        boolean sufficientAmount = itemInstance.canIncreaseAmountBy(amount);
-        if(sufficientAmount){
-            itemInstance.increaseAmount(amount);
-        }
-    }
-
-    public void decreaseItemInstance(int inventorySlot, int amount){
-        if(amount <= 0){
-            throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
-        }
-        ItemInstance itemInstance = inventory.get(inventorySlot);
-        Objects.requireNonNull(itemInstance, "The inventory did not find the item slot");
-        boolean sufficientAmount = itemInstance.canDecreaseAmountBy(amount);
-        if(sufficientAmount){
-            itemInstance.decreaseAmount(amount);
-        }
-    }
-
-
-
-
 
     public static Builder builder(){
         return new Builder();
@@ -137,6 +78,9 @@ public class Inventory {
                 throw new IllegalArgumentException("The size of the inventory must not be negative or 0");
             }
             Objects.requireNonNull(inventory, "The inventory map of the inventory must not be null");
+            if(inventory.size() != size){
+                throw new IllegalArgumentException("The size of the inventory does not match the inventory mapping");
+            }
             for(Integer i: inventory.keySet()){
                 Objects.requireNonNull(i, "The id of the inventory slot must not be null");
             }
