@@ -1,7 +1,5 @@
 package com.mygdx.game.Entity;
 
-import com.mygdx.game.NPC.Position2D;
-
 public class Entity {
 
     private Position2D position;

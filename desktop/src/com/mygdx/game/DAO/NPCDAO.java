@@ -1,9 +1,7 @@
 package com.mygdx.game.DAO;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.Clock.Day;
+import com.mygdx.game.Entity.Position2D;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 

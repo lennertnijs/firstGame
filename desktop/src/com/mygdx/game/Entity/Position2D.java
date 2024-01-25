@@ -1,4 +1,4 @@
-package com.mygdx.game.NPC;
+package com.mygdx.game.Entity;
 
 public class Position2D {
 

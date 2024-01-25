@@ -16,7 +16,7 @@ import com.mygdx.game.DAO.CalendarDAO;
 import com.mygdx.game.Graph.Graph;
 import com.mygdx.game.Graph.Vertex;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.NPC.Position2D;
+import com.mygdx.game.Entity.Position2D;
 
 import java.util.ArrayList;
 import java.util.Collections;

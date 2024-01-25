@@ -6,7 +6,7 @@ import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.NPC.ActivityInstance;
 import com.mygdx.game.NPC.DaySchedule;
-import com.mygdx.game.NPC.Position2D;
+import com.mygdx.game.Entity.Position2D;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

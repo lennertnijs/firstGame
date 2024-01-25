@@ -1,6 +1,8 @@
 package com.mygdx.game.NPC;
 
 import com.mygdx.game.Entity.Entity;
+import com.mygdx.game.Entity.Position2D;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
