@@ -15,8 +15,6 @@ import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.DAO.CalendarDAO;
-import com.mygdx.game.Graph.Graph;
-import com.mygdx.game.Graph.Vertex;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 import com.mygdx.game.Entity.Position2D;
@@ -141,15 +139,6 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
 
         Array<Rectangle> hitboxesRocks = new Array<>();
-
-
-        Graph graph = new Graph();
-        Vertex v1 = new Vertex("name1", 2000, 2000);
-        Vertex v2 = new Vertex("name2", 1000, 2000);
-        Vertex v3 = new Vertex("name3", 1000, 1000);
-        graph.addVertex(v1, new ArrayList<>(Collections.singletonList(v2)));
-        graph.addVertex(v2, new ArrayList<>(Collections.singletonList(v3)));
-        graph.addVertex(v3, new ArrayList<>(Collections.singletonList(v1)));
 
 
         for (int i = 0; i < rocks.size; i += 2) {
@@ -358,6 +347,7 @@ public class GameScreen implements Screen {
         movementNetwork.put(new Position2D(1000, 1000),
                 new ArrayList<>(Arrays.asList(new Position2D(500, 500), new Position2D(1000, 500))));
 
+        MovementGraph movementGraph = MovementGraph.builder().movementGraph(movementNetwork).build();
         long i = Math.round(Math.random()*5);
         if(i < 2 ){
             ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
@@ -368,7 +358,7 @@ public class GameScreen implements Screen {
                     .weekSchedule(weekSchedule)
                     .movementPath(movementPath1)
                     .activity(activity)
-                    .movementNetwork(movementNetwork)
+                    .movementGraph(movementGraph)
                     .dialogueOptions(dialogueOptions)
                     .build();
             return npc;
@@ -381,7 +371,7 @@ public class GameScreen implements Screen {
                     .weekSchedule(weekSchedule)
                     .movementPath(movementPath2)
                     .activity(activity)
-                    .movementNetwork(movementNetwork)
+                    .movementGraph(movementGraph)
                     .dialogueOptions(dialogueOptions)
                     .build();
             return npc;

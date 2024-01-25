@@ -4,7 +4,6 @@ import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position2D;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class NPC extends Entity {
@@ -19,7 +18,7 @@ public class NPC extends Entity {
     private final WeekSchedule weekSchedule;
     private final ArrayList<Position2D> movementPath;
     private Activity activity;
-    private final HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
+    private final MovementGraph movementGraph;
     private final ArrayList<Integer> dialogueOptions;
 
     public NPC(Builder builder){
@@ -28,7 +27,7 @@ public class NPC extends Entity {
         this.weekSchedule = builder.weekSchedule;
         this.movementPath = builder.movementPath;
         this.activity = builder.activity;
-        this.movementNetwork = builder.movementNetwork;
+        this.movementGraph = builder.movementGraph;
         this.dialogueOptions = builder.dialogueOptions;
     }
 
@@ -48,8 +47,8 @@ public class NPC extends Entity {
         return this.activity;
     }
 
-    public HashMap<Position2D, ArrayList<Position2D>> getMovementNetwork(){
-        return this.movementNetwork;
+    public MovementGraph getMovementGraph(){
+        return this.movementGraph;
     }
     public ArrayList<Integer> getDialogueOptions(){
         return dialogueOptions;
@@ -69,7 +68,7 @@ public class NPC extends Entity {
         private WeekSchedule weekSchedule;
         private ArrayList<Position2D> movementPath = new ArrayList<>();
         private Activity activity;
-        private HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
+        private MovementGraph movementGraph;
         private ArrayList<Integer> dialogueOptions = new ArrayList<>();
 
 
@@ -113,8 +112,8 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder movementNetwork(HashMap<Position2D, ArrayList<Position2D>> movementNetwork){
-            this.movementNetwork = movementNetwork;
+        public Builder movementGraph(MovementGraph movementGraph){
+            this.movementGraph = movementGraph;
             return this;
         }
 
@@ -138,13 +137,7 @@ public class NPC extends Entity {
                 Objects.requireNonNull(movingToPoint, "An npc's movement path must not contain null");
             }
             Objects.requireNonNull(activity, "An npc's activity must not be null");
-            Objects.requireNonNull(movementNetwork, "An npc's movement network must not be null");
-            for(Position2D point : movementNetwork.keySet()){
-                Objects.requireNonNull(point, "An npc's movement network must not contain a null key");
-                for(Position2D nextPoint : movementNetwork.get(point)){
-                    Objects.requireNonNull(nextPoint,"An npc's movement network must not contain a null value");
-                }
-            }
+            Objects.requireNonNull(movementGraph, "An npc's movement graph must not be null");
             Objects.requireNonNull(dialogueOptions, "An npc's dialogue option list must not be null");
             for(Integer i: dialogueOptions){
                 Objects.requireNonNull(i, "An npc's current dialogue option index must not be null");

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class NPCTest {
@@ -73,6 +72,7 @@ public class NPCTest {
         movementNetwork.put(new Position2D(1000,1000),
                 new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,500))));
 
+        MovementGraph movementGraph = MovementGraph.builder().movementGraph(movementNetwork).build();
         ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
         NPC npc = NPC.builder()
                 .position(position)
@@ -81,7 +81,7 @@ public class NPCTest {
                 .weekSchedule(weekSchedule)
                 .movementPath(movementPath)
                 .activity(activity)
-                .movementNetwork(movementNetwork)
+                .movementGraph(movementGraph)
                 .dialogueOptions(dialogueOptions)
                 .build();
 
@@ -92,7 +92,7 @@ public class NPCTest {
                 () -> Assertions.assertEquals(npc.getWeekSchedule(), weekSchedule),
                 () -> Assertions.assertEquals(npc.getMovementPath(), movementPath),
                 () -> Assertions.assertEquals(npc.getActivity(), activity),
-                () -> Assertions.assertEquals(npc.getMovementNetwork(), movementNetwork),
+                () -> Assertions.assertEquals(npc.getMovementGraph(), movementGraph),
                 () -> Assertions.assertEquals(npc.getDialogueOptions(), dialogueOptions)
         );
     }
@@ -154,24 +154,8 @@ public class NPCTest {
     public void testConstructorInvalidMovementNetwork(){
         NPC.Builder builder = getValidNPCBuilder();
 
-        HashMap<Position2D, ArrayList<Position2D>> nullKey = new HashMap<>();
-        nullKey.put(null, new ArrayList<>(Collections.singletonList(new Position2D(500, 500))));
-
-        HashMap<Position2D, ArrayList<Position2D>> nullValue = new HashMap<>();
-        nullValue.put(new Position2D(500, 500), null);
-
-        HashMap<Position2D, ArrayList<Position2D>> nullValueInValueList = new HashMap<>();
-        nullValueInValueList.put(new Position2D(500, 500), new ArrayList<>(Collections.singletonList(null)));
-
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementNetwork(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> builder.movementNetwork(nullKey).build()),
-                () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> builder.movementNetwork(nullValue).build()),
-                () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> builder.movementNetwork(nullValueInValueList).build())
-
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementGraph(null).build())
         );
     }
 
@@ -244,6 +228,8 @@ public class NPCTest {
         movementNetwork.put(new Position2D(1000,1000),
                 new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,500))));
 
+        MovementGraph graph = MovementGraph.builder().movementGraph(movementNetwork).build();
+
         ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
         return NPC.builder()
                 .position(position)
@@ -252,7 +238,7 @@ public class NPCTest {
                 .weekSchedule(weekSchedule)
                 .movementPath(movementPath)
                 .activity(activity)
-                .movementNetwork(movementNetwork)
+                .movementGraph(graph)
                 .dialogueOptions(dialogueOptions);
     }
 }
