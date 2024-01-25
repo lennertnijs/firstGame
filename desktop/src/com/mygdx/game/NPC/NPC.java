@@ -2,12 +2,13 @@ package com.mygdx.game.NPC;
 
 import com.mygdx.game.Entity.Entity;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class NPC extends Entity {
 
     /**
-     * MovementGraph movementNetwork
-     * NPC description list (unlockable)
+     * NPC description list (to unlock)
      * Dialogue tree
      */
 
@@ -15,6 +16,7 @@ public class NPC extends Entity {
     private final WeekSchedule weekSchedule;
     private final ArrayList<Position2D> movementPath;
     private Activity activity;
+    private final HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
 
     public NPC(Builder builder){
         super(builder.position, builder.spritePath);
@@ -22,6 +24,7 @@ public class NPC extends Entity {
         this.weekSchedule = builder.weekSchedule;
         this.movementPath = builder.movementPath;
         this.activity = builder.activity;
+        this.movementNetwork = builder.movementNetwork;
     }
 
     public String getName(){
@@ -40,6 +43,9 @@ public class NPC extends Entity {
         return this.activity;
     }
 
+    public HashMap<Position2D, ArrayList<Position2D>> getMovementNetwork(){
+        return this.movementNetwork;
+    }
     public static Builder builder(){
         return new NPC.Builder();
     }
@@ -55,6 +61,7 @@ public class NPC extends Entity {
         private WeekSchedule weekSchedule;
         private ArrayList<Position2D> movementPath;
         private Activity activity;
+        private HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
 
 
         private Builder(){
@@ -72,7 +79,6 @@ public class NPC extends Entity {
         }
 
         // NPC fields
-
         public Builder name(String name){
             this.name = name;
             return this;
@@ -98,7 +104,28 @@ public class NPC extends Entity {
             return this;
         }
 
+        public Builder movementNetwork(HashMap<Position2D, ArrayList<Position2D>> movementNetwork){
+            this.movementNetwork = movementNetwork;
+            return this;
+        }
+
         public NPC build(){
+            Objects.requireNonNull(position, "An npc's location must not be null");
+            Objects.requireNonNull(spritePath, "An npc's sprite path must not be null");
+            Objects.requireNonNull(name, "An npc's name must not be null");
+            Objects.requireNonNull(weekSchedule, "An npc's week schedule must not be null");
+            Objects.requireNonNull(movementPath, "An npc's movement path must not be null");
+            for(Position2D movingToPoint : movementPath){
+                Objects.requireNonNull(movingToPoint, "An npc's movement path must not contain null");
+            }
+            Objects.requireNonNull(activity, "An npc's activity must not be null");
+            Objects.requireNonNull(movementNetwork, "An npc's movement network must not be null");
+            for(Position2D point : movementNetwork.keySet()){
+                Objects.requireNonNull(point, "An npc's movement network must not contain a null key");
+                for(Position2D nextPoint : movementNetwork.get(point)){
+                    Objects.requireNonNull(nextPoint,"An npc's movement network must not contain a null value");
+                }
+            }
             return new NPC(this);
         }
     }
