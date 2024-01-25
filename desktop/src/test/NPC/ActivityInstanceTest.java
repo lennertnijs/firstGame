@@ -8,8 +8,6 @@ import com.mygdx.game.NPC.Position2D;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 public class ActivityInstanceTest {
 
@@ -28,10 +26,32 @@ public class ActivityInstanceTest {
                 .build();
 
         Assertions.assertAll(
-                () -> assertEquals( activityInstance.getPosition(), position),
-                () -> assertEquals(activityInstance.getActivity(), activity),
-                () -> assertEquals(activityInstance.getTimeInMinutes(), timeInMin),
-                () -> assertEquals(activityInstance.getMap(), map)
+                () -> Assertions.assertEquals(activityInstance.getPosition(), position),
+                () -> Assertions.assertEquals(activityInstance.getActivity(), activity),
+                () -> Assertions.assertEquals(activityInstance.getTimeInMinutes(), timeInMin),
+                () -> Assertions.assertEquals(activityInstance.getMap(), map)
         );
+    }
+
+    @Test
+    public void testActivityInstanceConstructorInvalid(){
+        Position2D position = new Position2D(500, 500);
+        Map map = Map.values()[0];
+        int timeInMin = Constants.MINUTES_PER_DAY/2;
+        Activity activity = Activity.values()[0];
+
+        ActivityInstance.Builder builder = ActivityInstance.builder()
+                .position(position)
+                .timeInMinutes(timeInMin)
+                .map(map)
+                .activity(activity);
+
+        Assertions.assertThrows(NullPointerException.class, () -> builder.position(null).build());
+        builder.position(position);
+        Assertions.assertThrows(NullPointerException.class, () -> builder.map(null).build());
+        builder.map(map);
+        Assertions.assertThrows(NullPointerException.class, () -> builder.activity(null).build());
+        builder.activity(activity);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> builder.timeInMinutes(-1).build());
     }
 }

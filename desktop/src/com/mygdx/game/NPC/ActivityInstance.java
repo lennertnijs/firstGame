@@ -4,6 +4,8 @@ import com.mygdx.game.Map.Map;
 
 import java.util.Objects;
 
+import static com.mygdx.game.Constants.MINUTES_PER_DAY;
+
 public class ActivityInstance {
 
     final Position2D position;
@@ -71,6 +73,9 @@ public class ActivityInstance {
             Objects.requireNonNull(position, "The position of an activity instance must not be null");
             Objects.requireNonNull(activity, "The activity of an activity instance must not be null");
             Objects.requireNonNull(map, "The map of an activity instance must not be null");
+            if(timeInMinutes < 0 || timeInMinutes >= MINUTES_PER_DAY){
+                throw new IllegalArgumentException("The time (in minutes) is invalid");
+            }
             return new ActivityInstance(this);
         }
     }

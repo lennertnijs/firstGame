@@ -33,9 +33,9 @@ public class NPCDAO {
 
                 Day dayName = Day.valueOf(dayScheduleJSON.getString("day"));
                 JsonValue activityList = dayScheduleJSON.get("daySchedule");
-                DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(dayName), activityList);
+                //DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(), activityList);
 
-                weekSchedule.addDaySchedule(daySchedule);
+                //weekSchedule.addDaySchedule(daySchedule);
             }
             NPC npc = NPC.builder().weekSchedule(weekSchedule)
                     .goalPosition(new Position2D(0,0)).name(name).build();
@@ -58,7 +58,7 @@ public class NPCDAO {
             int y = activity.getInt("y");
             Activity animation = Activity.valueOf(activity.getString("animation"));
             Map map = Map.valueOf(activity.getString("map"));
-            final ActivityInstance a = ActivityInstance.builder().location(new Position2D(x, y)).timeInMinutes(1200)
+            final ActivityInstance a = ActivityInstance.builder().position(new Position2D(x, y)).timeInMinutes(1200)
                     .activity(animation).map(map).build();
             //fix this last line, was node(a)
             //daySchedule.addActivity(new Node());
