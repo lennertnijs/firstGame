@@ -8,9 +8,9 @@ import java.util.Objects;
 public class NPC extends Entity {
 
     /**
+     * Dialogue tree -> HashMap<Integer, x>
+     *     needs player's text, npc response, and some quest checker?
      * NPC description list (to unlock)
-     * Current dialogue options
-     * Dialogue tree
      */
 
     private final String name;
@@ -18,6 +18,7 @@ public class NPC extends Entity {
     private final ArrayList<Position2D> movementPath;
     private Activity activity;
     private final HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
+    private final ArrayList<Integer> dialogueOptions;
 
     public NPC(Builder builder){
         super(builder.position, builder.spritePath);
@@ -26,6 +27,7 @@ public class NPC extends Entity {
         this.movementPath = builder.movementPath;
         this.activity = builder.activity;
         this.movementNetwork = builder.movementNetwork;
+        this.dialogueOptions = builder.dialogueOptions;
     }
 
     public String getName(){
@@ -47,6 +49,9 @@ public class NPC extends Entity {
     public HashMap<Position2D, ArrayList<Position2D>> getMovementNetwork(){
         return this.movementNetwork;
     }
+    public ArrayList<Integer> getDialogueOptions(){
+        return dialogueOptions;
+    }
     public static Builder builder(){
         return new NPC.Builder();
     }
@@ -60,9 +65,10 @@ public class NPC extends Entity {
         // NPC fields
         private String name;
         private WeekSchedule weekSchedule;
-        private ArrayList<Position2D> movementPath;
+        private ArrayList<Position2D> movementPath = new ArrayList<>();
         private Activity activity;
         private HashMap<Position2D, ArrayList<Position2D>> movementNetwork;
+        private ArrayList<Integer> dialogueOptions = new ArrayList<>();
 
 
         private Builder(){
@@ -110,6 +116,16 @@ public class NPC extends Entity {
             return this;
         }
 
+        public Builder dialogueOptions(ArrayList<Integer> dialogueOptions){
+            this.dialogueOptions = dialogueOptions;
+            return this;
+        }
+
+        public Builder addToDialogueOptions(Integer dialogueOptionIndex){
+            this.dialogueOptions.add(dialogueOptionIndex);
+            return this;
+        }
+
         public NPC build(){
             Objects.requireNonNull(position, "An npc's location must not be null");
             Objects.requireNonNull(spritePath, "An npc's sprite path must not be null");
@@ -126,6 +142,10 @@ public class NPC extends Entity {
                 for(Position2D nextPoint : movementNetwork.get(point)){
                     Objects.requireNonNull(nextPoint,"An npc's movement network must not contain a null value");
                 }
+            }
+            Objects.requireNonNull(dialogueOptions, "An npc's dialogue option list must not be null");
+            for(Integer i: dialogueOptions){
+                Objects.requireNonNull(i, "An npc's current dialogue option index must not be null");
             }
             return new NPC(this);
         }

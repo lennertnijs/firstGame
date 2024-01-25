@@ -30,7 +30,7 @@ public class NPCController {
      */
     public void drawNPCS(MyGame game){
         for(NPC npc: npcList){
-            String pathName = JSON_PATHNAME + npc.getPng();
+            String pathName = JSON_PATHNAME + npc.getSpritePath();
             Texture texture = new Texture(Gdx.files.internal(pathName));
             game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY());
         }
@@ -39,11 +39,11 @@ public class NPCController {
     public void moveNPCS(){
         for(NPC npc: npcList){
             int delta = (int) (70*Gdx.graphics.getDeltaTime());
-            boolean right = npc.getPosition().getX() < npc.getGoalPosition().getX();
-            boolean up = npc.getPosition().getY() < npc.getGoalPosition().getY();
+            boolean right = npc.getPosition().getX() < npc.getMovementPath().get(0).getX();
+            boolean up = npc.getPosition().getY() < npc.getMovementPath().get(0).getY();
 
-            int newX = newPosition(npc.getPosition().getX(), delta, npc.getGoalPosition().getX(), right);
-            int newY = newPosition(npc.getPosition().getY(), delta, npc.getGoalPosition().getY(), up);
+            int newX = newPosition(npc.getPosition().getX(), delta, npc.getMovementPath().get(0).getX(), right);
+            int newY = newPosition(npc.getPosition().getY(), delta, npc.getMovementPath().get(0).getY(), up);
             npc.getPosition().setX(newX);
             npc.getPosition().setY(newY);
         }
