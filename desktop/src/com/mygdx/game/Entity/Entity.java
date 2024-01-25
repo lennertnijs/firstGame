@@ -2,8 +2,6 @@ package com.mygdx.game.Entity;
 
 import com.mygdx.game.NPC.Position2D;
 
-import java.util.Objects;
-
 public class Entity {
 
     private Position2D position;

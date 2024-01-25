@@ -1,81 +1,61 @@
 package com.mygdx.game.NPC;
 
-
 import com.mygdx.game.Entity.Entity;
+import java.util.ArrayList;
 
 public class NPC extends Entity {
 
     /**
-     * string name
-     * Week schedule -> maps each day to dayschedule
-     * LinkedList<Node> path waarbij nodes Position2D
-     * Action action (idle, mining, ...)
      * MovementGraph movementNetwork
      * NPC description list (unlockable)
      * Dialogue tree
-     *
-     *
      */
-
-    /**
-     *      * position2D position
-     *      * spriteName
-     *
-     */
-
 
     private final String name;
-    private WeekSchedule weekSchedule;
-    private Position2D goalPosition;
-
-    private String png;
+    private final WeekSchedule weekSchedule;
+    private final ArrayList<Position2D> movementPath;
+    private Activity activity;
 
     public NPC(Builder builder){
-        super(builder.position, "string");
+        super(builder.position, builder.spritePath);
         this.name = builder.name;
         this.weekSchedule = builder.weekSchedule;
-        this.png = builder.png;
-        this.goalPosition = builder.goalPosition;
-        }
-
-    public void update(){
-        this.move();
-    }
-
-    public WeekSchedule getWeekSchedule(){
-        return weekSchedule;
-    }
-
-    public String getPng(){
-        return png;
-    }
-
-    public Position2D getGoalPosition(){
-        return this.goalPosition;
+        this.movementPath = builder.movementPath;
+        this.activity = builder.activity;
     }
 
     public String getName(){
         return name;
     }
 
-    public void setPosition(){
+    public WeekSchedule getWeekSchedule(){
+        return weekSchedule;
+    }
 
+    public ArrayList<Position2D> getMovementPath(){
+        return this.movementPath;
+    }
+
+    public Activity getActivity(){
+        return this.activity;
     }
 
     public static Builder builder(){
         return new NPC.Builder();
     }
 
-    public void move(){
-    }
-
     public static class Builder{
 
+        // Entity fields
         private Position2D position;
+        private String spritePath;
+
+        // NPC fields
         private String name;
-        private Position2D goalPosition;
         private WeekSchedule weekSchedule;
-        private String png;
+        private ArrayList<Position2D> movementPath;
+        private Activity activity;
+
 
         private Builder(){
 
@@ -85,6 +65,13 @@ public class NPC extends Entity {
             this.position = position;
             return this;
         }
+
+        public Builder spritePath(String spritePath){
+            this.spritePath = spritePath;
+            return this;
+        }
+
+        // NPC fields
 
         public Builder name(String name){
             this.name = name;
@@ -96,13 +83,18 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder png(String png){
-            this.png = png;
+        public Builder movementPath(ArrayList<Position2D> movementPath){
+            this.movementPath = movementPath;
             return this;
         }
 
-        public Builder goalPosition(Position2D goalPosition){
-            this.goalPosition = goalPosition;
+        public Builder addToMovementPath(Position2D position){
+            this.movementPath.add(position);
+            return this;
+        }
+
+        public Builder activity(Activity activity){
+            this.activity = activity;
             return this;
         }
 
