@@ -61,7 +61,7 @@ public class NPCController {
     public void updateNPCGoal(){
         for(NPC npc: npcList){
             WeekSchedule weekSchedule = npc.getWeekSchedule();
-            DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.SUNDAY);
+            // DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.SUNDAY);
             // still need the day somewhere!
         }
 

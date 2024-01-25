@@ -18,30 +18,30 @@ public class NPCDAO {
      * @return (to be added) each npc. CURRENTLY JUST WEEK SCHEDULE
      */
     public static ArrayList<NPC> readNPCS(){
-        ArrayList<NPC> npcs = new ArrayList<>();
-        JsonReader reader = new JsonReader();
-        JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
-
-        WeekSchedule weekSchedule = new WeekSchedule();
-        for(JsonValue npcJSON: file){
-            String name = npcJSON.getString("name");
-            int x = npcJSON.getInt("x");
-            int y = npcJSON.getInt("y");
-
-            JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
-            for(JsonValue dayScheduleJSON : weekScheduleJSON){
-
-                Day dayName = Day.valueOf(dayScheduleJSON.getString("day"));
-                JsonValue activityList = dayScheduleJSON.get("daySchedule");
-                //DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(), activityList);
-
-                //weekSchedule.addDaySchedule(daySchedule);
-            }
-            NPC npc = NPC.builder().weekSchedule(weekSchedule)
-                    .goalPosition(new Position2D(0,0)).name(name).build();
-            npcs.add(npc);
-        }
-        return npcs;
+//        ArrayList<NPC> npcs = new ArrayList<>();
+//        JsonReader reader = new JsonReader();
+//        JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
+//
+//        WeekSchedule weekSchedule = new WeekSchedule();
+//        for(JsonValue npcJSON: file){
+//            String name = npcJSON.getString("name");
+//            int x = npcJSON.getInt("x");
+//            int y = npcJSON.getInt("y");
+//
+//            JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
+//            for(JsonValue dayScheduleJSON : weekScheduleJSON){
+//
+//                Day dayName = Day.valueOf(dayScheduleJSON.getString("day"));
+//                JsonValue activityList = dayScheduleJSON.get("daySchedule");
+//                //DaySchedule daySchedule = fillInDaySchedule(new DaySchedule(), activityList);
+//
+//                //weekSchedule.addDaySchedule(daySchedule);
+//            }
+//            NPC npc = NPC.builder().weekSchedule(weekSchedule)
+//                    .goalPosition(new Position2D(0,0)).name(name).build();
+//            npcs.add(npc);
+//        }
+        return new ArrayList<>();
     }
 
     /**

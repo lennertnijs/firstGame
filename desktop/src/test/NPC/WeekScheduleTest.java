@@ -3,20 +3,18 @@ package NPC;
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
 import com.mygdx.game.Map.Map;
-import com.mygdx.game.NPC.Activity;
-import com.mygdx.game.NPC.ActivityInstance;
-import com.mygdx.game.NPC.DaySchedule;
-import com.mygdx.game.NPC.Position2D;
+import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
-public class DayScheduleTest {
+public class WeekScheduleTest {
 
     @Test
-    public void testDayScheduleConstructor(){
+    public void testConstructor(){
         Day day = Day.values()[0];
 
         Position2D position = new Position2D(500, 500);
@@ -43,49 +41,38 @@ public class DayScheduleTest {
 
         ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
-        DaySchedule daySchedule = DaySchedule.builder()
+        DaySchedule daySchedule1 = DaySchedule.builder()
                 .day(day)
                 .addActivity(activityInstance)
                 .addActivity(activityInstance2)
                 .build();
-
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(daySchedule.getDay(), day),
-                () -> Assertions.assertEquals(daySchedule.getActivities().get(0),activityInstance),
-                () -> Assertions.assertEquals(daySchedule.getActivities().get(1),activityInstance2),
-                () -> Assertions.assertEquals(daySchedule.getActivities(), activities)
-        );
 
         DaySchedule daySchedule2 = DaySchedule.builder()
                 .day(day)
                 .activities(activities)
                 .build();
 
+        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
+
         Assertions.assertAll(
-                () -> Assertions.assertEquals(daySchedule2.getDay(), day),
-                () -> Assertions.assertEquals(daySchedule2.getActivities().get(0),activityInstance),
-                () -> Assertions.assertEquals(daySchedule2.getActivities().get(1),activityInstance2),
-                () -> Assertions.assertEquals(daySchedule2.getActivities(), activities)
+                () -> Assertions.assertEquals(weekSchedule.getDaySchedules(), daySchedules)
         );
     }
 
     @Test
-    public void testDayScheduleConstructorInvalid(){
-        Day day = Day.values()[0];
-        ArrayList<ActivityInstance> activities = new ArrayList<>();
-
-        DaySchedule.Builder builder = DaySchedule.builder().day(day).activities(activities);
-
+    public void testConstructorInvalid(){
+        WeekSchedule.Builder builder = WeekSchedule.builder();
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, ()->builder.day(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class, ()->builder.activities(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class, ()->builder.addActivity(null).build())
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.daySchedules(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.addDaySchedule(null).build())
         );
     }
 
     @Test
-    public void testDayScheduleNext(){
-        Day day = Day.values()[0];
+    public void testNext(){
+        Day day1 = Day.values()[0];
+        Day day2 = Day.values()[1];
 
         Position2D position = new Position2D(500, 500);
         Map map = Map.values()[0];
@@ -98,7 +85,7 @@ public class DayScheduleTest {
                 .activity(activity)
                 .build();
 
-        Position2D position2 = new Position2D(750, 750);
+        Position2D position2 = new Position2D(500, 500);
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
@@ -109,33 +96,31 @@ public class DayScheduleTest {
                 .activity(activity2)
                 .build();
 
-        Position2D position3 = new Position2D(250, 250);
-        Map map3 = Map.values()[0];
-        int timeInMin3 = Constants.MINUTES_PER_DAY/2;
-        Activity activity3 = Activity.values()[0];
-        ActivityInstance activityInstance3 = ActivityInstance.builder()
-                .position(position3)
-                .timeInMinutes(timeInMin3)
-                .map(map3)
-                .activity(activity3)
-                .build();
+        ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
-        DaySchedule daySchedule = DaySchedule.builder()
-                .day(day)
+        DaySchedule daySchedule1 = DaySchedule.builder()
+                .day(day1)
                 .addActivity(activityInstance)
                 .addActivity(activityInstance2)
-                .addActivity(activityInstance3)
                 .build();
 
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .day(day2)
+                .activities(activities)
+                .build();
+
+        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
+
         Assertions.assertAll(
-                () -> Assertions.assertEquals(daySchedule.next(activityInstance), activityInstance2),
-                () -> Assertions.assertEquals(daySchedule.next(activityInstance2), activityInstance3),
-                () -> Assertions.assertNull(daySchedule.next(activityInstance3))
+                () -> Assertions.assertEquals(weekSchedule.next(day1), daySchedule2)
         );
     }
 
     @Test
-    public void testDayScheduleNextInvalid(){
+    public void testNextInvalid(){
+        Day day1 = Day.values()[0];
+
         Position2D position = new Position2D(500, 500);
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
@@ -147,11 +132,29 @@ public class DayScheduleTest {
                 .activity(activity)
                 .build();
 
-        DaySchedule daySchedule = DaySchedule.builder().day(Day.values()[0]).activities(new ArrayList<>()).build();
+        Position2D position2 = new Position2D(500, 500);
+        Map map2 = Map.values()[0];
+        int timeInMin2 = Constants.MINUTES_PER_DAY/2;
+        Activity activity2 = Activity.values()[0];
+        ActivityInstance activityInstance2 = ActivityInstance.builder()
+                .position(position2)
+                .timeInMinutes(timeInMin2)
+                .map(map2)
+                .activity(activity2)
+                .build();
+
+        DaySchedule daySchedule1 = DaySchedule.builder()
+                .day(day1)
+                .addActivity(activityInstance)
+                .addActivity(activityInstance2)
+                .build();
+
+        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Collections.singletonList(daySchedule1));
+        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> daySchedule.next(null)),
-                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> daySchedule.next(activityInstance))
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> weekSchedule.next(day1)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> weekSchedule.next(null))
         );
     }
 }
