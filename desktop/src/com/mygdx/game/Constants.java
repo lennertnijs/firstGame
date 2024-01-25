@@ -7,4 +7,6 @@ public class Constants {
     public static int HOURS_PER_DAY = 24;
     public static int MINUTES_PER_DAY = MINUTES_PER_HOUR*HOURS_PER_DAY;
     public static String JSON_PATHNAME = "resources/";
+
+    public static int STANDARD_MOVEMENT_SPEED = 50;
 }

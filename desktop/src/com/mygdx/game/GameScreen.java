@@ -11,16 +11,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.*;
+import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Controller.ClockController;
+import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.DAO.CalendarDAO;
 import com.mygdx.game.Graph.Graph;
 import com.mygdx.game.Graph.Vertex;
-import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.Map.Map;
+import com.mygdx.game.NPC.*;
 import com.mygdx.game.Entity.Position2D;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -43,12 +44,12 @@ public class GameScreen implements Screen {
 
     Array<Integer> rocks = spawnRocks();
 
-    NPC npc = NPC.builder().position(new Position2D(2000, 2000)).name("name").build(); //2000, 2000
-
     Rectangle inventorySlot;
 
     Clock clock = createClock();
     ClockController clockController = new ClockController();
+
+    NPCController npcController;
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -73,7 +74,7 @@ public class GameScreen implements Screen {
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         mapRect = new Rectangle();
         mapRect.width = 5000;
@@ -84,16 +85,21 @@ public class GameScreen implements Screen {
         charac = new Rectangle();
         charac.height = 256;
         charac.width = 128;
-        charac.x = (float) 1920 /2;
+        charac.x = (float) 1920 / 2;
         charac.y = 510;
 
         inventorySlot = new Rectangle();
         inventorySlot.height = 128;
         inventorySlot.width = 128;
-        inventorySlot.x = (float) 1920 /2;
+        inventorySlot.x = (float) 1920 / 2;
         inventorySlot.y = 0;
 
 
+        ArrayList<NPC> npcs = new ArrayList<>();
+        npcs.add(generateNPC(1250, 1250));
+        npcs.add(generateNPC(1000, 1250));
+        npcs.add(generateNPC(1000, 1000));
+        npcController = new NPCController(clock, npcs);
     }
 
 
@@ -118,17 +124,18 @@ public class GameScreen implements Screen {
 
         game.batch.draw(map, mapRect.x, mapRect.y, mapRect.width, mapRect.height);
         game.batch.draw(frame, inventorySlot.x, inventorySlot.y, inventorySlot.width, inventorySlot.height);
-        if(walking > 15 && walking < 30){
+        if (walking > 15 && walking < 30) {
             game.batch.draw(charLeft, charac.x, charac.y, charac.width, charac.height);
         } else if (walking > 45 && walking <= 60) {
             game.batch.draw(charRight, charac.x, charac.y, charac.width, charac.height);
-        }else{
+        } else {
             game.batch.draw(character, charac.x, charac.y, charac.width, charac.height);
         }
-        game.batch.draw(character, npc.getPosition().getX(), npc.getPosition().getY(), charac.width, charac.height);
         clockController.updateClock(clock);
+        npcController.moveNPCS();
+        npcController.drawNPCS(game);
 
-        game.font.getData().setScale(3,3);
+        game.font.getData().setScale(3, 3);
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
@@ -137,50 +144,50 @@ public class GameScreen implements Screen {
 
 
         Graph graph = new Graph();
-        Vertex v1 = new Vertex("name1",2000, 2000);
-        Vertex v2 = new Vertex("name2", 1000,2000);
+        Vertex v1 = new Vertex("name1", 2000, 2000);
+        Vertex v2 = new Vertex("name2", 1000, 2000);
         Vertex v3 = new Vertex("name3", 1000, 1000);
         graph.addVertex(v1, new ArrayList<>(Collections.singletonList(v2)));
         graph.addVertex(v2, new ArrayList<>(Collections.singletonList(v3)));
         graph.addVertex(v3, new ArrayList<>(Collections.singletonList(v1)));
 
 
-        for(int i = 0; i < rocks.size ; i+= 2){
+        for (int i = 0; i < rocks.size; i += 2) {
             Rectangle hitbox = new Rectangle();
             hitbox.height = 128;
             hitbox.width = 128;
             hitbox.x = rocks.get(i);
-            hitbox.y = rocks.get(i+1);
+            hitbox.y = rocks.get(i + 1);
             hitboxesRocks.add(hitbox);
 
 
             float xTotal = Math.abs(charac.x - rocks.get(i));
-            float yTotal = Math.abs(charac.y - rocks.get(i+1));
-            if(Math.sqrt(xTotal*xTotal + yTotal*yTotal) < 10500){
-                float num = yTotal/xTotal + 1;
+            float yTotal = Math.abs(charac.y - rocks.get(i + 1));
+            if (Math.sqrt(xTotal * xTotal + yTotal * yTotal) < 10500) {
+                float num = yTotal / xTotal + 1;
                 int total = 3;
-                int xChange = Math.round(total/num);
-                int yChange = total-xChange;
-                if(charac.x != rocks.get(i)){
-                    if(charac.x < rocks.get(i)){
-                        rocks.set(i, rocks.get(i)-xChange);
-                    }else{
-                        rocks.set(i, rocks.get(i)+xChange);
+                int xChange = Math.round(total / num);
+                int yChange = total - xChange;
+                if (charac.x != rocks.get(i)) {
+                    if (charac.x < rocks.get(i)) {
+                        rocks.set(i, rocks.get(i) - xChange);
+                    } else {
+                        rocks.set(i, rocks.get(i) + xChange);
                     }
 
                 }
-                if(charac.y != rocks.get(i+1)){
-                    if(charac.y < rocks.get(i+1)){
-                        rocks.set(i+1, rocks.get(i+1)-yChange);
-                    }else{
-                        rocks.set(i+1, rocks.get(i+1)+yChange);
+                if (charac.y != rocks.get(i + 1)) {
+                    if (charac.y < rocks.get(i + 1)) {
+                        rocks.set(i + 1, rocks.get(i + 1) - yChange);
+                    } else {
+                        rocks.set(i + 1, rocks.get(i + 1) + yChange);
                     }
 
                 }
             }
 
 
-            game.batch.draw(stone, rocks.get(i), rocks.get(i+1),128, 128);
+            game.batch.draw(stone, rocks.get(i), rocks.get(i + 1), 128, 128);
         }
         //npc.update();
         game.font.draw(game.batch, "Text ", 0, 480);
@@ -191,7 +198,7 @@ public class GameScreen implements Screen {
     }
 
 
-    private Clock createClock(){
+    private Clock createClock() {
         Calendar calendar = CalendarDAO.readCalendar();
         int minutes = 1420;
         int currentDaysInMonth = 12;
@@ -203,6 +210,7 @@ public class GameScreen implements Screen {
                 .timeInMinutes(minutes)
                 .build();
     }
+
     @Override
     public void resize(int width, int height) {
     }
@@ -233,16 +241,16 @@ public class GameScreen implements Screen {
     }
 
 
-    private Array<Integer> spawnRocks(){
+    private Array<Integer> spawnRocks() {
         Random random = new Random();
         Array<Integer> coordinates = new Array<>();
-        for(int i = 0; i< 100; i++){
-            coordinates.add(random.nextInt(5000)+1);
+        for (int i = 0; i < 100; i++) {
+            coordinates.add(random.nextInt(5000) + 1);
         }
         return coordinates;
     }
 
-    private void movementInputs(){
+    private void movementInputs() {
         // process user input
         if (Gdx.input.isTouched()) {
             Vector3 touchPos = new Vector3();
@@ -264,7 +272,7 @@ public class GameScreen implements Screen {
             charac.y -= 200 * Gdx.graphics.getDeltaTime();
             inventorySlot.y -= 200 * Gdx.graphics.getDeltaTime();
             walking += 1;
-            if(walking > 60){
+            if (walking > 60) {
                 walking = 0;
             }
         }
@@ -273,20 +281,110 @@ public class GameScreen implements Screen {
             inventorySlot.y += 200 * Gdx.graphics.getDeltaTime();
         }
 
-        if(charac.x < 0){
+        if (charac.x < 0) {
             charac.x = 0;
         }
-        if(charac.x >5000){
+        if (charac.x > 5000) {
             charac.x = 5000;
         }
-        if(charac.y < 0){
+        if (charac.y < 0) {
             charac.y = 0;
         }
-        if(charac.y >2500){
+        if (charac.y > 2500) {
             charac.y = 2500;
         }
     }
 
+    private NPC generateNPC(int startX, int startY) {
 
+        ArrayList<Position2D> movementPath1 = new ArrayList<>(
+                Arrays.asList(new Position2D(startX + 1000, startY), new Position2D(startX + 1000, startY + 1000))
+        );
 
+        ArrayList<Position2D> movementPath2 = new ArrayList<>(
+                Arrays.asList(new Position2D(startX - 1000, startY), new Position2D(startX - 1000, startY - 1000))
+        );
+        Position2D position = new Position2D(startX, startY);
+        String spritePath = "stone.png";
+        String name = "Bert";
+
+        Day day = Day.values()[0];
+
+        Position2D position1 = new Position2D(500, 500);
+        Map map1 = Map.values()[0];
+        int timeInMin1 = Constants.MINUTES_PER_DAY / 2;
+        Activity activity1 = Activity.values()[0];
+        ActivityInstance activityInstance = ActivityInstance.builder()
+                .position(position1)
+                .timeInMinutes(timeInMin1)
+                .map(map1)
+                .activity(activity1)
+                .build();
+
+        Position2D position2 = new Position2D(500, 500);
+        Map map2 = Map.values()[0];
+        int timeInMin2 = Constants.MINUTES_PER_DAY / 2;
+        Activity activity2 = Activity.values()[0];
+        ActivityInstance activityInstance2 = ActivityInstance.builder()
+                .position(position2)
+                .timeInMinutes(timeInMin2)
+                .map(map2)
+                .activity(activity2)
+                .build();
+
+        ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
+
+        DaySchedule daySchedule1 = DaySchedule.builder()
+                .day(day)
+                .addActivity(activityInstance)
+                .addActivity(activityInstance2)
+                .build();
+
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .day(day)
+                .activities(activities)
+                .build();
+
+        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
+
+        Activity activity = Activity.values()[0];
+
+        HashMap<Position2D, ArrayList<Position2D>> movementNetwork = new HashMap<>();
+        movementNetwork.put(new Position2D(500, 500),
+                new ArrayList<>(Arrays.asList(new Position2D(1000, 500), new Position2D(1000, 1000))));
+        movementNetwork.put(new Position2D(1000, 500),
+                new ArrayList<>(Arrays.asList(new Position2D(500, 500), new Position2D(1000, 1000))));
+        movementNetwork.put(new Position2D(1000, 1000),
+                new ArrayList<>(Arrays.asList(new Position2D(500, 500), new Position2D(1000, 500))));
+
+        long i = Math.round(Math.random()*5);
+        if(i < 2 ){
+            ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
+            NPC npc = NPC.builder()
+                    .position(position)
+                    .spritePath(spritePath)
+                    .name(name)
+                    .weekSchedule(weekSchedule)
+                    .movementPath(movementPath1)
+                    .activity(activity)
+                    .movementNetwork(movementNetwork)
+                    .dialogueOptions(dialogueOptions)
+                    .build();
+            return npc;
+        }else{
+            ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
+            NPC npc = NPC.builder()
+                    .position(position)
+                    .spritePath(spritePath)
+                    .name(name)
+                    .weekSchedule(weekSchedule)
+                    .movementPath(movementPath2)
+                    .activity(activity)
+                    .movementNetwork(movementNetwork)
+                    .dialogueOptions(dialogueOptions)
+                    .build();
+            return npc;
+        }
+    }
 }
