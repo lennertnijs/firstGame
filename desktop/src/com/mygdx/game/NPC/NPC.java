@@ -9,6 +9,7 @@ public class NPC extends Entity {
 
     /**
      * NPC description list (to unlock)
+     * Current dialogue options
      * Dialogue tree
      */
 
