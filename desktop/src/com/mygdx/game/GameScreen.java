@@ -15,9 +15,11 @@ import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.DAO.CalendarDAO;
+import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Service.NPCService;
 
 import java.util.*;
 
@@ -48,6 +50,8 @@ public class GameScreen implements Screen {
     ClockController clockController = new ClockController();
 
     NPCController npcController;
+    NPCRepository repository = new NPCRepository();
+    NPCService npcService = new NPCService(repository);
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -97,7 +101,13 @@ public class GameScreen implements Screen {
         npcs.add(generateNPC(1250, 1250));
         npcs.add(generateNPC(1000, 1250));
         npcs.add(generateNPC(1000, 1000));
-        npcController = new NPCController(clock, npcs);
+        npcController = new NPCController(clock);
+        long start = System.currentTimeMillis();
+        npcService.loadNPCS();
+        System.out.println(System.currentTimeMillis() - start);
+        for(NPC npc: repository.getNpcs()){
+            System.out.println(npc.getName());
+        }
     }
 
 

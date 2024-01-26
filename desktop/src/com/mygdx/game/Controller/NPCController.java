@@ -5,24 +5,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.NPC.NPCMover;
 import com.mygdx.game.NPC.WeekSchedule;
 
 import java.util.ArrayList;
 
-import static com.mygdx.game.Constants.JSON_PATHNAME;
 public class NPCController {
 
-    ArrayList<NPC> npcList;
     final Clock clock;
 
     /**
      * Constructor for the NPC controller.
      * Loads all the NPC data from the JSON file at creation.
      */
-    public NPCController(Clock clock, ArrayList<NPC> npcs) {
+    public NPCController(Clock clock) {
         this.clock = clock;
-        this.npcList = npcs;
     }
 
     /**
@@ -30,26 +26,26 @@ public class NPCController {
      * @param game The game object
      */
     public void drawNPCS(MyGame game){
-        for(NPC npc: npcList){
-            String pathName = "images/" + npc.getSpritePath();
-            Texture texture = new Texture(Gdx.files.internal(pathName));
-            game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY());
-        }
+//        for(NPC npc: npcList){
+//            String pathName = "images/" + npc.getSpritePath();
+//            Texture texture = new Texture(Gdx.files.internal(pathName));
+//            game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY());
+//        }
     }
 
     public void moveNPCS(){
-        for(NPC npc: npcList){
-            NPCMover.move(npc);
-        }
+//        for(NPC npc: npcList){
+//            NPCMover.move(npc);
+//        }
     }
 
 
     public void updateNPCGoal(){
-        for(NPC npc: npcList){
-            WeekSchedule weekSchedule = npc.getWeekSchedule();
-            // DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.SUNDAY);
-            // still need the day somewhere!
-        }
+//        for(NPC npc: npcList){
+//            WeekSchedule weekSchedule = npc.getWeekSchedule();
+//            // DaySchedule daySchedule = weekSchedule.getDaySchedules().get(Day.SUNDAY);
+//            // still need the day somewhere!
+//        }
 
     }
 

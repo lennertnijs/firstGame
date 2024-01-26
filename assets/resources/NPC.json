@@ -1,9 +1,10 @@
 [
     {
       "name": "Bart",
-      "png": "bucket.png",
+      "spritePath": "bucket.png",
       "x": "1000",
       "y": "1000",
+      "activity": "IDLING",
       "weekSchedule": [
         {
         "day": "MONDAY",
@@ -12,14 +13,14 @@
             "time": "8:30",
             "x": "1000",
             "y": "1000",
-            "animation": "MINING",
+            "activity": "MINING",
             "map": "MAIN"
           },
           {
             "time": "12:30",
             "x": "500",
             "y": "500",
-            "animation": "FISHING",
+            "activity": "FISHING",
             "map": "MAIN"
           }
         ]
@@ -31,17 +32,61 @@
               "time": "8:30",
               "x": "1000",
               "y": "1000",
-              "animation": "TUESDAY",
+              "activity": "FISHING",
               "map": "MAIN"
             },
             {
               "time": "12:30",
               "x": "500",
               "y": "500",
-              "animation": "TUESDAY",
+              "activity": "IDLING",
               "map": "MAIN"
             }
           ]
+        }
+      ],
+      "movementGraph": [
+        {
+          "x": "500",
+          "y": "500",
+          "connected": [
+            {
+              "x": "750",
+              "y": "500"
+            }
+          ]
+        },
+        {
+          "x": "750",
+          "y": "500",
+          "connected": [
+            {
+              "x": "500",
+              "y": "500"
+            },
+            {
+              "x": "750",
+              "y": "750"
+            }
+          ]
+        },
+        {
+          "x": "750",
+          "y": "750",
+          "connected": [
+            {
+              "x": "750",
+              "y": "500"
+            }
+          ]
+        }
+      ],
+      "dialogueOptions": [
+        {
+          "index": "1"
+        },
+        {
+          "index": "2"
         }
       ]
     }

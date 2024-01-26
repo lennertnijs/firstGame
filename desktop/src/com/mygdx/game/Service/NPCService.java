@@ -1,16 +1,38 @@
-package com.mygdx.game.NPC;
+package com.mygdx.game.Service;
 
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.NPC.NPCRepository;
+
+import java.util.ArrayList;
 
 import static com.mygdx.game.Constants.STANDARD_MOVEMENT_SPEED;
 
-public class NPCMover {
+public class NPCService {
 
-    public NPCMover(){
+    private final NPCRepository repository;
+    public NPCService(NPCRepository npcRepository){
+        this.repository = npcRepository;
     }
 
-    public static void move(NPC npc){
+    // draw npcs
+    // update npc schedules
+    // all npc logic
+
+    /**
+     * Loads all NPC's into memory from the json file.
+     * Should only be called once at startup.
+     */
+    public void loadNPCS(){
+        NPCDAO npcdao = new NPCDAO();
+        ArrayList<NPC> npcs = npcdao.readNPCS();
+        for(NPC npc: npcs){
+            repository.add(npc);
+        }
+    }
+    public void move(NPC npc){
         boolean isMoving = !npc.getMovementPath().isEmpty();
         if(isMoving){
             Position2D current = npc.getPosition();
@@ -27,7 +49,7 @@ public class NPCMover {
         }
     }
 
-    private static void verticalMovement(NPC npc){
+    private void verticalMovement(NPC npc){
         int currentY = npc.getPosition().getY();
         int goalY = npc.getMovementPath().get(0).getY();
         int nextY = calculateNextValue(currentY, goalY);
@@ -37,7 +59,7 @@ public class NPCMover {
         }
     }
 
-    private static void horizontalMovement(NPC npc){
+    private void horizontalMovement(NPC npc){
         int currentX = npc.getPosition().getX();
         int goalX = npc.getMovementPath().get(0).getX();
         int nextX = calculateNextValue(currentX, goalX);
@@ -47,8 +69,8 @@ public class NPCMover {
         }
     }
 
-    private static int calculateNextValue(int current, int goal){
-        int movement = Math.round(STANDARD_MOVEMENT_SPEED*Gdx.graphics.getDeltaTime());
+    private int calculateNextValue(int current, int goal){
+        int movement = Math.round(STANDARD_MOVEMENT_SPEED* Gdx.graphics.getDeltaTime());
         boolean movingPositive = current < goal;
         int nextValue;
         if(movingPositive){
@@ -59,7 +81,7 @@ public class NPCMover {
         return nextValue;
     }
 
-    private static void removeFirstPositionFromPath(NPC npc){
+    private void removeFirstPositionFromPath(NPC npc){
         npc.getMovementPath().remove(0);
     }
 }

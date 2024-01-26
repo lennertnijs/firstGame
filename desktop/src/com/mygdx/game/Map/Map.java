@@ -4,5 +4,6 @@ public enum Map {
 
     OUTSIDE,
     HOUSE,
-    MINE
+    MINE,
+    MAIN
 }
