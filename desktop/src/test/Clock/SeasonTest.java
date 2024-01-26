@@ -13,5 +13,6 @@ public class SeasonTest {
         Assertions.assertEquals(light, dark.next());
         Assertions.assertEquals(dark, light.next());
         Assertions.assertEquals(light.next().next(), light);
+
     }
 }

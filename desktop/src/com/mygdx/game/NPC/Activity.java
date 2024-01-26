@@ -4,5 +4,6 @@ public enum Activity {
 
     IDLING,
     MINING,
-    FISHING
+    FISHING,
+    WALKING
 }

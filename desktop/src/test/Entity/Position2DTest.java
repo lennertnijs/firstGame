@@ -1,4 +1,4 @@
-package NPC;
+package Entity;
 
 import com.mygdx.game.Entity.Position2D;
 import org.junit.jupiter.api.Assertions;

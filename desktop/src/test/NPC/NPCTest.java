@@ -132,13 +132,8 @@ public class NPCTest {
     @Test
     public void testConstructorInvalidMovementPath(){
         NPC.Builder builder = getValidNPCBuilder();
-
-        Position2D point = new Position2D(500, 500);
-
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementPath(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> builder.addToMovementPath(point).addToMovementPath(null).build())
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementPath(null).build())
         );
     }
 
@@ -164,9 +159,17 @@ public class NPCTest {
         NPC.Builder builder = getValidNPCBuilder();
 
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.dialogueOptions(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> builder.addToDialogueOptions(5).addToDialogueOptions(null).build())
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.dialogueOptions(null).build())
+        );
+    }
+
+    @Test
+    public void testSetActivity(){
+        NPC npc = getValidNPCBuilder().build();
+        npc.setActivity(Activity.WALKING);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(Activity.WALKING, npc.getActivity()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> npc.setActivity(null))
         );
     }
 

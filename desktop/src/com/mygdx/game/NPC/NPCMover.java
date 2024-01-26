@@ -22,6 +22,7 @@ public class NPCMover {
                 horizontalMovement(npc);
             }
         }else{
+            // on arrival of final node, update next move & then every frame check the time
 
         }
     }

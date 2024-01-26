@@ -29,7 +29,7 @@ public class MovementGraph {
             ArrayList<Position2D> currentPath = queue.pop();
             int lastIndex = currentPath.size()-1;
             Position2D currentPosition = currentPath.get(lastIndex);
-            if(movementGraph.containsKey(currentPosition)){
+            if(!movementGraph.containsKey(currentPosition)){
                 throw new IllegalArgumentException("The current position does not exist in the movement graph");
             }
             ArrayList<Position2D> adjacentVertices = movementGraph.get(currentPosition);
@@ -64,11 +64,6 @@ public class MovementGraph {
 
         public Builder movementGraph(HashMap<Position2D, ArrayList<Position2D>> movementGraph){
             this.movementGraph = movementGraph;
-            return this;
-        }
-
-        public Builder addToMovementGraph(Position2D position, ArrayList<Position2D> connectedPositions){
-            this.movementGraph.put(position, connectedPositions);
             return this;
         }
 

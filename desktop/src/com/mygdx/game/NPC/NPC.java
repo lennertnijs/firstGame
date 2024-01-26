@@ -53,6 +53,11 @@ public class NPC extends Entity {
     public ArrayList<Integer> getDialogueOptions(){
         return dialogueOptions;
     }
+
+    public void setActivity(Activity activity){
+        Objects.requireNonNull(activity, "The activity of an npc must not be null.");
+        this.activity = activity;
+    }
     public static Builder builder(){
         return new NPC.Builder();
     }
@@ -102,11 +107,6 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder addToMovementPath(Position2D position){
-            this.movementPath.add(position);
-            return this;
-        }
-
         public Builder activity(Activity activity){
             this.activity = activity;
             return this;
@@ -119,11 +119,6 @@ public class NPC extends Entity {
 
         public Builder dialogueOptions(ArrayList<Integer> dialogueOptions){
             this.dialogueOptions = dialogueOptions;
-            return this;
-        }
-
-        public Builder addToDialogueOptions(Integer dialogueOptionIndex){
-            this.dialogueOptions.add(dialogueOptionIndex);
             return this;
         }
 
