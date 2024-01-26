@@ -15,8 +15,6 @@ import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.DAO.CalendarDAO;
 import com.mygdx.game.Drawer.NPCDrawer;
-import com.mygdx.game.NPC.*;
-import com.mygdx.game.Service.NPCService;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -34,8 +32,6 @@ public class GameScreen implements Screen {
 
     Clock clock = createClock();
     ClockController clockController = new ClockController();
-
-    NPCService npcService;
     NPCController npcController;
     NPCDrawer npcDrawer;
 
@@ -45,9 +41,8 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGame game) {
         this.game = game;
 
-        npcService = new NPCService(new NPCRepository(), clock);
         npcDrawer = new NPCDrawer(game);
-        npcController = new NPCController(npcService, npcDrawer);
+        npcController = new NPCController(clock, npcDrawer);
         npcController.loadNPCS();
 
 

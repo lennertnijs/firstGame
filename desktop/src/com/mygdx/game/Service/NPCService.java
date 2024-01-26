@@ -15,10 +15,9 @@ public class NPCService {
 
     private final NPCRepository repository;
     private final Clock clock;
-    public NPCService(NPCRepository npcRepository, Clock clock){
+    public NPCService(Clock clock){
         Objects.requireNonNull(clock, "The clock of the npc service must not be null");
-        Objects.requireNonNull(npcRepository, "The npc repository of the npc service must not be null");
-        this.repository = npcRepository;
+        this.repository = new NPCRepository();
         this.clock = clock;
     }
 
@@ -54,20 +53,18 @@ public class NPCService {
         int timeInMinutes = clock.getTimeInMinutes();
         DaySchedule daySchedule = npc.getWeekSchedule().getDaySchedule(day);
         ActivityInstance nextActivity = daySchedule.nextActivity(timeInMinutes);
-        boolean noMorActivitiesToday = nextActivity == null;
-        if(noMorActivitiesToday){
+        boolean noMoreActivitiesInDay = nextActivity == null;
+        if(noMoreActivitiesInDay){
+            day = day.next();
             daySchedule = npc.getWeekSchedule().getDaySchedule(day.next());
             nextActivity = daySchedule.nextActivity(0);
         }
-        boolean timeToStartActivity = timeInMinutes == nextActivity.getTimeInMinutes();
-        if(timeToStartActivity){
-            MovementGraph movementGraph = npc.getMovementGraph();
-            System.out.println(npc.getName());
-            System.out.println(npc.getPosition().getX() + " " + npc.getPosition().getY());
-            System.out.println(nextActivity.getPosition().getX() + " " + nextActivity.getPosition().getY());
-            npc.setMovementPath(movementGraph.findPath(npc.getPosition(), nextActivity.getPosition()));
+        boolean startNextActivity = timeInMinutes >= nextActivity.getTimeInMinutes();
+        boolean correctDay = day == clock.getDay();
+        if(startNextActivity && correctDay){
+            MovementGraph graph = npc.getMovementGraph();
+            npc.setMovementPath(graph.findPath(npc.getPosition(), nextActivity.getPosition()));
         }
-
     }
 
 

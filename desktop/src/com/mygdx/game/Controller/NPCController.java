@@ -1,5 +1,6 @@
 package com.mygdx.game.Controller;
 
+import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Service.NPCService;
 
@@ -12,8 +13,8 @@ public class NPCController {
      * Constructor for the NPC controller.
      * Loads all the NPC data from the JSON file at creation.
      */
-    public NPCController(NPCService npcService, NPCDrawer npcDrawer) {
-        this.npcService = npcService;
+    public NPCController(Clock clock, NPCDrawer npcDrawer) {
+        this.npcService = new NPCService(clock);
         this.npcDrawer = npcDrawer;
     }
 

@@ -38,7 +38,6 @@ public class MovementGraph {
             for (Position2D nextPosition : adjacentPositions) {
                 ArrayList<Position2D> newPath = new ArrayList<>(currentPath);
 
-
                 boolean alreadyVisited = currentPath.contains(nextPosition);
                 if (!alreadyVisited) {
                     newPath.add(nextPosition);
@@ -47,11 +46,10 @@ public class MovementGraph {
                     boolean arrivedAtGoal = nextPosition.equals(goal);
                     if (arrivedAtGoal) {
                         return newPath;
-                }
+                    }
                 }
             }
         }
-
         throw new IllegalArgumentException("No path was found inside the movement graph");
     }
 
