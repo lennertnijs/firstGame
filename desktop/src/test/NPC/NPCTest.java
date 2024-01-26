@@ -2,8 +2,10 @@ package NPC;
 
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
+import com.mygdx.game.DesktopLauncher;
 import com.mygdx.game.Entity.Position2D;
 import com.mygdx.game.Map.Map;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ public class NPCTest {
     @Test
     public void testConstructor(){
         Position2D position = new Position2D(500,500);
-        String spritePath = "/resources";
+        String spritePath = "/resources/stone.png";
         String name = "Bert";
 
         Day day = Day.values()[0];
@@ -165,6 +167,7 @@ public class NPCTest {
 
     @Test
     public void testSetActivity(){
+
         NPC npc = getValidNPCBuilder().build();
         npc.setActivity(Activity.WALKING);
         Assertions.assertAll(
@@ -175,7 +178,7 @@ public class NPCTest {
 
     private NPC.Builder getValidNPCBuilder(){
         Position2D position = new Position2D(500,500);
-        String spritePath = "/resources";
+        String spritePath = "npc/stone.png";
         String name = "Bert";
 
         Day day = Day.values()[0];

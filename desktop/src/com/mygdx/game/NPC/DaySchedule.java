@@ -41,6 +41,18 @@ public class DaySchedule {
         return index;
     }
 
+    public ActivityInstance nextActivity(int timeInMin){
+        if(timeInMin < 0){
+            throw new IllegalArgumentException("Cannot find the activity for negative time");
+        }
+        for(ActivityInstance activity: activities){
+            if(activity.getTimeInMinutes() >= timeInMin){
+                return activity;
+            }
+        }
+        return null;
+    }
+
     public static Builder builder(){
         return new Builder();
     }

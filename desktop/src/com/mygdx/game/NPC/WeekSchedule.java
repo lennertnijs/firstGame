@@ -18,6 +18,16 @@ public class WeekSchedule {
         return this.daySchedules;
     }
 
+
+    public DaySchedule getDaySchedule(Day day){
+        Objects.requireNonNull(day, "Cannot find the day schedule of a null day");
+        for(DaySchedule daySchedule : daySchedules){
+            if(daySchedule.getDay() == day){
+                return daySchedule;
+            }
+        }
+        throw new IllegalArgumentException("Could not find the day schedule of the given day");
+    }
     public DaySchedule next(Day currentDay){
         Objects.requireNonNull(currentDay, "Cannot move to the next day schedule with null");
         Day nextDay = currentDay.next();

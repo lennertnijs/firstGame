@@ -1,5 +1,7 @@
 package com.mygdx.game.NPC;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position2D;
 
@@ -16,7 +18,7 @@ public class NPC extends Entity {
 
     private final String name;
     private final WeekSchedule weekSchedule;
-    private final ArrayList<Position2D> movementPath;
+    private ArrayList<Position2D> movementPath;
     private Activity activity;
     private final MovementGraph movementGraph;
     private final ArrayList<Integer> dialogueOptions;
@@ -43,6 +45,13 @@ public class NPC extends Entity {
         return this.movementPath;
     }
 
+    public void setMovementPath(ArrayList<Position2D> movementPath){
+        Objects.requireNonNull(movementPath, "The movement path of an npc cannot be null");
+        for(Position2D point : movementPath){
+            Objects.requireNonNull(point, "The points of the movement path of an npc cannot be null");
+        }
+        this.movementPath = movementPath;
+    }
     public Activity getActivity(){
         return this.activity;
     }

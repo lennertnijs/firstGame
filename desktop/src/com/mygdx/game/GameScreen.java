@@ -15,7 +15,6 @@ import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.DAO.CalendarDAO;
-import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 import com.mygdx.game.Entity.Position2D;
@@ -50,8 +49,7 @@ public class GameScreen implements Screen {
     ClockController clockController = new ClockController();
 
     NPCController npcController;
-    NPCRepository repository = new NPCRepository();
-    NPCService npcService = new NPCService(repository);
+    NPCService npcService = new NPCService(new NPCRepository(), clock);
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -66,7 +64,7 @@ public class GameScreen implements Screen {
         side = new Texture(Gdx.files.internal("images/side.png"));
         side2 = new Texture(Gdx.files.internal("images/side2.png"));
         pickaxe = new Texture(Gdx.files.internal("images/pick.png"));
-        stone = new Texture(Gdx.files.internal("images/stone.png"));
+        stone = new Texture(Gdx.files.internal("npc/stone.png"));
         frame = new Texture(Gdx.files.internal("images/frame.png"));
 
         // load the drop sound effect and the rain background "music"
@@ -97,17 +95,7 @@ public class GameScreen implements Screen {
         inventorySlot.y = 0;
 
 
-        ArrayList<NPC> npcs = new ArrayList<>();
-        npcs.add(generateNPC(1250, 1250));
-        npcs.add(generateNPC(1000, 1250));
-        npcs.add(generateNPC(1000, 1000));
-        npcController = new NPCController(clock);
-        long start = System.currentTimeMillis();
         npcService.loadNPCS();
-        System.out.println(System.currentTimeMillis() - start);
-        for(NPC npc: repository.getNpcs()){
-            System.out.println(npc.getName());
-        }
     }
 
 
@@ -129,7 +117,7 @@ public class GameScreen implements Screen {
         // begin a new batch and draw the bucket and
         // all drops
         game.batch.begin();
-
+        npcService.updateNPCS();
         game.batch.draw(map, mapRect.x, mapRect.y, mapRect.width, mapRect.height);
         game.batch.draw(frame, inventorySlot.x, inventorySlot.y, inventorySlot.width, inventorySlot.height);
         if (walking > 15 && walking < 30) {
@@ -140,8 +128,6 @@ public class GameScreen implements Screen {
             game.batch.draw(character, charac.x, charac.y, charac.width, charac.height);
         }
         clockController.updateClock(clock);
-        npcController.moveNPCS();
-        npcController.drawNPCS(game);
 
         game.font.getData().setScale(3, 3);
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
@@ -291,100 +277,6 @@ public class GameScreen implements Screen {
         }
         if (charac.y > 2500) {
             charac.y = 2500;
-        }
-    }
-
-    private NPC generateNPC(int startX, int startY) {
-
-        ArrayList<Position2D> movementPath1 = new ArrayList<>(
-                Arrays.asList(new Position2D(startX + 1000, startY), new Position2D(startX + 1000, startY + 1000))
-        );
-
-        ArrayList<Position2D> movementPath2 = new ArrayList<>(
-                Arrays.asList(new Position2D(startX - 1000, startY), new Position2D(startX - 1000, startY - 1000))
-        );
-        Position2D position = new Position2D(startX, startY);
-        String spritePath = "stone.png";
-        String name = "Bert";
-
-        Day day = Day.values()[0];
-
-        Position2D position1 = new Position2D(500, 500);
-        Map map1 = Map.values()[0];
-        int timeInMin1 = Constants.MINUTES_PER_DAY / 2;
-        Activity activity1 = Activity.values()[0];
-        ActivityInstance activityInstance = ActivityInstance.builder()
-                .position(position1)
-                .timeInMinutes(timeInMin1)
-                .map(map1)
-                .activity(activity1)
-                .build();
-
-        Position2D position2 = new Position2D(500, 500);
-        Map map2 = Map.values()[0];
-        int timeInMin2 = Constants.MINUTES_PER_DAY / 2;
-        Activity activity2 = Activity.values()[0];
-        ActivityInstance activityInstance2 = ActivityInstance.builder()
-                .position(position2)
-                .timeInMinutes(timeInMin2)
-                .map(map2)
-                .activity(activity2)
-                .build();
-
-        ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
-
-        DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
-                .build();
-
-        DaySchedule daySchedule2 = DaySchedule.builder()
-                .day(day)
-                .activities(activities)
-                .build();
-
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
-        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
-
-        Activity activity = Activity.values()[0];
-
-        HashMap<Position2D, ArrayList<Position2D>> movementNetwork = new HashMap<>();
-        movementNetwork.put(new Position2D(500, 500),
-                new ArrayList<>(Arrays.asList(new Position2D(1000, 500), new Position2D(1000, 1000))));
-        movementNetwork.put(new Position2D(1000, 500),
-                new ArrayList<>(Arrays.asList(new Position2D(500, 500), new Position2D(1000, 1000))));
-        movementNetwork.put(new Position2D(1000, 1000),
-                new ArrayList<>(Arrays.asList(new Position2D(500, 500), new Position2D(1000, 500))));
-
-        MovementGraph movementGraph = MovementGraph.builder().movementGraph(movementNetwork).build();
-        long i = Math.round(Math.random()*5);
-        if(i < 2 ){
-            ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
-            NPC npc = NPC.builder()
-                    .position(position)
-                    .spritePath(spritePath)
-                    .name(name)
-                    .weekSchedule(weekSchedule)
-                    .movementPath(movementPath1)
-                    .activity(activity)
-                    .movementGraph(movementGraph)
-                    .dialogueOptions(dialogueOptions)
-                    .build();
-            return npc;
-        }else{
-            ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
-            NPC npc = NPC.builder()
-                    .position(position)
-                    .spritePath(spritePath)
-                    .name(name)
-                    .weekSchedule(weekSchedule)
-                    .movementPath(movementPath2)
-                    .activity(activity)
-                    .movementGraph(movementGraph)
-                    .dialogueOptions(dialogueOptions)
-                    .build();
-            return npc;
         }
     }
 }
