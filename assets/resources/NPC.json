@@ -11,15 +11,15 @@
         "daySchedule": [
           {
             "time": "8:30",
-            "x": "1000",
+            "x": "500",
             "y": "1000",
             "activity": "MINING",
             "map": "MAIN"
           },
           {
             "time": "12:30",
-            "x": "500",
-            "y": "500",
+            "x": "1000",
+            "y": "1000",
             "activity": "FISHING",
             "map": "MAIN"
           }
@@ -29,14 +29,14 @@
           "day": "TUESDAY",
           "daySchedule": [
             {
-              "time": "8:30",
-              "x": "1000",
+              "time": "00:00",
+              "x": "500",
               "y": "1000",
               "activity": "FISHING",
               "map": "MAIN"
             },
             {
-              "time": "12:30",
+              "time": "1:00",
               "x": "500",
               "y": "500",
               "activity": "IDLING",
@@ -51,32 +51,32 @@
           "y": "500",
           "connected": [
             {
-              "x": "750",
-              "y": "500"
+              "x": "500",
+              "y": "1000"
             }
           ]
         },
         {
-          "x": "750",
-          "y": "500",
+          "x": "500",
+          "y": "1000",
           "connected": [
             {
               "x": "500",
               "y": "500"
             },
             {
-              "x": "750",
-              "y": "750"
+              "x": "1000",
+              "y": "1000"
             }
           ]
         },
         {
-          "x": "750",
-          "y": "750",
+          "x": "1000",
+          "y": "1000",
           "connected": [
             {
-              "x": "750",
-              "y": "500"
+              "x": "500",
+              "y": "1000"
             }
           ]
         }
@@ -89,5 +89,96 @@
           "index": "2"
         }
       ]
-    }
+    },
+  {
+    "name": "Lise",
+    "spritePath": "stone.png",
+    "x": "750",
+    "y": "750",
+    "activity": "IDLING",
+    "weekSchedule": [
+      {
+        "day": "MONDAY",
+        "daySchedule": [
+          {
+            "time": "8:30",
+            "x": "750",
+            "y": "750",
+            "activity": "MINING",
+            "map": "MAIN"
+          },
+          {
+            "time": "12:30",
+            "x": "500",
+            "y": "500",
+            "activity": "FISHING",
+            "map": "MAIN"
+          }
+        ]
+      },
+      {
+        "day": "TUESDAY",
+        "daySchedule": [
+          {
+            "time": "00:00",
+            "x": "750",
+            "y": "750",
+            "activity": "FISHING",
+            "map": "MAIN"
+          },
+          {
+            "time": "00:55",
+            "x": "500",
+            "y": "500",
+            "activity": "IDLING",
+            "map": "MAIN"
+          }
+        ]
+      }
+    ],
+    "movementGraph": [
+      {
+        "x": "500",
+        "y": "500",
+        "connected": [
+          {
+            "x": "750",
+            "y": "500"
+          }
+        ]
+      },
+      {
+        "x": "750",
+        "y": "500",
+        "connected": [
+          {
+            "x": "500",
+            "y": "500"
+          },
+          {
+            "x": "750",
+            "y": "750"
+          }
+        ]
+      },
+      {
+        "x": "750",
+        "y": "750",
+        "connected": [
+          {
+            "x": "750",
+            "y": "500"
+          }
+        ]
+      }
+    ],
+    "dialogueOptions": [
+      {
+        "index": "1"
+      },
+      {
+        "index": "2"
+      }
+    ]
+  }
 ]

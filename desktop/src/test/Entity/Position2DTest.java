@@ -13,9 +13,9 @@ public class Position2DTest {
         Position2D point3 = new Position2D(120, 200);
         Assertions.assertEquals(point1.getX(), 120);
         Assertions.assertEquals(point1.getY(), 200);
-        Assertions.assertNotEquals(point1, point3);
-        Assertions.assertTrue(point1.equals(point3));
-        Assertions.assertFalse(point1.equals(point2));
+        Assertions.assertEquals(point1, point3);
+        Assertions.assertEquals(point1, point3);
+        Assertions.assertNotEquals(point1, point2);
 
         point1.setX(500);
         Assertions.assertEquals(point1.getX(), 500);

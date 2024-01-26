@@ -23,13 +23,20 @@ public class NPCDrawer {
     public void loadNPCTextures(ArrayList<NPC> npcs){
         Objects.requireNonNull(npcs, "The list of npcs to load must not be null");
         for(NPC npc: npcs){
-            Objects.requireNonNull("The npc to load must not be null");
+            Objects.requireNonNull(npc, "The npc to load must not be null");
             Texture texture = new Texture(Gdx.files.internal(npc.getSpritePath()));
             npcTextures.put(npc.getName(), texture);
         }
     }
 
-    public void drawNPC(NPC npc){
+    public void drawAllNPCS(ArrayList<NPC> npcs){
+        Objects.requireNonNull(npcs, "The list of npcs to load must not be null");
+        for(NPC npc: npcs){
+            drawNPC(npc);
+        }
+    }
+
+    private void drawNPC(NPC npc){
         Objects.requireNonNull(npc, "The npc to draw must not be null");
         Texture texture = npcTextures.get(npc.getName());
         game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY(), NPC_WIDTH, NPC_HEIGHT);

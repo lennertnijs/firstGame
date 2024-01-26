@@ -16,34 +16,38 @@ public class MovementGraph {
      * BFS algorithm to find path in graph
      */
     public ArrayList<Position2D> findPath(Position2D start, Position2D goal){
-        if(!movementGraph.containsKey(goal)){
-            throw new IllegalArgumentException("The starting position does not exist in the movement graph.");
-        }
-        if(!movementGraph.containsKey(start)){
+        if(!movementGraph.containsKey(start) || !movementGraph.containsKey(goal)){
             throw new IllegalArgumentException("The goal position does not exist in the movement graph.");
         }
+
+        if(start.equals(goal)){
+            return new ArrayList<>();
+        }
+
         LinkedList<ArrayList<Position2D>> queue = new LinkedList<>();
         queue.add(new ArrayList<>(Collections.singletonList(start)));
 
         while(!queue.isEmpty()){
             ArrayList<Position2D> currentPath = queue.pop();
-            int lastIndex = currentPath.size()-1;
-            Position2D currentPosition = currentPath.get(lastIndex);
+            Position2D currentPosition = currentPath.get(currentPath.size()-1);
+
             if(!movementGraph.containsKey(currentPosition)){
                 throw new IllegalArgumentException("The current position does not exist in the movement graph");
             }
-            ArrayList<Position2D> adjacentVertices = movementGraph.get(currentPosition);
-
-            for (Position2D nextPosition : adjacentVertices) {
+            ArrayList<Position2D> adjacentPositions = movementGraph.get(currentPosition);
+            for (Position2D nextPosition : adjacentPositions) {
                 ArrayList<Position2D> newPath = new ArrayList<>(currentPath);
 
-                if (nextPosition.equals(goal)) {
-                    newPath.add(nextPosition);
-                    return newPath;
-                }
-                if (!currentPath.contains(nextPosition)) {
+
+                boolean alreadyVisited = currentPath.contains(nextPosition);
+                if (!alreadyVisited) {
                     newPath.add(nextPosition);
                     queue.addLast(newPath);
+
+                    boolean arrivedAtGoal = nextPosition.equals(goal);
+                    if (arrivedAtGoal) {
+                        return newPath;
+                }
                 }
             }
         }

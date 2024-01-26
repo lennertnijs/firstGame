@@ -1,5 +1,7 @@
 package com.mygdx.game.Entity;
 
+import java.util.Objects;
+
 public class Position2D {
 
     private int x;
@@ -35,7 +37,19 @@ public class Position2D {
         this.y = newY;
     }
 
-    public boolean equals(Position2D position2D){
-        return this.x == position2D.x && this.y == position2D.y;
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof Position2D)){
+            return false;
+        }
+        return ((Position2D) o).getX() == x && ((Position2D) o).getY() == y;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(x,y);
     }
 }

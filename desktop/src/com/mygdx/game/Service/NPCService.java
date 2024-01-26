@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Clock.*;
 import com.mygdx.game.DAO.NPCDAO;
 import com.mygdx.game.Entity.Position2D;
-import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
 
 import java.util.ArrayList;
@@ -63,6 +62,9 @@ public class NPCService {
         boolean timeToStartActivity = timeInMinutes == nextActivity.getTimeInMinutes();
         if(timeToStartActivity){
             MovementGraph movementGraph = npc.getMovementGraph();
+            System.out.println(npc.getName());
+            System.out.println(npc.getPosition().getX() + " " + npc.getPosition().getY());
+            System.out.println(nextActivity.getPosition().getX() + " " + nextActivity.getPosition().getY());
             npc.setMovementPath(movementGraph.findPath(npc.getPosition(), nextActivity.getPosition()));
         }
 
@@ -105,9 +107,9 @@ public class NPCService {
         boolean movingPositive = current < goal;
         int nextValue;
         if(movingPositive){
-            nextValue = current + movement < goal ? current + movement : goal;
+            nextValue = Math.min(current + movement, goal);
         }else{
-            nextValue = current - movement > goal ? current - movement : goal;
+            nextValue = Math.max(current - movement, goal);
         }
         return nextValue;
     }

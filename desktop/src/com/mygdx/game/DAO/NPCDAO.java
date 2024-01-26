@@ -50,6 +50,13 @@ public class NPCDAO {
                 ArrayList<Position2D> nextNodePositions = readNextNodes(node.get("connected"));
                 network.put(nodePosition, nextNodePositions);
             }
+//            for(Position2D printpos : network.keySet()){
+//                System.out.println(printpos.getX() + " " + printpos.getY());
+//                for(Position2D connecPos : network.get(printpos)){
+//                    System.out.println(connecPos.getX() + " " + connecPos.getY());
+//                }
+//                System.out.println("--------------------------------");
+//            }
             MovementGraph movementGraph = MovementGraph.builder().movementGraph(network).build();
 
             JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
