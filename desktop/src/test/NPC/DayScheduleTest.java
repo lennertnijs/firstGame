@@ -68,7 +68,7 @@ public class DayScheduleTest {
 
     @Test
     public void testNextActivityAfterTime(){
-        DaySchedule daySchedule = generateValidActivityInstanceBuilder().build();
+        DaySchedule daySchedule = generateValidActivityInstanceBuilder(500).build();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(daySchedule.nextActivityAfterTime(0), daySchedule.getActivities().get(0)),
 
@@ -81,7 +81,7 @@ public class DayScheduleTest {
 
     @Test
     public void testNextActivityAfterTimeInvalid(){
-        DaySchedule daySchedule = generateValidActivityInstanceBuilder().build();
+        DaySchedule daySchedule = generateValidActivityInstanceBuilder(500).build();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> daySchedule.nextActivityAfterTime(-1)),
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
@@ -91,15 +91,19 @@ public class DayScheduleTest {
 
     @Test
     public void testEquals(){
-        DaySchedule daySchedule = generateValidActivityInstanceBuilder().build();
-        DaySchedule daySchedule1 = generateValidActivityInstanceBuilder().build();
+        DaySchedule daySchedule = generateValidActivityInstanceBuilder(500).build();
+        DaySchedule daySchedule1 = generateValidActivityInstanceBuilder(250).build();
+        DaySchedule daySchedule2 = generateValidActivityInstanceBuilder(500).build();
         Assertions.assertAll(
-                () -> Assertions.assertEquals(daySchedule, daySchedule1)
+                () -> Assertions.assertEquals(daySchedule, daySchedule2),
+                () -> Assertions.assertNotEquals(daySchedule, daySchedule1),
+                () -> Assertions.assertNotEquals(daySchedule, new ArrayList<>()),
+                () -> Assertions.assertEquals(daySchedule.hashCode(), daySchedule2.hashCode())
         );
     }
 
-    private DaySchedule.Builder generateValidActivityInstanceBuilder(){
-        Position position = Position.builder().x(500).y( 500).build();
+    private DaySchedule.Builder generateValidActivityInstanceBuilder(int x){
+        Position position = Position.builder().x(x).y( 500).build();
         int timeInMin = 0;
         Activity activity = Activity.values()[0];
         Map map = Map.values()[0];
@@ -110,7 +114,7 @@ public class DayScheduleTest {
                 .activity(activity)
                 .build();
 
-        Position position2 = Position.builder().x(500).y( 500).build();
+        Position position2 = Position.builder().x(x).y( 500).build();
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
         Map map2 = Map.values()[0];

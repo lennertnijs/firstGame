@@ -38,7 +38,8 @@ public class PositionTest {
                 () -> Assertions.assertNotEquals(position1, position3),
                 () -> Assertions.assertEquals(position2, position1),
                 () -> Assertions.assertNotEquals(null, position1),
-                () -> Assertions.assertNotEquals(position1, list)
+                () -> Assertions.assertNotEquals(position1, list),
+                () -> Assertions.assertEquals(position1.hashCode(), position2.hashCode())
         );
     }
 

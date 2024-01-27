@@ -40,7 +40,7 @@ public class WeekSchedule {
     }
 
     public static class Builder{
-        private HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        private HashMap<Day, DaySchedule> daySchedules = null;
 
         public Builder daySchedules(HashMap<Day, DaySchedule> daySchedules){
             this.daySchedules = daySchedules;

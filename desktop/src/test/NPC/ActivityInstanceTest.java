@@ -74,7 +74,8 @@ public class ActivityInstanceTest {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(activity1, activity3),
                 () -> Assertions.assertNotEquals(activity1, activity2),
-                () -> Assertions.assertNotEquals(activity1, position)
+                () -> Assertions.assertNotEquals(activity1, position),
+                () -> Assertions.assertEquals(activity1.hashCode(), activity3.hashCode())
         );
     }
 

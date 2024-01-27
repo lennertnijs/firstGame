@@ -49,7 +49,7 @@ public class DaySchedule {
     }
 
     public static class Builder{
-        private ArrayList<ActivityInstance> activities;
+        private ArrayList<ActivityInstance> activities = null;
 
         public Builder(){
         }
