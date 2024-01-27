@@ -3,18 +3,18 @@ package com.mygdx.game.NPC;
 
 import com.mygdx.game.Clock.Day;
 
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class WeekSchedule {
 
-    private final HashMap<Day, DaySchedule> daySchedules;
+    private final Map<Day, DaySchedule> daySchedules;
 
     public WeekSchedule(Builder builder){
         this.daySchedules = builder.daySchedules;
     }
 
-    public HashMap<Day, DaySchedule> getDaySchedules(){
+    public Map<Day, DaySchedule> getDaySchedules(){
         return this.daySchedules;
     }
 
@@ -40,9 +40,9 @@ public class WeekSchedule {
     }
 
     public static class Builder{
-        private HashMap<Day, DaySchedule> daySchedules = null;
+        private Map<Day, DaySchedule> daySchedules = null;
 
-        public Builder daySchedules(HashMap<Day, DaySchedule> daySchedules){
+        public Builder daySchedules(Map<Day, DaySchedule> daySchedules){
             this.daySchedules = daySchedules;
             return this;
         }
