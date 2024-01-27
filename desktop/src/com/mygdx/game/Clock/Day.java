@@ -12,7 +12,6 @@ public enum Day {
     SUNDAY(6);
 
     private final int index;
-
     Day(int index){
         this.index = index;
     }

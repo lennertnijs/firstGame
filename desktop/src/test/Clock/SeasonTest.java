@@ -8,11 +8,10 @@ public class SeasonTest {
 
     @Test
     public void testSeason(){
-        Season dark = Season.DARK;
-        Season light = Season.LIGHT;
-        Assertions.assertEquals(light, dark.next());
-        Assertions.assertEquals(dark, light.next());
-        Assertions.assertEquals(light.next().next(), light);
-
+        for(int i = 0; i < Season.values().length; i++){
+            int index = (i+1)%Season.values().length;
+            Season next = Season.values()[index];
+            Assertions.assertEquals(next, Season.values()[i].next());
+        }
     }
 }
