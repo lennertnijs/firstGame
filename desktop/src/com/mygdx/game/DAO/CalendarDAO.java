@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Clock.Season;
 
+import java.util.HashMap;
+
 import static com.mygdx.game.Constants.JSON_PATHNAME;
 
 public class CalendarDAO {
@@ -18,13 +20,13 @@ public class CalendarDAO {
         String path = JSON_PATHNAME + "seasons.json";
         JsonValue file = reader.parse(Gdx.files.internal(path));
         int seasonIndex = 0;
-        Calendar.Builder calenderBuilder = new Calendar.Builder();
+        HashMap<Season, Integer> map = new HashMap<>();
         for(JsonValue seasonJSON: file){
             Season season = Season.getSeason(seasonIndex);
             int length = seasonJSON.getInt("length");
-            calenderBuilder.put(season, length);
+            map.put(season, length);
             seasonIndex += 1;
         }
-        return calenderBuilder.build();
+        return Calendar.builder().seasons(map).build();
     }
 }

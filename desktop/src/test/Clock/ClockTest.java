@@ -4,6 +4,8 @@ import com.mygdx.game.Clock.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 public class ClockTest {
 
     @Test
@@ -12,8 +14,10 @@ public class ClockTest {
         Season light = Season.LIGHT;
 
         Calendar calendar = Calendar.builder()
-                .put(dark, 13)
-                .put(light, 1)
+                .seasons(new HashMap<Season, Integer>(){{
+                    put(dark, 13);
+                    put(light, 1);
+                }})
                 .build();
 
         Clock clock = Clock.builder()
