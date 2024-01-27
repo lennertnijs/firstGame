@@ -5,17 +5,19 @@ import com.mygdx.game.Entity.Position;
 import java.util.*;
 
 public class MovementGraph {
-    private final HashMap<Position, ArrayList<Position>> movementGraph;
+    private final Map<Position, ArrayList<Position>> movementGraph;
 
     public MovementGraph(Builder builder){
         this.movementGraph = builder.movementGraph;
     }
 
+    public Map<Position, ArrayList<Position>> getMovementGraph(){
+        return this.movementGraph;
+    }
 
-    /**
-     * BFS algorithm to find path in graph
-     */
-    public ArrayList<Position> findPath(Position start, Position goal){
+    public List<Position> findPath(Position start, Position goal){
+        Objects.requireNonNull(start, "The start position in the movement graph must not be null");
+        Objects.requireNonNull(goal, "The goal position in the movement graph must not be null");
         if(!movementGraph.containsKey(start) || !movementGraph.containsKey(goal)){
             throw new IllegalArgumentException("The goal position does not exist in the movement graph.");
         }
@@ -26,10 +28,9 @@ public class MovementGraph {
     }
 
 
-    private ArrayList<Position> breadFirstSearch(Position start, Position goal){
+    private List<Position> breadFirstSearch(Position start, Position goal){
         LinkedList<ArrayList<Position>> queue = new LinkedList<>();
         queue.add(new ArrayList<>(Collections.singletonList(start)));
-
         while(!queue.isEmpty()){
             ArrayList<Position> currentPath = queue.pop();
             Position currentPosition = currentPath.get(currentPath.size()-1);
@@ -40,12 +41,10 @@ public class MovementGraph {
             ArrayList<Position> adjacentPositions = movementGraph.get(currentPosition);
             for (Position nextPosition : adjacentPositions) {
                 ArrayList<Position> newPath = new ArrayList<>(currentPath);
-
                 boolean alreadyVisited = currentPath.contains(nextPosition);
                 if (!alreadyVisited) {
                     newPath.add(nextPosition);
                     queue.addLast(newPath);
-
                     boolean arrivedAtGoal = nextPosition.equals(goal);
                     if (arrivedAtGoal) {
                         return newPath;
@@ -57,6 +56,22 @@ public class MovementGraph {
     }
 
 
+    @Override
+    public boolean equals(Object o){
+        if( this == o){
+            return true;
+        }
+        if(!(o instanceof MovementGraph)){
+            return false;
+        }
+        MovementGraph graph = (MovementGraph) o;
+        return movementGraph.equals(graph.movementGraph);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(movementGraph);
+    }
 
 
     public static Builder builder(){
@@ -65,9 +80,9 @@ public class MovementGraph {
 
     public static class Builder{
 
-        private HashMap<Position, ArrayList<Position>> movementGraph = new HashMap<>();
+        private Map<Position, ArrayList<Position>> movementGraph = new HashMap<>();
 
-        public Builder movementGraph(HashMap<Position, ArrayList<Position>> movementGraph){
+        public Builder movementGraph(Map<Position, ArrayList<Position>> movementGraph){
             this.movementGraph = movementGraph;
             return this;
         }

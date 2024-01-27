@@ -8,7 +8,6 @@ public class NPCRepository {
     private final ArrayList<NPC> npcs = new ArrayList<>();
 
     public NPCRepository(){
-
     }
 
     public ArrayList<NPC> getNpcs(){

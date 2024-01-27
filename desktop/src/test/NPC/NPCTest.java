@@ -99,84 +99,48 @@ public class NPCTest {
 
     @Test
     public void testConstructorInvalidPosition(){
-        NPC.Builder builder = getValidNPCBuilder();
+        NPC.Builder builder1 = getValidNPCBuilder(500);
+        NPC.Builder builder2 = getValidNPCBuilder(500);
+        NPC.Builder builder3 = getValidNPCBuilder(500);
+        NPC.Builder builder4 = getValidNPCBuilder(500);
+        NPC.Builder builder5 = getValidNPCBuilder(500);
+        NPC.Builder builder6 = getValidNPCBuilder(500);
+        NPC.Builder builder7 = getValidNPCBuilder(500);
+        NPC.Builder builder8 = getValidNPCBuilder(500);
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.position(null).build())
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder1.position(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder2.spritePath(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder3.name(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder4.weekSchedule(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder5.movementPath(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder6.activity(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder7.movementGraph(null).build()),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder8.dialogueOptions(null).build())
 
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidSpritePath(){
-        NPC.Builder builder = getValidNPCBuilder();
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.spritePath(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidName(){
-        NPC.Builder builder = getValidNPCBuilder();
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.name(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidWeekSchedule(){
-        NPC.Builder builder = getValidNPCBuilder();
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.weekSchedule(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidMovementPath(){
-        NPC.Builder builder = getValidNPCBuilder();
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementPath(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidActivity(){
-        NPC.Builder builder = getValidNPCBuilder();
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.activity(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidMovementNetwork(){
-        NPC.Builder builder = getValidNPCBuilder();
-
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.movementGraph(null).build())
-        );
-    }
-
-    @Test
-    public void testConstructorInvalidDialogueOptions(){
-        NPC.Builder builder = getValidNPCBuilder();
-
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.dialogueOptions(null).build())
         );
     }
 
     @Test
     public void testSetActivity(){
-        NPC npc = getValidNPCBuilder().build();
+        NPC npc = getValidNPCBuilder(500).build();
         npc.setActivity(Activity.WALKING);
         Assertions.assertAll(
-                () -> Assertions.assertEquals(Activity.WALKING, npc.getActivity()),
+                () -> Assertions.assertEquals(Activity.WALKING, npc.getActivity())
+        );
+    }
+
+    @Test
+    public void testSetActivityInvalid(){
+        NPC npc = getValidNPCBuilder(500).build();
+        npc.setActivity(Activity.WALKING);
+        Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> npc.setActivity(null))
         );
     }
 
     @Test
     public void testSetMovementPath(){
-        NPC npc = getValidNPCBuilder().build();
+        NPC npc = getValidNPCBuilder(500).build();
         List<Position> movement = new ArrayList<>(Arrays.asList(
                 Position.builder().x(500).y(500).build(),
                 Position.builder().x(250).y(250).build()
@@ -184,7 +148,14 @@ public class NPCTest {
         npc.setMovementPath(movement);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(npc.getMovementPath(), movement),
+                () -> Assertions.assertEquals(npc.getMovementPath(), movement)
+        );
+    }
+
+    @Test
+    public void testSetMovementPathInvalid(){
+        NPC npc = getValidNPCBuilder(500).build();
+        Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> npc.setMovementPath(null)),
                 () -> Assertions.assertThrows(NullPointerException.class,
                         () -> npc.setMovementPath(Collections.singletonList(null)))
@@ -193,17 +164,21 @@ public class NPCTest {
 
     @Test
     public void testEquals(){
-        NPC npc = getValidNPCBuilder().build();
-        NPC npc2 = getValidNPCBuilder().build();
+        NPC npc = getValidNPCBuilder(500).build();
+        NPC npc2 = getValidNPCBuilder(500).build();
+        NPC npc3 = getValidNPCBuilder(750).build();
         Assertions.assertAll(
                 () -> Assertions.assertNotEquals(npc, null),
                 () -> Assertions.assertEquals(npc, npc2),
-                () -> Assertions.assertEquals(npc, new ArrayList<>())
+                () -> Assertions.assertNotEquals(npc2, npc3),
+                () -> Assertions.assertNotEquals(npc, new ArrayList<>()),
+                () -> Assertions.assertEquals(npc.hashCode(), npc2.hashCode()),
+                () -> Assertions.assertNotEquals(npc3.hashCode(), npc2.hashCode())
         );
     }
 
-    private NPC.Builder getValidNPCBuilder(){
-        Position position = Position.builder().x(500).y( 500).build();
+    private NPC.Builder getValidNPCBuilder(int x){
+        Position position = Position.builder().x(x).y( 500).build();
         String spritePath = "npc/stone.png";
         String name = "Bert";
 

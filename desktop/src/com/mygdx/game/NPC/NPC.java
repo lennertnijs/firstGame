@@ -78,7 +78,6 @@ public class NPC extends Entity {
             return false;
         }
         NPC npc = (NPC) o;
-        System.out.println(weekSchedule.equals(npc.weekSchedule));
         return getPosition().equals(npc.getPosition()) &&
                 getSpritePath().equals(npc.getSpritePath()) &&
                 name.equals(npc.name) &&

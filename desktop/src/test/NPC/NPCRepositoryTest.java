@@ -33,10 +33,18 @@ public class NPCRepositoryTest {
         Assertions.assertAll(
                 () -> Assertions.assertEquals(npcRepository.getNpcs().get(0), bart),
                 () -> Assertions.assertEquals(npcRepository.getNpcs().get(1), jan),
+                () -> Assertions.assertEquals(npcRepository.getNpcs(), new ArrayList<>(Arrays.asList(bart, jan)))
+        );
+    }
+
+    @Test
+    public void testAddInvalid(){
+        NPCRepository npcRepository = new NPCRepository();
+        Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> npcRepository.add(null))
         );
-
     }
+
 
     private NPC getValidNPC(String name){
         Position position = Position.builder().x(500).y( 500).build();

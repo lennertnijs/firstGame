@@ -1,7 +1,7 @@
 [
     {
       "name": "Bart",
-      "spritePath": "bucket.png",
+      "spritePath": "stone.png",
       "x": "1000",
       "y": "1000",
       "activity": "IDLING",
@@ -31,7 +31,7 @@
             {
               "time": "00:05",
               "x": "500",
-              "y": "1000",
+              "y": "500",
               "activity": "FISHING",
               "map": "MAIN"
             },
