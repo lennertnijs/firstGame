@@ -1,11 +1,11 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 
 import java.util.*;
 
 public class MovementGraph {
-    private final HashMap<Position2D, ArrayList<Position2D>> movementGraph;
+    private final HashMap<Position, ArrayList<Position>> movementGraph;
 
     public MovementGraph(Builder builder){
         this.movementGraph = builder.movementGraph;
@@ -15,7 +15,7 @@ public class MovementGraph {
     /**
      * BFS algorithm to find path in graph
      */
-    public ArrayList<Position2D> findPath(Position2D start, Position2D goal){
+    public ArrayList<Position> findPath(Position start, Position goal){
         if(!movementGraph.containsKey(start) || !movementGraph.containsKey(goal)){
             throw new IllegalArgumentException("The goal position does not exist in the movement graph.");
         }
@@ -24,19 +24,19 @@ public class MovementGraph {
             return new ArrayList<>();
         }
 
-        LinkedList<ArrayList<Position2D>> queue = new LinkedList<>();
+        LinkedList<ArrayList<Position>> queue = new LinkedList<>();
         queue.add(new ArrayList<>(Collections.singletonList(start)));
 
         while(!queue.isEmpty()){
-            ArrayList<Position2D> currentPath = queue.pop();
-            Position2D currentPosition = currentPath.get(currentPath.size()-1);
+            ArrayList<Position> currentPath = queue.pop();
+            Position currentPosition = currentPath.get(currentPath.size()-1);
 
             if(!movementGraph.containsKey(currentPosition)){
                 throw new IllegalArgumentException("The current position does not exist in the movement graph");
             }
-            ArrayList<Position2D> adjacentPositions = movementGraph.get(currentPosition);
-            for (Position2D nextPosition : adjacentPositions) {
-                ArrayList<Position2D> newPath = new ArrayList<>(currentPath);
+            ArrayList<Position> adjacentPositions = movementGraph.get(currentPosition);
+            for (Position nextPosition : adjacentPositions) {
+                ArrayList<Position> newPath = new ArrayList<>(currentPath);
 
                 boolean alreadyVisited = currentPath.contains(nextPosition);
                 if (!alreadyVisited) {
@@ -62,19 +62,19 @@ public class MovementGraph {
 
     public static class Builder{
 
-        private HashMap<Position2D, ArrayList<Position2D>> movementGraph = new HashMap<>();
+        private HashMap<Position, ArrayList<Position>> movementGraph = new HashMap<>();
 
-        public Builder movementGraph(HashMap<Position2D, ArrayList<Position2D>> movementGraph){
+        public Builder movementGraph(HashMap<Position, ArrayList<Position>> movementGraph){
             this.movementGraph = movementGraph;
             return this;
         }
 
         public MovementGraph build(){
             Objects.requireNonNull(movementGraph, "The movement graph must not be null");
-            for(Position2D node: movementGraph.keySet()){
+            for(Position node: movementGraph.keySet()){
                 Objects.requireNonNull(node, "Key values in the movement graph must not be null");
                 Objects.requireNonNull(movementGraph.get(node), "Values in the movement graph must not be null");
-                for(Position2D connectedNode : movementGraph.get(node)){
+                for(Position connectedNode : movementGraph.get(node)){
                     Objects.requireNonNull(connectedNode, "Value lists in the movement graph must not contain null");
                 }
             }

@@ -4,7 +4,7 @@ import com.mygdx.game.Constants;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.NPC.ActivityInstance;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +13,7 @@ public class ActivityInstanceTest {
 
     @Test
     public void testActivityInstanceConstructor(){
-        Position2D position = new Position2D(500, 500);
+        Position position = Position.builder().x(500).y( 500).build();
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
         Activity activity = Activity.values()[0];
@@ -35,7 +35,7 @@ public class ActivityInstanceTest {
 
     @Test
     public void testActivityInstanceConstructorInvalid(){
-        Position2D position = new Position2D(500, 500);
+        Position position = Position.builder().x(500).y( 500).build();
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
         Activity activity = Activity.values()[0];

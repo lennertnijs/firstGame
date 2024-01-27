@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Day;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 
@@ -27,7 +27,7 @@ public class NPCDAO {
             String name = npcJSON.getString("name");
             int x = npcJSON.getInt("x");
             int y = npcJSON.getInt("y");
-            Position2D position = new Position2D(x, y);
+            Position position = Position.builder().x(x).y(y).build();
             Activity activity = Activity.valueOf(npcJSON.getString("activity"));
             String spritePath = npcJSON.getString("spritePath");
 
@@ -42,12 +42,12 @@ public class NPCDAO {
             WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
             JsonValue movementGraphJSON = npcJSON.get("movementGraph");
-            HashMap<Position2D, ArrayList<Position2D>> network = new HashMap<>();
+            HashMap<Position, ArrayList<Position>> network = new HashMap<>();
             for(JsonValue node : movementGraphJSON){
                 int nodeX = node.getInt("x");
                 int nodeY = node.getInt("y");
-                Position2D nodePosition = new Position2D(nodeX, nodeY);
-                ArrayList<Position2D> nextNodePositions = readNextNodes(node.get("connected"));
+                Position nodePosition = Position.builder().x(nodeX).y(nodeY).build();
+                ArrayList<Position> nextNodePositions = readNextNodes(node.get("connected"));
                 network.put(nodePosition, nextNodePositions);
             }
 
@@ -71,6 +71,7 @@ public class NPCDAO {
                     .dialogueOptions(dialogueOptions)
                     .build();
             npcs.add(npc);
+
         }
         return npcs;
     }
@@ -82,7 +83,7 @@ public class NPCDAO {
             final int timeInMinutes = timeStringToMinutes(time);
             final int x = activityJSON.getInt("x");
             final int y = activityJSON.getInt("y");
-            final Position2D position = new Position2D(x, y);
+            final Position position = Position.builder().x(x).y(y).build();
             final Activity activity = Activity.valueOf(activityJSON.getString("activity"));
             final Map map = Map.valueOf(activityJSON.getString("map"));
             final ActivityInstance a = ActivityInstance.builder()
@@ -96,12 +97,12 @@ public class NPCDAO {
         return activityInstances;
     }
 
-    private ArrayList<Position2D> readNextNodes(JsonValue nodeJSON){
-        ArrayList<Position2D> connectedNodes = new ArrayList<>();
+    private ArrayList<Position> readNextNodes(JsonValue nodeJSON){
+        ArrayList<Position> connectedNodes = new ArrayList<>();
         for(JsonValue connectedNode : nodeJSON){
             int nodeX = connectedNode.getInt("x");
             int nodeY = connectedNode.getInt("y");
-            Position2D position = new Position2D(nodeX, nodeY);
+            Position position = Position.builder().x(nodeX).y(nodeY).build();
             connectedNodes.add(position);
         }
         return connectedNodes;

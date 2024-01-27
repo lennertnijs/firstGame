@@ -2,7 +2,7 @@ package NPC;
 
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +18,7 @@ public class WeekScheduleTest {
     public void testConstructor(){
         Day day = Day.values()[0];
 
-        Position2D position = new Position2D(500, 500);
+        Position position = Position.builder().x(500).y(500).build();
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
         Activity activity = Activity.values()[0];
@@ -29,7 +29,7 @@ public class WeekScheduleTest {
                 .activity(activity)
                 .build();
 
-        Position2D position2 = new Position2D(500, 500);
+        Position position2 = Position.builder().x(500).y(500).build();
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
@@ -75,7 +75,7 @@ public class WeekScheduleTest {
         Day day1 = Day.values()[0];
         Day day2 = Day.values()[1];
 
-        Position2D position = new Position2D(500, 500);
+        Position position = Position.builder().x(500).y(500).build();
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
         Activity activity = Activity.values()[0];
@@ -86,7 +86,7 @@ public class WeekScheduleTest {
                 .activity(activity)
                 .build();
 
-        Position2D position2 = new Position2D(500, 500);
+        Position position2 = Position.builder().x(500).y(500).build();
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
@@ -122,7 +122,7 @@ public class WeekScheduleTest {
     public void testNextInvalid(){
         Day day1 = Day.values()[0];
 
-        Position2D position = new Position2D(500, 500);
+        Position position = Position.builder().x(500).y(500).build();
         Map map = Map.values()[0];
         int timeInMin = Constants.MINUTES_PER_DAY/2;
         Activity activity = Activity.values()[0];
@@ -133,7 +133,7 @@ public class WeekScheduleTest {
                 .activity(activity)
                 .build();
 
-        Position2D position2 = new Position2D(500, 500);
+        Position position2 = Position.builder().x(500).y(500).build();
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];

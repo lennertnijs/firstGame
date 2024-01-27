@@ -1,6 +1,6 @@
 package NPC;
 
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.MovementGraph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,20 +14,20 @@ public class TestGraphs {
 
     @Test
     public void testGraphs(){
-        Position2D v = new Position2D(3000, 2000);
-        Position2D v1 = new Position2D(2000, 2000);
-        Position2D v2 = new Position2D(1000,2000);
-        Position2D v3 = new Position2D( 1000, 1000);
-        Position2D v4 = new Position2D( 1000, 0);
-        Position2D v5 = new Position2D( 0, 0);
-        Position2D v6 = new Position2D( 0, 1000);
-        Position2D v7 = new Position2D(2000,1000);
-        Position2D v8 = new Position2D(2000,0);
+        Position v = Position.builder().x(3000).y( 2000).build();
+        Position v1 = Position.builder().x(2000).y( 2000).build();
+        Position v2 = Position.builder().x(1000).y( 2000).build();
+        Position v3 = Position.builder().x(1000).y( 1000).build();
+        Position v4 = Position.builder().x(1000).y( 0).build();
+        Position v5 = Position.builder().x(0).y( 0).build();
+        Position v6 = Position.builder().x(0).y( 1000).build();
+        Position v7 = Position.builder().x(2000).y( 1000).build();
+        Position v8 = Position.builder().x(2000).y( 0).build();
 
 
 
-        HashMap<Position2D, ArrayList<Position2D>> network = new HashMap();
-        network.put(v, new ArrayList(Collections.singletonList(v1)));
+        HashMap<Position, ArrayList<Position>> network = new HashMap<>();
+        network.put(v, new ArrayList<>(Collections.singletonList(v1)));
         network.put(v1, new ArrayList<>(Arrays.asList(v, v2)));
         network.put(v2, new ArrayList<>(Arrays.asList(v1, v3)));
 

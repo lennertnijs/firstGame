@@ -3,7 +3,7 @@ package com.mygdx.game.Service;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Clock.*;
 import com.mygdx.game.DAO.NPCDAO;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.*;
 
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class NPCService {
 
 
     public void move(NPC npc){
-        Position2D current = npc.getPosition();
-        Position2D next = npc.getMovementPath().get(0);
+        Position current = npc.getPosition();
+        Position next = npc.getMovementPath().get(0);
         boolean verticalMovement = (current.getX() == next.getX());
         if(verticalMovement){
             verticalMovement(npc);
@@ -83,7 +83,8 @@ public class NPCService {
         int currentY = npc.getPosition().getY();
         int goalY = npc.getMovementPath().get(0).getY();
         int nextY = calculateNextValue(currentY, goalY);
-        npc.getPosition().setY(nextY);
+        Position newPosition = Position.builder().x(npc.getPosition().getX()).y(nextY).build();
+        npc.setPosition(newPosition);
         if(nextY == goalY){
             removeFirstPositionFromPath(npc);
         }
@@ -93,14 +94,15 @@ public class NPCService {
         int currentX = npc.getPosition().getX();
         int goalX = npc.getMovementPath().get(0).getX();
         int nextX = calculateNextValue(currentX, goalX);
-        npc.getPosition().setX(nextX);
+        Position newPosition = Position.builder().x(nextX).y(npc.getPosition().getY()).build();
+        npc.setPosition(newPosition);
         if(nextX == goalX){
             removeFirstPositionFromPath(npc);
         }
     }
 
     private int calculateNextValue(int current, int goal){
-        int movement = Math.round(STANDARD_MOVEMENT_SPEED* Gdx.graphics.getDeltaTime());
+        int movement = Math.round(STANDARD_MOVEMENT_SPEED*Gdx.graphics.getDeltaTime());
         boolean movingPositive = current < goal;
         int nextValue;
         if(movingPositive){

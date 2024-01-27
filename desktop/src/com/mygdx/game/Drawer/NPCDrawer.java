@@ -21,6 +21,7 @@ public class NPCDrawer {
     }
 
     public void loadNPCTextures(ArrayList<NPC> npcs){
+        System.out.println(npcs.size());
         Objects.requireNonNull(npcs, "The list of npcs to load must not be null");
         for(NPC npc: npcs){
             Objects.requireNonNull(npc, "The npc to load must not be null");

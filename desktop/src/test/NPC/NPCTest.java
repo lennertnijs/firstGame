@@ -2,10 +2,8 @@ package NPC;
 
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
-import com.mygdx.game.DesktopLauncher;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
-import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,13 +15,13 @@ import java.util.HashMap;
 public class NPCTest {
     @Test
     public void testConstructor(){
-        Position2D position = new Position2D(500,500);
-        String spritePath = "/resources/stone.png";
+        Position position = Position.builder().x(500).y( 500).build();
+        String spritePath = "npc/stone.png";
         String name = "Bert";
 
         Day day = Day.values()[0];
 
-        Position2D position1 = new Position2D(500, 500);
+        Position position1 = Position.builder().x(500).y( 500).build();
         Map map1 = Map.values()[0];
         int timeInMin1 = Constants.MINUTES_PER_DAY/2;
         Activity activity1 = Activity.values()[0];
@@ -34,7 +32,7 @@ public class NPCTest {
                 .activity(activity1)
                 .build();
 
-        Position2D position2 = new Position2D(500, 500);
+        Position position2 = Position.builder().x(500).y( 500).build();
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
@@ -61,20 +59,21 @@ public class NPCTest {
         ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
-        ArrayList<Position2D> movementPath = new ArrayList<>(
-                Arrays.asList(new Position2D(1000,500), new Position2D(1000,1000)));
+        ArrayList<Position> movementPath = new ArrayList<>(
+                Arrays.asList(Position.builder().x(1000).y(500).build(),Position.builder().x(1000).y(1000).build()));
 
         Activity activity = Activity.values()[0];
 
-        HashMap<Position2D, ArrayList<Position2D>> movementNetwork = new HashMap<>();
-        movementNetwork.put(new Position2D(500,500),
-                new ArrayList<>(Arrays.asList(new Position2D(1000,500), new Position2D(1000,1000))));
-        movementNetwork.put(new Position2D(1000,500),
-                new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,1000))));
-        movementNetwork.put(new Position2D(1000,1000),
-                new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,500))));
+        HashMap<Position, ArrayList<Position>> movementNetwork = new HashMap<>();
+        movementNetwork.put(Position.builder().x(500).y(500).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(1000).y(500).build(), Position.builder().x(1000).y(1000).build())));
+        movementNetwork.put(Position.builder().x(1000).y(500).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(500).y(500).build(), Position.builder().x(1000).y(1000).build())));
+        movementNetwork.put(Position.builder().x(1000).y(1000).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(500).y(500).build(), Position.builder().x(1000).y(500).build())));
 
-        MovementGraph movementGraph = MovementGraph.builder().movementGraph(movementNetwork).build();
+        MovementGraph graph = MovementGraph.builder().movementGraph(movementNetwork).build();
+
         ArrayList<Integer> dialogueOptions = new ArrayList<>(Arrays.asList(1, 2, 3));
         NPC npc = NPC.builder()
                 .position(position)
@@ -83,7 +82,7 @@ public class NPCTest {
                 .weekSchedule(weekSchedule)
                 .movementPath(movementPath)
                 .activity(activity)
-                .movementGraph(movementGraph)
+                .movementGraph(graph)
                 .dialogueOptions(dialogueOptions)
                 .build();
 
@@ -94,7 +93,7 @@ public class NPCTest {
                 () -> Assertions.assertEquals(npc.getWeekSchedule(), weekSchedule),
                 () -> Assertions.assertEquals(npc.getMovementPath(), movementPath),
                 () -> Assertions.assertEquals(npc.getActivity(), activity),
-                () -> Assertions.assertEquals(npc.getMovementGraph(), movementGraph),
+                () -> Assertions.assertEquals(npc.getMovementGraph(), graph),
                 () -> Assertions.assertEquals(npc.getDialogueOptions(), dialogueOptions)
         );
     }
@@ -177,13 +176,13 @@ public class NPCTest {
     }
 
     private NPC.Builder getValidNPCBuilder(){
-        Position2D position = new Position2D(500,500);
+        Position position = Position.builder().x(500).y( 500).build();
         String spritePath = "npc/stone.png";
         String name = "Bert";
 
         Day day = Day.values()[0];
 
-        Position2D position1 = new Position2D(500, 500);
+        Position position1 = Position.builder().x(500).y( 500).build();
         Map map1 = Map.values()[0];
         int timeInMin1 = Constants.MINUTES_PER_DAY/2;
         Activity activity1 = Activity.values()[0];
@@ -194,7 +193,7 @@ public class NPCTest {
                 .activity(activity1)
                 .build();
 
-        Position2D position2 = new Position2D(500, 500);
+        Position position2 = Position.builder().x(500).y( 500).build();
         Map map2 = Map.values()[0];
         int timeInMin2 = Constants.MINUTES_PER_DAY/2;
         Activity activity2 = Activity.values()[0];
@@ -221,18 +220,18 @@ public class NPCTest {
         ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
-        ArrayList<Position2D> movementPath = new ArrayList<>(
-                Arrays.asList(new Position2D(1000,500), new Position2D(1000,1000)));
+        ArrayList<Position> movementPath = new ArrayList<>(
+                Arrays.asList(Position.builder().x(1000).y(500).build(),Position.builder().x(1000).y(1000).build()));
 
         Activity activity = Activity.values()[0];
 
-        HashMap<Position2D, ArrayList<Position2D>> movementNetwork = new HashMap<>();
-        movementNetwork.put(new Position2D(500,500),
-                new ArrayList<>(Arrays.asList(new Position2D(1000,500), new Position2D(1000,1000))));
-        movementNetwork.put(new Position2D(1000,500),
-                new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,1000))));
-        movementNetwork.put(new Position2D(1000,1000),
-                new ArrayList<>(Arrays.asList(new Position2D(500,500), new Position2D(1000,500))));
+        HashMap<Position, ArrayList<Position>> movementNetwork = new HashMap<>();
+        movementNetwork.put(Position.builder().x(500).y(500).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(1000).y(500).build(), Position.builder().x(1000).y(1000).build())));
+        movementNetwork.put(Position.builder().x(1000).y(500).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(500).y(500).build(), Position.builder().x(1000).y(1000).build())));
+        movementNetwork.put(Position.builder().x(1000).y(1000).build(),
+                new ArrayList<>(Arrays.asList(Position.builder().x(500).y(500).build(), Position.builder().x(1000).y(500).build())));
 
         MovementGraph graph = MovementGraph.builder().movementGraph(movementNetwork).build();
 

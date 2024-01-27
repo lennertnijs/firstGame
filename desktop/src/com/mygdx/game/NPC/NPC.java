@@ -1,7 +1,7 @@
 package com.mygdx.game.NPC;
 
 import com.mygdx.game.Entity.Entity;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class NPC extends Entity {
 
     private final String name;
     private final WeekSchedule weekSchedule;
-    private ArrayList<Position2D> movementPath;
+    private ArrayList<Position> movementPath;
     private Activity activity;
     private final MovementGraph movementGraph;
     private final ArrayList<Integer> dialogueOptions;
@@ -39,13 +39,13 @@ public class NPC extends Entity {
         return weekSchedule;
     }
 
-    public ArrayList<Position2D> getMovementPath(){
+    public ArrayList<Position> getMovementPath(){
         return this.movementPath;
     }
 
-    public void setMovementPath(ArrayList<Position2D> movementPath){
+    public void setMovementPath(ArrayList<Position> movementPath){
         Objects.requireNonNull(movementPath, "The movement path of an npc cannot be null");
-        for(Position2D point : movementPath){
+        for(Position point : movementPath){
             Objects.requireNonNull(point, "The points of the movement path of an npc cannot be null");
         }
         this.movementPath = movementPath;
@@ -73,13 +73,13 @@ public class NPC extends Entity {
     public static class Builder{
 
         // Entity fields
-        private Position2D position;
+        private Position position;
         private String spritePath;
 
         // NPC fields
         private String name;
         private WeekSchedule weekSchedule;
-        private ArrayList<Position2D> movementPath = new ArrayList<>();
+        private ArrayList<Position> movementPath = new ArrayList<>();
         private Activity activity;
         private MovementGraph movementGraph;
         private ArrayList<Integer> dialogueOptions = new ArrayList<>();
@@ -89,7 +89,7 @@ public class NPC extends Entity {
 
         }
 
-        public Builder position(Position2D position){
+        public Builder position(Position position){
             this.position = position;
             return this;
         }
@@ -110,7 +110,7 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder movementPath(ArrayList<Position2D> movementPath){
+        public Builder movementPath(ArrayList<Position> movementPath){
             this.movementPath = movementPath;
             return this;
         }
@@ -136,7 +136,7 @@ public class NPC extends Entity {
             Objects.requireNonNull(name, "An npc's name must not be null");
             Objects.requireNonNull(weekSchedule, "An npc's week schedule must not be null");
             Objects.requireNonNull(movementPath, "An npc's movement path must not be null");
-            for(Position2D movingToPoint : movementPath){
+            for(Position movingToPoint : movementPath){
                 Objects.requireNonNull(movingToPoint, "An npc's movement path must not contain null");
             }
             Objects.requireNonNull(activity, "An npc's activity must not be null");

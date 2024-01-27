@@ -10,7 +10,7 @@ public class Constants {
 
     public static String NPC_PATHNAME = "npc/";
 
-    public static int STANDARD_MOVEMENT_SPEED = 50;
+    public static int STANDARD_MOVEMENT_SPEED = 100;
 
     public static int NPC_WIDTH = 32;
     public static int NPC_HEIGHT = 64;

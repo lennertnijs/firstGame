@@ -1,6 +1,6 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
 
 import java.util.Objects;
@@ -9,7 +9,7 @@ import static com.mygdx.game.Constants.MINUTES_PER_DAY;
 
 public class ActivityInstance {
 
-    final Position2D position;
+    final Position position;
     final int timeInMinutes;
     final Activity activity;
     final Map map;
@@ -20,7 +20,7 @@ public class ActivityInstance {
         this.activity = builder.activity;
         this.map = builder.map;
     }
-    public Position2D getPosition(){
+    public Position getPosition(){
         return this.position;
     }
 
@@ -42,7 +42,7 @@ public class ActivityInstance {
 
     public static class Builder{
 
-        private Position2D position;
+        private Position position;
         private int timeInMinutes;
         private Activity activity;
         private Map map;
@@ -50,7 +50,7 @@ public class ActivityInstance {
         public Builder(){
         }
 
-        public Builder position(Position2D position){
+        public Builder position(Position position){
             this.position = position;
             return this;
         }

@@ -29,7 +29,7 @@
           "day": "TUESDAY",
           "daySchedule": [
             {
-              "time": "00:00",
+              "time": "00:05",
               "x": "500",
               "y": "1000",
               "activity": "FISHING",

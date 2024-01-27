@@ -2,7 +2,7 @@ package NPC;
 
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
-import com.mygdx.game.Entity.Position2D;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
@@ -39,11 +39,11 @@ public class NPCRepositoryTest {
     }
 
     private NPC getValidNPC(String name){
-        Position2D position = new Position2D(500,500);
+        Position position = Position.builder().x(500).y( 500).build();
         String spritePath = "/resources";
         Day day = Day.values()[0];
 
-        Position2D position1 = new Position2D(500, 500);
+        Position position1 = Position.builder().x(500).y( 500).build();
         Map map1 = Map.values()[0];
         int timeInMin1 = Constants.MINUTES_PER_DAY/2;
         Activity activity1 = Activity.values()[0];
