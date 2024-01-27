@@ -9,10 +9,10 @@ import static com.mygdx.game.Constants.MINUTES_PER_DAY;
 
 public class ActivityInstance {
 
-    final Position position;
-    final int timeInMinutes;
-    final Activity activity;
-    final Map map;
+    private final Position position;
+    private final int timeInMinutes;
+    private final Activity activity;
+    private final Map map;
 
     public ActivityInstance(Builder builder){
         this.position = builder.position;
@@ -43,7 +43,7 @@ public class ActivityInstance {
     public static class Builder{
 
         private Position position;
-        private int timeInMinutes;
+        private int timeInMinutes = -1;
         private Activity activity;
         private Map map;
 
@@ -72,11 +72,11 @@ public class ActivityInstance {
 
         public ActivityInstance build(){
             Objects.requireNonNull(position, "The position of an activity instance must not be null");
+            if(timeInMinutes < 0 || timeInMinutes >= MINUTES_PER_DAY){
+                throw new IllegalArgumentException("The time of an activity instance must be valid");
+            }
             Objects.requireNonNull(activity, "The activity of an activity instance must not be null");
             Objects.requireNonNull(map, "The map of an activity instance must not be null");
-            if(timeInMinutes < 0 || timeInMinutes >= MINUTES_PER_DAY){
-                throw new IllegalArgumentException("The time (in minutes) is invalid");
-            }
             return new ActivityInstance(this);
         }
     }
