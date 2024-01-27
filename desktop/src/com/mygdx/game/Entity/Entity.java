@@ -20,6 +20,7 @@ public class Entity {
     public String getSpritePath() {
         return spritePath;
     }
+
     public void setPosition(Position position){
         Objects.requireNonNull(position, "The new position of an entity must not be null");
         this.position = position;

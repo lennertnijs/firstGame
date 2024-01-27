@@ -1,6 +1,7 @@
 package com.mygdx.game.Clock;
 
-import static com.mygdx.game.ArgumentValidator.ifNullThrowError;
+import java.util.Objects;
+
 import static com.mygdx.game.Constants.*;
 
 public class Clock {
@@ -39,10 +40,10 @@ public class Clock {
         return this.dayOfTheSeason;
     }
 
+
     public int getSeasonLength(){
         return calendar.getSeasonLength(season);
     }
-
 
     /**
      * @return The time in HH:MM format. 0's will be added to keep the size of each of the numbers consistent.
@@ -83,16 +84,12 @@ public class Clock {
      * Increases the clock's time with the given minutes. Also takes day and season into consideration.
      */
     public void increaseTimeByMinutes(int minutes){
-        validateNumberOfMinutesToAdd(minutes);
-        timeInMinutes += minutes;
-        handleDayChange();
-        handleSeasonChange();
-    }
-
-    private void validateNumberOfMinutesToAdd(int minutes){
         if(minutes < 0 ||  minutes > MINUTES_PER_DAY ){
             throw new IllegalArgumentException("Invalid amount of minutes to add");
         }
+        timeInMinutes += minutes;
+        handleDayChange();
+        handleSeasonChange();
     }
 
     private void handleDayChange(){
@@ -105,11 +102,11 @@ public class Clock {
     }
 
     private void handleSeasonChange(){
-        boolean seasonChange = dayOfTheSeason > getSeasonLength();
+        boolean seasonChange = dayOfTheSeason > calendar.getSeasonLength(season);
         while(seasonChange){
             season = season.next();
             dayOfTheSeason = 1;
-            seasonChange = dayOfTheSeason > getSeasonLength();
+            seasonChange = dayOfTheSeason > calendar.getSeasonLength(season);
         }
     }
 
@@ -155,12 +152,10 @@ public class Clock {
             return this;
         }
 
-
-
         public Clock build(){
-            ifNullThrowError(calendar, "Cannot create a clock if the calendar is null");
-            ifNullThrowError(season, "Cannot create a clock if the current season is null");
-            ifNullThrowError(day, "Cannot create a clock if the current season is null");
+            Objects.requireNonNull(calendar, "Cannot create a clock if the calendar is null");
+            Objects.requireNonNull(season, "Cannot create a clock if the current season is null");
+            Objects.requireNonNull(day, "Cannot create a clock if the current season is null");
             if(timeInMinutes < 0 || MINUTES_PER_DAY <= timeInMinutes){
                 throw new IllegalArgumentException("Clock's time is invalid");
             }
