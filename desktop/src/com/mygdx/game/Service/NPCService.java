@@ -7,18 +7,17 @@ import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import static com.mygdx.game.Constants.STANDARD_MOVEMENT_SPEED;
 
 public class NPCService {
 
     private final NPCRepository repository;
-    private final Clock clock;
-    public NPCService(Clock clock){
-        Objects.requireNonNull(clock, "The clock of the npc service must not be null");
+    private final ClockService clockService;
+
+    public NPCService(ClockService clockService){
         this.repository = new NPCRepository();
-        this.clock = clock;
+        this.clockService = clockService;
     }
 
     public ArrayList<NPC> getAllNPCS(){
@@ -48,9 +47,9 @@ public class NPCService {
         }
     }
 
-    public void checkMove(NPC npc){
-        Day day = clock.getDay();
-        int timeInMinutes = clock.getTimeInMinutes();
+    private void checkMove(NPC npc){
+        Day day = clockService.getClock().getDay();
+        int timeInMinutes = clockService.getClock().getTimeInMinutes();
         DaySchedule daySchedule = npc.getWeekSchedule().getDaySchedule(day);
         ActivityInstance nextActivity = daySchedule.nextActivityAfterTime(timeInMinutes);
         boolean noMoreActivitiesInDay = nextActivity == null;
@@ -60,7 +59,7 @@ public class NPCService {
             nextActivity = daySchedule.nextActivityAfterTime(0);
         }
         boolean startNextActivity = timeInMinutes >= nextActivity.getStartTimeInMinutes();
-        boolean correctDay = day == clock.getDay();
+        boolean correctDay = day == clockService.getClock().getDay();
         if(startNextActivity && correctDay){
             MovementGraph graph = npc.getMovementGraph();
             npc.setMovementPath(graph.findPath(npc.getPosition(), nextActivity.getPosition()));
@@ -68,7 +67,7 @@ public class NPCService {
     }
 
 
-    public void move(NPC npc){
+    private void move(NPC npc){
         Position current = npc.getPosition();
         Position next = npc.getMovementPath().get(0);
         boolean verticalMovement = (current.getX() == next.getX());

@@ -11,11 +11,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.*;
-import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
-import com.mygdx.game.DAO.CalendarDAO;
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Service.ClockService;
+import com.mygdx.game.Service.NPCService;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -31,10 +31,14 @@ public class GameScreen implements Screen {
 
     Rectangle inventorySlot;
 
-    Clock clock = createClock();
-    ClockController clockController = new ClockController();
+
+    // ===========================
+    Clock clock;
+    ClockController clockController;
     NPCController npcController;
     NPCDrawer npcDrawer;
+    NPCService npcService;
+    ClockService clockService;
 
 
 
@@ -42,13 +46,22 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGame game) {
         this.game = game;
 
+        clockService = new ClockService();
+        npcService = new NPCService(clockService);
+
         npcDrawer = new NPCDrawer(game);
-        npcController = new NPCController(clock, npcDrawer);
+        clockController = new ClockController(clockService);
+        npcController = new NPCController(npcService, npcDrawer);
+
+
         npcController.loadNPCS();
+        clockController.loadClock();
+
+        clock = clockController.getClock();
 
 
         // load the images for the droplet and the bucket, 64x64 pixels each
-        map = new Texture(Gdx.files.internal("images/map.png"));
+        map = new Texture(Gdx.files.internal("images/untitled.png"));
         character = new Texture(Gdx.files.internal("images/guy.png"));
         charLeft = new Texture(Gdx.files.internal("images/guy_left.png"));
         charRight = new Texture(Gdx.files.internal("images/guy_right.png"));
@@ -64,8 +77,8 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         mapRect = new Rectangle();
-        mapRect.width = 5000;
-        mapRect.height = 2500;
+        mapRect.width = 1600;
+        mapRect.height = 1600;
         mapRect.x = 0;
         mapRect.y = 0;
 
@@ -96,9 +109,13 @@ public class GameScreen implements Screen {
 
         game.batch.begin();
         game.batch.draw(map, mapRect.x, mapRect.y, mapRect.width, mapRect.height);
+
+
         npcController.updateNPCs();
+        clockController.updateClock();
+
         game.batch.draw(frame, inventorySlot.x, inventorySlot.y, inventorySlot.width, inventorySlot.height);
-        clockController.updateClock(clock);
+        clockController.updateClock();
         game.font.getData().setScale(3, 3);
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
@@ -110,19 +127,6 @@ public class GameScreen implements Screen {
         camera.position.set(characterRect.x, characterRect.y, 0);
     }
 
-
-    private Clock createClock() {
-        Calendar calendar = CalendarDAO.readCalendar();
-        int minutes = 1420;
-        int currentDaysInMonth = 12;
-        return Clock.builder()
-                .calendar(calendar)
-                .season(Season.DARK)
-                .dayOfTheSeason(currentDaysInMonth)
-                .day(Day.MONDAY)
-                .timeInMinutes(minutes)
-                .build();
-    }
 
     @Override
     public void resize(int width, int height) {

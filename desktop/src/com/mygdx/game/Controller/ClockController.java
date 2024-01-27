@@ -1,30 +1,25 @@
 package com.mygdx.game.Controller;
 
 import com.mygdx.game.Clock.Clock;
+import com.mygdx.game.Service.ClockService;
 
 public class ClockController {
 
-    long lastUpdateInMillis;
-    long timeElapsedInMillis;
-    public ClockController(){
-        lastUpdateInMillis = System.currentTimeMillis();
-        timeElapsedInMillis = 0;
+    private final ClockService clockService;
+
+    public ClockController(ClockService clockService){
+        this.clockService = clockService;
     }
 
-    /**
-     * Updates the clock on every frame.
-     * Uses the System.currentTimeMillis() to accurately get timeframes.
-     * Everytime a second has passed, one minute is added to the clock.
-     * Thus, the current clock takes 24 minutes to complete a day, aka 1 minute per hour.
-     */
-    public void updateClock(Clock clock){
-        long currentMillis = System.currentTimeMillis();
-        long timeDifference = currentMillis - lastUpdateInMillis;
-        timeElapsedInMillis += timeDifference;
-        if(timeElapsedInMillis >= 1000){
-            timeElapsedInMillis -= 1000;
-            clock.incrementTimeByOne();
-        }
-        lastUpdateInMillis = currentMillis;
+    public void updateClock(){
+        clockService.updateClock();
+    }
+
+    public void loadClock(){
+        clockService.loadClock();
+    }
+
+    public Clock getClock(){
+        return clockService.getClock();
     }
 }
