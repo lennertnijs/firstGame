@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 
 public class WeekScheduleTest {
 
@@ -24,7 +24,7 @@ public class WeekScheduleTest {
         Activity activity = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position)
-                .timeInMinutes(timeInMin)
+                .startTimeInMinutes(timeInMin)
                 .map(map)
                 .activity(activity)
                 .build();
@@ -35,7 +35,7 @@ public class WeekScheduleTest {
         Activity activity2 = Activity.values()[0];
         ActivityInstance activityInstance2 = ActivityInstance.builder()
                 .position(position2)
-                .timeInMinutes(timeInMin2)
+                .startTimeInMinutes(timeInMin2)
                 .map(map2)
                 .activity(activity2)
                 .build();
@@ -43,17 +43,15 @@ public class WeekScheduleTest {
         ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
         DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
-                .build();
-
-        DaySchedule daySchedule2 = DaySchedule.builder()
-                .day(day)
                 .activities(activities)
                 .build();
 
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .activities(activities)
+                .build();
+
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day, daySchedule1);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         Assertions.assertAll(
@@ -65,8 +63,7 @@ public class WeekScheduleTest {
     public void testConstructorInvalid(){
         WeekSchedule.Builder builder = WeekSchedule.builder();
         Assertions.assertAll(
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.daySchedules(null).build()),
-                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.addDaySchedule(null).build())
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.daySchedules(null).build())
         );
     }
 
@@ -81,7 +78,7 @@ public class WeekScheduleTest {
         Activity activity = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position)
-                .timeInMinutes(timeInMin)
+                .startTimeInMinutes(timeInMin)
                 .map(map)
                 .activity(activity)
                 .build();
@@ -92,7 +89,7 @@ public class WeekScheduleTest {
         Activity activity2 = Activity.values()[0];
         ActivityInstance activityInstance2 = ActivityInstance.builder()
                 .position(position2)
-                .timeInMinutes(timeInMin2)
+                .startTimeInMinutes(timeInMin2)
                 .map(map2)
                 .activity(activity2)
                 .build();
@@ -100,17 +97,16 @@ public class WeekScheduleTest {
         ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
         DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day1)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
-                .build();
-
-        DaySchedule daySchedule2 = DaySchedule.builder()
-                .day(day2)
                 .activities(activities)
                 .build();
 
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .activities(activities)
+                .build();
+
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day1, daySchedule1);
+        daySchedules.put(day2, daySchedule2);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         Assertions.assertAll(
@@ -128,7 +124,7 @@ public class WeekScheduleTest {
         Activity activity = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position)
-                .timeInMinutes(timeInMin)
+                .startTimeInMinutes(timeInMin)
                 .map(map)
                 .activity(activity)
                 .build();
@@ -139,23 +135,17 @@ public class WeekScheduleTest {
         Activity activity2 = Activity.values()[0];
         ActivityInstance activityInstance2 = ActivityInstance.builder()
                 .position(position2)
-                .timeInMinutes(timeInMin2)
+                .startTimeInMinutes(timeInMin2)
                 .map(map2)
                 .activity(activity2)
                 .build();
 
         DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day1)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
+                .activities(new ArrayList<>(Arrays.asList(activityInstance, activityInstance2)))
                 .build();
 
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Collections.singletonList(daySchedule1));
-        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day1, daySchedule1);
 
-        Assertions.assertAll(
-                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> weekSchedule.next(day1)),
-                () -> Assertions.assertThrows(NullPointerException.class, () -> weekSchedule.next(null))
-        );
     }
 }

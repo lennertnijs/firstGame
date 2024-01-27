@@ -10,13 +10,13 @@ import static com.mygdx.game.Constants.MINUTES_PER_DAY;
 public class ActivityInstance {
 
     private final Position position;
-    private final int timeInMinutes;
+    private final int startTimeInMinutes;
     private final Activity activity;
     private final Map map;
 
     public ActivityInstance(Builder builder){
         this.position = builder.position;
-        this.timeInMinutes = builder.timeInMinutes;
+        this.startTimeInMinutes = builder.startTimeInMinutes;
         this.activity = builder.activity;
         this.map = builder.map;
     }
@@ -24,8 +24,8 @@ public class ActivityInstance {
         return this.position;
     }
 
-    public int getTimeInMinutes(){
-        return this.timeInMinutes;
+    public int getStartTimeInMinutes(){
+        return this.startTimeInMinutes;
     }
 
     public Activity getActivity(){
@@ -36,6 +36,24 @@ public class ActivityInstance {
         return this.map;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof ActivityInstance)){
+            return false;
+        }
+        ActivityInstance instance = (ActivityInstance) o;
+        return position.equals(instance.position) && startTimeInMinutes == instance.startTimeInMinutes &&
+                activity.equals(instance.activity) && map.equals(instance.map);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(position, startTimeInMinutes, activity, map);
+    }
+
     public static Builder builder(){
         return new Builder();
     }
@@ -43,7 +61,7 @@ public class ActivityInstance {
     public static class Builder{
 
         private Position position;
-        private int timeInMinutes = -1;
+        private int startTimeInMinutes = -1;
         private Activity activity;
         private Map map;
 
@@ -55,8 +73,8 @@ public class ActivityInstance {
             return this;
         }
 
-        public Builder timeInMinutes(int timeInMinutes){
-            this.timeInMinutes = timeInMinutes;
+        public Builder startTimeInMinutes(int startTimeInMinutes){
+            this.startTimeInMinutes = startTimeInMinutes;
             return this;
         }
 
@@ -72,7 +90,7 @@ public class ActivityInstance {
 
         public ActivityInstance build(){
             Objects.requireNonNull(position, "The position of an activity instance must not be null");
-            if(timeInMinutes < 0 || timeInMinutes >= MINUTES_PER_DAY){
+            if(startTimeInMinutes < 0 || startTimeInMinutes >= MINUTES_PER_DAY){
                 throw new IllegalArgumentException("The time of an activity instance must be valid");
             }
             Objects.requireNonNull(activity, "The activity of an activity instance must not be null");

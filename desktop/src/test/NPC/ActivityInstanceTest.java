@@ -20,14 +20,14 @@ public class ActivityInstanceTest {
 
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position)
-                .timeInMinutes(timeInMin)
+                .startTimeInMinutes(timeInMin)
                 .activity(activity)
                 .map(map)
                 .build();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(activityInstance.getPosition(), position),
-                () -> Assertions.assertEquals(activityInstance.getTimeInMinutes(), timeInMin),
+                () -> Assertions.assertEquals(activityInstance.getStartTimeInMinutes(), timeInMin),
                 () -> Assertions.assertEquals(activityInstance.getActivity(), activity),
                 () -> Assertions.assertEquals(activityInstance.getMap(), map)
         );
@@ -42,7 +42,7 @@ public class ActivityInstanceTest {
 
         ActivityInstance.Builder builder = ActivityInstance.builder()
                                                             .position(position)
-                                                            .timeInMinutes(timeInMin)
+                                                            .startTimeInMinutes(timeInMin)
                                                             .map(map)
                                                             .activity(activity);
 
@@ -50,10 +50,10 @@ public class ActivityInstanceTest {
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.position(null).build()),
                 () -> builder.position(position),
 
-                () -> Assertions.assertThrows(IllegalArgumentException.class,() -> builder.timeInMinutes(-1).build()),
+                () -> Assertions.assertThrows(IllegalArgumentException.class,() -> builder.startTimeInMinutes(-1).build()),
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
-                        () -> builder.timeInMinutes(Constants.MINUTES_PER_DAY).build()),
-                () -> builder.timeInMinutes(timeInMin),
+                        () -> builder.startTimeInMinutes(Constants.MINUTES_PER_DAY).build()),
+                () -> builder.startTimeInMinutes(timeInMin),
 
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.activity(null).build()),
                 () -> builder.activity(activity),
@@ -61,5 +61,35 @@ public class ActivityInstanceTest {
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.map(null).build())
 
         );
+    }
+
+    @Test
+    public void testEquals(){
+        ActivityInstance activity1 = generateValidActivityInstanceBuilder(200).build();
+        ActivityInstance activity2 = generateValidActivityInstanceBuilder(100).build();
+        ActivityInstance activity3 = generateValidActivityInstanceBuilder(200).build();
+
+        Position position = Position.builder().x(200).y(200).build();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(activity1, activity3),
+                () -> Assertions.assertNotEquals(activity1, activity2),
+                () -> Assertions.assertNotEquals(activity1, position)
+        );
+    }
+
+
+
+    private ActivityInstance.Builder generateValidActivityInstanceBuilder(int x){
+        Position position = Position.builder().x(x).y( 120).build();
+        int timeInMin = Constants.MINUTES_PER_DAY/2;
+        Map map = Map.values()[0];
+        Activity activity = Activity.values()[0];
+
+        return ActivityInstance.builder()
+                .position(position)
+                .startTimeInMinutes(timeInMin)
+                .map(map)
+                .activity(activity);
     }
 }

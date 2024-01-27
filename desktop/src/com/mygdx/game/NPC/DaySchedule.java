@@ -1,56 +1,47 @@
 package com.mygdx.game.NPC;
 
-import com.mygdx.game.Clock.Day;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class DaySchedule {
+import static com.mygdx.game.Constants.MINUTES_PER_DAY;
 
-    private final Day day;
+public class DaySchedule {
     private final ArrayList<ActivityInstance> activities;
 
     public DaySchedule(Builder builder){
-        this.day = builder.day;
         this.activities = builder.activities;
-    }
-
-    public Day getDay(){
-        return this.day;
     }
 
     public ArrayList<ActivityInstance> getActivities(){
         return this.activities;
     }
 
-    public ActivityInstance next(ActivityInstance activityInstance){
-        Objects.requireNonNull(activityInstance, "Cannot find the next activity instance of null");
-        int index = findIndexOfActivityInstance(activityInstance);
-        int size = activities.size();
-        if(index == size-1){
-            return null;
-        }
-        return activities.get(index+1);
-    }
-
-    private int findIndexOfActivityInstance(ActivityInstance activityInstance){
-        int index = activities.indexOf(activityInstance);
-        if(index == -1){
-            throw new IllegalArgumentException("Could not find the activity instance");
-        }
-        return index;
-    }
-
-    public ActivityInstance nextActivity(int timeInMin){
-        if(timeInMin < 0){
-            throw new IllegalArgumentException("Cannot find the activity for negative time");
+    public ActivityInstance nextActivityAfterTime(int time){
+        if(time < 0 || time >= MINUTES_PER_DAY){
+            throw new IllegalArgumentException("The time to find the next activity for must not be invalid");
         }
         for(ActivityInstance activity: activities){
-            if(activity.getTimeInMinutes() >= timeInMin){
+            if(activity.getStartTimeInMinutes() >= time){
                 return activity;
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof DaySchedule)){
+            return false;
+        }
+        DaySchedule daySchedule = (DaySchedule) o;
+        return activities.equals(daySchedule.activities);
+    }
+    @Override
+    public int hashCode(){
+        return Objects.hash(activities);
     }
 
     public static Builder builder(){
@@ -58,16 +49,9 @@ public class DaySchedule {
     }
 
     public static class Builder{
-        private Day day;
-        private ArrayList<ActivityInstance> activities = new ArrayList<>();
+        private ArrayList<ActivityInstance> activities;
 
         public Builder(){
-
-        }
-
-        public Builder day(Day day){
-            this.day = day;
-            return this;
         }
 
         public Builder activities(ArrayList<ActivityInstance> activities){
@@ -75,16 +59,10 @@ public class DaySchedule {
             return this;
         }
 
-        public Builder addActivity(ActivityInstance activity){
-            this.activities.add(activity);
-            return this;
-        }
-
         public DaySchedule build(){
-            Objects.requireNonNull(day, "The day of the day schedule must not be null");
-            Objects.requireNonNull(activities, "The list of activities of the day schedule must not be null");
+            Objects.requireNonNull(activities, "The list of activity instances of the day schedule must not be null");
             for(ActivityInstance activityInstance : activities){
-                Objects.requireNonNull(activityInstance, "The activity instance of the day schedule must not be null");
+                Objects.requireNonNull(activityInstance, "The list of activity instances of the day schedule must not contain null");
             }
             return new DaySchedule(this);
         }

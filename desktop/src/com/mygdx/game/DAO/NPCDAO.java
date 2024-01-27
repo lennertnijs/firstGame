@@ -32,12 +32,12 @@ public class NPCDAO {
             String spritePath = npcJSON.getString("spritePath");
 
             JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
-            ArrayList<DaySchedule> daySchedules = new ArrayList<>();
+            HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
             for(JsonValue dayScheduleJSON : weekScheduleJSON){
                 Day day = Day.valueOf(dayScheduleJSON.getString("day"));
                 ArrayList<ActivityInstance> activities = readDayActivities(dayScheduleJSON.get("daySchedule"));
-                DaySchedule daySchedule = DaySchedule.builder().day(day).activities(activities).build();
-                daySchedules.add(daySchedule);
+                DaySchedule daySchedule = DaySchedule.builder().activities(activities).build();
+                daySchedules.put(day, daySchedule);
             }
             WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
@@ -88,7 +88,7 @@ public class NPCDAO {
             final Map map = Map.valueOf(activityJSON.getString("map"));
             final ActivityInstance a = ActivityInstance.builder()
                             .position(position)
-                            .timeInMinutes(timeInMinutes)
+                            .startTimeInMinutes(timeInMinutes)
                             .activity(activity)
                             .map(map)
                             .build();

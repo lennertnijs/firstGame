@@ -3,59 +3,55 @@ package com.mygdx.game.NPC;
 
 import com.mygdx.game.Clock.Day;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class WeekSchedule {
 
-    private final ArrayList<DaySchedule> daySchedules;
+    private final HashMap<Day, DaySchedule> daySchedules;
 
     public WeekSchedule(Builder builder){
         this.daySchedules = builder.daySchedules;
     }
 
-    public ArrayList<DaySchedule> getDaySchedules(){
+    public HashMap<Day, DaySchedule> getDaySchedules(){
         return this.daySchedules;
     }
 
 
     public DaySchedule getDaySchedule(Day day){
         Objects.requireNonNull(day, "Cannot find the day schedule of a null day");
-        for(DaySchedule daySchedule : daySchedules){
-            if(daySchedule.getDay() == day){
-                return daySchedule;
-            }
-        }
-        throw new IllegalArgumentException("Could not find the day schedule of the given day");
+        DaySchedule daySchedule = daySchedules.get(day);
+        Objects.requireNonNull(daySchedule, "No day schedule was found for the given day");
+        return daySchedule;
     }
-    public DaySchedule next(Day currentDay){
-        Objects.requireNonNull(currentDay, "Cannot move to the next day schedule with null");
-        Day nextDay = currentDay.next();
-        return daySchedules.stream().filter(e -> e.getDay() == nextDay).findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+
+    public DaySchedule next(Day day){
+        Objects.requireNonNull(day, "The day must not be null to fetch the next day's schedule");
+        DaySchedule daySchedule = daySchedules.get(day.next());
+        Objects.requireNonNull(daySchedule, "No day schedule was found for the next day");
+        return daySchedule;
     }
+
+
 
     public static Builder builder(){
         return new Builder();
     }
 
     public static class Builder{
-        private ArrayList<DaySchedule> daySchedules = new ArrayList<>();
+        private HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
 
-        public Builder daySchedules(ArrayList<DaySchedule> daySchedules){
+        public Builder daySchedules(HashMap<Day, DaySchedule> daySchedules){
             this.daySchedules = daySchedules;
             return this;
         }
 
-        public Builder addDaySchedule(DaySchedule daySchedule){
-            this.daySchedules.add(daySchedule);
-            return this;
-        }
-
         public WeekSchedule build(){
-            Objects.requireNonNull(daySchedules, "The list of day schedules of a week schedule must not be null");
-            for(DaySchedule daySchedule : daySchedules){
-                Objects.requireNonNull(daySchedule, "No day schedule of a week schedule can be null");
+            Objects.requireNonNull(daySchedules, "The map of a week schedule must not be null");
+            for(Day day : daySchedules.keySet()){
+                Objects.requireNonNull(day, "The day key of a day schedule in a week schedule must not be null");
+                Objects.requireNonNull(daySchedules.get(day), "Day schedules in a week schedule must not be null");
             }
             return new WeekSchedule(this);
         }

@@ -52,14 +52,14 @@ public class NPCService {
         Day day = clock.getDay();
         int timeInMinutes = clock.getTimeInMinutes();
         DaySchedule daySchedule = npc.getWeekSchedule().getDaySchedule(day);
-        ActivityInstance nextActivity = daySchedule.nextActivity(timeInMinutes);
+        ActivityInstance nextActivity = daySchedule.nextActivityAfterTime(timeInMinutes);
         boolean noMoreActivitiesInDay = nextActivity == null;
         if(noMoreActivitiesInDay){
             day = day.next();
-            daySchedule = npc.getWeekSchedule().getDaySchedule(day.next());
-            nextActivity = daySchedule.nextActivity(0);
+            daySchedule = npc.getWeekSchedule().getDaySchedule(day);
+            nextActivity = daySchedule.nextActivityAfterTime(0);
         }
-        boolean startNextActivity = timeInMinutes >= nextActivity.getTimeInMinutes();
+        boolean startNextActivity = timeInMinutes >= nextActivity.getStartTimeInMinutes();
         boolean correctDay = day == clock.getDay();
         if(startNextActivity && correctDay){
             MovementGraph graph = npc.getMovementGraph();

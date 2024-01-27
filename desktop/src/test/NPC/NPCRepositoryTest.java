@@ -49,7 +49,7 @@ public class NPCRepositoryTest {
         Activity activity1 = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position1)
-                .timeInMinutes(timeInMin1)
+                .startTimeInMinutes(timeInMin1)
                 .map(map1)
                 .activity(activity1)
                 .build();
@@ -57,10 +57,10 @@ public class NPCRepositoryTest {
 
         ArrayList<ActivityInstance> activities = new ArrayList<>(Collections.singletonList(activityInstance));
         DaySchedule daySchedule = DaySchedule.builder()
-                .day(day)
                 .activities(activities)
                 .build();
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Collections.singletonList(daySchedule));
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day, daySchedule);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         MovementGraph movementGraph = MovementGraph.builder().movementGraph(new HashMap<>()).build();

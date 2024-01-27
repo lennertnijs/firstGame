@@ -27,7 +27,7 @@ public class NPCTest {
         Activity activity1 = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position1)
-                .timeInMinutes(timeInMin1)
+                .startTimeInMinutes(timeInMin1)
                 .map(map1)
                 .activity(activity1)
                 .build();
@@ -38,7 +38,7 @@ public class NPCTest {
         Activity activity2 = Activity.values()[0];
         ActivityInstance activityInstance2 = ActivityInstance.builder()
                 .position(position2)
-                .timeInMinutes(timeInMin2)
+                .startTimeInMinutes(timeInMin2)
                 .map(map2)
                 .activity(activity2)
                 .build();
@@ -46,17 +46,15 @@ public class NPCTest {
         ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
         DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
-                .build();
-
-        DaySchedule daySchedule2 = DaySchedule.builder()
-                .day(day)
                 .activities(activities)
                 .build();
 
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .activities(activities)
+                .build();
+
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day, daySchedule1);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         ArrayList<Position> movementPath = new ArrayList<>(
@@ -188,7 +186,7 @@ public class NPCTest {
         Activity activity1 = Activity.values()[0];
         ActivityInstance activityInstance = ActivityInstance.builder()
                 .position(position1)
-                .timeInMinutes(timeInMin1)
+                .startTimeInMinutes(timeInMin1)
                 .map(map1)
                 .activity(activity1)
                 .build();
@@ -199,7 +197,7 @@ public class NPCTest {
         Activity activity2 = Activity.values()[0];
         ActivityInstance activityInstance2 = ActivityInstance.builder()
                 .position(position2)
-                .timeInMinutes(timeInMin2)
+                .startTimeInMinutes(timeInMin2)
                 .map(map2)
                 .activity(activity2)
                 .build();
@@ -207,17 +205,15 @@ public class NPCTest {
         ArrayList<ActivityInstance> activities = new ArrayList<>(Arrays.asList(activityInstance, activityInstance2));
 
         DaySchedule daySchedule1 = DaySchedule.builder()
-                .day(day)
-                .addActivity(activityInstance)
-                .addActivity(activityInstance2)
-                .build();
-
-        DaySchedule daySchedule2 = DaySchedule.builder()
-                .day(day)
                 .activities(activities)
                 .build();
 
-        ArrayList<DaySchedule> daySchedules = new ArrayList<>(Arrays.asList(daySchedule1, daySchedule2));
+        DaySchedule daySchedule2 = DaySchedule.builder()
+                .activities(activities)
+                .build();
+
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        daySchedules.put(day, daySchedule1);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         ArrayList<Position> movementPath = new ArrayList<>(
