@@ -20,65 +20,78 @@ public class NPCDAO {
     }
 
     public ArrayList<NPC> readNPCS(){
-        ArrayList<NPC> npcs = new ArrayList<>();
         JsonReader reader = new JsonReader();
         JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
+
+        ArrayList<NPC> npcs = new ArrayList<>();
         for(JsonValue npcJSON: file){
-            String name = npcJSON.getString("name");
-            int x = npcJSON.getInt("x");
-            int y = npcJSON.getInt("y");
-            Position position = Position.builder().x(x).y(y).build();
-            Activity activity = Activity.valueOf(npcJSON.getString("activity"));
-            String spritePath = npcJSON.getString("spritePath");
-
-            JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
-            HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
-            for(JsonValue dayScheduleJSON : weekScheduleJSON){
-                Day day = Day.valueOf(dayScheduleJSON.getString("day"));
-                ArrayList<ActivityInstance> activities = readDayActivities(dayScheduleJSON.get("daySchedule"));
-                DaySchedule daySchedule = DaySchedule.builder().activities(activities).build();
-                daySchedules.put(day, daySchedule);
-            }
-            WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
-
-            JsonValue movementGraphJSON = npcJSON.get("movementGraph");
-            HashMap<Position, ArrayList<Position>> network = new HashMap<>();
-            for(JsonValue node : movementGraphJSON){
-                int nodeX = node.getInt("x");
-                int nodeY = node.getInt("y");
-                Position nodePosition = Position.builder().x(nodeX).y(nodeY).build();
-                ArrayList<Position> nextNodePositions = readNextNodes(node.get("connected"));
-                network.put(nodePosition, nextNodePositions);
-            }
-
-            MovementGraph movementGraph = MovementGraph.builder().movementGraph(network).build();
-
-            JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
-            ArrayList<Integer> dialogueOptions = new ArrayList<>();
-            for(JsonValue dialogueOptionJSON : dialogueOptionsJSON){
-                int dialogueIndex = dialogueOptionJSON.getInt("index");
-                dialogueOptions.add(dialogueIndex);
-            }
-
-            NPC npc = NPC.builder()
-                    .position(position)
-                    .spritePath(NPC_PATHNAME + spritePath)
-                    .name(name)
-                    .activity(activity)
-                    .weekSchedule(weekSchedule)
-                    .movementPath(new ArrayList<>())
-                    .movementGraph(movementGraph)
-                    .dialogueOptions(dialogueOptions)
-                    .build();
+            NPC npc = readNPC(npcJSON);
             npcs.add(npc);
-
         }
         return npcs;
     }
 
-    private ArrayList<ActivityInstance> readDayActivities(JsonValue dayScheduleJSON){
+
+    /**
+     * Reads a npc and returns it
+     */
+    private NPC readNPC(JsonValue npcJSON){
+        String name = npcJSON.getString("name");
+
+        int x = npcJSON.getInt("x");
+        int y = npcJSON.getInt("y");
+        Position position = Position.builder().x(x).y(y).build();
+
+        String spritePath = npcJSON.getString("spritePath");
+
+        Activity activity = Activity.valueOf(npcJSON.getString("activity"));
+
+        JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
+        WeekSchedule weekSchedule = readWeekSchedule(weekScheduleJSON);
+
+        JsonValue movementGraphJSON = npcJSON.get("movementGraph");
+        MovementGraph movementGraph = readMovementGraph(movementGraphJSON);
+
+        JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
+        ArrayList<Integer> dialogueOptions = readDialogueOptions(dialogueOptionsJSON);
+
+        return NPC.builder()
+                .position(position)
+                .spritePath(NPC_PATHNAME + spritePath)
+                .name(name)
+                .activity(activity)
+                .weekSchedule(weekSchedule)
+                .movementPath(new ArrayList<>())
+                .movementGraph(movementGraph)
+                .dialogueOptions(dialogueOptions)
+                .build();
+    }
+
+    /**
+     * Reads the week schedule
+     */
+    private WeekSchedule readWeekSchedule(JsonValue weekScheduleJSON){
+        HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
+        for(JsonValue dayScheduleJSON : weekScheduleJSON){
+            Day day = Day.valueOf(dayScheduleJSON.getString("day"));
+
+            ArrayList<ActivityInstance> activities = readDayActivities(dayScheduleJSON.get("daySchedule"));
+
+            DaySchedule daySchedule = DaySchedule.builder().activities(activities).build();
+
+            daySchedules.put(day, daySchedule);
+        }
+        return WeekSchedule.builder().daySchedules(daySchedules).build();
+    }
+
+
+
+    /**
+     * Reads all activities of a given day
+     */
+    private ArrayList<ActivityInstance> readDayActivities(JsonValue dayScheduleActivitiesJSON){
         ArrayList<ActivityInstance> activityInstances = new ArrayList<>();
-        for(JsonValue activityJSON: dayScheduleJSON){
+        for(JsonValue activityJSON: dayScheduleActivitiesJSON){
             final String time = activityJSON.getString("time");
             final int timeInMinutes = timeStringToMinutes(time);
             final int x = activityJSON.getInt("x");
@@ -97,6 +110,27 @@ public class NPCDAO {
         return activityInstances;
     }
 
+
+
+    /**
+     * Reads the movement graph and returns it
+     */
+    private MovementGraph readMovementGraph(JsonValue movementGraphJSON){
+        HashMap<Position, ArrayList<Position>> network = new HashMap<>();
+        for(JsonValue node : movementGraphJSON){
+            int nodeX = node.getInt("x");
+            int nodeY = node.getInt("y");
+            Position nodePosition = Position.builder().x(nodeX).y(nodeY).build();
+            ArrayList<Position> nextNodePositions = readNextNodes(node.get("connected"));
+            network.put(nodePosition, nextNodePositions);
+        }
+        return MovementGraph.builder().movementGraph(network).build();
+    }
+
+
+    /**
+     * Reads the next nodes of the movement graph and returns them
+     */
     private ArrayList<Position> readNextNodes(JsonValue nodeJSON){
         ArrayList<Position> connectedNodes = new ArrayList<>();
         for(JsonValue connectedNode : nodeJSON){
@@ -106,8 +140,23 @@ public class NPCDAO {
             connectedNodes.add(position);
         }
         return connectedNodes;
-
     }
+
+
+
+    /**
+     * Reads the dialogue options and returns them
+     */
+    private ArrayList<Integer> readDialogueOptions(JsonValue dialogueOptionsJSON){
+        ArrayList<Integer> dialogueOptions = new ArrayList<>();
+        for(JsonValue dialogueOptionJSON : dialogueOptionsJSON){
+            int dialogueIndex = dialogueOptionJSON.getInt("index");
+            dialogueOptions.add(dialogueIndex);
+        }
+        return dialogueOptions;
+    }
+
+
 
     /**
      * Converts a time string HH:MM to an integer (the time in minutes, to be precise)
