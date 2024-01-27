@@ -45,8 +45,10 @@ public class ActivityInstance {
             return false;
         }
         ActivityInstance instance = (ActivityInstance) o;
-        return position.equals(instance.position) && startTimeInMinutes == instance.startTimeInMinutes &&
-                activity.equals(instance.activity) && map.equals(instance.map);
+        return position.equals(instance.position) &&
+                startTimeInMinutes == instance.startTimeInMinutes &&
+                activity.equals(instance.activity) &&
+                map.equals(instance.map);
     }
 
     @Override

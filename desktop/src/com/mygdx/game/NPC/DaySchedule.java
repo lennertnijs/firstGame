@@ -1,18 +1,18 @@
 package com.mygdx.game.NPC;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.mygdx.game.Constants.MINUTES_PER_DAY;
 
 public class DaySchedule {
-    private final ArrayList<ActivityInstance> activities;
+    private final List<ActivityInstance> activities;
 
     public DaySchedule(Builder builder){
         this.activities = builder.activities;
     }
 
-    public ArrayList<ActivityInstance> getActivities(){
+    public List<ActivityInstance> getActivities(){
         return this.activities;
     }
 
@@ -49,12 +49,12 @@ public class DaySchedule {
     }
 
     public static class Builder{
-        private ArrayList<ActivityInstance> activities = null;
+        private List<ActivityInstance> activities = null;
 
         public Builder(){
         }
 
-        public Builder activities(ArrayList<ActivityInstance> activities){
+        public Builder activities(List<ActivityInstance> activities){
             this.activities = activities;
             return this;
         }
