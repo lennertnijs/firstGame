@@ -33,6 +33,23 @@ public class WeekSchedule {
         return daySchedule;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof WeekSchedule)){
+            return false;
+        }
+        WeekSchedule weekSchedule = (WeekSchedule) o;
+        return daySchedules.equals(weekSchedule.daySchedules);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(daySchedules);
+    }
+
 
 
     public static Builder builder(){

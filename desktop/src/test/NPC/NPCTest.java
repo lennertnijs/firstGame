@@ -8,18 +8,18 @@ import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class NPCTest {
+
     @Test
     public void testConstructor(){
         Position position = Position.builder().x(500).y( 500).build();
         String spritePath = "npc/stone.png";
         String name = "Bert";
 
-        Day day = Day.values()[0];
+        Day day1 = Day.values()[0];
+        Day day2 = Day.values()[1];
 
         Position position1 = Position.builder().x(500).y( 500).build();
         Map map1 = Map.values()[0];
@@ -54,7 +54,8 @@ public class NPCTest {
                 .build();
 
         HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
-        daySchedules.put(day, daySchedule1);
+        daySchedules.put(day1, daySchedule1);
+        daySchedules.put(day2, daySchedule2);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         ArrayList<Position> movementPath = new ArrayList<>(
@@ -101,6 +102,7 @@ public class NPCTest {
         NPC.Builder builder = getValidNPCBuilder();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.position(null).build())
+
         );
     }
 
@@ -164,7 +166,6 @@ public class NPCTest {
 
     @Test
     public void testSetActivity(){
-
         NPC npc = getValidNPCBuilder().build();
         npc.setActivity(Activity.WALKING);
         Assertions.assertAll(
@@ -173,12 +174,41 @@ public class NPCTest {
         );
     }
 
+    @Test
+    public void testSetMovementPath(){
+        NPC npc = getValidNPCBuilder().build();
+        List<Position> movement = new ArrayList<>(Arrays.asList(
+                Position.builder().x(500).y(500).build(),
+                Position.builder().x(250).y(250).build()
+        ));
+        npc.setMovementPath(movement);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(npc.getMovementPath(), movement),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> npc.setMovementPath(null)),
+                () -> Assertions.assertThrows(NullPointerException.class,
+                        () -> npc.setMovementPath(Collections.singletonList(null)))
+        );
+    }
+
+    @Test
+    public void testEquals(){
+        NPC npc = getValidNPCBuilder().build();
+        NPC npc2 = getValidNPCBuilder().build();
+        Assertions.assertAll(
+                () -> Assertions.assertNotEquals(npc, null),
+                () -> Assertions.assertEquals(npc, npc2),
+                () -> Assertions.assertEquals(npc, new ArrayList<>())
+        );
+    }
+
     private NPC.Builder getValidNPCBuilder(){
         Position position = Position.builder().x(500).y( 500).build();
         String spritePath = "npc/stone.png";
         String name = "Bert";
 
-        Day day = Day.values()[0];
+        Day day1 = Day.values()[0];
+        Day day2 = Day.values()[1];
 
         Position position1 = Position.builder().x(500).y( 500).build();
         Map map1 = Map.values()[0];
@@ -213,7 +243,8 @@ public class NPCTest {
                 .build();
 
         HashMap<Day, DaySchedule> daySchedules = new HashMap<>();
-        daySchedules.put(day, daySchedule1);
+        daySchedules.put(day1, daySchedule1);
+        daySchedules.put(day2, daySchedule2);
         WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(daySchedules).build();
 
         ArrayList<Position> movementPath = new ArrayList<>(

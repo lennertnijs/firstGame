@@ -4,6 +4,7 @@ import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class NPC extends Entity {
@@ -16,10 +17,10 @@ public class NPC extends Entity {
 
     private final String name;
     private final WeekSchedule weekSchedule;
-    private ArrayList<Position> movementPath;
+    private List<Position> movementPath;
     private Activity activity;
     private final MovementGraph movementGraph;
-    private final ArrayList<Integer> dialogueOptions;
+    private final List<Integer> dialogueOptions;
 
     public NPC(Builder builder){
         super(builder.position, builder.spritePath);
@@ -39,14 +40,14 @@ public class NPC extends Entity {
         return weekSchedule;
     }
 
-    public ArrayList<Position> getMovementPath(){
+    public List<Position> getMovementPath(){
         return this.movementPath;
     }
 
-    public void setMovementPath(ArrayList<Position> movementPath){
-        Objects.requireNonNull(movementPath, "The movement path of an npc cannot be null");
+    public void setMovementPath(List<Position> movementPath){
+        Objects.requireNonNull(movementPath, "Cannot set the movement path of an npc to null");
         for(Position point : movementPath){
-            Objects.requireNonNull(point, "The points of the movement path of an npc cannot be null");
+            Objects.requireNonNull(point, "Cannot set the movement path of an npc to a list with a null value");
         }
         this.movementPath = movementPath;
     }
@@ -55,17 +56,47 @@ public class NPC extends Entity {
         return this.activity;
     }
 
+    public void setActivity(Activity activity){
+        Objects.requireNonNull(activity, "Cannot set the activity of an npc to null");
+        this.activity = activity;
+    }
+
     public MovementGraph getMovementGraph(){
         return this.movementGraph;
     }
-    public ArrayList<Integer> getDialogueOptions(){
+
+    public List<Integer> getDialogueOptions(){
         return dialogueOptions;
     }
 
-    public void setActivity(Activity activity){
-        Objects.requireNonNull(activity, "The activity of an npc must not be null.");
-        this.activity = activity;
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof NPC)){
+            return false;
+        }
+        NPC npc = (NPC) o;
+        System.out.println(weekSchedule.equals(npc.weekSchedule));
+        return getPosition().equals(npc.getPosition()) &&
+                getSpritePath().equals(npc.getSpritePath()) &&
+                name.equals(npc.name) &&
+                weekSchedule.equals(npc.weekSchedule) &&
+                movementPath.equals(npc.movementPath) &&
+                activity.equals(npc.activity) &&
+                movementGraph.equals(npc.movementGraph) &&
+                dialogueOptions.equals(npc.dialogueOptions);
     }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(getPosition(), getSpritePath(), name, weekSchedule,
+                movementPath, activity, movementGraph, dialogueOptions);
+    }
+
+
+
     public static Builder builder(){
         return new NPC.Builder();
     }
@@ -79,10 +110,10 @@ public class NPC extends Entity {
         // NPC fields
         private String name;
         private WeekSchedule weekSchedule;
-        private ArrayList<Position> movementPath = new ArrayList<>();
+        private List<Position> movementPath = new ArrayList<>();
         private Activity activity;
         private MovementGraph movementGraph;
-        private ArrayList<Integer> dialogueOptions = new ArrayList<>();
+        private List<Integer> dialogueOptions = new ArrayList<>();
 
 
         private Builder(){
@@ -110,7 +141,7 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder movementPath(ArrayList<Position> movementPath){
+        public Builder movementPath(List<Position> movementPath){
             this.movementPath = movementPath;
             return this;
         }
@@ -125,7 +156,7 @@ public class NPC extends Entity {
             return this;
         }
 
-        public Builder dialogueOptions(ArrayList<Integer> dialogueOptions){
+        public Builder dialogueOptions(List<Integer> dialogueOptions){
             this.dialogueOptions = dialogueOptions;
             return this;
         }

@@ -99,6 +99,19 @@ public class WeekScheduleTest {
         );
     }
 
+    @Test
+    public void testEquals(){
+        WeekSchedule weekSchedule = WeekSchedule.builder().daySchedules(generateValidMapOfSchedules()).build();
+        WeekSchedule weekSchedule2 = WeekSchedule.builder().daySchedules(generateValidMapOfSchedules()).build();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(weekSchedule, weekSchedule2),
+                () -> Assertions.assertNotEquals(weekSchedule, null),
+                () -> Assertions.assertNotEquals(weekSchedule, new ArrayList<>()),
+                () -> Assertions.assertEquals(weekSchedule.hashCode(), weekSchedule2.hashCode())
+        );
+    }
+
 
 
     private HashMap<Day, DaySchedule> generateValidMapOfSchedules(){
