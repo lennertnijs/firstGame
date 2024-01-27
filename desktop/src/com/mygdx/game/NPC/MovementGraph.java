@@ -19,11 +19,14 @@ public class MovementGraph {
         if(!movementGraph.containsKey(start) || !movementGraph.containsKey(goal)){
             throw new IllegalArgumentException("The goal position does not exist in the movement graph.");
         }
-
         if(start.equals(goal)){
             return new ArrayList<>();
         }
+        return breadFirstSearch(start, goal);
+    }
 
+
+    private ArrayList<Position> breadFirstSearch(Position start, Position goal){
         LinkedList<ArrayList<Position>> queue = new LinkedList<>();
         queue.add(new ArrayList<>(Collections.singletonList(start)));
 
