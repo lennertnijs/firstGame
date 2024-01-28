@@ -2,75 +2,68 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.Service.NPCService;
+import com.mygdx.game.Player.Player;
 
 public class KeyboardInputController {
 
-    private final OrthographicCamera camera;
-    private final Rectangle rectangle;
     private final NPCController npcController;
+    private final Player player;
+    private final double sqrtTwo = 1/Math.sqrt(2);
 
-    public KeyboardInputController(OrthographicCamera camera, Rectangle rectangle, NPCController npcController){
-        this.camera = camera;
-        this.rectangle = rectangle;
+    public KeyboardInputController(Player player, NPCController npcController){
+        this.player = player;
         this.npcController = npcController;
 
     }
 
     public void handleMovement(){
-        int movement = (int)(200 * Gdx.graphics.getDeltaTime());
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-        };
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            Position position = Position.builder().x((int) (rectangle.x - movement)).y((int) rectangle.y).build();
-            boolean collides = npcController.checkCollision(position);
-            if(!collides){
-                rectangle.x -= 200 * Gdx.graphics.getDeltaTime();
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            Position position = Position.builder().x((int) (rectangle.x + movement)).y((int) rectangle.y).build();
-            boolean collides = npcController.checkCollision(position);
-            if(!collides){
-                rectangle.x += 200 * Gdx.graphics.getDeltaTime();
-            }
-        }
+        int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
+        int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
+        boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+        boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+        boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
+        int currentX = player.getPosition().getX();
+        int currentY = player.getPosition().getY();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            Position position = Position.builder().x((int) (rectangle.x)).y((int) rectangle.y - movement).build();
-            boolean collides = npcController.checkCollision(position);
-            if(!collides){
-                rectangle.y -= 200 * Gdx.graphics.getDeltaTime();
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            Position position = Position.builder().x((int) (rectangle.x)).y((int) rectangle.y + movement).build();
-            boolean collides = npcController.checkCollision(position);
-            if(!collides){
-                rectangle.y += 200 * Gdx.graphics.getDeltaTime();
-            }
-        }
+        Position newPosition = Position.builder().x(currentX).y(currentY).build();
 
-        if (rectangle.x < 0) {
-            rectangle.x = 0;
+        if(up && down || left && right){
+            return;
         }
-        if (rectangle.x > 5000) {
-            rectangle.x = 5000;
+        if(up){
+            newPosition = buildNewPosition(currentX, currentY + movement);
         }
-        if (rectangle.y < 0) {
-            rectangle.y = 0;
+        if(right){
+            newPosition = buildNewPosition(currentX + movement, currentY);
         }
-        if (rectangle.y > 2500) {
-            rectangle.y = 2500;
+        if(down){
+            newPosition = buildNewPosition(currentX , currentY - movement);
         }
-        camera.position.set(rectangle.x, rectangle.y, 0);
+        if(left){
+            newPosition = buildNewPosition(currentX - movement, currentY);
+        }
+        if(up && right){
+            newPosition = buildNewPosition(currentX + diagonalMovement, currentY + diagonalMovement);
+        }
+        if(right && down){
+            newPosition = buildNewPosition(currentX + diagonalMovement, currentY - diagonalMovement);
+        }
+        if(down && left){
+            newPosition = buildNewPosition(currentX - diagonalMovement, currentY - diagonalMovement);
+        }
+        if(left && up){
+            newPosition = buildNewPosition(currentX - diagonalMovement, currentY + diagonalMovement);
+        }
+        boolean collisionWithNPC = npcController.checkCollision(newPosition);
+        if(!collisionWithNPC){
+            player.setPosition(newPosition);
+        }
+    }
+
+    private Position buildNewPosition(int x, int y){
+        return Position.builder().x(x).y(y).build();
     }
 }

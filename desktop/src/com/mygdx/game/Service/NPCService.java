@@ -53,10 +53,8 @@ public class NPCService {
         for(NPC npc: repository.getNpcs()){
             int npcX = npc.getPosition().getX();
             int npcY = npc.getPosition().getY();
-            System.out.println("The position of the player:" + x + " " + y);
-            System.out.println("The position of the npc:" + npcX + " " + npcY);
-            boolean collides = x < npcX + NPC_WIDTH && npcX <= x + PLAYER_WIDTH &&
-                               y < npcY + NPC_HEIGHT && npcY <= y + PLAYER_HEIGHT;
+            boolean collides = x <= npcX + NPC_WIDTH && npcX <= x + PLAYER_WIDTH &&
+                               y <= npcY + NPC_HEIGHT && npcY <= y + PLAYER_HEIGHT;
             if(collides){
                 return true;
             }

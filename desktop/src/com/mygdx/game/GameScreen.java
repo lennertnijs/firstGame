@@ -12,9 +12,14 @@ import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
+import com.mygdx.game.Player.Inventory;
+import com.mygdx.game.Player.Player;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
+
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -35,6 +40,10 @@ public class GameScreen implements Screen {
     ClockService clockService;
 
     KeyboardInputController keyboardInput;
+    Position position = Position.builder().x(960).y(510).build();
+    Player player = Player.builder().position(position).name("bartje")
+            .inventory(Inventory.builder().size(0).items(new ArrayList<>()).build())
+            .build();
 
 
 
@@ -81,7 +90,7 @@ public class GameScreen implements Screen {
         characterRect.x = (float) 1920 / 2;
         characterRect.y = 510;
 
-        keyboardInput = new KeyboardInputController(camera, characterRect, npcController);
+        keyboardInput = new KeyboardInputController(player, npcController);
     }
 
 
@@ -104,13 +113,14 @@ public class GameScreen implements Screen {
         clockController.updateClock();
 
         clockController.updateClock();
-
+        keyboardInput.handleMovement();
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
-        game.batch.draw(character, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
-        keyboardInput.handleMovement();
+        game.batch.draw(character, player.getPosition().getX(), player.getPosition().getY(), characterRect.width, characterRect.height);
+
+        camera.position.set(player.getPosition().getX(), player.getPosition().getY(), 0);
         game.batch.end();
     }
 
