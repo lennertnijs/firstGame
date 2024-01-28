@@ -1,12 +1,15 @@
 package NPC;
 
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Constants;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.*;
 

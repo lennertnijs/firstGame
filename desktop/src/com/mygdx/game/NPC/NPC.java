@@ -1,5 +1,7 @@
 package com.mygdx.game.NPC;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
 

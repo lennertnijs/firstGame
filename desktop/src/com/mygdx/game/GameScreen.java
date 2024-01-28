@@ -20,15 +20,10 @@ public class GameScreen implements Screen {
     final MyGame game;
     Texture map;
     Texture character;
-    Texture charRight;
-    Texture charLeft;
     Rectangle characterRect;
     Music rainMusic;
     OrthographicCamera camera;
     Rectangle mapRect;
-    Texture frame;
-
-    Rectangle inventorySlot;
 
 
     // ===========================
@@ -61,13 +56,9 @@ public class GameScreen implements Screen {
         clock = clockController.getClock();
 
 
-
         // load the images for the droplet and the bucket, 64x64 pixels each
         map = new Texture(Gdx.files.internal("images/untitled.png"));
         character = new Texture(Gdx.files.internal("images/guy.png"));
-        charLeft = new Texture(Gdx.files.internal("images/guy_left.png"));
-        charRight = new Texture(Gdx.files.internal("images/guy_right.png"));
-        frame = new Texture(Gdx.files.internal("images/frame.png"));
 
         // load the drop sound effect and the rain background "music"
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
@@ -89,12 +80,6 @@ public class GameScreen implements Screen {
         characterRect.width = 128;
         characterRect.x = (float) 1920 / 2;
         characterRect.y = 510;
-
-        inventorySlot = new Rectangle();
-        inventorySlot.height = 128;
-        inventorySlot.width = 128;
-        inventorySlot.x = (float) 1920 / 2;
-        inventorySlot.y = 0;
 
         keyboardInput = new KeyboardInputController(camera, characterRect);
     }
@@ -118,7 +103,6 @@ public class GameScreen implements Screen {
         npcController.updateNPCs();
         clockController.updateClock();
 
-        game.batch.draw(frame, inventorySlot.x, inventorySlot.y, inventorySlot.width, inventorySlot.height);
         clockController.updateClock();
 
 

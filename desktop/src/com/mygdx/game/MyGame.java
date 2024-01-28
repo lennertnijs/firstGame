@@ -10,6 +10,9 @@ public class MyGame extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
 
+    public MyGame(){
+
+    }
     @Override
     public void create(){
         batch = new SpriteBatch();
