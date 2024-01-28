@@ -76,12 +76,12 @@ public class GameScreen implements Screen {
         mapRect.y = 0;
 
         characterRect = new Rectangle();
-        characterRect.height = 256;
-        characterRect.width = 128;
+        characterRect.height = 128;
+        characterRect.width = 64;
         characterRect.x = (float) 1920 / 2;
         characterRect.y = 510;
 
-        keyboardInput = new KeyboardInputController(camera, characterRect);
+        keyboardInput = new KeyboardInputController(camera, characterRect, npcController);
     }
 
 
@@ -104,7 +104,6 @@ public class GameScreen implements Screen {
         clockController.updateClock();
 
         clockController.updateClock();
-
 
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);

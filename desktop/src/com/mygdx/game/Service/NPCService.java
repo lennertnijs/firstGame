@@ -8,7 +8,7 @@ import com.mygdx.game.NPC.*;
 
 import java.util.ArrayList;
 
-import static com.mygdx.game.Constants.STANDARD_MOVEMENT_SPEED;
+import static com.mygdx.game.Constants.*;
 
 public class NPCService {
 
@@ -45,6 +45,23 @@ public class NPCService {
                 checkMove(npc);
             }
         }
+    }
+
+    public boolean collides(Position playerPosition){
+        int x = playerPosition.getX();
+        int y = playerPosition.getY();
+        for(NPC npc: repository.getNpcs()){
+            int npcX = npc.getPosition().getX();
+            int npcY = npc.getPosition().getY();
+            System.out.println("The position of the player:" + x + " " + y);
+            System.out.println("The position of the npc:" + npcX + " " + npcY);
+            boolean collides = x < npcX + NPC_WIDTH && npcX <= x + PLAYER_WIDTH &&
+                               y < npcY + NPC_HEIGHT && npcY <= y + PLAYER_HEIGHT;
+            if(collides){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void checkMove(NPC npc){
@@ -114,5 +131,9 @@ public class NPCService {
 
     private void removeFirstPositionFromPath(NPC npc){
         npc.getMovementPath().remove(0);
+    }
+
+    public static int getInt(){
+        return 5;
     }
 }

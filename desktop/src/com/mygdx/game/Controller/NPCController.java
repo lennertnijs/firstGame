@@ -1,6 +1,7 @@
 package com.mygdx.game.Controller;
 
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
 
@@ -26,5 +27,9 @@ public class NPCController {
     public void updateNPCs(){
         npcService.updateNPCS();
         npcDrawer.drawAllNPCS(npcService.getAllNPCS());
+    }
+
+    public boolean checkCollision(Position position){
+        return npcService.collides(position);
     }
 }

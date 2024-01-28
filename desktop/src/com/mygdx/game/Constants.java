@@ -12,6 +12,10 @@ public class Constants {
 
     public static int STANDARD_MOVEMENT_SPEED = 100;
 
-    public static int NPC_WIDTH = 32;
-    public static int NPC_HEIGHT = 64;
+    public static int NPC_WIDTH = 64;
+    public static int NPC_HEIGHT = 128;
+
+    public static int PLAYER_WIDTH = 64;
+    public static int PLAYER_HEIGHT = 128;
+
 }

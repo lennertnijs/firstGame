@@ -10,7 +10,7 @@
         "day": "MONDAY",
         "daySchedule": [
           {
-            "time": "8:30",
+            "time": "8:35",
             "x": "500",
             "y": "1000",
             "activity": "MINING",

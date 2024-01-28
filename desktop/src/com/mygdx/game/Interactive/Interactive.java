@@ -2,5 +2,5 @@ package com.mygdx.game.Interactive;
 
 public interface Interactive {
 
-    void interact();
+    void interact(); // item
 }
