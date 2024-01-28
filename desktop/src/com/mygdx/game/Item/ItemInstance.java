@@ -3,16 +3,16 @@ package com.mygdx.game.Item;
 import java.util.Objects;
 
 public class ItemInstance {
-    private final Item item;
+    private final Item usableItem;
     private int amount;
 
     public ItemInstance(Builder builder){
-        this.item = builder.item;
+        this.usableItem = builder.usableItem;
         this.amount = builder.amount;
     }
 
     public Item getItem(){
-        return item;
+        return usableItem;
     }
 
     public int getAmount(){
@@ -23,7 +23,7 @@ public class ItemInstance {
         if(increase < 0){
             throw new IllegalArgumentException("The amount of an item instance must not be increased by a negative value");
         }
-        return (amount + increase) <= item.getStackSize();
+        return (amount + increase) <= usableItem.getStackSize();
     }
 
     public boolean canDecreaseAmountBy(int decrease){
@@ -65,15 +65,15 @@ public class ItemInstance {
 
     public static class Builder{
 
-        private Item item;
+        private Item usableItem;
         private int amount;
 
         public Builder(){
 
         }
 
-        public Builder item(Item item){
-            this.item = item;
+        public Builder item(Item usableItem){
+            this.usableItem = usableItem;
             return this;
         }
 
@@ -83,8 +83,8 @@ public class ItemInstance {
         }
 
         public ItemInstance build(){
-            Objects.requireNonNull(item, "The item of an item instance cannot be null");
-            if(amount <= 0 || amount > item.getStackSize()){
+            Objects.requireNonNull(usableItem, "The item of an item instance cannot be null");
+            if(amount <= 0 || amount > usableItem.getStackSize()){
                 throw new IllegalArgumentException("The amount of an item instance has to be positive");
             }
             return new ItemInstance(this);

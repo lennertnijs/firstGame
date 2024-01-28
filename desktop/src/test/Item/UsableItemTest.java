@@ -1,25 +1,25 @@
 package Item;
 
-import com.mygdx.game.Item.Item;
+import com.mygdx.game.Item.UsableItem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ItemTest {
+public class UsableItemTest {
 
     @Test
     public void testConstructor(){
-        Item item = Item.builder().id(0).stackSize(64).name("stone").spritePath("/items").build();
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("stone").spritePath("/items").build();
         Assertions.assertAll(
-                () -> Assertions.assertEquals(item.getId(), 0),
-                () -> Assertions.assertEquals(item.getStackSize(), 64),
-                () -> Assertions.assertEquals(item.getName(), "stone"),
-                () -> Assertions.assertEquals(item.getSpritePath(), "/items")
+                () -> Assertions.assertEquals(usableItem.getId(), 0),
+                () -> Assertions.assertEquals(usableItem.getStackSize(), 64),
+                () -> Assertions.assertEquals(usableItem.getName(), "stone"),
+                () -> Assertions.assertEquals(usableItem.getSpritePath(), "/items")
         );
     }
 
     @Test
     public void testConstructorInvalidId(){
-        Item.Builder builder = generateValidItemBuilder();
+        UsableItem.Builder builder = generateValidItemBuilder();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.id(-1).build())
         );
@@ -27,7 +27,7 @@ public class ItemTest {
 
     @Test
     public void testConstructorInvalidStackSize(){
-        Item.Builder builder = generateValidItemBuilder();
+        UsableItem.Builder builder = generateValidItemBuilder();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.stackSize(0).build())
         );
@@ -35,7 +35,7 @@ public class ItemTest {
 
     @Test
     public void testConstructorInvalidName(){
-        Item.Builder builder = generateValidItemBuilder();
+        UsableItem.Builder builder = generateValidItemBuilder();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.name(null).build())
         );
@@ -43,13 +43,13 @@ public class ItemTest {
 
     @Test
     public void testConstructorInvalidSpritePath(){
-        Item.Builder builder = generateValidItemBuilder();
+        UsableItem.Builder builder = generateValidItemBuilder();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.spritePath(null).build())
         );
     }
 
-    private Item.Builder generateValidItemBuilder(){
-       return Item.builder().id(0).stackSize(64).name("stone").spritePath("/items");
+    private UsableItem.Builder generateValidItemBuilder(){
+       return UsableItem.builder().id(0).stackSize(64).name("stone").spritePath("/items");
     }
 }

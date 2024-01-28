@@ -1,30 +1,31 @@
 package Item;
 
 import com.mygdx.game.Item.Item;
+import com.mygdx.game.Item.UsableItem;
 import com.mygdx.game.Item.ItemInstance;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ItemInstanceTest {
+public class UsableItemInstanceTest {
 
     @Test
     public void testConstructor(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(item).build();
+        Item usableItem = (Item) UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(usableItem).build();
         Assertions.assertAll(
-                () -> Assertions.assertEquals(itemInstance.getItem(), item),
+                () -> Assertions.assertEquals(itemInstance.getItem(), usableItem),
                 () -> Assertions.assertEquals(itemInstance.getAmount(), 24)
         );
     }
 
     @Test
     public void testConstructorInvalidAmount(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance.Builder builder = ItemInstance.builder().amount(24).item(item);
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance.Builder builder = ItemInstance.builder().amount(24).item(usableItem);
         Assertions.assertAll(
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.amount(-1).build()),
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
-                        () -> builder.amount(item.getStackSize()+1).build())
+                        () -> builder.amount(usableItem.getStackSize()+1).build())
         );
     }
 
@@ -38,8 +39,8 @@ public class ItemInstanceTest {
 
     @Test
     public void testCanIncreaseAmountBy(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(item).build();
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(usableItem).build();
         Assertions.assertAll(
                 () -> Assertions.assertTrue(itemInstance.canIncreaseAmountBy(40)),
                 () -> Assertions.assertTrue(itemInstance.canIncreaseAmountBy(0)),
@@ -51,8 +52,8 @@ public class ItemInstanceTest {
 
     @Test
     public void testCanDecreaseAmountBy(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(item).build();
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(usableItem).build();
         Assertions.assertAll(
                 () -> Assertions.assertTrue(itemInstance.canDecreaseAmountBy(24)),
                 () -> Assertions.assertTrue(itemInstance.canDecreaseAmountBy(0)),
@@ -64,8 +65,8 @@ public class ItemInstanceTest {
 
     @Test
     public void testIncreaseAmountBy(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(item).build();
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(usableItem).build();
         itemInstance.increaseAmount(40);
         Assertions.assertEquals(itemInstance.getAmount(), 64);
         Assertions.assertAll(
@@ -76,8 +77,8 @@ public class ItemInstanceTest {
 
     @Test
     public void testDecreaseAmountBy(){
-        Item item = Item.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
-        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(item).build();
+        UsableItem usableItem = UsableItem.builder().id(0).stackSize(64).name("Bert").spritePath("/item").build();
+        ItemInstance itemInstance = ItemInstance.builder().amount(24).item(usableItem).build();
         itemInstance.decreaseAmount(24);
         Assertions.assertEquals(itemInstance.getAmount(), 0);
         Assertions.assertAll(
