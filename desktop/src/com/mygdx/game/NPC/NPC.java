@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NPC extends Entity {
+public class NPC extends Entity{
 
     /**
      * Dialogue tree -> HashMap<Integer, x>
@@ -67,6 +67,10 @@ public class NPC extends Entity {
 
     public List<Integer> getDialogueOptions(){
         return dialogueOptions;
+    }
+
+    public void interact(){
+        int x = 0;
     }
 
     @Override

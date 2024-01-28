@@ -11,9 +11,6 @@ public enum Season {
         this.index = index;
     }
 
-    public static Season getSeason(int index){
-        return values()[index];
-    }
     public Season next(){
         int nextIndex = this.index + 1;
         int divisor = values().length;

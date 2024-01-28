@@ -2,18 +2,17 @@ package com.mygdx.game;
 
 //
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Input.KeyboardInputController;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
 
@@ -40,6 +39,8 @@ public class GameScreen implements Screen {
     NPCService npcService;
     ClockService clockService;
 
+    KeyboardInputController keyboardInput;
+
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -60,6 +61,7 @@ public class GameScreen implements Screen {
         clock = clockController.getClock();
 
 
+
         // load the images for the droplet and the bucket, 64x64 pixels each
         map = new Texture(Gdx.files.internal("images/untitled.png"));
         character = new Texture(Gdx.files.internal("images/guy.png"));
@@ -77,8 +79,8 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         mapRect = new Rectangle();
-        mapRect.width = 1600;
-        mapRect.height = 1600;
+        mapRect.width = 4800;
+        mapRect.height = 4800;
         mapRect.x = 0;
         mapRect.y = 0;
 
@@ -93,6 +95,8 @@ public class GameScreen implements Screen {
         inventorySlot.width = 128;
         inventorySlot.x = (float) 1920 / 2;
         inventorySlot.y = 0;
+
+        keyboardInput = new KeyboardInputController(camera, characterRect);
     }
 
 
@@ -116,15 +120,15 @@ public class GameScreen implements Screen {
 
         game.batch.draw(frame, inventorySlot.x, inventorySlot.y, inventorySlot.width, inventorySlot.height);
         clockController.updateClock();
-        game.font.getData().setScale(3, 3);
+
+
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
-        movementInputs();
+        game.batch.draw(character, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
+        keyboardInput.handleMovement();
         game.batch.end();
-
-        camera.position.set(characterRect.x, characterRect.y, 0);
     }
 
 
@@ -155,48 +159,5 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         rainMusic.dispose();
-    }
-
-    private void movementInputs() {
-        // process user input
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-        }
-        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            characterRect.x -= 200 * Gdx.graphics.getDeltaTime();
-            inventorySlot.x -= 200 * Gdx.graphics.getDeltaTime();
-            game.batch.draw(charLeft, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
-        }
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-            characterRect.x += 200 * Gdx.graphics.getDeltaTime();
-            inventorySlot.x += 200 * Gdx.graphics.getDeltaTime();
-            game.batch.draw(charRight, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
-        }
-
-        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-            characterRect.y -= 200 * Gdx.graphics.getDeltaTime();
-            inventorySlot.y -= 200 * Gdx.graphics.getDeltaTime();
-            game.batch.draw(character, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
-        }
-        if (Gdx.input.isKeyPressed(Keys.UP)) {
-            characterRect.y += 200 * Gdx.graphics.getDeltaTime();
-            inventorySlot.y += 200 * Gdx.graphics.getDeltaTime();
-            game.batch.draw(character, characterRect.x, characterRect.y, characterRect.width, characterRect.height);
-        }
-
-        if (characterRect.x < 0) {
-            characterRect.x = 0;
-        }
-        if (characterRect.x > 5000) {
-            characterRect.x = 5000;
-        }
-        if (characterRect.y < 0) {
-            characterRect.y = 0;
-        }
-        if (characterRect.y > 2500) {
-            characterRect.y = 2500;
-        }
     }
 }
