@@ -2,7 +2,7 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Item.ItemInstance;
-import com.mygdx.game.MovementDirection;
+import com.mygdx.game.Direction;
 import com.mygdx.game.NPC.Activity;
 
 import java.util.Objects;
@@ -16,7 +16,7 @@ public class Player {
     private boolean doingAnimation = false;
 
     private Activity activity = Activity.IDLING;
-    private final MovementDirection movementDirection = MovementDirection.DOWN;
+    private final Direction direction = Direction.DOWN;
 
     public Player(Builder builder){
         this.name = builder.name;
@@ -66,8 +66,8 @@ public class Player {
     }
 
 
-    public MovementDirection getMovementDirection(){
-        return movementDirection;
+    public Direction getMovementDirection(){
+        return direction;
     }
 
     public static Builder builder(){

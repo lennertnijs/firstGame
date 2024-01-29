@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-public enum MovementDirection {
+public enum Direction {
 
     UP,
     RIGHT,

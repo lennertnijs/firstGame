@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-//
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -97,20 +96,20 @@ public class GameScreen implements Screen {
         texture[3] = frame4;
         animation = new Animation<>(0.25F, texture);
 
-        HashMap<MovementDirection, Texture> map1 = new HashMap<>();
-        map1.put(MovementDirection.UP, frame1);
-        map1.put(MovementDirection.RIGHT, frame1);
-        map1.put(MovementDirection.DOWN, frame1);
-        map1.put(MovementDirection.LEFT, frame1);
+        HashMap<Direction, Texture> map1 = new HashMap<>();
+        map1.put(Direction.UP, frame1);
+        map1.put(Direction.RIGHT, frame1);
+        map1.put(Direction.DOWN, frame1);
+        map1.put(Direction.LEFT, frame1);
 
 
-        HashMap<MovementDirection, Animation<Texture>> map2 = new HashMap<>();
-        map2.put(MovementDirection.UP, animation);
-        map2.put(MovementDirection.RIGHT, animation);
-        map2.put(MovementDirection.DOWN, animation);
-        map2.put(MovementDirection.LEFT, animation);
+        HashMap<Direction, Animation<Texture>> map2 = new HashMap<>();
+        map2.put(Direction.UP, animation);
+        map2.put(Direction.RIGHT, animation);
+        map2.put(Direction.DOWN, animation);
+        map2.put(Direction.LEFT, animation);
 
-        playerTexturesRepo = PlayerTexturesRepo.builder().idleAnimation(map1).movementAnimations(map2).build();
+        playerTexturesRepo = PlayerTexturesRepo.builder().idleTextures(map1).movementAnimations(map2).build();
 
         playerDrawer = new PlayerDrawer(game, playerTexturesRepo);
         timePassed = 0;

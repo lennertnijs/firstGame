@@ -4,20 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Constants;
-import com.mygdx.game.Item.Tool;
-import com.mygdx.game.Item.ToolInstance;
-import com.mygdx.game.MovementDirection;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
 
 public class PlayerDrawer {
 
-    MyGame game;
-
-    PlayerTexturesRepo playerTexturesRepo;
+    private final MyGame game;
+    private final PlayerTexturesRepo playerTexturesRepo;
     private float elapsed;
-    Animation<Texture> animation;
+    private Animation<Texture> animation;
 
     public PlayerDrawer(MyGame game, PlayerTexturesRepo playerTexturesRepo){
         this.game = game;
@@ -34,7 +30,9 @@ public class PlayerDrawer {
             drawPlayerMovement(player);
         }
     }
-    public void drawPlayerMovement(Player player){
+
+
+    private void drawPlayerMovement(Player player){
         if(!player.getDoingAnimation()){
             player.setDoingAnimation(true);
             elapsed = 0;
