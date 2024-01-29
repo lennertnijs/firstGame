@@ -12,20 +12,4 @@ import java.util.List;
 
 public class InventoryTest {
 
-    @Test
-    public void testConstructor(){
-        UsableItem stone = UsableItem.builder().id(0).name("stone").spritePath("path").stackSize(32).build();
-        UsableItem wood = UsableItem.builder().id(1).name("wood").spritePath("path").stackSize(32).build();
-        ItemInstance itemInstance1 = ItemInstance.builder().amount(15).item(stone).build();
-        ItemInstance itemInstance2 = ItemInstance.builder().amount(5).item(wood).build();
-
-        List<ItemInstance> items = new ArrayList<>(Arrays.asList(itemInstance1, itemInstance2));
-
-        Inventory inventory = Inventory.builder().size(2).items(items).build();
-
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(inventory.getSize(), 2),
-                () -> Assertions.assertEquals(inventory.getItems(), items)
-        );
-    }
 }

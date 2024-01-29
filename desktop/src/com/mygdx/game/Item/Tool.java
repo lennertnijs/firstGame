@@ -2,11 +2,23 @@ package com.mygdx.game.Item;
 
 public class Tool extends UsableItem{
 
-    public Tool(){
-        super();
+    private int toolId;
+    public Tool(Builder<?> builder){
+        super(builder);
+        this.toolId = builder.toolId;
     }
 
-    public void print(){
-        System.out.println("Tool");
+    public static class Builder<T extends Builder<T>> extends UsableItem.Builder<T>{
+        private int toolId;
+
+        public T toolId(int id){
+            this.toolId = toolId;
+            return self();
+        }
+
+        @Override
+        public Tool build(){
+            return new Tool(this);
+        }
     }
 }

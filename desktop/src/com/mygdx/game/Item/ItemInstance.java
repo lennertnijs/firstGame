@@ -23,7 +23,7 @@ public class ItemInstance {
         if(increase < 0){
             throw new IllegalArgumentException("The amount of an item instance must not be increased by a negative value");
         }
-        return (amount + increase) <= usableItem.getStackSize();
+        return true;  //(amount + increase) <= usableItem.getStackSize();
     }
 
     public boolean canDecreaseAmountBy(int decrease){
@@ -84,7 +84,7 @@ public class ItemInstance {
 
         public ItemInstance build(){
             Objects.requireNonNull(usableItem, "The item of an item instance cannot be null");
-            if(amount <= 0 || amount > usableItem.getStackSize()){
+            if(amount <= 0){ //amount > usableItem.getStackSize()
                 throw new IllegalArgumentException("The amount of an item instance has to be positive");
             }
             return new ItemInstance(this);

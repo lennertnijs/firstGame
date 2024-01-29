@@ -1,9 +1,8 @@
 package com.mygdx.game.Item;
 
-public class Potion extends UsableItem{
+public class Potion{
 
     public Potion(){
-        super();
     }
 
     public void print(){
