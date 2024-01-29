@@ -18,4 +18,7 @@ public class Constants {
     public static int PLAYER_WIDTH = 64;
     public static int PLAYER_HEIGHT = 128;
 
+    public static final int TOOL_STACK_SIZE = 1;
+    public static final int WEAPON_STACK_SIZE = 1;
+
 }

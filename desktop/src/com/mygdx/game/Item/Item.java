@@ -3,14 +3,14 @@ package com.mygdx.game.Item;
 import java.util.Objects;
 
 public class Item {
-    private final int stackSize;
     private final String name;
     private final String spritePath;
+    private final int stackSize;
 
-    public Item(Builder<?> builder){
-        this.stackSize = builder.stackSize;
+    public Item(Builder builder){
         this.name = builder.name;
         this.spritePath = builder.spritePath;
+        this.stackSize = builder.stackSize;
     }
 
     public final int getStackSize(){
@@ -25,39 +25,42 @@ public class Item {
         return spritePath;
     }
 
+    public static Builder itemBuilder(){
+        return new Builder();
+    }
 
-    public static class Builder<T extends Builder<T>>{
-        private int stackSize;
+    public static class Builder{
+
         private String name;
         private String spritePath;
+        private int stackSize;
 
-        public T stackSize(int stackSize){
-            this.stackSize = stackSize;
-            return self();
+        public Builder(){
+
         }
 
-        public T name(String name){
+        public Builder name(String name){
             this.name = name;
-            return self();
+            return this;
         }
 
-        public T spritePath(String spritePath){
+        public Builder spritePath(String spritePath){
             this.spritePath = spritePath;
-            return self();
+            return this;
+        }
+
+        public Builder stackSize(int stackSize){
+            this.stackSize = stackSize;
+            return this;
         }
 
         public Item build(){
+            Objects.requireNonNull(name, "The name of an item must not be null");
+            Objects.requireNonNull(spritePath, "The spritePath of an item must not be null");
             if(stackSize <= 0){
                 throw new IllegalArgumentException("The stack size of an item must be strictly positive");
             }
-            Objects.requireNonNull(name);
-            Objects.requireNonNull(spritePath);
             return new Item(this);
-        }
-
-        @SuppressWarnings("unchecked")
-        protected T self(){
-            return (T) this;
         }
     }
 }
