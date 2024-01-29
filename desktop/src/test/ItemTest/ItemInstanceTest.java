@@ -58,6 +58,34 @@ public class ItemInstanceTest {
     }
 
 
+    @Test
+    public void testCanDecrease(){
+        Item item = generateItem(32);
+        ItemInstance itemInstance = ItemInstance.builder().amount(16).item(item).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemInstance.canDecreaseAmountBy(16)),
+                () -> Assertions.assertFalse(itemInstance.canDecreaseAmountBy(17)),
+                () -> Assertions.assertTrue(itemInstance.canIncreaseAmountBy(0)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemInstance.canIncreaseAmountBy(-1))
+        );
+    }
+
+    @Test
+    public void testDecrease(){
+        Item item = generateItem(32);
+        ItemInstance itemInstance = ItemInstance.builder().amount(16).item(item).build();
+        itemInstance.decreaseAmount(16);
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(itemInstance.getAmount(), 0),
+
+                () -> itemInstance.decreaseAmount(0),
+                () -> Assertions.assertEquals(itemInstance.getAmount(), 0),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemInstance.decreaseAmount(1)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemInstance.decreaseAmount(-1))
+        );
+    }
+
+
 
 
     private Item generateItem(int stackSize){
