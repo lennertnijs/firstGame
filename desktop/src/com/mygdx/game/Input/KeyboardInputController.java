@@ -3,20 +3,28 @@ package com.mygdx.game.Input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Controller.NPCController;
+import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Interactive.Interactive;
+import com.mygdx.game.Interactive.InteractiveController;
 import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Item.ToolInstance;
+import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
 
 public class KeyboardInputController {
 
     private final NPCController npcController;
+    private final InteractiveController interactiveController;
     private final Player player;
+    private final PlayerDrawer playerDrawer;
     private final double sqrtTwo = 1/Math.sqrt(2);
 
-    public KeyboardInputController(Player player, NPCController npcController){
+    public KeyboardInputController(Player player, NPCController npcController, InteractiveController  interactiveController, PlayerDrawer playerDrawer){
         this.player = player;
         this.npcController = npcController;
+        this.interactiveController = interactiveController;
+        this.playerDrawer = playerDrawer;
 
     }
 
@@ -31,6 +39,11 @@ public class KeyboardInputController {
         int currentY = player.getPosition().getY();
 
         Position newPosition = Position.builder().x(currentX).y(currentY).build();
+
+        if(Gdx.input.isKeyPressed(Input.Keys.E)){
+            player.setActivity(Activity.WALKING);
+            Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+50, player.getPosition().getY());
+        }
 
         if(up && down || left && right){
             return;
@@ -72,6 +85,7 @@ public class KeyboardInputController {
                 // command class runs execute() which calls interact() on whatever class necessary
             }
         }
+        playerDrawer.drawPlayer(player);
     }
 
     private Position buildNewPosition(int x, int y){

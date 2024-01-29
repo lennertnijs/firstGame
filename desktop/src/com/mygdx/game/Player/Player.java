@@ -2,6 +2,8 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Item.ItemInstance;
+import com.mygdx.game.MovementDirection;
+import com.mygdx.game.NPC.Activity;
 
 import java.util.Objects;
 
@@ -11,6 +13,10 @@ public class Player {
     private final Inventory inventory;
     private final int currentItemIndex;
     private Position position;
+    private boolean doingAnimation = false;
+
+    private Activity activity = Activity.IDLING;
+    private final MovementDirection movementDirection = MovementDirection.DOWN;
 
     public Player(Builder builder){
         this.name = builder.name;
@@ -42,6 +48,26 @@ public class Player {
     public void setPosition(Position position){
         Objects.requireNonNull(position);
         this.position = position;
+    }
+
+    public boolean getDoingAnimation(){
+        return doingAnimation;
+    }
+    public void setDoingAnimation(boolean bool){
+        doingAnimation = bool;
+    }
+
+    public void setActivity(Activity activity){
+        this.activity = activity;
+    }
+
+    public Activity getActivity(){
+        return activity;
+    }
+
+
+    public MovementDirection getMovementDirection(){
+        return movementDirection;
     }
 
     public static Builder builder(){

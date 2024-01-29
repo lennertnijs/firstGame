@@ -13,13 +13,18 @@ import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Drawer.PlayerDrawer;
+import com.mygdx.game.Drawer.PlayerTexturesRepo;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
+import com.mygdx.game.Interactive.InteractiveController;
 import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Player.Inventory;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
+
+import java.util.HashMap;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -48,6 +53,10 @@ public class GameScreen implements Screen {
     Animation<Texture> animation;
     float timePassed;
 
+    InteractiveController interactiveController;
+    PlayerTexturesRepo playerTexturesRepo;
+    PlayerDrawer playerDrawer;
+
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -59,6 +68,7 @@ public class GameScreen implements Screen {
         clockService = new ClockService();
         npcService = new NPCService(clockService);
 
+        interactiveController = new InteractiveController(npcService);
         npcDrawer = new NPCDrawer(game);
         clockController = new ClockController(clockService);
         npcController = new NPCController(npcService, npcDrawer);
@@ -75,7 +85,7 @@ public class GameScreen implements Screen {
         character = new Texture(Gdx.files.internal("images/guy.png"));
 
 
-        Texture frame1 = new Texture(Gdx.files.internal("images/guy.png"));
+        Texture frame1 = new Texture(Gdx.files.internal("images/lmaoxd.png"));
         Texture frame2 = new Texture(Gdx.files.internal("images/guy_right.png"));
         Texture frame3 = new Texture(Gdx.files.internal("images/guy.png"));
         Texture frame4 = new Texture(Gdx.files.internal("images/guy_left.png"));
@@ -87,6 +97,22 @@ public class GameScreen implements Screen {
         texture[3] = frame4;
         animation = new Animation<>(0.25F, texture);
 
+        HashMap<MovementDirection, Texture> map1 = new HashMap<>();
+        map1.put(MovementDirection.UP, frame1);
+        map1.put(MovementDirection.RIGHT, frame1);
+        map1.put(MovementDirection.DOWN, frame1);
+        map1.put(MovementDirection.LEFT, frame1);
+
+
+        HashMap<MovementDirection, Animation<Texture>> map2 = new HashMap<>();
+        map2.put(MovementDirection.UP, animation);
+        map2.put(MovementDirection.RIGHT, animation);
+        map2.put(MovementDirection.DOWN, animation);
+        map2.put(MovementDirection.LEFT, animation);
+
+        playerTexturesRepo = PlayerTexturesRepo.builder().idleAnimation(map1).movementAnimations(map2).build();
+
+        playerDrawer = new PlayerDrawer(game, playerTexturesRepo);
         timePassed = 0;
 
 
@@ -96,7 +122,7 @@ public class GameScreen implements Screen {
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1920, 1080);
+        camera.setToOrtho(false, 1080, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         mapRect = new Rectangle();
@@ -111,7 +137,7 @@ public class GameScreen implements Screen {
         characterRect.x = (float) 1920 / 2;
         characterRect.y = 510;
 
-        keyboardInput = new KeyboardInputController(player, npcController);
+        keyboardInput = new KeyboardInputController(player, npcController, interactiveController, playerDrawer);
     }
 
 
@@ -141,10 +167,10 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
-        game.batch.draw(character, player.getPosition().getX(), player.getPosition().getY(), characterRect.width, characterRect.height);
-        Texture texture = animation.getKeyFrame(timePassed, true);
+        //game.batch.draw(character, player.getPosition().getX(), player.getPosition().getY(), characterRect.width, characterRect.height);
+        //Texture texture = animation.getKeyFrame(timePassed, true);
 
-        game.batch.draw(texture, 200, 200);
+        //game.batch.draw(texture, 200, 200);
         camera.position.set(player.getPosition().getX(), player.getPosition().getY(), 0);
         game.batch.end();
     }
