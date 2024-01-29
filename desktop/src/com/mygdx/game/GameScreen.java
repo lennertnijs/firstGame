@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
 
     KeyboardInputController keyboardInput;
     Position position = Position.builder().x(960).y(510).build();
-    Player player = Player.builder().position(position).name("bartje")
+    Player player = Player.builder().position(position).name("Bart")
             .inventory(Inventory.builder().size(0).items(new ArrayList<>()).build())
             .build();
 
