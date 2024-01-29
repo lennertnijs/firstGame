@@ -110,7 +110,6 @@ public class GameScreen implements Screen {
         map2.put(Direction.LEFT, animation);
 
         playerTexturesRepo = PlayerTexturesRepo.builder().idleTextures(map1).movementAnimations(map2).build();
-
         playerDrawer = new PlayerDrawer(game, playerTexturesRepo);
         timePassed = 0;
 

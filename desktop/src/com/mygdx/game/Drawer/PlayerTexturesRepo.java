@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Direction;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -19,14 +18,12 @@ public class PlayerTexturesRepo {
     }
 
     public Texture getIdleTexture(Direction direction){
-        Objects.requireNonNull("Cannot return the idle Texture because the Direction is null");
-        return Objects.requireNonNull(idleTextures.get(direction));
+        return Objects.requireNonNull(idleTextures.get(direction), "No idle Texture was found for the Player");
     }
 
     public Animation<Texture> getMovementAnimation(Direction direction){
-        return movementAnimations.get(direction);
+        return Objects.requireNonNull(movementAnimations.get(direction), "No movement Animation was found for the Player");
     }
-
 
 
     public static Builder builder(){
@@ -35,28 +32,40 @@ public class PlayerTexturesRepo {
 
     public static class Builder{
 
-        private HashMap<Direction, Animation<Texture>> movementAnimations;
+        private Map<Direction, Texture> idleTextures;
+        private Map<Direction, Animation<Texture>> movementAnimations;
 
-        private HashMap<Direction, Texture> idleTextures;
-        public Builder(){
-
+        private Builder(){
         }
 
-        public Builder movementAnimations(HashMap<Direction, Animation<Texture>> movementAnimations){
-            this.movementAnimations = movementAnimations;
-            return this;
-        }
-
-        public Builder idleTextures(HashMap<Direction, Texture> idleTextures){
+        public Builder idleTextures(Map<Direction, Texture> idleTextures){
             this.idleTextures = idleTextures;
             return this;
         }
 
+        public Builder movementAnimations(Map<Direction, Animation<Texture>> movementAnimations){
+            this.movementAnimations = movementAnimations;
+            return this;
+        }
+
         public PlayerTexturesRepo build(){
-            Objects.requireNonNull(movementAnimations);
-            Objects.requireNonNull(idleTextures);
-            // add more checks
+            checkValidMap(idleTextures);
+            checkValidMap(movementAnimations);
             return new PlayerTexturesRepo(this);
+
+        }
+
+        private void checkValidMap(Map<Direction, ?> map){
+            int amountOfDirections = Direction.values().length;
+            String invalidMapMessage = "Couldn't build the playerTexture repository because the map is invalid";
+            Objects.requireNonNull(map, invalidMapMessage);
+            if(map.size() != amountOfDirections){
+                throw new IllegalArgumentException(invalidMapMessage);
+            }
+            for(Direction direction : map.keySet()){
+                Objects.requireNonNull(direction, invalidMapMessage);
+                Objects.requireNonNull(map.get(direction), invalidMapMessage);
+            }
         }
     }
 }
