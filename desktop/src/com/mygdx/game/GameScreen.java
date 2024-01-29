@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.*;
@@ -14,12 +15,11 @@ import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
+import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Player.Inventory;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
-
-import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -42,14 +42,19 @@ public class GameScreen implements Screen {
     KeyboardInputController keyboardInput;
     Position position = Position.builder().x(960).y(510).build();
     Player player = Player.builder().position(position).name("Bart")
-            .inventory(Inventory.builder().size(0).items(new ArrayList<>()).build())
+            .inventory(Inventory.builder().size(0).items(new ItemInstance[0]).build())
             .build();
+    Texture[] texture;
+    Animation<Texture> animation;
+    float timePassed;
 
 
 
     /* Loads the game screen. Only is executed upon screen load */
     public GameScreen(final MyGame game) {
         this.game = game;
+
+        texture = new Texture[4];
 
         clockService = new ClockService();
         npcService = new NPCService(clockService);
@@ -68,6 +73,22 @@ public class GameScreen implements Screen {
         // load the images for the droplet and the bucket, 64x64 pixels each
         map = new Texture(Gdx.files.internal("images/untitled.png"));
         character = new Texture(Gdx.files.internal("images/guy.png"));
+
+
+        Texture frame1 = new Texture(Gdx.files.internal("images/guy.png"));
+        Texture frame2 = new Texture(Gdx.files.internal("images/guy_right.png"));
+        Texture frame3 = new Texture(Gdx.files.internal("images/guy.png"));
+        Texture frame4 = new Texture(Gdx.files.internal("images/guy_left.png"));
+        texture[0] = frame1;
+        texture[1] = frame2;
+
+        texture[2] = frame3;
+
+        texture[3] = frame4;
+        animation = new Animation<>(0.25F, texture);
+
+        timePassed = 0;
+
 
         // load the drop sound effect and the rain background "music"
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
@@ -112,6 +133,8 @@ public class GameScreen implements Screen {
         npcController.updateNPCs();
         clockController.updateClock();
 
+        timePassed += Gdx.graphics.getDeltaTime();
+
         clockController.updateClock();
         keyboardInput.handleMovement();
         game.font.draw(game.batch, clock.getTimeInHHMM(), 1700, 800);
@@ -119,7 +142,9 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
         game.batch.draw(character, player.getPosition().getX(), player.getPosition().getY(), characterRect.width, characterRect.height);
+        Texture texture = animation.getKeyFrame(timePassed, true);
 
+        game.batch.draw(texture, 200, 200);
         camera.position.set(player.getPosition().getX(), player.getPosition().getY(), 0);
         game.batch.end();
     }

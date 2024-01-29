@@ -2,12 +2,11 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Item.ItemInstance;
 
-import java.util.List;
 import java.util.Objects;
 
 public class Inventory {
     private final int size;
-    private final List<ItemInstance> items;
+    private final ItemInstance[] items;
 
     public Inventory(Builder builder){
         this.size = builder.size;
@@ -18,8 +17,30 @@ public class Inventory {
         return size;
     }
 
-    public List<ItemInstance> getItems(){
+    public ItemInstance[] getItems(){
         return items;
+    }
+
+    public boolean hasEmptySlot(){
+        for (ItemInstance item : items) {
+            if (item == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void addItem(ItemInstance item){
+        Objects.requireNonNull(item, "Cannot add a null item to the inventory");
+        if(!hasEmptySlot()){
+            return;
+        }
+        for(int i = 0; i < items.length; i++){
+            if(items[i] == null){
+                items[i] = item;
+                return;
+            }
+        }
     }
 
 
@@ -30,7 +51,7 @@ public class Inventory {
     public static class Builder{
 
         private int size;
-        private List<ItemInstance> items;
+        private ItemInstance[] items;
 
         public Builder(){
 
@@ -41,7 +62,7 @@ public class Inventory {
             return this;
         }
 
-        public Builder items(List<ItemInstance> items){
+        public Builder items(ItemInstance[] items){
             this.items = items;
             return this;
         }
@@ -51,11 +72,8 @@ public class Inventory {
                 throw new IllegalArgumentException("The size of the inventory must not be negative or 0");
             }
             Objects.requireNonNull(items, "The item list of the inventory must not be null");
-            if(items.size() != size){
-                throw new IllegalArgumentException("The size of the inventory does not match the inventory mapping");
-            }
-            for(ItemInstance item: items){
-                Objects.requireNonNull(item, "The item instance of the inventory is not null");
+            if(items.length != size){
+                throw new IllegalArgumentException("The size of the inventory does not match the amount of items");
             }
             return new Inventory(this);
         }

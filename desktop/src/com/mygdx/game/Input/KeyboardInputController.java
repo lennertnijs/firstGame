@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Item.ItemInstance;
+import com.mygdx.game.Item.ToolInstance;
 import com.mygdx.game.Player.Player;
 
 public class KeyboardInputController {
@@ -60,6 +62,15 @@ public class KeyboardInputController {
         boolean collisionWithNPC = npcController.checkCollision(newPosition);
         if(!collisionWithNPC){
             player.setPosition(newPosition);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+            ItemInstance itemInstance = player.getCurrentItem();
+            if(itemInstance instanceof ToolInstance){
+                // call command pattern class
+                // run animation
+                // check interactive collision
+                // command class runs execute() which calls interact() on whatever class necessary
+            }
         }
     }
 
