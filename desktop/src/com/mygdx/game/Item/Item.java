@@ -1,5 +1,7 @@
 package com.mygdx.game.Item;
 
+import java.util.Objects;
+
 public abstract class Item {
     private final int stackSize;
     private final String name;
@@ -9,6 +11,8 @@ public abstract class Item {
         if(builder.stackSize <= 0){
             throw new IllegalArgumentException("The stack size of an item must be strictly positive");
         }
+        Objects.requireNonNull(builder.name);
+        Objects.requireNonNull(builder.spritePath);
         this.stackSize = builder.stackSize;
         this.name = builder.name;
         this.spritePath = builder.spritePath;
@@ -49,6 +53,7 @@ public abstract class Item {
 
         abstract Item build();
 
+        @SuppressWarnings("unchecked")
         protected T self(){
             return (T) this;
         }

@@ -1,13 +1,15 @@
 package com.mygdx.game.Item;
 
-public class NotUsableItem {
+public class NotUsableItem extends Item{
 
-    public NotUsableItem(){
-        super();
-
+    protected NotUsableItem(Builder<?> builder){
+        super(builder);
     }
 
-    public void print(){
-        System.out.println("UsableItem");
+    public static class Builder<T extends Builder<T>> extends Item.Builder<T>{
+
+        public NotUsableItem build(){
+            return new NotUsableItem(this);
+        }
     }
 }
