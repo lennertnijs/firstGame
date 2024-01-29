@@ -3,16 +3,16 @@ package com.mygdx.game.Item;
 import java.util.Objects;
 
 public class ItemInstance {
-    private final Item usableItem;
+    private final Item item;
     private int amount;
 
     public ItemInstance(Builder builder){
-        this.usableItem = builder.usableItem;
+        this.item = builder.item;
         this.amount = builder.amount;
     }
 
     public Item getItem(){
-        return usableItem;
+        return item;
     }
 
     public int getAmount(){
@@ -65,15 +65,15 @@ public class ItemInstance {
 
     public static class Builder{
 
-        private Item usableItem;
+        private Item item;
         private int amount;
 
         public Builder(){
 
         }
 
-        public Builder item(Item usableItem){
-            this.usableItem = usableItem;
+        public Builder item(Item item){
+            this.item = item;
             return this;
         }
 
@@ -83,7 +83,7 @@ public class ItemInstance {
         }
 
         public ItemInstance build(){
-            Objects.requireNonNull(usableItem, "The item of an item instance cannot be null");
+            Objects.requireNonNull(item, "The item of an item instance cannot be null");
             if(amount <= 0){ //amount > usableItem.getStackSize()
                 throw new IllegalArgumentException("The amount of an item instance has to be positive");
             }
