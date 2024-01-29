@@ -1,6 +1,5 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Item.UsableItem;
 import com.mygdx.game.Item.ItemInstance;
 
 import java.util.List;
@@ -23,32 +22,6 @@ public class Inventory {
         return items;
     }
 
-    public boolean contains(UsableItem usableItem){
-        for(ItemInstance itemInstance : items){
-            boolean foundItem = itemInstance.getItem().equals(usableItem);
-            if(foundItem){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean containsAmount(UsableItem usableItem, int amount){
-        Objects.requireNonNull(usableItem, "The item to check the amount of must not be null");
-        if(amount <= 0){
-            throw new IllegalArgumentException("The amount of an item instance that is to be checked has to be positive");
-        }
-        for(ItemInstance itemInstance : items){
-            boolean foundItem = itemInstance.getItem().equals(usableItem);
-            if(foundItem){
-                boolean sufficientAmount = itemInstance.getAmount() >= amount;
-                if(sufficientAmount){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public static Builder builder(){
         return new Builder();

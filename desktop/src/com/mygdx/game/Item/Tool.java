@@ -1,6 +1,6 @@
 package com.mygdx.game.Item;
 
-public class Tool extends UsableItem{
+public class Tool extends Item{
 
     private final int proficiency;
 
@@ -13,7 +13,7 @@ public class Tool extends UsableItem{
         return proficiency;
     }
 
-    public static class Builder<T extends Builder<T>> extends UsableItem.Builder<T>{
+    public static class Builder<T extends Builder<T>> extends Item.Builder<T>{
 
         private int proficiency;
 
