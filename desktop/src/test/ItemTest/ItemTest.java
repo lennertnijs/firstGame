@@ -15,4 +15,16 @@ public class ItemTest {
                 () -> Assertions.assertEquals(item.getStackSize(), 64)
         );
     }
+
+    @Test
+    public void testConstructorInvalid(){
+        Item.Builder builder1 = Item.itemBuilder().name(null).spritePath("stone.png").stackSize(64);
+        Item.Builder builder2 = Item.itemBuilder().name("Stone").spritePath(null).stackSize(64);
+        Item.Builder builder3 = Item.itemBuilder().name("Stone").spritePath("stone.png").stackSize(0);
+        Assertions.assertAll(
+                () -> Assertions.assertThrows(NullPointerException.class, builder1::build),
+                () -> Assertions.assertThrows(NullPointerException.class, builder2::build),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, builder3::build)
+        );
+    }
 }

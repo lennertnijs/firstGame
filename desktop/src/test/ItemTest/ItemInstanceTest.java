@@ -65,8 +65,8 @@ public class ItemInstanceTest {
         Assertions.assertAll(
                 () -> Assertions.assertTrue(itemInstance.canDecreaseAmountBy(16)),
                 () -> Assertions.assertFalse(itemInstance.canDecreaseAmountBy(17)),
-                () -> Assertions.assertTrue(itemInstance.canIncreaseAmountBy(0)),
-                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemInstance.canIncreaseAmountBy(-1))
+                () -> Assertions.assertTrue(itemInstance.canDecreaseAmountBy(0)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemInstance.canDecreaseAmountBy(-1))
         );
     }
 
