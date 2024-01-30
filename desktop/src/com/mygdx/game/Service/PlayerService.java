@@ -1,6 +1,6 @@
 package com.mygdx.game.Service;
 
-import com.mygdx.game.Player.PlayerRepository;
+import com.mygdx.game.Repository.PlayerRepository;
 
 
 public class PlayerService {

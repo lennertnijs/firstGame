@@ -1,5 +1,6 @@
-package com.mygdx.game.Player;
+package com.mygdx.game.Repository;
 
+import com.mygdx.game.Player.Player;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Objects;

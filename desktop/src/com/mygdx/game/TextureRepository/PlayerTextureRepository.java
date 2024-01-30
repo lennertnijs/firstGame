@@ -1,4 +1,4 @@
-package com.mygdx.game.Drawer;
+package com.mygdx.game.TextureRepository;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

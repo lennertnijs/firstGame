@@ -13,7 +13,7 @@ import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Drawer.PlayerDrawer;
-import com.mygdx.game.Drawer.PlayerTextureRepository;
+import com.mygdx.game.TextureRepository.PlayerTextureRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
 import com.mygdx.game.Interactive.InteractiveController;

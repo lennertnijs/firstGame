@@ -6,6 +6,7 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
+import com.mygdx.game.TextureRepository.PlayerTextureRepository;
 
 import static com.mygdx.game.Constants.*;
 

@@ -1,7 +1,5 @@
 package com.mygdx.game.NPC;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
 
@@ -71,9 +69,6 @@ public class NPC extends Entity{
         return dialogueOptions;
     }
 
-    public void interact(){
-        int x = 0;
-    }
 
     @Override
     public boolean equals(Object o){
