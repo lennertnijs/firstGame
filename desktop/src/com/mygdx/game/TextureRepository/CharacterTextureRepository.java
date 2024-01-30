@@ -12,6 +12,9 @@ public class CharacterTextureRepository {
     private final Map<Direction, Texture> idleTextures;
     private final Map<Direction, Animation<Texture>> movementAnimations;
 
+    private float timeElapsed = 0;
+    private boolean inAnimation = false;
+
     public CharacterTextureRepository(Builder builder){
         this.movementAnimations = builder.movementAnimations;
         this.idleTextures = builder.idleTextures;
@@ -29,6 +32,22 @@ public class CharacterTextureRepository {
      */
     public Animation<Texture> getMovingAnimation(Direction direction){
         return movementAnimations.get(direction);
+    }
+
+    public float getTimeElapsed(){
+        return timeElapsed;
+    }
+
+    public boolean getInAnimation(){
+        return inAnimation;
+    };
+
+    public void setTimeElapsed(float timeElapsed){
+        this.timeElapsed = timeElapsed;
+    }
+
+    public void setInAnimation(boolean inAnimation){
+        this.inAnimation = inAnimation;
     }
 
 

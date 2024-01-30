@@ -1,17 +1,18 @@
 package com.mygdx.game.NPC;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class NPCRepository {
 
-    private final ArrayList<NPC> npcs = new ArrayList<>();
+    private final List<NPC> npcs;
 
-    public NPCRepository(){
+    public NPCRepository(List<NPC> npcs){
+        this.npcs = npcs;
     }
 
-    public ArrayList<NPC> getNpcs(){
+    public List<NPC> getAllNpcs(){
         return this.npcs;
     }
-
 }

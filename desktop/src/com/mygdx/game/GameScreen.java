@@ -12,10 +12,8 @@ import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
-import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.NPC.NPCRepository;
 import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
@@ -60,7 +58,7 @@ public class GameScreen implements Screen {
     InteractiveController interactiveController;
     CharacterTextureRepository characterTextureRepository;
     PlayerDrawer playerDrawer;
-    NPCDrawerRepository npcDrawerRepository;
+    NPCDrawer npcDrawer;
 
 
 
@@ -75,11 +73,8 @@ public class GameScreen implements Screen {
         npcController = new NPCController(npcService);
 
 
+        npcDrawer = new NPCDrawer(game);
 
-        npcDrawerRepository = npcController.getNPCDrawerRepository();
-        for(NPCDrawer drawer: npcDrawerRepository.getNpcDrawers()){
-            drawer.setGame(game);
-        }
         texture = new Texture[4];
 
 
@@ -177,7 +172,9 @@ public class GameScreen implements Screen {
 
 
         npcController.updateNPCs();
-        npcController.drawNPCS();
+        for(NPC npc: npcController.getNPCS()){
+            npcDrawer.drawNPC(npc);
+        }
         clockController.updateClock();
 
         timePassed += Gdx.graphics.getDeltaTime();

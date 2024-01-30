@@ -3,6 +3,7 @@ package com.mygdx.game.NPC;
 import com.mygdx.game.Direction;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,8 @@ public class NPC extends Entity{
     private Direction direction = Direction.LEFT;
     private final MovementGraph movementGraph;
     private final List<Integer> dialogueOptions;
+    private final CharacterTextureRepository textureRepository;
+
 
     public NPC(Builder builder){
         super(builder.position, builder.spritePath);
@@ -32,6 +35,7 @@ public class NPC extends Entity{
         this.activity = builder.activity;
         this.movementGraph = builder.movementGraph;
         this.dialogueOptions = builder.dialogueOptions;
+        this.textureRepository = builder.textureRepository;
     }
 
     public String getName(){
@@ -73,6 +77,10 @@ public class NPC extends Entity{
 
     public List<Integer> getDialogueOptions(){
         return dialogueOptions;
+    }
+
+    public CharacterTextureRepository getTextureRepository(){
+        return this.textureRepository;
     }
 
 
@@ -120,6 +128,7 @@ public class NPC extends Entity{
         private Activity activity;
         private MovementGraph movementGraph;
         private List<Integer> dialogueOptions = new ArrayList<>();
+        private CharacterTextureRepository textureRepository;
 
 
         private Builder(){
@@ -164,6 +173,11 @@ public class NPC extends Entity{
 
         public Builder dialogueOptions(List<Integer> dialogueOptions){
             this.dialogueOptions = dialogueOptions;
+            return this;
+        }
+
+        public Builder characterTextureRepository(CharacterTextureRepository textureRepository){
+            this.textureRepository = textureRepository;
             return this;
         }
 

@@ -8,10 +8,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Direction;
 import com.mygdx.game.Drawer.NPCDrawer;
-import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
-import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
 import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
@@ -27,23 +25,22 @@ public class NPCDAO {
     public NPCDAO(){
     }
 
-    public NPCDrawerRepository readNPCS(){
+    public List<NPC> readNPCS(){
         JsonReader reader = new JsonReader();
         JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
 
-        List<NPCDrawer> npcDrawers = new ArrayList<>();
+        List<NPC> npcs = new ArrayList<>();
         for(JsonValue npcJSON: file){
-            npcDrawers.add(readNPC(npcJSON));
+            npcs.add(readNPC(npcJSON));
         }
-        NPCDrawerRepository drawerRepository = NPCDrawerRepository.builder().npcDrawers(npcDrawers).build();
-        return drawerRepository;
+        return npcs;
     }
 
 
     /**
      * Reads a npc and returns it
      */
-    private NPCDrawer readNPC(JsonValue npcJSON){
+    private NPC readNPC(JsonValue npcJSON){
         String name = npcJSON.getString("name");
 
         int x = npcJSON.getInt("x");
@@ -81,10 +78,9 @@ public class NPCDAO {
                 .movementPath(new ArrayList<>())
                 .movementGraph(movementGraph)
                 .dialogueOptions(dialogueOptions)
+                .characterTextureRepository(textureRepository)
                 .build();
-
-        NPCDrawer npcDrawer = new NPCDrawer(null, npc, textureRepository);
-        return npcDrawer;
+        return npc;
     }
 
     /**

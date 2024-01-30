@@ -3,7 +3,6 @@ package com.mygdx.game.Service;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Clock.*;
 import com.mygdx.game.DAO.NPCDAO;
-import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.*;
 
@@ -13,31 +12,22 @@ import static com.mygdx.game.Constants.*;
 
 public class NPCService {
 
-    private final NPCDrawerRepository npcDrawerRepository;
+    private final NPCRepository npcRepository;
     private final ClockService clockService;
 
     public NPCService(ClockService clockService){
         this.clockService = clockService;
         NPCDAO npcdao = new NPCDAO();
-        npcDrawerRepository = npcdao.readNPCS();
-    }
-
-
-    public NPCDrawerRepository getNpcDrawerRepository(){
-        return npcDrawerRepository;
+        npcRepository = new NPCRepository(npcdao.readNPCS());
     }
 
 
     public List<NPC> getAllNPCS(){
-        return npcDrawerRepository.getAllNpcs();
-    }
-
-    public void drawNPCS(){
-        npcDrawerRepository.drawAllNPCS();
+        return npcRepository.getAllNpcs();
     }
 
     public void updateNPCS(){
-        for(NPC npc: npcDrawerRepository.getAllNpcs()){
+        for(NPC npc: npcRepository.getAllNpcs()){
             boolean isMoving = !npc.getMovementPath().isEmpty();
             if(isMoving){
                 move(npc);
@@ -51,7 +41,7 @@ public class NPCService {
     public boolean collides(Position playerPosition){
         int x = playerPosition.getX();
         int y = playerPosition.getY();
-        for(NPC npc: npcDrawerRepository.getAllNpcs()){
+        for(NPC npc: npcRepository.getAllNpcs()){
             int npcX = npc.getPosition().getX();
             int npcY = npc.getPosition().getY();
             boolean collides = x <= npcX + NPC_WIDTH && npcX <= x + PLAYER_WIDTH &&
