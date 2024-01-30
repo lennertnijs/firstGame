@@ -25,8 +25,7 @@ import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -119,12 +118,7 @@ public class GameScreen implements Screen {
         map2.put(Direction.LEFT, animation);
 
         characterTextureRepository = CharacterTextureRepository.builder().idleTextures(map1).movementAnimations(map2).build();
-        List<NPC> list = npcController.getNPCS();
-        HashMap<NPC, Map<Direction, Texture>> npcMap = new HashMap<>();
-        npcMap.put(list.get(0), map1);
 
-        HashMap<NPC, Map<Direction, Animation<Texture>>> npcMoveMap = new HashMap<>();
-        npcMoveMap.put(list.get(0), map2);
 
         playerDrawer = new PlayerDrawer(game, player, characterTextureRepository);
 

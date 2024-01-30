@@ -1,6 +1,5 @@
 package com.mygdx.game.Breakable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.game.Constants.STONE_HEIGHT;
@@ -11,8 +10,11 @@ public class StoneService {
     private final StoneRepository stoneRepository;
 
     public StoneService(){
-        // INITIALISE REPOSITORY!!!!
-        stoneRepository = new StoneRepository(new ArrayList<>());
+        stoneRepository = new StoneRepository(new StoneDAO().loadStones());
+    }
+
+    protected int getStoneAmount(){
+        return stoneRepository.getRepositorySize();
     }
 
     protected List<Stone> getStones(){
@@ -20,22 +22,19 @@ public class StoneService {
     }
 
     protected void addStone(Stone stone){
-        stoneRepository.addStone(stone);
+        stoneRepository.add(stone);
     }
 
     protected void removeStone(Stone stone){
-        stoneRepository.removeStone(stone);
-    }
-
-    protected int getStoneAmount(){
-        return stoneRepository.getRepositorySize();
+        stoneRepository.remove(stone);
     }
 
     protected void mine(Stone stone, float damage){
-        stone.damage(damage);
-        if(stone.isBroken()){
-            stoneRepository.removeStone(stone);
+        boolean stoneBroken = stone.getHealthPoints() - damage <= 0;
+        if(stoneBroken){
+            stoneRepository.remove(stone);
         }
+        stone.damage(damage);
     }
 
     /**

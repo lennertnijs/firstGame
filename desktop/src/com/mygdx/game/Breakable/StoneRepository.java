@@ -20,12 +20,11 @@ public class StoneRepository {
         return stones.size();
     }
 
-    protected void addStone(Stone stone){
-        Objects.requireNonNull(stone, "Cannot add a null stone to the repository");
+    protected void add(Stone stone){
         stones.add(stone);
     }
 
-    protected void removeStone(Stone stone){
+    protected void remove(Stone stone){
         stones.remove(stone);
     }
 }
