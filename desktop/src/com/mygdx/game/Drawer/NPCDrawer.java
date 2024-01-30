@@ -13,7 +13,7 @@ import static com.mygdx.game.Constants.*;
 
 public class NPCDrawer {
 
-    private final MyGame game;
+    private MyGame game;
     private final NPC npc;
     private final CharacterTextureRepository textureRepository;
 
@@ -27,6 +27,9 @@ public class NPCDrawer {
         this.textureRepository = textureRepository;
     }
 
+    public void setGame(MyGame game){
+        this.game = game;
+    }
     public NPC getNpc(){
         return npc;
     }

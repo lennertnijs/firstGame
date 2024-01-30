@@ -20,7 +20,7 @@ public class NPC extends Entity{
     private final WeekSchedule weekSchedule;
     private List<Position> movementPath;
     private Activity activity;
-    private Direction direction = Direction.UP;
+    private Direction direction = Direction.LEFT;
     private final MovementGraph movementGraph;
     private final List<Integer> dialogueOptions;
 

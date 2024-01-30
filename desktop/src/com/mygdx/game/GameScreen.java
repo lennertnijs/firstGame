@@ -12,6 +12,7 @@ import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.NPC.NPCRepository;
@@ -59,8 +60,7 @@ public class GameScreen implements Screen {
     InteractiveController interactiveController;
     CharacterTextureRepository characterTextureRepository;
     PlayerDrawer playerDrawer;
-
-    NPCDrawer npcDrawer;
+    NPCDrawerRepository npcDrawerRepository;
 
 
 
@@ -68,18 +68,27 @@ public class GameScreen implements Screen {
     public GameScreen(final MyGame game) {
         this.game = game;
 
+        clockService = new ClockService();
+        npcService = new NPCService(clockService);
+
+        clockController = new ClockController(clockService);
+        npcController = new NPCController(npcService);
+
+
+
+        npcDrawerRepository = npcController.getNPCDrawerRepository();
+        for(NPCDrawer drawer: npcDrawerRepository.getNpcDrawers()){
+            drawer.setGame(game);
+        }
         texture = new Texture[4];
 
-        clockService = new ClockService();
-        //npcService = new NPCService(clockService);
+
+
 
         interactiveController = new InteractiveController(npcService);
 
-        clockController = new ClockController(clockService);
-        npcController = new NPCController(npcService, npcDrawer);
 
 
-        npcController.loadNPCS();
         clockController.loadClock();
 
         clock = clockController.getClock();
@@ -124,7 +133,6 @@ public class GameScreen implements Screen {
         npcMoveMap.put(list.get(0), map2);
 
         playerDrawer = new PlayerDrawer(game, player, characterTextureRepository);
-        npcDrawer = new NPCDrawer(game, list.get(0), characterTextureRepository);
         timePassed = 0;
 
 
@@ -169,6 +177,7 @@ public class GameScreen implements Screen {
 
 
         npcController.updateNPCs();
+        npcController.drawNPCS();
         clockController.updateClock();
 
         timePassed += Gdx.graphics.getDeltaTime();

@@ -183,6 +183,50 @@
         {
           "index": "2"
         }
-      ]
-    }
+      ],
+      "idle" : [
+        {
+          "up": "images/guy.png",
+          "right": "images/guy.png",
+          "down": "images/guy.png",
+          "left": "images/guy.png"
+        }
+      ],
+      "moving": [
+            {
+              "up": [
+                {
+                "first": "images/guy.png",
+                "second": "images/bucket.png",
+                "third": "images/guy.png",
+                "fourth": "images/bucket.png"
+                }
+              ],
+              "right": [
+                {
+                  "first": "images/guy.png",
+                  "second": "images/guy_left.png",
+                  "third": "images/guy.png",
+                  "fourth": "images/guy_right.png"
+                }
+              ],
+              "down": [
+                {
+                  "first": "images/guy.png",
+                  "second": "images/bucket.png",
+                  "third": "images/guy.png",
+                  "fourth": "images/bucket.png"
+                }
+              ],
+              "left": [
+                {
+                  "first": "images/guy.png",
+                  "second": "images/guy_left.png",
+                  "third": "images/guy.png",
+                  "fourth": "images/guy_right.png"
+                }
+              ]
+            }
+          ]
+        }
 ]

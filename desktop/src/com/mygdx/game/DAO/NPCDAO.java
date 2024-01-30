@@ -1,15 +1,23 @@
 package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Day;
+import com.mygdx.game.Direction;
+import com.mygdx.game.Drawer.NPCDrawer;
+import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
+import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.*;
+import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.mygdx.game.Constants.MINUTES_PER_HOUR;
 import static com.mygdx.game.Constants.NPC_PATHNAME;
@@ -19,23 +27,23 @@ public class NPCDAO {
     public NPCDAO(){
     }
 
-    public ArrayList<NPC> readNPCS(){
+    public NPCDrawerRepository readNPCS(){
         JsonReader reader = new JsonReader();
         JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
 
-        ArrayList<NPC> npcs = new ArrayList<>();
+        List<NPCDrawer> npcDrawers = new ArrayList<>();
         for(JsonValue npcJSON: file){
-            NPC npc = readNPC(npcJSON);
-            npcs.add(npc);
+            npcDrawers.add(readNPC(npcJSON));
         }
-        return npcs;
+        NPCDrawerRepository drawerRepository = NPCDrawerRepository.builder().npcDrawers(npcDrawers).build();
+        return drawerRepository;
     }
 
 
     /**
      * Reads a npc and returns it
      */
-    private NPC readNPC(JsonValue npcJSON){
+    private NPCDrawer readNPC(JsonValue npcJSON){
         String name = npcJSON.getString("name");
 
         int x = npcJSON.getInt("x");
@@ -55,7 +63,16 @@ public class NPCDAO {
         JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
         ArrayList<Integer> dialogueOptions = readDialogueOptions(dialogueOptionsJSON);
 
-        return NPC.builder()
+        JsonValue idlingJSON = npcJSON.get("idle");
+        HashMap<Direction, Texture> idleMap = readNPCIdleTextures(idlingJSON);
+
+        JsonValue movingJSON = npcJSON.get("moving");
+        HashMap<Direction, Animation<Texture>> movingMap = readNPCMovingTextures(movingJSON);
+
+        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder().idleTextures(idleMap)
+                .movementAnimations(movingMap).build();
+
+        NPC npc =  NPC.builder()
                 .position(position)
                 .spritePath(NPC_PATHNAME + spritePath)
                 .name(name)
@@ -65,6 +82,9 @@ public class NPCDAO {
                 .movementGraph(movementGraph)
                 .dialogueOptions(dialogueOptions)
                 .build();
+
+        NPCDrawer npcDrawer = new NPCDrawer(null, npc, textureRepository);
+        return npcDrawer;
     }
 
     /**
@@ -154,6 +174,48 @@ public class NPCDAO {
             dialogueOptions.add(dialogueIndex);
         }
         return dialogueOptions;
+    }
+
+    private HashMap<Direction, Texture> readNPCIdleTextures(JsonValue idleTexturesJSON){
+        HashMap<Direction, Texture> idleMap = new HashMap<>();
+        for(JsonValue value: idleTexturesJSON){
+            idleMap.put(Direction.UP, new Texture(value.getString("up")));
+            idleMap.put(Direction.RIGHT, new Texture(value.getString("right")));
+            idleMap.put(Direction.DOWN, new Texture(value.getString("down")));
+            idleMap.put(Direction.LEFT, new Texture(value.getString("left")));
+        }
+        return idleMap;
+    }
+
+    private HashMap<Direction, Animation<Texture>> readNPCMovingTextures(JsonValue movingTexturesJSON){
+        HashMap<Direction, Animation<Texture>> movingMap = new HashMap<>();
+        for(JsonValue value: movingTexturesJSON){
+            movingMap.put(Direction.UP, readNPCAnimation(value.get("up")));
+            movingMap.put(Direction.RIGHT, readNPCAnimation(value.get("right")));
+            movingMap.put(Direction.DOWN, readNPCAnimation(value.get("down")));
+            movingMap.put(Direction.LEFT, readNPCAnimation(value.get("left")));
+        }
+        return movingMap;
+
+    }
+
+
+//
+//        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder()
+//                .idleTextures(idleMap).movementAnimations(movingMap).build();
+
+
+    private Animation<Texture> readNPCAnimation(JsonValue animationJSON){
+        int i = 0;
+        Texture[] textures = new Texture[4];
+        for(JsonValue value: animationJSON){
+            textures[0] = new Texture(value.getString("first"));
+            textures[1] = new Texture(value.getString("second"));
+            textures[2] = new Texture(value.getString("third"));
+            textures[3] = new Texture(value.getString("fourth"));
+        }
+        Animation<Texture> animation = new Animation<>(0.25F, textures);
+        return animation;
     }
 
 

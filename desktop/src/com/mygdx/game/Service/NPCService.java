@@ -7,7 +7,6 @@ import com.mygdx.game.Drawer.NPCDrawerRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.mygdx.game.Constants.*;
@@ -17,31 +16,34 @@ public class NPCService {
     private final NPCDrawerRepository npcDrawerRepository;
     private final ClockService clockService;
 
-    public NPCService(ClockService clockService, NPCDrawerRepository npcDrawerRepository){
+    public NPCService(ClockService clockService){
         this.clockService = clockService;
-        this.npcDrawerRepository = npcDrawerRepository;
+        NPCDAO npcdao = new NPCDAO();
+        npcDrawerRepository = npcdao.readNPCS();
     }
+
+
+    public NPCDrawerRepository getNpcDrawerRepository(){
+        return npcDrawerRepository;
+    }
+
 
     public List<NPC> getAllNPCS(){
         return npcDrawerRepository.getAllNpcs();
     }
 
-    /**
-     * Loads all NPC's into memory from the json file.
-     * Should only be called once at startup.
-     */
-    public void loadNPCS(){
-        NPCDAO npcdao = new NPCDAO();
-        ArrayList<NPC> npcs = npcdao.readNPCS();
-        //
+    public void drawNPCS(){
+        npcDrawerRepository.drawAllNPCS();
     }
 
     public void updateNPCS(){
         for(NPC npc: npcDrawerRepository.getAllNpcs()){
             boolean isMoving = !npc.getMovementPath().isEmpty();
             if(isMoving){
+                npc.setActivity(Activity.WALKING);
                 move(npc);
             }else{
+                npc.setActivity(Activity.IDLING);
                 checkMove(npc);
             }
         }

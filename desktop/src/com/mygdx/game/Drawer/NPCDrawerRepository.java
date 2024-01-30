@@ -14,6 +14,10 @@ public class NPCDrawerRepository {
         this.npcDrawers = builder.npcDrawers;
     }
 
+    public List<NPCDrawer> getNpcDrawers(){
+        return npcDrawers;
+    }
+
     public void drawAllNPCS(){
         for(NPCDrawer npcDrawer: npcDrawers){
             npcDrawer.drawNPC();
