@@ -15,6 +15,14 @@ public class StoneService {
         return stoneRepository.getStones();
     }
 
+    public void addStone(Stone stone){
+        stoneRepository.addStone(stone);
+    }
+
+    public void removeStone(Stone stone){
+        stoneRepository.removeStone(stone);
+    }
+
     public int getStoneAmount(){
         return stoneRepository.getRepositorySize();
     }
@@ -25,4 +33,6 @@ public class StoneService {
             stoneRepository.removeStone(stone);
         }
     }
+
+    // need stone spawning mechanic
 }
