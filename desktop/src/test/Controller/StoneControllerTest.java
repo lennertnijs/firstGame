@@ -1,5 +1,7 @@
-package com.mygdx.game.Breakable;
+package Controller;
 
+import com.mygdx.game.Breakable.Stone;
+import com.mygdx.game.Breakable.StoneController;
 import com.mygdx.game.Entity.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
