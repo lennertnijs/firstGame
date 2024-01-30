@@ -7,12 +7,12 @@ import com.mygdx.game.Direction;
 import java.util.Map;
 import java.util.Objects;
 
-public class PlayerTexturesRepo {
+public class PlayerTextureRepository {
 
     private final Map<Direction, Texture> idleTextures;
     private final Map<Direction, Animation<Texture>> movementAnimations;
 
-    public PlayerTexturesRepo(Builder builder){
+    public PlayerTextureRepository(Builder builder){
         this.movementAnimations = builder.movementAnimations;
         this.idleTextures = builder.idleTextures;
     }
@@ -48,10 +48,10 @@ public class PlayerTexturesRepo {
             return this;
         }
 
-        public PlayerTexturesRepo build(){
+        public PlayerTextureRepository build(){
             checkValidMap(idleTextures);
             checkValidMap(movementAnimations);
-            return new PlayerTexturesRepo(this);
+            return new PlayerTextureRepository(this);
 
         }
 

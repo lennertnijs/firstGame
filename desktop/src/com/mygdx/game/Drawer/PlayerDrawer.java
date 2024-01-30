@@ -2,60 +2,64 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.mygdx.game.Constants;
+import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
 
+import static com.mygdx.game.Constants.PLAYER_HEIGHT;
+import static com.mygdx.game.Constants.PLAYER_WIDTH;
+
 public class PlayerDrawer {
 
     private final MyGame game;
-    private final PlayerTexturesRepo playerTexturesRepo;
-    private float elapsed;
-    private Animation<Texture> animation;
+    private final Player player;
+    private final PlayerTextureRepository playerTextureRepository;
+    private float elapsed = 0;
+    private boolean playerInAnimation = false;
 
-    public PlayerDrawer(MyGame game, PlayerTexturesRepo playerTexturesRepo){
+    public PlayerDrawer(MyGame game, Player player, PlayerTextureRepository playerTextureRepository){
         this.game = game;
-        this.playerTexturesRepo = playerTexturesRepo;
+        this.player = player;
+        this.playerTextureRepository = playerTextureRepository;
     }
 
-    public void drawPlayer(Player player){
+    public void drawPlayer(){
         if(player.getActivity() == Activity.IDLING){
-            game.batch.draw(playerTexturesRepo.getIdleTexture(player.getMovementDirection()),
-                    player.getPosition().getX(), player.getPosition().getY(),
-                    Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+            drawPlayerIdle();
         }
         if(player.getActivity() == Activity.WALKING){
-            drawPlayerMovement(player);
+            drawPlayerMoving();
         }
     }
 
+    private void drawPlayerIdle(){
+        int x = player.getPosition().getX();
+        int y = player.getPosition().getY();
+        Direction direction = player.getMovementDirection();
+        Texture texture = playerTextureRepository.getIdleTexture(direction);
+        game.batch.draw(texture, x, y, PLAYER_WIDTH, PLAYER_HEIGHT);
+    }
 
-    private void drawPlayerMovement(Player player){
-        if(!player.getDoingAnimation()){
-            player.setDoingAnimation(true);
+
+    private void drawPlayerMoving(){
+        if(!(playerInAnimation)){
+            playerInAnimation = true;
             elapsed = 0;
-            animation = playerTexturesRepo.getMovementAnimation(player.getMovementDirection());
-            game.batch.draw(playerTexturesRepo.getIdleTexture(player.getMovementDirection()),
-                    player.getPosition().getX(), player.getPosition().getY(),
-                    Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
         }
-        System.out.println(elapsed);
         if(elapsed < 1){
             elapsed += Gdx.graphics.getDeltaTime();
-            Texture texture = animation.getKeyFrame(elapsed, false);
+            Texture texture = playerTextureRepository.getMovementAnimation(player.getMovementDirection()).getKeyFrame(elapsed, false);
             game.batch.draw(texture,player.getPosition().getX(), player.getPosition().getY(),
-                    Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+                    PLAYER_WIDTH, PLAYER_HEIGHT);
         }
         if(elapsed >= 1){
             player.setActivity(Activity.IDLING);
             elapsed = 0;
             player.setDoingAnimation(false);
-            animation = null;
-            game.batch.draw(playerTexturesRepo.getIdleTexture(player.getMovementDirection()),
+            game.batch.draw(playerTextureRepository.getIdleTexture(player.getMovementDirection()),
                     player.getPosition().getX(), player.getPosition().getY(),
-                    Constants.PLAYER_WIDTH, Constants.PLAYER_HEIGHT);
+                    PLAYER_WIDTH, PLAYER_HEIGHT);
         }
 
     }

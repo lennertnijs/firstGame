@@ -85,7 +85,7 @@ public class KeyboardInputController {
                 // command class runs execute() which calls interact() on whatever class necessary
             }
         }
-        playerDrawer.drawPlayer(player);
+        playerDrawer.drawPlayer();
     }
 
     private Position buildNewPosition(int x, int y){

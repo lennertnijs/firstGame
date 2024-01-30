@@ -13,7 +13,7 @@ import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Drawer.PlayerDrawer;
-import com.mygdx.game.Drawer.PlayerTexturesRepo;
+import com.mygdx.game.Drawer.PlayerTextureRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
 import com.mygdx.game.Interactive.InteractiveController;
@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
     float timePassed;
 
     InteractiveController interactiveController;
-    PlayerTexturesRepo playerTexturesRepo;
+    PlayerTextureRepository playerTextureRepository;
     PlayerDrawer playerDrawer;
 
 
@@ -109,8 +109,8 @@ public class GameScreen implements Screen {
         map2.put(Direction.DOWN, animation);
         map2.put(Direction.LEFT, animation);
 
-        playerTexturesRepo = PlayerTexturesRepo.builder().idleTextures(map1).movementAnimations(map2).build();
-        playerDrawer = new PlayerDrawer(game, playerTexturesRepo);
+        playerTextureRepository = PlayerTextureRepository.builder().idleTextures(map1).movementAnimations(map2).build();
+        playerDrawer = new PlayerDrawer(game, player, playerTextureRepository);
         timePassed = 0;
 
 
