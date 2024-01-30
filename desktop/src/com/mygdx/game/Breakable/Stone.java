@@ -28,11 +28,15 @@ public class Stone {
         return hardness;
     }
 
-    public void setHealthPoints(float newHealthPoints){
-        if(newHealthPoints <= 0 || newHealthPoints > healthPoints){
-            throw new IllegalArgumentException("The new health points is invalid");
+    public boolean isBroken(){
+        return healthPoints <= 0;
+    }
+
+    public void damage(float damage){
+        if(damage < 0){
+            throw new IllegalArgumentException("Cannot negatively damage rocc");
         }
-        this.healthPoints = newHealthPoints;
+        this.healthPoints -= damage;
     }
 
 

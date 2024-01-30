@@ -15,4 +15,12 @@ public class StoneRepository {
     protected List<Stone> getStones(){
         return stones;
     }
+
+    protected int getRepositorySize(){
+        return stones.size();
+    }
+
+    protected void removeStone(Stone stone){
+        stones.remove(stone);
+    }
 }
