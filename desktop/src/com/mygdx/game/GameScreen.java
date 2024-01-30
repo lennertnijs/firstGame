@@ -13,7 +13,9 @@ import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Drawer.PlayerDrawer;
-import com.mygdx.game.TextureRepository.PlayerTextureRepository;
+import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.NPC.NPCRepository;
+import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Input.KeyboardInputController;
 import com.mygdx.game.Interactive.InteractiveController;
@@ -24,6 +26,8 @@ import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GameScreen implements Screen {
     final MyGame game;
@@ -39,7 +43,7 @@ public class GameScreen implements Screen {
     Clock clock;
     ClockController clockController;
     NPCController npcController;
-    NPCDrawer npcDrawer;
+
     NPCService npcService;
     ClockService clockService;
 
@@ -53,9 +57,12 @@ public class GameScreen implements Screen {
     float timePassed;
 
     InteractiveController interactiveController;
-    PlayerTextureRepository playerTextureRepository;
+    CharacterTextureRepository characterTextureRepository;
     PlayerDrawer playerDrawer;
 
+    NPCDrawer npcDrawer;
+
+    NPCRepository npcRepository;
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -68,7 +75,7 @@ public class GameScreen implements Screen {
         npcService = new NPCService(clockService);
 
         interactiveController = new InteractiveController(npcService);
-        npcDrawer = new NPCDrawer(game);
+
         clockController = new ClockController(clockService);
         npcController = new NPCController(npcService, npcDrawer);
 
@@ -109,8 +116,17 @@ public class GameScreen implements Screen {
         map2.put(Direction.DOWN, animation);
         map2.put(Direction.LEFT, animation);
 
-        playerTextureRepository = PlayerTextureRepository.builder().idleTextures(map1).movementAnimations(map2).build();
-        playerDrawer = new PlayerDrawer(game, player, playerTextureRepository);
+        characterTextureRepository = CharacterTextureRepository.builder().idleTextures(map1).movementAnimations(map2).build();
+        List<NPC> list = npcController.getNPCS();
+        HashMap<NPC, Map<Direction, Texture>> npcMap = new HashMap<>();
+        npcMap.put(list.get(0), map1);
+
+        HashMap<NPC, Map<Direction, Animation<Texture>>> npcMoveMap = new HashMap<>();
+        npcMoveMap.put(list.get(0), map2);
+
+        playerDrawer = new PlayerDrawer(game, player, characterTextureRepository);
+        npcRepository = new NPCRepository();
+        npcDrawer = new NPCDrawer(game, list.get(0), characterTextureRepository);
         timePassed = 0;
 
 

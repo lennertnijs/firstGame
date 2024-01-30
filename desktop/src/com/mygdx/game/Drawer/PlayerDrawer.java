@@ -6,7 +6,7 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.TextureRepository.PlayerTextureRepository;
+import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
 import static com.mygdx.game.Constants.*;
 
@@ -14,14 +14,14 @@ public class PlayerDrawer {
 
     private final MyGame game;
     private final Player player;
-    private final PlayerTextureRepository playerTextureRepository;
+    private final CharacterTextureRepository characterTextureRepository;
     private float timeElapsed = 0;
     private boolean playerInAnimation = false;
 
-    public PlayerDrawer(MyGame game, Player player, PlayerTextureRepository playerTextureRepository){
+    public PlayerDrawer(MyGame game, Player player, CharacterTextureRepository characterTextureRepository){
         this.game = game;
         this.player = player;
-        this.playerTextureRepository = playerTextureRepository;
+        this.characterTextureRepository = characterTextureRepository;
     }
 
     /**
@@ -41,7 +41,7 @@ public class PlayerDrawer {
      * Handles the drawing of the player if they're idle.
      */
     private void drawPlayerIdle(){
-        Texture texture = playerTextureRepository.getIdleTexture(player.getDirection());
+        Texture texture = characterTextureRepository.getIdleTexture(player.getDirection());
         draw(texture);
     }
 
@@ -55,7 +55,7 @@ public class PlayerDrawer {
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
-            Texture texture = playerTextureRepository.getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            Texture texture = characterTextureRepository.getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
             draw(texture);
             return;
         }

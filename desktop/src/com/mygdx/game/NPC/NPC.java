@@ -1,5 +1,6 @@
 package com.mygdx.game.NPC;
 
+import com.mygdx.game.Direction;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
 
@@ -19,6 +20,7 @@ public class NPC extends Entity{
     private final WeekSchedule weekSchedule;
     private List<Position> movementPath;
     private Activity activity;
+    private Direction direction = Direction.UP;
     private final MovementGraph movementGraph;
     private final List<Integer> dialogueOptions;
 
@@ -50,6 +52,10 @@ public class NPC extends Entity{
             Objects.requireNonNull(point, "Cannot set the movement path of an npc to a list with a null value");
         }
         this.movementPath = movementPath;
+    }
+
+    public Direction getDirection(){
+        return direction;
     }
 
     public Activity getActivity(){

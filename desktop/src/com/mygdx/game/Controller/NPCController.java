@@ -2,8 +2,11 @@ package com.mygdx.game.Controller;
 
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.Service.ClockService;
 import com.mygdx.game.Service.NPCService;
+
+import java.util.List;
 
 
 public class NPCController {
@@ -21,12 +24,14 @@ public class NPCController {
 
     public void loadNPCS(){
         npcService.loadNPCS();
-        npcDrawer.loadNPCTextures(npcService.getAllNPCS());
     }
 
     public void updateNPCs(){
         npcService.updateNPCS();
-        npcDrawer.drawAllNPCS(npcService.getAllNPCS());
+    }
+
+    public List<NPC> getNPCS(){
+        return npcService.getAllNPCS();
     }
 
     public boolean checkCollision(Position position){

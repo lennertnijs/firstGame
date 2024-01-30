@@ -7,12 +7,12 @@ import com.mygdx.game.Direction;
 import java.util.Map;
 import java.util.Objects;
 
-public class PlayerTextureRepository {
+public class CharacterTextureRepository {
 
     private final Map<Direction, Texture> idleTextures;
     private final Map<Direction, Animation<Texture>> movementAnimations;
 
-    public PlayerTextureRepository(Builder builder){
+    public CharacterTextureRepository(Builder builder){
         this.movementAnimations = builder.movementAnimations;
         this.idleTextures = builder.idleTextures;
     }
@@ -25,7 +25,7 @@ public class PlayerTextureRepository {
     }
 
     /**
-     * Returns the mining animation textures of the player for the given direction.
+     * Returns the moving animation textures of the player for the given direction.
      */
     public Animation<Texture> getMovingAnimation(Direction direction){
         return Objects.requireNonNull(movementAnimations.get(direction), "No movement Animation was found for the Player");
@@ -54,10 +54,10 @@ public class PlayerTextureRepository {
             return this;
         }
 
-        public PlayerTextureRepository build(){
+        public CharacterTextureRepository build(){
             checkValidMap(idleTextures);
             checkValidMap(movementAnimations);
-            return new PlayerTextureRepository(this);
+            return new CharacterTextureRepository(this);
 
         }
 
