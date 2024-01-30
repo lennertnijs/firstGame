@@ -14,8 +14,4 @@ public class NPCRepository {
         return this.npcs;
     }
 
-    public void add(NPC npc){
-        Objects.requireNonNull(npc, "Cannot put a null NPC into the repository");
-        npcs.add(npc);
-    }
 }

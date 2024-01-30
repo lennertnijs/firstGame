@@ -27,6 +27,10 @@ public class NPCDrawer {
         this.textureRepository = textureRepository;
     }
 
+    public NPC getNpc(){
+        return npc;
+    }
+
     public void drawNPC(){
         if(npc.getActivity() == Activity.IDLING){
             drawNPCIdle();

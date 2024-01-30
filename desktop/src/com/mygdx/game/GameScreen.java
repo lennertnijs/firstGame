@@ -62,7 +62,6 @@ public class GameScreen implements Screen {
 
     NPCDrawer npcDrawer;
 
-    NPCRepository npcRepository;
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -72,7 +71,7 @@ public class GameScreen implements Screen {
         texture = new Texture[4];
 
         clockService = new ClockService();
-        npcService = new NPCService(clockService);
+        //npcService = new NPCService(clockService);
 
         interactiveController = new InteractiveController(npcService);
 
@@ -125,7 +124,6 @@ public class GameScreen implements Screen {
         npcMoveMap.put(list.get(0), map2);
 
         playerDrawer = new PlayerDrawer(game, player, characterTextureRepository);
-        npcRepository = new NPCRepository();
         npcDrawer = new NPCDrawer(game, list.get(0), characterTextureRepository);
         timePassed = 0;
 
