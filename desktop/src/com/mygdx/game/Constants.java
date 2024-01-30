@@ -22,4 +22,7 @@ public class Constants {
 
     public static final int ANIMATION_LENGTH = 1;
 
+    public static final int STONE_HEIGHT = 32;
+    public static final int STONE_WIDTH = 32;
+
 }

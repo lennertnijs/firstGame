@@ -8,7 +8,5 @@ public class StoneRepositoryTest {
 
     @Test
     public void test(){
-        StoneRepository stoneRepository = new StoneRepository(new ArrayList<>());
-        System.out.println("xd");
     }
 }

@@ -28,11 +28,7 @@ public class Stone {
         return hardness;
     }
 
-    public boolean isBroken(){
-        return healthPoints <= 0;
-    }
-
-    public void damage(float damage){
+    protected void damage(float damage){
         if(damage < 0){
             throw new IllegalArgumentException("Cannot negatively damage rocc");
         }
@@ -40,6 +36,9 @@ public class Stone {
     }
 
 
+    protected boolean isBroken(){
+        return healthPoints <= 0;
+    }
 
 
     public static Builder builder(){
