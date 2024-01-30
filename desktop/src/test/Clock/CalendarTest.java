@@ -44,10 +44,10 @@ public class CalendarTest {
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.seasons(seasons).build()),
 
                 () -> seasons.put(one, -1),
-                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.seasons(seasons).build())
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.seasons(seasons).build()),
 
-                //() -> seasons.put(null, 10),
-                //() -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.seasons(seasons).build())
+                () -> seasons.put(null, 10),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> builder.seasons(seasons).build())
         );
     }
 
