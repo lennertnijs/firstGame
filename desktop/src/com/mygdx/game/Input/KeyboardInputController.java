@@ -2,6 +2,8 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.Interactive.Interactive;
+import com.mygdx.game.Stone.Stone;
 import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.PlayerDrawer;
@@ -48,7 +50,15 @@ public class KeyboardInputController {
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
             player.setActivity(Activity.WALKING);
-            //Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+50, player.getPosition().getY());
+            Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+120, player.getPosition().getY()+50);
+            if(interactive instanceof Stone){
+                Position position = Position.builder().x(player.getPosition().getX()+120).y(player.getPosition().getY()+50).build();
+                Stone stone = stoneController.getCollisionStoneFromPoint(position);
+                if(stone != null){
+                    stoneController.mineStone(stone, 30);
+                }
+
+            }
         }
 
         if(up && down || left && right){

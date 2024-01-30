@@ -197,14 +197,19 @@ public class NPCDAO {
 
     private Animation<Texture> readNPCAnimation(JsonValue animationJSON){
         int i = 0;
-        Texture[] textures = new Texture[4];
+        Texture[] textures = new Texture[8];
         for(JsonValue value: animationJSON){
             textures[0] = new Texture(value.getString("first"));
             textures[1] = new Texture(value.getString("second"));
             textures[2] = new Texture(value.getString("third"));
             textures[3] = new Texture(value.getString("fourth"));
+            textures[4] = new Texture(value.getString("fifth"));
+            textures[5] = new Texture(value.getString("sixth"));
+            textures[6] = new Texture(value.getString("seventh"));
+            textures[7] = new Texture(value.getString("eight"));
+
         }
-        Animation<Texture> animation = new Animation<>(0.25F, textures);
+        Animation<Texture> animation = new Animation<>(0.125F, textures);
 
         return animation;
     }

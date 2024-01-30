@@ -186,44 +186,60 @@
       ],
       "idle" : [
         {
-          "up": "images/guy.png",
-          "right": "images/guy.png",
-          "down": "images/guy.png",
-          "left": "images/guy.png"
+          "up": "npc/left1.png",
+          "right": "npc/left1.png",
+          "down": "npc/left1.png",
+          "left": "npc/left1.png"
         }
       ],
       "moving": [
             {
               "up": [
                 {
-                "first": "images/guy.png",
-                "second": "images/bucket.png",
-                "third": "images/guy.png",
-                "fourth": "images/bucket.png"
+                  "first": "npc/left1.png",
+                  "second": "npc/left2.png",
+                  "third": "npc/left3.png",
+                  "fourth": "npc/left4.png",
+                  "fifth": "npc/left5.png",
+                  "sixth": "npc/left6.png",
+                  "seventh": "npc/left7.png",
+                  "eight": "npc/left8.png"
                 }
               ],
               "right": [
                 {
-                  "first": "images/guy.png",
-                  "second": "images/guy_left.png",
-                  "third": "images/guy.png",
-                  "fourth": "images/guy_right.png"
+                  "first": "npc/left1.png",
+                  "second": "npc/left2.png",
+                  "third": "npc/left3.png",
+                  "fourth": "npc/left4.png",
+                  "fifth": "npc/left5.png",
+                  "sixth": "npc/left6.png",
+                  "seventh": "npc/left7.png",
+                  "eight": "npc/left8.png"
                 }
               ],
               "down": [
                 {
-                  "first": "images/guy.png",
-                  "second": "images/bucket.png",
-                  "third": "images/guy.png",
-                  "fourth": "images/bucket.png"
+                  "first": "npc/left1.png",
+                  "second": "npc/left2.png",
+                  "third": "npc/left3.png",
+                  "fourth": "npc/left4.png",
+                  "fifth": "npc/left5.png",
+                  "sixth": "npc/left6.png",
+                  "seventh": "npc/left7.png",
+                  "eight": "npc/left8.png"
                 }
               ],
               "left": [
                 {
-                  "first": "images/guy.png",
-                  "second": "images/guy_left.png",
-                  "third": "images/guy.png",
-                  "fourth": "images/guy_right.png"
+                  "first": "npc/left1.png",
+                  "second": "npc/left2.png",
+                  "third": "npc/left3.png",
+                  "fourth": "npc/left4.png",
+                  "fifth": "npc/left5.png",
+                  "sixth": "npc/left6.png",
+                  "seventh": "npc/left7.png",
+                  "eight": "npc/left8.png"
                 }
               ]
             }
