@@ -123,6 +123,54 @@ public class StoneServiceTest {
     }
 
 
+    @Test
+    public void testGetCollidingStoneFromPoint(){
+        Gdx.files = new Lwjgl3Files();
+        StoneService stoneService = new StoneService();
+
+        List<Stone> stones = stoneService.getStones();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromPoint(1200+STONE_WIDTH, 1200+STONE_HEIGHT), stones.get(0)
+                ),
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromPoint(720, 1200+STONE_HEIGHT), stones.get(2)
+                ),
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromPoint(700, 700), stones.get(1)
+                ),
+
+                () -> Assertions.assertNull(stoneService.getCollidingStoneFromPoint(699, 700)),
+                () -> Assertions.assertNull(stoneService.getCollidingStoneFromPoint(1201+STONE_WIDTH, 1200+STONE_HEIGHT))
+        );
+    }
+
+
+    @Test
+    public void testGetCollidingStoneFromHitBox(){
+        Gdx.files = new Lwjgl3Files();
+        StoneService stoneService = new StoneService();
+
+        List<Stone> stones = stoneService.getStones();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromHitBox(1200+STONE_WIDTH, 1200+STONE_HEIGHT, 0, 0), stones.get(0)
+                ),
+                () -> Assertions.assertNull(
+                        stoneService.getCollidingStoneFromHitBox(699, 699, 0, 0)
+                ),
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromHitBox(1202, 1200+STONE_HEIGHT, 0, 0), stones.get(0)
+                ),
+                () -> Assertions.assertEquals(
+                        stoneService.getCollidingStoneFromHitBox(699, 699, 2, 2), stones.get(1)
+                )
+        );
+    }
+
+
 
 
     private List<Stone> generateListOfStones(){

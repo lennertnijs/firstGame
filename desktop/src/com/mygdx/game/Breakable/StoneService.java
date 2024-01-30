@@ -69,5 +69,37 @@ public class StoneService {
         return false;
     }
 
+    /**
+     * Finds the colliding stone from the given point, if there is one.
+     * @return The stone if colliding, null otherwise
+     */
+    protected Stone getCollidingStoneFromPoint(int x, int y){
+        for(Stone stone: stoneRepository.getStones()){
+            int stoneX = stone.getPosition().getX();
+            int stoneY = stone.getPosition().getY();
+            boolean collides = x >= stoneX && x <= stoneX + STONE_WIDTH && y >= stoneY && y <= stoneY + STONE_HEIGHT;
+            if(collides){
+                return stone;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds the colliding stone from the given hit box, if there is one.
+     * @return The stone if collision, null otherwise
+     */
+    protected Stone getCollidingStoneFromHitBox(int x, int y, int width, int height){
+        for(Stone stone: stoneRepository.getStones()){
+            int stoneX = stone.getPosition().getX();
+            int stoneY = stone.getPosition().getY();
+            boolean collides = x + width >= stoneX && x <= stoneX + STONE_WIDTH &&
+                    y + height >= stoneY && y <= stoneY + STONE_HEIGHT;
+            if(collides){
+                return stone;
+            }
+        }
+        return null;
+    }
     // need stone spawning mechanic
 }
