@@ -40,7 +40,7 @@ public class CharacterTextureRepository {
 
     public boolean getInAnimation(){
         return inAnimation;
-    };
+    }
 
     public void setTimeElapsed(float timeElapsed){
         this.timeElapsed = timeElapsed;

@@ -17,8 +17,7 @@ public class NPCService {
 
     public NPCService(ClockService clockService){
         this.clockService = clockService;
-        NPCDAO npcdao = new NPCDAO();
-        npcRepository = new NPCRepository(npcdao.readNPCS());
+        npcRepository = new NPCRepository(new NPCDAO().readNPCS());
     }
 
 
