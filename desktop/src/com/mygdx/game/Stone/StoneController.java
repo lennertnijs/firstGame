@@ -1,4 +1,4 @@
-package com.mygdx.game.Breakable;
+package com.mygdx.game.Stone;
 
 import com.mygdx.game.Entity.Position;
 
@@ -50,5 +50,18 @@ public class StoneController {
             throw new IllegalArgumentException("Cannot check collision because the measurements are negative");
         }
         return stoneService.hitBoxCollidesWithStone(position.getX(), position.getY(), width, height);
+    }
+
+    public Stone getCollisionStoneFromPoint(Position position){
+        Objects.requireNonNull(position, "Cannot check collision with a null position");
+        return stoneService.getCollidingStoneFromPoint(position.getX(), position.getY());
+    }
+
+    public Stone getCollisionStoneFromHitBox(Position position, int width, int height){
+        Objects.requireNonNull(position, "Cannot check collision with a null position");
+        if(width < 0 || height < 0){
+            throw new IllegalArgumentException("Cannot check collision because the measurements are negative");
+        }
+        return stoneService.getCollidingStoneFromHitBox(position.getX(), position.getY(), width, height);
     }
 }

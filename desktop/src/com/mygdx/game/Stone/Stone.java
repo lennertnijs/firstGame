@@ -1,4 +1,4 @@
-package com.mygdx.game.Breakable;
+package com.mygdx.game.Stone;
 
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Interactive.Interactive;

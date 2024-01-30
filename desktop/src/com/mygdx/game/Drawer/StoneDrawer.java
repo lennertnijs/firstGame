@@ -2,7 +2,7 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Breakable.Stone;
+import com.mygdx.game.Stone.Stone;
 import com.mygdx.game.MyGame;
 
 import static com.mygdx.game.Constants.STONE_HEIGHT;

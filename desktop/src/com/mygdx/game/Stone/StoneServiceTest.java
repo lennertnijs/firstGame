@@ -1,4 +1,4 @@
-package com.mygdx.game.Breakable;
+package com.mygdx.game.Stone;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;

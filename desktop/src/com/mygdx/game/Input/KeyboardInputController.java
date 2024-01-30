@@ -2,7 +2,7 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.Breakable.StoneController;
+import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.Entity.Position;

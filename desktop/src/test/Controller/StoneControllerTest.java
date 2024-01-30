@@ -1,7 +1,7 @@
 package Controller;
 
-import com.mygdx.game.Breakable.Stone;
-import com.mygdx.game.Breakable.StoneController;
+import com.mygdx.game.Stone.Stone;
+import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Entity.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -112,9 +112,48 @@ public class StoneControllerTest {
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
                         () -> stoneController.hitBoxCollidesWithStone(collision, 1, -1))
         );
-
     }
 
+
+    @Test
+    public void testGetCollisionStoneFromPoint(){
+        StoneController stoneController = new StoneController();
+
+        List<Stone> stones = stoneController.getAllStones();
+        Position collision = Position.builder().x(700+STONE_WIDTH).y(700+STONE_HEIGHT).build();
+        Position noCollision = Position.builder().x(1199).y(1200).build();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(stoneController.getCollisionStoneFromPoint(collision), stones.get(1)),
+                () -> Assertions.assertNull(stoneController.getCollisionStoneFromPoint(noCollision)),
+                () -> Assertions.assertThrows(NullPointerException.class,
+                        () -> stoneController.getCollisionStoneFromPoint(null))
+        );
+    }
+
+
+
+    @Test
+    public void testGetCollisionStoneFromHitBox(){
+        StoneController stoneController = new StoneController();
+
+        List<Stone> stones = stoneController.getAllStones();
+        Position collision = Position.builder().x(700+STONE_WIDTH).y(700+STONE_HEIGHT).build();
+        Position noCollision = Position.builder().x(1199).y(1200).build();
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(
+                        stoneController.getCollisionStoneFromHitBox(collision,0 , 0), stones.get(1)
+                ),
+                () -> Assertions.assertNull(
+                        stoneController.getCollisionStoneFromHitBox(noCollision, 0, 0)
+                ),
+                () -> Assertions.assertThrows(NullPointerException.class,
+                        () -> stoneController.getCollisionStoneFromHitBox(null, 1, 1)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class,
+                        () -> stoneController.getCollisionStoneFromHitBox(collision, 1, -1))
+        );
+    }
 
 
 

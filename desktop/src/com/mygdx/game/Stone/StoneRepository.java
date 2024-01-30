@@ -1,4 +1,4 @@
-package com.mygdx.game.Breakable;
+package com.mygdx.game.Stone;
 
 import java.util.List;
 import java.util.Objects;
