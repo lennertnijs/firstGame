@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.game.Constants.STONE_HEIGHT;
+import static com.mygdx.game.Constants.STONE_WIDTH;
+
 public class StoneServiceTest {
 
     @Test
@@ -93,19 +96,29 @@ public class StoneServiceTest {
 
 
     @Test
-    public void testCollidesWithStone(){
+    public void testPointCollidesWithStone(){
         Gdx.files = new Lwjgl3Files();
         StoneService stoneService = new StoneService();
 
-        List<Stone> stones = stoneService.getStones();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(stoneService.pointCollidesWithStone(1200+STONE_WIDTH, 1200+STONE_HEIGHT)),
+                () -> Assertions.assertTrue(stoneService.pointCollidesWithStone(720, 1200+STONE_HEIGHT)),
+                () -> Assertions.assertTrue(stoneService.pointCollidesWithStone(700, 700)),
+                () -> Assertions.assertFalse(stoneService.pointCollidesWithStone(699, 700)),
+                () -> Assertions.assertFalse(stoneService.pointCollidesWithStone(1201+STONE_WIDTH, 1200+STONE_HEIGHT))
+        );
+    }
+
+    @Test
+    public void testHitBoxCollidesWithStone(){
+        Gdx.files = new Lwjgl3Files();
+        StoneService stoneService = new StoneService();
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(stoneService.collidesWithStone(1232, 1232), stones.get(0)),
-                () -> Assertions.assertEquals(stoneService.collidesWithStone(720, 1232), stones.get(2)),
-                () -> Assertions.assertEquals(stoneService.collidesWithStone(700, 700), stones.get(1)),
-                () -> Assertions.assertNull(stoneService.collidesWithStone(699, 700)),
-                () -> Assertions.assertNull(stoneService.collidesWithStone(1233, 1232))
-
+                () -> Assertions.assertTrue(stoneService.hitBoxCollidesWithStone(1200+STONE_WIDTH, 1200+STONE_HEIGHT, 0, 0)),
+                () -> Assertions.assertFalse(stoneService.hitBoxCollidesWithStone(699, 699, 0, 0)),
+                () -> Assertions.assertTrue(stoneService.hitBoxCollidesWithStone(1202, 1200+STONE_HEIGHT, 0, 0)),
+                () -> Assertions.assertTrue(stoneService.hitBoxCollidesWithStone(699, 699, 2, 2))
         );
     }
 

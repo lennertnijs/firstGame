@@ -39,8 +39,16 @@ public class StoneController {
         stoneService.mine(stone, damage);
     }
 
-    public Stone pointCollidesWithStone(Position position){
+    public boolean pointCollidesWithStone(Position position){
         Objects.requireNonNull(position, "Cannot check collision with a null position");
-        return stoneService.collidesWithStone(position.getX(), position.getY());
+        return stoneService.pointCollidesWithStone(position.getX(), position.getY());
+    }
+
+    public boolean hitBoxCollidesWithStone(Position position, int width, int height){
+        Objects.requireNonNull(position, "Cannot check collision with a null position");
+        if(width < 0 || height < 0){
+            throw new IllegalArgumentException("Cannot check collision because the measurements are negative");
+        }
+        return stoneService.hitBoxCollidesWithStone(position.getX(), position.getY(), width, height);
     }
 }

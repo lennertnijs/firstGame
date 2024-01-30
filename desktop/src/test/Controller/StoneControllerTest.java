@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mygdx.game.Constants.STONE_HEIGHT;
+import static com.mygdx.game.Constants.STONE_WIDTH;
+
 public class StoneControllerTest {
 
 
@@ -83,16 +86,33 @@ public class StoneControllerTest {
     @Test
     public void testPointCollidesWithStone(){
         StoneController stoneController = new StoneController();
-        List<Stone> stones = stoneController.getAllStones();
 
-        Position collision = Position.builder().x(732).y(732).build();
-        Position noCollision = Position.builder().x(1199).y(1199).build();
+        Position collision = Position.builder().x(700+STONE_WIDTH).y(700+STONE_HEIGHT).build();
+        Position noCollision = Position.builder().x(1199).y(1200).build();
         Assertions.assertAll(
-                () -> Assertions.assertEquals(stoneController.pointCollidesWithStone(collision), stones.get(1)),
-                () -> Assertions.assertNull(stoneController.pointCollidesWithStone(noCollision)),
+                () -> Assertions.assertTrue(stoneController.pointCollidesWithStone(collision)),
+                () -> Assertions.assertFalse(stoneController.pointCollidesWithStone(noCollision)),
                 () -> Assertions.assertThrows(NullPointerException.class,
                         () -> stoneController.pointCollidesWithStone(null))
         );
+    }
+
+    @Test
+    public void testHitBoxCollidesWithStone(){
+        StoneController stoneController = new StoneController();
+
+        Position collision = Position.builder().x(700+STONE_WIDTH).y(700+STONE_HEIGHT).build();
+        Position noCollision = Position.builder().x(1199).y(1200).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(stoneController.hitBoxCollidesWithStone(collision, 0, 0)),
+                () -> Assertions.assertFalse(stoneController.hitBoxCollidesWithStone(noCollision, 0, 0)),
+                () -> Assertions.assertTrue(stoneController.hitBoxCollidesWithStone(noCollision, 1, 0)),
+                () -> Assertions.assertThrows(NullPointerException.class,
+                        () -> stoneController.hitBoxCollidesWithStone(null, 1, 1)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class,
+                        () -> stoneController.hitBoxCollidesWithStone(collision, 1, -1))
+        );
+
     }
 
 

@@ -2,17 +2,18 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.mygdx.game.Breakable.Stone;
 import com.mygdx.game.Breakable.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.Interactive.Interactive;
 import com.mygdx.game.Interactive.InteractiveController;
 import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Item.ToolInstance;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
+
+import static com.mygdx.game.Constants.NPC_HEIGHT;
+import static com.mygdx.game.Constants.NPC_WIDTH;
 
 public class KeyboardInputController {
 
@@ -78,8 +79,7 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX - diagonalMovement, currentY + diagonalMovement);
         }
         boolean collisionWithNPC = npcController.checkCollision(newPosition);
-        Stone stone = stoneController.pointCollidesWithStone(newPosition);
-        boolean collisionWithStone = stone != null;
+        boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
         if(!collisionWithNPC && !collisionWithStone){
             player.setPosition(newPosition);
         }
