@@ -4,14 +4,19 @@ import java.util.Objects;
 
 public class ToolInstance extends ItemInstance {
     private int durability;
-
+    private final ToolType toolType;
     public ToolInstance(Builder builder){
         super(ItemInstance.builder().item(builder.item).amount(builder.amount));
         this.durability = builder.durability;
+        this.toolType = builder.toolType;
     }
 
     public int getDurability(){
         return durability;
+    }
+
+    public ToolType getToolType(){
+        return toolType;
     }
 
     public void use(){
@@ -24,9 +29,16 @@ public class ToolInstance extends ItemInstance {
 
     public static class Builder{
 
+        private ToolType toolType;
         private Item item;
         private int amount;
         private int durability;
+
+
+        public Builder toolType(ToolType breakable){
+            this.toolType = toolType;
+            return this;
+        }
 
         public Builder item(Item item){
             this.item = item;
