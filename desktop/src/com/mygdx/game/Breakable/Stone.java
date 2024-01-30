@@ -40,6 +40,22 @@ public class Stone {
         return healthPoints <= 0;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+        if(!(o instanceof Stone)){
+            return false;
+        }
+        Stone stone = (Stone) o;
+        return position.equals(stone.position) && healthPoints == stone.healthPoints && hardness == stone.hardness;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(position, healthPoints, hardness);
+    }
 
     public static Builder builder(){
         return new Builder();
