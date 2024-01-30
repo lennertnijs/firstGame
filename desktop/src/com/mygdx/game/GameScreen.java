@@ -188,10 +188,7 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
-        //game.batch.draw(character, player.getPosition().getX(), player.getPosition().getY(), characterRect.width, characterRect.height);
-        //Texture texture = animation.getKeyFrame(timePassed, true);
 
-        //game.batch.draw(texture, 200, 200);
         camera.position.set(player.getPosition().getX(), player.getPosition().getY(), 0);
         game.batch.end();
     }

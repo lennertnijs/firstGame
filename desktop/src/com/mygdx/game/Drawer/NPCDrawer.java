@@ -17,7 +17,7 @@ public class NPCDrawer {
     private final NPC npc;
     private final CharacterTextureRepository textureRepository;
 
-    private int timeElapsed = 0;
+    private float timeElapsed = 0;
 
     private boolean npcInAnimation = false;
 
@@ -59,8 +59,9 @@ public class NPCDrawer {
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = npc.getDirection();
-            Texture texture = textureRepository.getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            Texture texture = textureRepository.getMovingAnimation(direction).getKeyFrame(timeElapsed, true);
             draw(texture);
+            return;
         }
         endAnimation();
         drawNPCIdle();
@@ -81,7 +82,6 @@ public class NPCDrawer {
      * Ends the npc's animation sequence.
      */
     private void endAnimation(){
-        npc.setActivity(Activity.IDLING);
         timeElapsed = 0;
     }
 }

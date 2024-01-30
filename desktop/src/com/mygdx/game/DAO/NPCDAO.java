@@ -199,12 +199,6 @@ public class NPCDAO {
 
     }
 
-
-//
-//        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder()
-//                .idleTextures(idleMap).movementAnimations(movingMap).build();
-
-
     private Animation<Texture> readNPCAnimation(JsonValue animationJSON){
         int i = 0;
         Texture[] textures = new Texture[4];
@@ -215,6 +209,7 @@ public class NPCDAO {
             textures[3] = new Texture(value.getString("fourth"));
         }
         Animation<Texture> animation = new Animation<>(0.25F, textures);
+
         return animation;
     }
 

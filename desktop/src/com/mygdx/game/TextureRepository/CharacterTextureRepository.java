@@ -28,7 +28,7 @@ public class CharacterTextureRepository {
      * Returns the moving animation textures of the player for the given direction.
      */
     public Animation<Texture> getMovingAnimation(Direction direction){
-        return Objects.requireNonNull(movementAnimations.get(direction), "No movement Animation was found for the Player");
+        return movementAnimations.get(direction);
     }
 
 

@@ -40,7 +40,6 @@ public class NPCService {
         for(NPC npc: npcDrawerRepository.getAllNpcs()){
             boolean isMoving = !npc.getMovementPath().isEmpty();
             if(isMoving){
-                npc.setActivity(Activity.WALKING);
                 move(npc);
             }else{
                 npc.setActivity(Activity.IDLING);
@@ -78,6 +77,7 @@ public class NPCService {
         boolean startNextActivity = timeInMinutes >= nextActivity.getStartTimeInMinutes();
         boolean correctDay = day == clockService.getClock().getDay();
         if(startNextActivity && correctDay){
+            npc.setActivity(Activity.WALKING);
             MovementGraph graph = npc.getMovementGraph();
             npc.setMovementPath(graph.findPath(npc.getPosition(), nextActivity.getPosition()));
         }
@@ -131,6 +131,9 @@ public class NPCService {
 
     private void removeFirstPositionFromPath(NPC npc){
         npc.getMovementPath().remove(0);
+        if(npc.getMovementPath().isEmpty()){
+            npc.setActivity(Activity.IDLING);
+        }
     }
 
     public static int getInt(){
