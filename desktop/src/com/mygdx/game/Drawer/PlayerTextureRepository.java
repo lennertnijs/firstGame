@@ -17,10 +17,16 @@ public class PlayerTextureRepository {
         this.idleTextures = builder.idleTextures;
     }
 
+    /**
+     * Returns the idle texture of the player for the given direction.
+     */
     public Texture getIdleTexture(Direction direction){
         return Objects.requireNonNull(idleTextures.get(direction), "No idle Texture was found for the Player");
     }
 
+    /**
+     * Returns the mining animation textures of the player for the given direction.
+     */
     public Animation<Texture> getMovingAnimation(Direction direction){
         return Objects.requireNonNull(movementAnimations.get(direction), "No movement Animation was found for the Player");
     }
@@ -55,6 +61,11 @@ public class PlayerTextureRepository {
 
         }
 
+        /**
+         * Validates the given map.
+         * The map cannot be null and cannot contain a null key or value.
+         * The map should also have one mapping for each {@code Direction}
+         */
         private void checkValidMap(Map<Direction, ?> map){
             int amountOfDirections = Direction.values().length;
             String invalidMapMessage = "Couldn't build the playerTexture repository because the map is invalid";
