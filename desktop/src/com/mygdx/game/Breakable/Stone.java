@@ -1,10 +1,11 @@
 package com.mygdx.game.Breakable;
 
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Interactive.Interactive;
 
 import java.util.Objects;
 
-public class Stone {
+public class Stone implements Interactive {
 
     private final Position position;
     private float healthPoints;

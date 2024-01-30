@@ -12,14 +12,10 @@ import static com.mygdx.game.Constants.*;
 
 public class NPCDrawer {
 
-    private MyGame game;
+    private final MyGame game;
 
 
     public NPCDrawer(MyGame game){
-        this.game = game;
-    }
-
-    public void setGame(MyGame game){
         this.game = game;
     }
 

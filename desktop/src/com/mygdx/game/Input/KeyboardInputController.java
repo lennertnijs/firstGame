@@ -2,6 +2,8 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.Breakable.Stone;
+import com.mygdx.game.Breakable.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.Entity.Position;
@@ -16,12 +18,15 @@ public class KeyboardInputController {
 
     private final NPCController npcController;
     private final InteractiveController interactiveController;
+
+    private final StoneController stoneController;
     private final Player player;
     private final PlayerDrawer playerDrawer;
     private final double sqrtTwo = 1/Math.sqrt(2);
 
-    public KeyboardInputController(Player player, NPCController npcController, InteractiveController  interactiveController, PlayerDrawer playerDrawer){
+    public KeyboardInputController(Player player,StoneController stoneController, NPCController npcController, InteractiveController  interactiveController, PlayerDrawer playerDrawer){
         this.player = player;
+        this.stoneController = stoneController;
         this.npcController = npcController;
         this.interactiveController = interactiveController;
         this.playerDrawer = playerDrawer;
@@ -42,7 +47,7 @@ public class KeyboardInputController {
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
             player.setActivity(Activity.WALKING);
-            Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+50, player.getPosition().getY());
+            //Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+50, player.getPosition().getY());
         }
 
         if(up && down || left && right){
@@ -73,7 +78,9 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX - diagonalMovement, currentY + diagonalMovement);
         }
         boolean collisionWithNPC = npcController.checkCollision(newPosition);
-        if(!collisionWithNPC){
+        Stone stone = stoneController.pointCollidesWithStone(newPosition);
+        boolean collisionWithStone = stone != null;
+        if(!collisionWithNPC && !collisionWithStone){
             player.setPosition(newPosition);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){

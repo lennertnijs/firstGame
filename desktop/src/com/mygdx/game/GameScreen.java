@@ -8,11 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Breakable.Stone;
+import com.mygdx.game.Breakable.StoneController;
 import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Drawer.PlayerDrawer;
+import com.mygdx.game.Drawer.StoneDrawer;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 import com.mygdx.game.Entity.Position;
@@ -57,6 +60,8 @@ public class GameScreen implements Screen {
     CharacterTextureRepository characterTextureRepository;
     PlayerDrawer playerDrawer;
     NPCDrawer npcDrawer;
+    StoneDrawer stoneDrawer;
+    StoneController stoneController;
 
 
 
@@ -75,10 +80,14 @@ public class GameScreen implements Screen {
 
         texture = new Texture[4];
 
+        stoneDrawer = new StoneDrawer(game);
+
+        stoneController = new StoneController();
 
 
 
-        interactiveController = new InteractiveController(npcService);
+
+        interactiveController = new InteractiveController(npcController, stoneController);
 
 
 
@@ -144,7 +153,7 @@ public class GameScreen implements Screen {
         characterRect.x = (float) 1920 / 2;
         characterRect.y = 510;
 
-        keyboardInput = new KeyboardInputController(player, npcController, interactiveController, playerDrawer);
+        keyboardInput = new KeyboardInputController(player,stoneController, npcController, interactiveController, playerDrawer);
     }
 
 
@@ -168,6 +177,10 @@ public class GameScreen implements Screen {
             npcDrawer.drawNPC(npc);
         }
         clockController.updateClock();
+
+        for(Stone stone: stoneController.getAllStones()){
+            stoneDrawer.drawStone(stone);
+        }
 
         clockController.updateClock();
         keyboardInput.handleMovement();
