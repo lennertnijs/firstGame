@@ -11,10 +11,9 @@ public class EntityTest {
     public void testConstructor(){
         Position position = Position.builder().x(200).y(120).build();
         String spritePath = "resources/stone.png";
-        Entity entity = new Entity(position, spritePath);
+        Entity entity = new Entity(position);
         Assertions.assertAll(
-                () -> Assertions.assertEquals(position, entity.getPosition()),
-                () -> Assertions.assertEquals(spritePath, entity.getSpritePath())
+                () -> Assertions.assertEquals(position, entity.getPosition())
         );
     }
 
@@ -23,7 +22,7 @@ public class EntityTest {
         Position position = Position.builder().x(200).y(120).build();
         Position newPosition = Position.builder().x(400).y(240).build();
         String spritePath = "resources/stone.png";
-        Entity entity = new Entity(position, spritePath);
+        Entity entity = new Entity(position);
         entity.setPosition(newPosition);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(entity.getPosition(), newPosition)
@@ -34,7 +33,7 @@ public class EntityTest {
     public void testSetPositionInvalid(){
         Position position = Position.builder().x(200).y(120).build();
         String spritePath = "resources/stone.png";
-        Entity entity = new Entity(position, spritePath);
+        Entity entity = new Entity(position);
         Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class, () -> entity.setPosition(null))
         );

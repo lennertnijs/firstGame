@@ -1,12 +1,14 @@
 package com.mygdx.game.Item;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.Objects;
 
 public class Weapon extends Item{
 
     private final int damage;
     public Weapon(Builder builder){
-        super(Item.itemBuilder().name(builder.name).spritePath(builder.spritePath).stackSize(builder.stackSize));
+        super(Item.itemBuilder().name(builder.name).texture(builder.texture).stackSize(builder.stackSize));
         damage = builder.damage;
     }
 
@@ -21,8 +23,9 @@ public class Weapon extends Item{
     public static class Builder{
 
         private String name;
-        private String spritePath;
         private final int stackSize = 1;
+
+        private Texture texture;
         private int damage;
 
 
@@ -34,8 +37,8 @@ public class Weapon extends Item{
             return this;
         }
 
-        public Builder spritePath(String spritePath){
-            this.spritePath = spritePath;
+        public Builder texture(Texture texture){
+            this.texture = texture;
             return this;
         }
 
@@ -46,7 +49,6 @@ public class Weapon extends Item{
 
         public Weapon build(){
             Objects.requireNonNull(name, "The name of a weapon must not be null");
-            Objects.requireNonNull(spritePath, "The spritePath of a weapon must not be null");
             if(damage <= 0){
                 throw new IllegalArgumentException("The damage of a weapon has to be strictly positive");
             }

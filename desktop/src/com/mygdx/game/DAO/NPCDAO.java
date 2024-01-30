@@ -47,8 +47,6 @@ public class NPCDAO {
         int y = npcJSON.getInt("y");
         Position position = Position.builder().x(x).y(y).build();
 
-        String spritePath = npcJSON.getString("spritePath");
-
         Activity activity = Activity.valueOf(npcJSON.getString("activity"));
 
         JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
@@ -71,7 +69,6 @@ public class NPCDAO {
 
         NPC npc =  NPC.builder()
                 .position(position)
-                .spritePath(NPC_PATHNAME + spritePath)
                 .name(name)
                 .activity(activity)
                 .weekSchedule(weekSchedule)

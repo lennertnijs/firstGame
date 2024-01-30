@@ -14,7 +14,6 @@ public class Player {
     private final int currentItemIndex;
     private Position position;
     private boolean doingAnimation = false;
-
     private Activity activity = Activity.IDLING;
     private final Direction direction = Direction.DOWN;
 

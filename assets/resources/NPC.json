@@ -1,7 +1,6 @@
 [
     {
       "name": "Bart",
-      "spritePath": "stone.png",
       "x": "1000",
       "y": "1000",
       "activity": "IDLING",

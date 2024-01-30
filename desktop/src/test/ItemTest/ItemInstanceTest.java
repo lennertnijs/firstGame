@@ -89,6 +89,6 @@ public class ItemInstanceTest {
 
 
     private Item generateItem(int stackSize){
-        return Item.itemBuilder().name("Item").spritePath("item.png").stackSize(stackSize).build();
+        return Item.itemBuilder().name("Item").stackSize(stackSize).build();
     }
 }

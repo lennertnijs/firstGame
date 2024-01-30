@@ -28,7 +28,7 @@ public class NPC extends Entity{
 
 
     public NPC(Builder builder){
-        super(builder.position, builder.spritePath);
+        super(builder.position);
         this.name = builder.name;
         this.weekSchedule = builder.weekSchedule;
         this.movementPath = builder.movementPath;
@@ -94,7 +94,6 @@ public class NPC extends Entity{
         }
         NPC npc = (NPC) o;
         return getPosition().equals(npc.getPosition()) &&
-                getSpritePath().equals(npc.getSpritePath()) &&
                 name.equals(npc.name) &&
                 weekSchedule.equals(npc.weekSchedule) &&
                 movementPath.equals(npc.movementPath) &&
@@ -105,7 +104,7 @@ public class NPC extends Entity{
 
     @Override
     public int hashCode(){
-        return Objects.hash(getPosition(), getSpritePath(), name, weekSchedule,
+        return Objects.hash(getPosition(), name, weekSchedule,
                 movementPath, activity, movementGraph, dialogueOptions);
     }
 
@@ -119,7 +118,6 @@ public class NPC extends Entity{
 
         // Entity fields
         private Position position;
-        private String spritePath;
 
         // NPC fields
         private String name;
@@ -137,11 +135,6 @@ public class NPC extends Entity{
 
         public Builder position(Position position){
             this.position = position;
-            return this;
-        }
-
-        public Builder spritePath(String spritePath){
-            this.spritePath = spritePath;
             return this;
         }
 
@@ -183,7 +176,6 @@ public class NPC extends Entity{
 
         public NPC build(){
             Objects.requireNonNull(position, "An npc's location must not be null");
-            Objects.requireNonNull(spritePath, "An npc's sprite path must not be null");
             Objects.requireNonNull(name, "An npc's name must not be null");
             Objects.requireNonNull(weekSchedule, "An npc's week schedule must not be null");
             Objects.requireNonNull(movementPath, "An npc's movement path must not be null");

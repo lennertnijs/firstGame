@@ -1,16 +1,18 @@
 package com.mygdx.game.Item;
 
+import com.badlogic.gdx.graphics.Texture;
+
 import java.util.Objects;
 
 public class Item {
     private final String name;
-    private final String spritePath;
     private final int stackSize;
+    private final Texture texture;
 
     public Item(Builder builder){
         this.name = builder.name;
-        this.spritePath = builder.spritePath;
         this.stackSize = builder.stackSize;
+        this.texture = builder.texture;
     }
 
     public final int getStackSize(){
@@ -21,9 +23,6 @@ public class Item {
         return name;
     }
 
-    public final String getSpritePath(){
-        return spritePath;
-    }
 
     public static Builder itemBuilder(){
         return new Builder();
@@ -32,8 +31,8 @@ public class Item {
     public static class Builder{
 
         private String name;
-        private String spritePath;
         private int stackSize;
+        private Texture texture;
 
         public Builder(){
 
@@ -44,19 +43,18 @@ public class Item {
             return this;
         }
 
-        public Builder spritePath(String spritePath){
-            this.spritePath = spritePath;
-            return this;
-        }
-
         public Builder stackSize(int stackSize){
             this.stackSize = stackSize;
             return this;
         }
 
+        public Builder texture(Texture texture){
+            this.texture = texture;
+            return this;
+        }
+
         public Item build(){
             Objects.requireNonNull(name, "The name of an item must not be null");
-            Objects.requireNonNull(spritePath, "The spritePath of an item must not be null");
             if(stackSize <= 0){
                 throw new IllegalArgumentException("The stack size of an item must be strictly positive");
             }
