@@ -21,7 +21,7 @@ public class PlayerTextureRepository {
         return Objects.requireNonNull(idleTextures.get(direction), "No idle Texture was found for the Player");
     }
 
-    public Animation<Texture> getMovementAnimation(Direction direction){
+    public Animation<Texture> getMovingAnimation(Direction direction){
         return Objects.requireNonNull(movementAnimations.get(direction), "No movement Animation was found for the Player");
     }
 

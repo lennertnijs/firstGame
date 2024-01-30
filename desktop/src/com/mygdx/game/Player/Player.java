@@ -66,7 +66,7 @@ public class Player {
     }
 
 
-    public Direction getMovementDirection(){
+    public Direction getDirection(){
         return direction;
     }
 

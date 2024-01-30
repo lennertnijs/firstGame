@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 public class Constants {
 
-    public static int SECONDS_PER_MINUTE = 60;
     public static int MINUTES_PER_HOUR = 60;
     public static int HOURS_PER_DAY = 24;
     public static int MINUTES_PER_DAY = MINUTES_PER_HOUR*HOURS_PER_DAY;
@@ -20,5 +19,7 @@ public class Constants {
 
     public static final int TOOL_STACK_SIZE = 1;
     public static final int WEAPON_STACK_SIZE = 1;
+
+    public static final int ANIMATION_LENGTH = 1;
 
 }
