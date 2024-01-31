@@ -8,19 +8,22 @@ import java.util.List;
 
 
 public class NPCController {
+
     private final NPCService npcService;
+    private final ClockController clockController;
 
     /**
      * Constructor for the NPC controller.
      * Loads all the NPC data from the JSON file at creation.
      */
-    public NPCController(NPCService npcService) {
-        this.npcService = npcService;
+    public NPCController(ClockController clockController) {
+        this.npcService = new NPCService();
+        this.clockController = clockController;
     }
 
 
     public void updateNPCs(){
-        npcService.updateNPCS();
+        npcService.updateNPCS(clockController.getClock());
     }
 
 

@@ -25,14 +25,38 @@ public class Tool extends Item{
         return toolType;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof Tool)){
+            return false;
+        }
+        Tool tool = (Tool) o;
+        return getName().equals(tool.getName()) &&
+                getStackSize() == tool.getStackSize()
+                && efficiency == tool.efficiency
+                && toolType.equals(tool.toolType);
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(getName(), getStackSize(), efficiency, toolType);
+    }
+
+
     public static Builder toolBuilder(){
         return new Builder();
     }
 
     public static class Builder{
-        private String name;
 
+        // Item fields
+        private String name;
         private Texture texture;
+
+        // Tool fields
         private int efficiency;
         private ToolType toolType;
 
@@ -59,8 +83,9 @@ public class Tool extends Item{
         public Tool build(){
             Objects.requireNonNull(name, "The name of a tool must not be null");
             if(efficiency <= 0){
-                throw new IllegalArgumentException("The proficiency of a tool has to be strictly positive");
+                throw new IllegalArgumentException("The efficiency of a tool has to be strictly positive");
             }
+            Objects.requireNonNull(toolType, "The type of a tool must not eb null");
             return new Tool(this);
         }
     }

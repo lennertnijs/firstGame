@@ -13,10 +13,8 @@ import static com.mygdx.game.Constants.*;
 public class NPCService {
 
     private final NPCRepository npcRepository;
-    private final ClockService clockService;
 
-    public NPCService(ClockService clockService){
-        this.clockService = clockService;
+    public NPCService(){
         npcRepository = new NPCRepository(new NPCDAO().readNPCS());
     }
 
@@ -25,7 +23,7 @@ public class NPCService {
         return npcRepository.getAllNpcs();
     }
 
-    public void updateNPCS(){
+    public void updateNPCS(Clock clock){
         for(NPC npc: npcRepository.getAllNpcs()){
             boolean isMoving = !npc.getMovementPath().isEmpty();
             if(isMoving){
@@ -33,7 +31,7 @@ public class NPCService {
             }
             else{
                 npc.setActivity(Activity.IDLING);
-                checkMove(npc);
+                checkMove(npc, clock);
             }
         }
     }
@@ -53,9 +51,10 @@ public class NPCService {
         return false;
     }
 
-    private void checkMove(NPC npc){
-        Day day = clockService.getClock().getDay();
-        int timeInMinutes = clockService.getClock().getTimeInMinutes();
+    private void checkMove(NPC npc, Clock clock){
+        Day day = clock.getDay();
+        int timeInMinutes = clock.getTimeInMinutes();
+
         DaySchedule daySchedule = npc.getWeekSchedule().getDaySchedule(day);
         ActivityInstance nextActivity = daySchedule.nextActivityAfterTime(timeInMinutes);
         boolean noMoreActivitiesInDay = nextActivity == null;
@@ -65,7 +64,7 @@ public class NPCService {
             nextActivity = daySchedule.nextActivityAfterTime(0);
         }
         boolean startNextActivity = timeInMinutes >= nextActivity.getStartTimeInMinutes();
-        boolean correctDay = day == clockService.getClock().getDay();
+        boolean correctDay = day == clock.getDay();
         if(startNextActivity && correctDay){
             npc.setActivity(Activity.WALKING);
             MovementGraph graph = npc.getMovementGraph();

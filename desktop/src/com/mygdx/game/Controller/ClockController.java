@@ -7,16 +7,12 @@ public class ClockController {
 
     private final ClockService clockService;
 
-    public ClockController(ClockService clockService){
-        this.clockService = clockService;
+    public ClockController(){
+        this.clockService = new ClockService();
     }
 
     public void updateClock(){
         clockService.updateClock();
-    }
-
-    public void loadClock(){
-        clockService.loadClock();
     }
 
     public Clock getClock(){

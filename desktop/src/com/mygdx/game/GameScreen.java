@@ -8,13 +8,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Controller.PlayerController;
 import com.mygdx.game.Drawer.DrawerController;
 import com.mygdx.game.Stone.StoneController;
-import com.mygdx.game.Clock.*;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Input.KeyboardInputController;
 import com.mygdx.game.Interactive.InteractiveController;
-import com.mygdx.game.Service.ClockService;
-import com.mygdx.game.Service.NPCService;
 
 
 
@@ -22,12 +19,6 @@ public class GameScreen implements Screen {
     final MyGame game;
     Music rainMusic;
     OrthographicCamera camera;
-
-    Clock clock;
-
-    NPCService npcService;
-    ClockService clockService;
-
 
     ClockController clockController;
     KeyboardInputController keyboardInput;
@@ -41,20 +32,11 @@ public class GameScreen implements Screen {
 
         this.game = game;
 
-        clockService = new ClockService();
-        npcService = new NPCService(clockService);
-
-        clockController = new ClockController(clockService);
-        npcController = new NPCController(npcService);
+        clockController = new ClockController();
+        npcController = new NPCController(clockController);
         playerController  = new PlayerController();
         stoneController = new StoneController();
         interactiveController = new InteractiveController(npcController, stoneController);
-
-
-        clockController.loadClock();
-
-        clock = clockController.getClock();
-
         drawerController = new DrawerController(game, npcController, playerController, stoneController);
 
 

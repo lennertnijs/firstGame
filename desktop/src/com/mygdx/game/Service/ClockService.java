@@ -1,27 +1,23 @@
 package com.mygdx.game.Service;
 
 import com.mygdx.game.Clock.Clock;
+import com.mygdx.game.Clock.ClockRepository;
 import com.mygdx.game.DAO.ClockDAO;
 
 public class ClockService {
 
     long lastUpdateInMillis;
     long timeElapsedInMillis;
-    final Clock clock;
+    private final ClockRepository clockRepository;
 
     public ClockService(){
-        this.clock = loadClock();
+        this.clockRepository = new ClockRepository();
         lastUpdateInMillis = System.currentTimeMillis();
         timeElapsedInMillis = 0;
     }
 
-    public Clock loadClock(){
-        ClockDAO clockDAO = new ClockDAO();
-        return clockDAO.readClock();
-    }
-
     public Clock getClock(){
-        return clock;
+        return clockRepository.getClock();
     }
 
     /**
@@ -36,7 +32,7 @@ public class ClockService {
         timeElapsedInMillis += timeDifference;
         if(timeElapsedInMillis >= 1000){
             timeElapsedInMillis -= 1000;
-            clock.incrementTimeByOne();
+            clockRepository.getClock().incrementTimeByOne();
         }
         lastUpdateInMillis = currentMillis;
     }

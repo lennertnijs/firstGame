@@ -15,12 +15,34 @@ public class Item {
         this.texture = builder.texture;
     }
 
+    public final String getName(){
+        return name;
+    }
+
+
     public final int getStackSize(){
         return stackSize;
     }
 
-    public final String getName(){
-        return name;
+    public final Texture getTexture(){
+        return texture;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof Item)){
+            return false;
+        }
+        Item item = (Item) o;
+        return name.equals(item.name) && stackSize == item.stackSize;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(name, stackSize, texture);
     }
 
 
@@ -34,8 +56,7 @@ public class Item {
         private int stackSize;
         private Texture texture;
 
-        public Builder(){
-
+        private Builder(){
         }
 
         public Builder name(String name){
