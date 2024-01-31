@@ -8,17 +8,21 @@ import static com.mygdx.game.Constants.TOOL_STACK_SIZE;
 
 public class Tool extends Item{
 
-    private final int proficiency;
+    private final int efficiency;
     private final ToolType toolType;
 
     public Tool(Builder builder){
         super(Item.itemBuilder().name(builder.name).texture(builder.texture).stackSize(TOOL_STACK_SIZE));
-        this.proficiency = builder.proficiency;
+        this.efficiency = builder.efficiency;
         this.toolType = builder.toolType;
     }
 
-    public int getProficiency(){
-        return proficiency;
+    public int getEfficiency(){
+        return efficiency;
+    }
+
+    public ToolType getToolType(){
+        return toolType;
     }
 
     public static Builder toolBuilder(){
@@ -29,7 +33,7 @@ public class Tool extends Item{
         private String name;
 
         private Texture texture;
-        private int proficiency;
+        private int efficiency;
         private ToolType toolType;
 
         public Builder name(String name){
@@ -42,8 +46,8 @@ public class Tool extends Item{
             return this;
         }
 
-        public Builder proficiency(int proficiency){
-            this.proficiency = proficiency;
+        public Builder efficiency(int efficiency){
+            this.efficiency = efficiency;
             return this;
         }
 
@@ -54,7 +58,7 @@ public class Tool extends Item{
 
         public Tool build(){
             Objects.requireNonNull(name, "The name of a tool must not be null");
-            if(proficiency <= 0){
+            if(efficiency <= 0){
                 throw new IllegalArgumentException("The proficiency of a tool has to be strictly positive");
             }
             return new Tool(this);

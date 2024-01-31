@@ -10,13 +10,13 @@ import static com.mygdx.game.Constants.STONE_WIDTH;
 
 public class StoneDrawer {
 
+    Texture texture = new Texture(Gdx.files.internal("npc/stone.png"));
     private final MyGame game;
     public StoneDrawer(MyGame game){
         this.game = game;
     }
 
     public void drawStone(Stone stone){
-        Texture texture = new Texture(Gdx.files.internal("npc/stone.png"));
         game.batch.draw(texture, stone.getPosition().getX(), stone.getPosition().getY(), STONE_WIDTH, STONE_HEIGHT);
 
     }
