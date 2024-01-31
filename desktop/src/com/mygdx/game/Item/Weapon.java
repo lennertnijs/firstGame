@@ -22,10 +22,12 @@ public class Weapon extends Item{
 
     public static class Builder{
 
+        // Item fields
         private String name;
         private final int stackSize = 1;
-
         private Texture texture;
+
+        // Weapon fields
         private int damage;
 
 

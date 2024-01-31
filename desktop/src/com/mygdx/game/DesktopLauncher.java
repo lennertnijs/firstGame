@@ -12,8 +12,8 @@ public class DesktopLauncher {
 		// Configuring the settings of game window.
 		config.setTitle("Game Title");
 		config.setWindowedMode(1080, 1080);
-		config.useVsync(true);
-		config.setForegroundFPS(0);
+		config.useVsync(false);
+		config.setForegroundFPS(144);
 
 		// Start the game with the settings.
 		new Lwjgl3Application(new MyGame(), config);

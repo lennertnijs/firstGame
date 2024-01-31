@@ -37,16 +37,57 @@ public class KeyboardInputController {
     }
 
     public void handleMovement(){
-        int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
-        int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
         boolean left = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean right = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean up = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean down = Gdx.input.isKeyPressed(Input.Keys.DOWN);
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
 
-        Position newPosition = Position.builder().x(currentX).y(currentY).build();
+        Position newPosition;
+
+        boolean anyMovement = up || right || down || left;
+        boolean oppositeDirection = up && down || left && right;
+        if(oppositeDirection || !anyMovement){
+            playerDrawer.drawPlayer();
+            handleOtherInputs();
+            return;
+        }
+
+        boolean twoDirections = up && right || right && down || down && left || left && up;
+        if(twoDirections){
+            newPosition = handleTwoMovementInputs(up, right, down, left);
+            boolean collisionWithNPC = npcController.checkCollision(newPosition);
+            boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            if(!collisionWithNPC && !collisionWithStone){
+                player.setPosition(newPosition);
+                playerDrawer.drawPlayer();
+                handleOtherInputs();
+                return;
+            }
+        }
+
+        newPosition = handleOneMovementInput(up, right, down, left);
+        boolean collisionWithNPC = npcController.checkCollision(newPosition);
+        boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+        if(!collisionWithNPC && !collisionWithStone){
+            player.setPosition(newPosition);
+            playerDrawer.drawPlayer();
+            handleOtherInputs();
+        }
+        handleOtherInputs();
+        playerDrawer.drawPlayer();
+    }
+
+    private void handleOtherInputs(){
+
+        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+            ItemInstance itemInstance = player.getCurrentItem();
+            if(itemInstance instanceof ToolInstance){
+                // call command pattern class
+                // run animation
+                // check interactive collision
+                // command class runs execute() which calls interact() on whatever class necessary
+            }
+        }
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
             player.setActivity(Activity.WALKING);
@@ -60,22 +101,15 @@ public class KeyboardInputController {
 
             }
         }
+    }
 
-        if(up && down || left && right){
-            return;
-        }
-        if(up){
-            newPosition = buildNewPosition(currentX, currentY + movement);
-        }
-        if(right){
-            newPosition = buildNewPosition(currentX + movement, currentY);
-        }
-        if(down){
-            newPosition = buildNewPosition(currentX , currentY - movement);
-        }
-        if(left){
-            newPosition = buildNewPosition(currentX - movement, currentY);
-        }
+
+    private Position handleTwoMovementInputs(boolean up, boolean right, boolean down, boolean left){
+        int currentX = player.getPosition().getX();
+        int currentY = player.getPosition().getY();
+        int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
+        int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
+        Position newPosition = null;
         if(up && right){
             newPosition = buildNewPosition(currentX + diagonalMovement, currentY + diagonalMovement);
         }
@@ -88,21 +122,48 @@ public class KeyboardInputController {
         if(left && up){
             newPosition = buildNewPosition(currentX - diagonalMovement, currentY + diagonalMovement);
         }
-        boolean collisionWithNPC = npcController.checkCollision(newPosition);
-        boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
-        if(!collisionWithNPC && !collisionWithStone){
-            player.setPosition(newPosition);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            ItemInstance itemInstance = player.getCurrentItem();
-            if(itemInstance instanceof ToolInstance){
-                // call command pattern class
-                // run animation
-                // check interactive collision
-                // command class runs execute() which calls interact() on whatever class necessary
+        return newPosition;
+    }
+
+    private Position handleOneMovementInput(boolean up, boolean right, boolean down, boolean left){
+        int currentX = player.getPosition().getX();
+        int currentY = player.getPosition().getY();
+        int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
+        int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
+        Position newPosition = null;
+        if(up){
+            newPosition = buildNewPosition(currentX, currentY + diagonalMovement);
+            boolean collisionWithNPC = npcController.checkCollision(newPosition);
+            boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            if(!collisionWithNPC && !collisionWithStone){
+                return newPosition;
             }
         }
-        playerDrawer.drawPlayer();
+        if(right){
+            newPosition = buildNewPosition(currentX + diagonalMovement, currentY);
+            boolean collisionWithNPC = npcController.checkCollision(newPosition);
+            boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            if(!collisionWithNPC && !collisionWithStone){
+                return newPosition;
+            }
+        }
+        if(down){
+            newPosition = buildNewPosition(currentX , currentY - diagonalMovement);
+            boolean collisionWithNPC = npcController.checkCollision(newPosition);
+            boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            if(!collisionWithNPC && !collisionWithStone){
+                return newPosition;
+            }
+        }
+        if(left){
+            newPosition = buildNewPosition(currentX - diagonalMovement, currentY);
+            boolean collisionWithNPC = npcController.checkCollision(newPosition);
+            boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            if(!collisionWithNPC && !collisionWithStone){
+                return newPosition;
+            }
+        }
+        return newPosition;
     }
 
     private Position buildNewPosition(int x, int y){

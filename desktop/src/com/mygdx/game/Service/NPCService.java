@@ -30,7 +30,8 @@ public class NPCService {
             boolean isMoving = !npc.getMovementPath().isEmpty();
             if(isMoving){
                 move(npc);
-            }else{
+            }
+            else{
                 npc.setActivity(Activity.IDLING);
                 checkMove(npc);
             }

@@ -67,7 +67,6 @@ public class GameScreen implements Screen {
 
     /* Loads the game screen. Only is executed upon screen load */
     public GameScreen(final MyGame game) {
-        float start = System.currentTimeMillis();
         this.game = game;
 
         clockService = new ClockService();
@@ -155,7 +154,6 @@ public class GameScreen implements Screen {
         characterRect.y = 510;
 
         keyboardInput = new KeyboardInputController(player,stoneController, npcController, interactiveController, playerDrawer);
-        System.out.println(System.currentTimeMillis() - start);
     }
 
 
@@ -175,6 +173,8 @@ public class GameScreen implements Screen {
 
 
         npcController.updateNPCs();
+
+
         for(NPC npc: npcController.getNPCS()){
             npcDrawer.drawNPC(npc);
         }
