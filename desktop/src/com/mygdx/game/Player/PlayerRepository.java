@@ -1,7 +1,5 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Player.Player;
-import org.junit.jupiter.api.Assertions;
 
 import java.util.Objects;
 
