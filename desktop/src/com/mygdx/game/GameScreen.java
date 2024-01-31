@@ -24,27 +24,20 @@ public class GameScreen implements Screen {
     OrthographicCamera camera;
 
     Clock clock;
-    ClockController clockController;
-    NPCController npcController;
 
     NPCService npcService;
     ClockService clockService;
 
-    KeyboardInputController keyboardInput;
 
+    ClockController clockController;
+    KeyboardInputController keyboardInput;
     InteractiveController interactiveController;
-    StoneController stoneController;
+    NPCController npcController;
     PlayerController playerController;
+    StoneController stoneController;
     DrawerController drawerController;
 
-
-
-    /* Loads the game screen. Only is executed upon screen load */
     public GameScreen(final MyGame game) {
-
-        // Build player drawer, then finish npc Controller to remove npc service. Then create drawerController
-        // with all the controller. DrawerController should initiate all drawer classes.
-        // Thus, after refactor the render() should just call drawerController.drawAll();
 
         this.game = game;
 
@@ -80,10 +73,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        // clear the screen with a dark blue color. The
-        // arguments to clear are the red, green
-        // blue and alpha component in the range [0,1]
-        // of the color to be used to clear the screen.
+        // clear the screen with a dark blue color.
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
@@ -92,7 +82,6 @@ public class GameScreen implements Screen {
 
         npcController.updateNPCs();
         clockController.updateClock();
-
 
         keyboardInput.handleMovement();
         drawerController.drawAll();
