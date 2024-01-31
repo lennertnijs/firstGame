@@ -2,17 +2,16 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.Controller.PlayerController;
 import com.mygdx.game.Interactive.Interactive;
 import com.mygdx.game.Stone.Stone;
 import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Controller.NPCController;
-import com.mygdx.game.Drawer.PlayerDrawer;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Interactive.InteractiveController;
 import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Item.ToolInstance;
 import com.mygdx.game.NPC.Activity;
-import com.mygdx.game.Player.Player;
 
 import static com.mygdx.game.Constants.NPC_HEIGHT;
 import static com.mygdx.game.Constants.NPC_WIDTH;
@@ -23,16 +22,14 @@ public class KeyboardInputController {
     private final InteractiveController interactiveController;
 
     private final StoneController stoneController;
-    private final Player player;
-    private final PlayerDrawer playerDrawer;
+    private final PlayerController playerController;
     private final double sqrtTwo = 1/Math.sqrt(2);
 
-    public KeyboardInputController(Player player,StoneController stoneController, NPCController npcController, InteractiveController  interactiveController, PlayerDrawer playerDrawer){
-        this.player = player;
+    public KeyboardInputController(StoneController stoneController, NPCController npcController, InteractiveController  interactiveController, PlayerController playerController){
         this.stoneController = stoneController;
         this.npcController = npcController;
         this.interactiveController = interactiveController;
-        this.playerDrawer = playerDrawer;
+        this.playerController = playerController;
 
     }
 
@@ -47,7 +44,6 @@ public class KeyboardInputController {
         boolean anyMovement = up || right || down || left;
         boolean oppositeDirection = up && down || left && right;
         if(oppositeDirection || !anyMovement){
-            playerDrawer.drawPlayer();
             handleOtherInputs();
             return;
         }
@@ -58,8 +54,7 @@ public class KeyboardInputController {
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
             if(!collisionWithNPC && !collisionWithStone){
-                player.setPosition(newPosition);
-                playerDrawer.drawPlayer();
+                playerController.getPlayer().setPosition(newPosition);
                 handleOtherInputs();
                 return;
             }
@@ -69,18 +64,16 @@ public class KeyboardInputController {
         boolean collisionWithNPC = npcController.checkCollision(newPosition);
         boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
         if(!collisionWithNPC && !collisionWithStone){
-            player.setPosition(newPosition);
-            playerDrawer.drawPlayer();
+            playerController.getPlayer().setPosition(newPosition);
             handleOtherInputs();
         }
         handleOtherInputs();
-        playerDrawer.drawPlayer();
     }
 
     private void handleOtherInputs(){
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            ItemInstance itemInstance = player.getCurrentItem();
+            ItemInstance itemInstance = playerController.getPlayer().getCurrentItem();
             if(itemInstance instanceof ToolInstance){
                 // call command pattern class
                 // run animation
@@ -90,10 +83,10 @@ public class KeyboardInputController {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
-            player.setActivity(Activity.WALKING);
-            Interactive interactive = interactiveController.checkInteractions(player.getPosition().getX()+120, player.getPosition().getY()+50);
+            playerController.getPlayer().setActivity(Activity.WALKING);
+            Interactive interactive = interactiveController.checkInteractions(playerController.getPlayer().getPosition().getX()+120, playerController.getPlayer().getPosition().getY()+50);
             if(interactive instanceof Stone){
-                Position position = Position.builder().x(player.getPosition().getX()+120).y(player.getPosition().getY()+50).build();
+                Position position = Position.builder().x(playerController.getPlayer().getPosition().getX()+120).y(playerController.getPlayer().getPosition().getY()+50).build();
                 Stone stone = stoneController.getCollisionStoneFromPoint(position);
                 if(stone != null){
                     stoneController.mineStone(stone, 30);
@@ -105,8 +98,8 @@ public class KeyboardInputController {
 
 
     private Position handleTwoMovementInputs(boolean up, boolean right, boolean down, boolean left){
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
+        int currentX = playerController.getPlayer().getPosition().getX();
+        int currentY = playerController.getPlayer().getPosition().getY();
         int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
         int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
         Position newPosition = null;
@@ -126,8 +119,8 @@ public class KeyboardInputController {
     }
 
     private Position handleOneMovementInput(boolean up, boolean right, boolean down, boolean left){
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
+        int currentX = playerController.getPlayer().getPosition().getX();
+        int currentY = playerController.getPlayer().getPosition().getY();
         int movement = (int)Math.ceil((200 * Gdx.graphics.getDeltaTime()));
         int diagonalMovement = (int)Math.ceil((movement*sqrtTwo));
         Position newPosition = null;

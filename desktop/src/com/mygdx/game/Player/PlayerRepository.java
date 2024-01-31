@@ -1,15 +1,15 @@
 package com.mygdx.game.Player;
 
 
-import java.util.Objects;
+import com.mygdx.game.DAO.PlayerDAO;
+
 
 public class PlayerRepository {
 
     private final Player player;
 
-    public PlayerRepository(Player player){
-        Objects.requireNonNull(player, "The player must not be null");
-        this.player = player;
+    public PlayerRepository(){
+        this.player = new PlayerDAO().readPlayer();
     }
 
     public Player getPlayer(){

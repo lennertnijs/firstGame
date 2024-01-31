@@ -6,67 +6,62 @@ import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
 import static com.mygdx.game.Constants.*;
 
 public class PlayerDrawer {
 
     private final MyGame game;
-    private final Player player;
-    private final CharacterTextureRepository characterTextureRepository;
     private float timeElapsed = 0;
     private boolean playerInAnimation = false;
 
-    public PlayerDrawer(MyGame game, Player player, CharacterTextureRepository characterTextureRepository){
+    public PlayerDrawer(MyGame game){
         this.game = game;
-        this.player = player;
-        this.characterTextureRepository = characterTextureRepository;
     }
 
     /**
      * Draws the player character in the appropriate animation.
      */
-    public void drawPlayer(){
+    public void drawPlayer(Player player){
         if(player.getActivity() == Activity.IDLING){
-            drawPlayerIdle();
+            drawPlayerIdle(player);
             return;
         }
         if(player.getActivity() == Activity.WALKING){
-            drawPlayerMoving();
+            drawPlayerMoving(player);
         }
     }
 
     /**
      * Handles the drawing of the player if they're idle.
      */
-    private void drawPlayerIdle(){
-        Texture texture = characterTextureRepository.getIdleTexture(player.getDirection());
-        draw(texture);
+    private void drawPlayerIdle(Player player){
+        Texture texture = player.getTextureRepository().getIdleTexture(player.getDirection());
+        draw(texture, player);
     }
 
 
     /**
      * Handles the drawing of the player if they're mining.
      */
-    private void drawPlayerMoving(){
+    private void drawPlayerMoving(Player player){
         initiateAnimationIfNecessary();
         boolean animationInProgress = timeElapsed < ANIMATION_LENGTH;
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
-            Texture texture = characterTextureRepository.getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
-            draw(texture);
+            Texture texture = player.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            draw(texture, player);
             return;
         }
-        endAnimation();
-        drawPlayerIdle();
+        endAnimation(player);
+        drawPlayerIdle(player);
     }
 
     /**
      * Draws the texture at the player location. Helper function.
      */
-    private void draw(Texture texture){
+    private void draw(Texture texture, Player player){
         game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), PLAYER_WIDTH, PLAYER_HEIGHT);
     }
 
@@ -84,7 +79,7 @@ public class PlayerDrawer {
     /**
      * Ends the player's animation sequence.
      */
-    private void endAnimation(){
+    private void endAnimation(Player player){
         player.setActivity(Activity.IDLING);
         timeElapsed = 0;
     }

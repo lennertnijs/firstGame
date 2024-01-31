@@ -1,0 +1,91 @@
+[
+  {
+    "name": "Player"
+  },
+  {
+    "inventory": [
+      {
+        "size": "0",
+        "itemInstances": [
+        ]
+      }
+    ]
+  },
+  {
+    "currentItemIndex": "0"
+  },
+  {
+    "position": [
+      {
+        "x": "500"
+      },
+      {
+        "y": "500"
+      }
+    ]
+  },
+  {
+    "activity": "IDLING"
+  },
+  {
+    "direction": "UP"
+  },
+  {
+    "textures": [
+      {
+        "idleTextures": [
+          {
+            "up": "images/lmaoxd.png",
+            "right": "images/lmaoxd.png",
+            "down": "images/lmaoxd.png",
+            "left": "images/lmaoxd.png"
+          }
+        ]
+      },
+      {
+        "animationTextures": [
+          {
+            "up": [
+              {
+                "first": "images/lmaoxd.png",
+                "second": "images/guy_right.png",
+                "third": "images/guy.png",
+                "fourth": "images/guy_left.png"
+              }
+            ]
+          },
+          {
+            "right": [
+              {
+                "first": "images/lmaoxd.png",
+                "second": "images/guy_right.png",
+                "third": "images/guy.png",
+                "fourth": "images/guy_left.png"
+              }
+            ]
+          },
+          {
+            "down": [
+              {
+                "first": "images/lmaoxd.png",
+                "second": "images/guy_right.png",
+                "third": "images/guy.png",
+                "fourth": "images/guy_left.png"
+              }
+            ]
+          },
+          {
+            "left": [
+              {
+                "first": "images/lmaoxd.png",
+                "second": "images/guy_right.png",
+                "third": "images/guy.png",
+                "fourth": "images/guy_left.png"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
