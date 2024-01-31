@@ -63,6 +63,8 @@ public class GameScreen implements Screen {
     StoneDrawer stoneDrawer;
     StoneController stoneController;
 
+    Texture bar;
+
 
 
     /* Loads the game screen. Only is executed upon screen load */
@@ -89,7 +91,7 @@ public class GameScreen implements Screen {
 
         interactiveController = new InteractiveController(npcController, stoneController);
 
-
+        bar = new Texture("inventoryBar.png");
 
         clockController.loadClock();
 
@@ -138,7 +140,7 @@ public class GameScreen implements Screen {
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1080, 1080);
+        camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         mapRect = new Rectangle();
@@ -185,6 +187,7 @@ public class GameScreen implements Screen {
         }
 
         clockController.updateClock();
+        game.batch.draw(bar, player.getPosition().getX() - 256 + 45, player.getPosition().getY() - 520, 512, 64);
         keyboardInput.handleMovement();
 
 
@@ -192,6 +195,8 @@ public class GameScreen implements Screen {
         game.font.draw(game.batch, String.valueOf(clock.getDay()), 1700, 725);
         game.font.draw(game.batch, String.valueOf(clock.getSeason()), 1700, 650);
         game.font.draw(game.batch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 1400, 900);
+
+
 
         camera.position.set(player.getPosition().getX(), player.getPosition().getY(), 0);
         game.batch.end();
