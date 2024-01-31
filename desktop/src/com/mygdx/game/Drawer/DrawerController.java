@@ -13,5 +13,7 @@ public class DrawerController {
         npcDrawer = new NPCDrawer(game);
         //playerDrawer = new PlayerDrawer(game);
         stoneDrawer = new StoneDrawer(game);
+
+        // add Controllers here.
     }
 }

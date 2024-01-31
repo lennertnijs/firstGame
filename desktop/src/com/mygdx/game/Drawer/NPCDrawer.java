@@ -20,7 +20,6 @@ public class NPCDrawer {
     }
 
 
-
     public void drawNPC(NPC npc){
         if(npc.getActivity() == Activity.IDLING){
             drawNPCIdle(npc);

@@ -69,6 +69,11 @@ public class GameScreen implements Screen {
 
     /* Loads the game screen. Only is executed upon screen load */
     public GameScreen(final MyGame game) {
+
+        // Build player drawer, then finish npc Controller to remove npc service. Then create drawerController
+        // with all the controller. DrawerController should initiate all drawer classes.
+        // Thus, after refactor the render() should just call drawerController.drawAll();
+
         this.game = game;
 
         clockService = new ClockService();
@@ -85,9 +90,6 @@ public class GameScreen implements Screen {
         stoneDrawer = new StoneDrawer(game);
 
         stoneController = new StoneController();
-
-
-
 
         interactiveController = new InteractiveController(npcController, stoneController);
 

@@ -4,6 +4,7 @@ import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Item.ItemInstance;
 import com.mygdx.game.Direction;
 import com.mygdx.game.NPC.Activity;
+import com.mygdx.game.TextureRepository.CharacterTextureRepository;
 
 import java.util.Objects;
 
@@ -17,11 +18,14 @@ public class Player {
     private Activity activity = Activity.IDLING;
     private final Direction direction = Direction.DOWN;
 
+    private final CharacterTextureRepository textureRepository;
+
     public Player(Builder builder){
         this.name = builder.name;
         this.inventory = builder.inventory;
         this.position = builder.position;
         this.currentItemIndex = builder.currentItemIndex;
+        this.textureRepository = builder.textureRepository;
     }
 
     public String getName(){
@@ -69,6 +73,14 @@ public class Player {
         return direction;
     }
 
+    public CharacterTextureRepository getTextureRepository(){
+        return textureRepository;
+    }
+
+
+
+
+
     public static Builder builder(){
         return new Builder();
     }
@@ -79,6 +91,8 @@ public class Player {
         private Inventory inventory;
         private Position position;
         private int currentItemIndex;
+
+        private CharacterTextureRepository textureRepository;
 
         public Builder(){
 
@@ -96,6 +110,11 @@ public class Player {
 
         public Builder position(Position position){
             this.position = position;
+            return this;
+        }
+
+        public Builder textureRepository(CharacterTextureRepository textureRepository){
+            this.textureRepository = textureRepository;
             return this;
         }
 
