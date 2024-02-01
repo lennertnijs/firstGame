@@ -64,4 +64,86 @@ public class ItemServiceTest {
                 () -> Assertions.assertEquals(tool.getDurability(), 0)
         );
     }
+
+
+    @Test
+    public void testCanUseWeapon(){
+        Weapon weapon = Weapon.weaponBuilder().itemId(0).name("axe").damage(5).durability(5).weaponType(WeaponType.SWORD).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemService.canUseWeapon(weapon)),
+                () -> weapon.setDurability(0),
+                () -> Assertions.assertFalse(itemService.canUseWeapon(weapon))
+        );
+    }
+
+    @Test
+    public void testUseWeapon(){
+        Weapon weapon = Weapon.weaponBuilder().itemId(0).name("axe").damage(5).durability(2).weaponType(WeaponType.SWORD).build();
+        Assertions.assertAll(
+                () -> itemService.useWeapon(weapon),
+                () -> Assertions.assertEquals(weapon.getDurability(), 1),
+                () -> itemService.useWeapon(weapon),
+                () -> Assertions.assertEquals(weapon.getDurability(), 0),
+                () -> itemService.useWeapon(weapon),
+                () -> Assertions.assertEquals(weapon.getDurability(), 0)
+        );
+    }
+
+    @Test
+    public void testCanIncreaseByAmount(){
+        Item item = Item.itemBuilder().name("stone").stackSize(32).itemId(0).amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemService.canIncreaseByAmount(item, 27)),
+                () -> Assertions.assertFalse(itemService.canIncreaseByAmount(item, 28))
+        );
+    }
+
+    @Test
+    public void testIncreaseByAmount(){
+        Item item = Item.itemBuilder().name("stone").stackSize(32).itemId(0).amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(item.getAmount(), 5),
+                () -> itemService.increaseByAmount(item, 27),
+                () -> Assertions.assertEquals(item.getAmount(), 32),
+                () -> itemService.increaseByAmount(item, 1),
+                () -> Assertions.assertEquals(item.getAmount(), 32)
+        );
+    }
+
+
+    @Test
+    public void testCanDecreaseByAmount(){
+        Item item = Item.itemBuilder().name("stone").stackSize(32).itemId(0).amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemService.canDecreaseByAmount(item, 5)),
+                () -> Assertions.assertFalse(itemService.canDecreaseByAmount(item, 6))
+        );
+    }
+
+    @Test
+    public void testDecreaseByAmount(){
+        Item item = Item.itemBuilder().name("stone").stackSize(32).itemId(0).amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(item.getAmount(), 5),
+                () -> itemService.decreaseByAmount(item, 5),
+                () -> Assertions.assertEquals(item.getAmount(), 0),
+                () -> itemService.decreaseByAmount(item, 1),
+                () -> Assertions.assertEquals(item.getAmount(), 0)
+        );
+    }
+
+    @Test
+    public void testIsEmptyStack(){
+        Item item1 = Item.itemBuilder().itemId(0).name("axe").stackSize(64).amount(1).build();
+        Tool tool1 = Tool.toolBuilder().itemId(0).name("axe").durability(5).efficiency(5).toolType(ToolType.AXE).build();
+        Assertions.assertAll(
+                () -> Assertions.assertFalse(itemService.isEmptyStack(item1)),
+                () -> Assertions.assertFalse(itemService.isEmptyStack(tool1)),
+                () -> itemService.decreaseByAmount(item1, 1),
+                () -> itemService.decreaseByAmount(tool1, 1),
+                () -> Assertions.assertTrue(itemService.isEmptyStack(item1)),
+                () -> Assertions.assertTrue(itemService.isEmptyStack(tool1))
+        );
+
+    }
 }

@@ -47,6 +47,7 @@ public class CalendarTest {
                 () -> Assertions.assertThrows(IllegalArgumentException.class, () -> builder.seasons(seasons).build()),
 
                 () -> seasons.put(null, 10),
+                () -> seasons.put(one, 5),
                 () -> Assertions.assertThrows(NullPointerException.class, () -> builder.seasons(seasons).build())
         );
     }

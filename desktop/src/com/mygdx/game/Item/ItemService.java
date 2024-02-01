@@ -50,13 +50,13 @@ public class ItemService {
 
     protected void increaseByAmount(Item item, int amount){
         if(canIncreaseByAmount(item, amount)){
-            item.setAmount(amount);
+            item.setAmount(item.getAmount() + amount);
         }
     }
 
     protected void decreaseByAmount(Item item, int amount){
         if(canDecreaseByAmount(item, amount)){
-            item.setAmount(amount);
+            item.setAmount(item.getAmount() - amount);
         }
     }
 }
