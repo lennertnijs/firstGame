@@ -9,14 +9,13 @@ public class WeaponTest {
 
     @Test
     public void testConstructor(){
-        Weapon weapon = Weapon.weaponBuilder().damage(15).texture(null).name("Sword").weaponType(WeaponType.DAGGER).build();
+        Weapon weapon = Weapon.weaponBuilder().damage(15).name("Sword").weaponType(WeaponType.DAGGER).build();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(weapon.getDamage(), 15),
                 () -> Assertions.assertEquals(weapon.getStackSize(), 1),
                 () -> Assertions.assertEquals(weapon.getName(), "Sword"),
-                () -> Assertions.assertEquals(weapon.getWeaponType(), WeaponType.DAGGER),
-                () -> Assertions.assertNull(weapon.getTexture())
+                () -> Assertions.assertEquals(weapon.getWeaponType(), WeaponType.DAGGER)
         );
     }
 

@@ -1,8 +1,8 @@
 package com.mygdx.game.Item;
 
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.Objects;
+
+import static com.mygdx.game.Constants.WEAPON_STACK_SIZE;
 
 public class Weapon extends Item{
 
@@ -12,8 +12,9 @@ public class Weapon extends Item{
 
 
     public Weapon(Builder builder){
-        super(Item.itemBuilder().name(builder.name).stackSize(builder.stackSize));
+        super(Item.itemBuilder().itemId(builder.itemId).name(builder.name).stackSize(WEAPON_STACK_SIZE));
         this.damage = builder.damage;
+        this.durability = builder.durability;
         this.weaponType = builder.weaponType;
     }
 
@@ -38,15 +39,17 @@ public class Weapon extends Item{
             return false;
         }
         Weapon weapon = (Weapon) o;
-        return getName().equals(weapon.getName()) &&
+        return  getItemId() == weapon.getItemId() &&
+                getName().equals(weapon.getName()) &&
                 getStackSize() == weapon.getStackSize() &&
                 damage == weapon.damage &&
+                durability == weapon.durability &&
                 weaponType.equals(weapon.weaponType);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(getName(), getStackSize(), damage, weaponType);
+        return Objects.hash(getItemId(), getName(), getStackSize(), damage, durability, weaponType);
     }
 
 
@@ -58,17 +61,21 @@ public class Weapon extends Item{
     public static class Builder{
 
         // Item fields
+        private int itemId;
         private String name;
-        private final int stackSize = 1;
-        private Texture texture;
-
 
         // Weapon fields
         private int damage;
+        private int durability;
         private WeaponType weaponType;
 
 
         private Builder(){
+        }
+
+        public Builder itemId(int itemId){
+            this.itemId = itemId;
+            return this;
         }
 
         public Builder name(String name){
@@ -76,13 +83,13 @@ public class Weapon extends Item{
             return this;
         }
 
-        public Builder texture(Texture texture){
-            this.texture = texture;
+        public Builder damage(int damage){
+            this.damage = damage;
             return this;
         }
 
-        public Builder damage(int damage){
-            this.damage = damage;
+        public Builder durability(int durability){
+            this.damage = durability;
             return this;
         }
 
@@ -92,9 +99,15 @@ public class Weapon extends Item{
         }
 
         public Weapon build(){
+            if(itemId < 0){
+                throw new IllegalArgumentException("The id of a weapon must not be negative");
+            }
             Objects.requireNonNull(name, "The name of a weapon must not be null");
             if(damage <= 0){
                 throw new IllegalArgumentException("The damage of a weapon has to be strictly positive");
+            }
+            if(durability < 0){
+                throw new IllegalArgumentException("The durability of a weapon must not be negative");
             }
             Objects.requireNonNull(weaponType, "The weapon type must not be null");
             return new Weapon(this);
