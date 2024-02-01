@@ -14,7 +14,7 @@ public class Tool extends Item{
     int durability;
 
     public Tool(Builder builder){
-        super(Item.itemBuilder().name(builder.name).texture(builder.texture).stackSize(TOOL_STACK_SIZE));
+        super(Item.itemBuilder().name(builder.name).stackSize(TOOL_STACK_SIZE));
         this.efficiency = builder.efficiency;
         this.toolType = builder.toolType;
     }

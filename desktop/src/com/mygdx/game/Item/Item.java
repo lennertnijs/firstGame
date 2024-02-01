@@ -1,34 +1,38 @@
 package com.mygdx.game.Item;
 
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.Objects;
 
 public class Item {
+
+    private final int itemId;
     private final String name;
     private final int stackSize;
-    private final Texture texture;
-
     private int amount;
 
     public Item(Builder builder){
+        this.itemId = builder.itemId;
         this.name = builder.name;
         this.stackSize = builder.stackSize;
-        this.texture = builder.texture;
+        this.amount = builder.amount;
+    }
+
+
+    public final int getItemId(){
+        return itemId;
     }
 
     public final String getName(){
         return name;
     }
 
-
     public final int getStackSize(){
         return stackSize;
     }
 
-    public final Texture getTexture(){
-        return texture;
+    public final int getAmount(){
+        return amount;
     }
+
 
     @Override
     public boolean equals(Object o){
@@ -39,12 +43,12 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return name.equals(item.name) && stackSize == item.stackSize;
+        return itemId == item.itemId && name.equals(item.name) && stackSize == item.stackSize && amount == item.amount;
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(name, stackSize, texture);
+        return Objects.hash(itemId, name, stackSize, amount);
     }
 
 
@@ -54,11 +58,17 @@ public class Item {
 
     public static class Builder{
 
+        private int itemId;
         private String name;
         private int stackSize;
-        private Texture texture;
+        private int amount;
 
         private Builder(){
+        }
+
+        public Builder itemId(int itemId){
+            this.itemId = itemId;
+            return this;
         }
 
         public Builder name(String name){
@@ -71,15 +81,21 @@ public class Item {
             return this;
         }
 
-        public Builder texture(Texture texture){
-            this.texture = texture;
+        public Builder amount(int amount){
+            this.amount = amount;
             return this;
         }
 
         public Item build(){
+            if(itemId < 0){
+                throw new IllegalArgumentException("The id of an item cannot be negative");
+            }
             Objects.requireNonNull(name, "The name of an item must not be null");
             if(stackSize <= 0){
                 throw new IllegalArgumentException("The stack size of an item must be strictly positive");
+            }
+            if(amount <= 0){
+                throw new IllegalArgumentException("The amount of an item must be strictly positive");
             }
             return new Item(this);
         }
