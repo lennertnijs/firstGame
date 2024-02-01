@@ -1,6 +1,5 @@
-package ItemTest;
+package com.mygdx.game.Item;
 
-import com.mygdx.game.Item.Item;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

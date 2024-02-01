@@ -26,7 +26,7 @@ public class Weapon extends Item{
         return durability;
     }
 
-    public final void setDurability(int durability){
+    protected final void setDurability(int durability){
         if(durability < 0 || durability > this.durability){
             throw new IllegalArgumentException("Cannot set the weapon durability to a negative amount");
         }

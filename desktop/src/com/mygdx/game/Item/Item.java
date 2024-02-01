@@ -33,7 +33,7 @@ public class Item {
         return amount;
     }
 
-    public final void setAmount(int amount){
+    protected final void setAmount(int amount){
         if(amount < 0 || amount > stackSize){
             throw new IllegalArgumentException("Cannot set the item amount to a negative");
         }
