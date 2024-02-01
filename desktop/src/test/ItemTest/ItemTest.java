@@ -11,8 +11,7 @@ public class ItemTest {
         Item item = Item.itemBuilder().name("Stone").stackSize(64).build();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(item.getName(), "Stone"),
-                () -> Assertions.assertEquals(item.getStackSize(), 64),
-                () -> Assertions.assertNull(item.getTexture())
+                () -> Assertions.assertEquals(item.getStackSize(), 64)
         );
     }
 

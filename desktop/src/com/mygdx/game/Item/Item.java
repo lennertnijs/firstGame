@@ -33,6 +33,13 @@ public class Item {
         return amount;
     }
 
+    public final void setAmount(int amount){
+        if(amount < 0){
+            throw new IllegalArgumentException("Cannot set the item amount to a negative");
+        }
+        this.amount = amount;
+    }
+
 
     @Override
     public boolean equals(Object o){
