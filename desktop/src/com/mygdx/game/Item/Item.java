@@ -34,7 +34,7 @@ public class Item {
     }
 
     public final void setAmount(int amount){
-        if(amount < 0){
+        if(amount < 0 || amount > stackSize){
             throw new IllegalArgumentException("Cannot set the item amount to a negative");
         }
         this.amount = amount;
@@ -65,10 +65,10 @@ public class Item {
 
     public static class Builder{
 
-        private int itemId;
+        private int itemId = -1;
         private String name;
         private int stackSize;
-        private int amount;
+        private int amount = -1;
 
         private Builder(){
         }

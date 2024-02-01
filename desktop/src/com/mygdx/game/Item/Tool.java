@@ -11,7 +11,7 @@ public class Tool extends Item{
     private final ToolType toolType;
 
     public Tool(Builder builder){
-        super(Item.itemBuilder().itemId(builder.itemId).name(builder.name).stackSize(TOOL_STACK_SIZE));
+        super(Item.itemBuilder().itemId(builder.itemId).name(builder.name).stackSize(TOOL_STACK_SIZE).amount(1));
         this.efficiency = builder.efficiency;
         this.durability = builder.durability;
         this.toolType = builder.toolType;
@@ -26,7 +26,7 @@ public class Tool extends Item{
     }
 
     public final void setDurability(int durability){
-        if(durability < 0){
+        if(durability < 0 || durability > this.durability){
             throw new IllegalArgumentException("Cannot set the durability to a negative value");
         }
         this.durability = durability;
@@ -66,12 +66,12 @@ public class Tool extends Item{
     public static class Builder{
 
         // Item fields
-        private int itemId;
+        private int itemId = -1;
         private String name;
 
         // Tool fields
         private int efficiency;
-        private int durability;
+        private int durability = -1;
         private ToolType toolType;
 
 

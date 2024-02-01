@@ -12,7 +12,7 @@ public class Weapon extends Item{
 
 
     public Weapon(Builder builder){
-        super(Item.itemBuilder().itemId(builder.itemId).name(builder.name).stackSize(WEAPON_STACK_SIZE));
+        super(Item.itemBuilder().itemId(builder.itemId).name(builder.name).stackSize(WEAPON_STACK_SIZE).amount(1));
         this.damage = builder.damage;
         this.durability = builder.durability;
         this.weaponType = builder.weaponType;
@@ -68,12 +68,12 @@ public class Weapon extends Item{
     public static class Builder{
 
         // Item fields
-        private int itemId;
+        private int itemId = -1;
         private String name;
 
         // Weapon fields
         private int damage;
-        private int durability;
+        private int durability = -1;
         private WeaponType weaponType;
 
 
