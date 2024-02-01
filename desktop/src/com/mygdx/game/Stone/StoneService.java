@@ -10,7 +10,7 @@ public class StoneService {
     private final StoneRepository stoneRepository;
 
     public StoneService(){
-        stoneRepository = new StoneRepository(new StoneDAO().loadStones());
+        stoneRepository = new StoneRepository();
     }
 
     protected int getStoneAmount(){

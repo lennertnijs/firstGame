@@ -25,7 +25,7 @@ public class Tool extends Item{
         return durability;
     }
 
-    public final void setDurability(int durability){
+    protected final void setDurability(int durability){
         if(durability < 0 || durability > this.durability){
             throw new IllegalArgumentException("Cannot set the durability to a negative value");
         }

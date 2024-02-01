@@ -8,8 +8,8 @@ public class StoneRepository {
 
     private final List<Stone> stones;
 
-    protected StoneRepository(List<Stone> stones){
-        this.stones = stones.stream().filter(Objects::nonNull).collect(Collectors.toList());
+    protected StoneRepository(){
+        this.stones = new StoneDAO().loadStones().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     protected List<Stone> getStones(){

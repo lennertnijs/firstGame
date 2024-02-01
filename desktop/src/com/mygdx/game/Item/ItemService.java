@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class ItemService {
 
     private final ItemTextureRepository itemTextureRepository;
+
     protected ItemService(){
         itemTextureRepository = new ItemTextureRepository();
     }
@@ -12,7 +13,6 @@ public class ItemService {
     protected Texture getItemTexture(int itemId){
         return itemTextureRepository.getItemTexture(itemId);
     }
-
 
     protected boolean canUseTool(Tool tool){
         return tool.getDurability() > 0;
