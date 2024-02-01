@@ -7,18 +7,22 @@ import java.util.Objects;
 public class Weapon extends Item{
 
     private final int damage;
+    private int durability;
     private final WeaponType weaponType;
 
-    int durability;
 
     public Weapon(Builder builder){
-        super(Item.itemBuilder().name(builder.name).texture(builder.texture).stackSize(builder.stackSize));
+        super(Item.itemBuilder().name(builder.name).stackSize(builder.stackSize));
         this.damage = builder.damage;
         this.weaponType = builder.weaponType;
     }
 
     public int getDamage(){
         return damage;
+    }
+
+    public final int getDurability(){
+        return durability;
     }
 
     public WeaponType getWeaponType(){

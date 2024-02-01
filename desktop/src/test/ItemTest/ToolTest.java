@@ -9,13 +9,12 @@ public class ToolTest {
 
     @Test
     public void testConstructor(){
-        Tool tool = Tool.toolBuilder().name("Pickaxe").efficiency(1500).texture(null).toolType(ToolType.PICKAXE).build();
+        Tool tool = Tool.toolBuilder().name("Pickaxe").efficiency(1500).toolType(ToolType.PICKAXE).build();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(tool.getName(), "Pickaxe"),
                 () -> Assertions.assertEquals(tool.getStackSize(), 1),
                 () -> Assertions.assertEquals(tool.getEfficiency(), 1500),
-                () -> Assertions.assertEquals(tool.getToolType(), ToolType.PICKAXE),
-                () -> Assertions.assertNull(tool.getTexture())
+                () -> Assertions.assertEquals(tool.getToolType(), ToolType.PICKAXE)
         );
     }
 
