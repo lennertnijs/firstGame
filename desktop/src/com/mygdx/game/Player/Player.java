@@ -1,7 +1,7 @@
 package com.mygdx.game.Player;
 
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.Item.ItemInstance;
+import com.mygdx.game.Item.Item;
 import com.mygdx.game.Direction;
 import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.TextureRepository.CharacterTextureRepository;
@@ -44,7 +44,7 @@ public class Player {
         return currentItemIndex;
     }
 
-    public ItemInstance getCurrentItem(){
+    public Item getCurrentItem(){
         return inventory.getItems()[currentItemIndex];
     }
 

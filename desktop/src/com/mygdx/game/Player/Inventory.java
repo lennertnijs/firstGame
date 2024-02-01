@@ -1,12 +1,12 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Item.ItemInstance;
+import com.mygdx.game.Item.Item;
 
 import java.util.Objects;
 
 public class Inventory {
     private final int size;
-    private final ItemInstance[] items;
+    private final Item[] items;
 
     public Inventory(Builder builder){
         this.size = builder.size;
@@ -17,12 +17,12 @@ public class Inventory {
         return size;
     }
 
-    public ItemInstance[] getItems(){
+    public Item[] getItems(){
         return items;
     }
 
     public boolean hasEmptySlot(){
-        for (ItemInstance item : items) {
+        for (Item item : items) {
             if (item == null) {
                 return true;
             }
@@ -30,7 +30,7 @@ public class Inventory {
         return false;
     }
 
-    public void addItem(ItemInstance item){
+    public void addItem(Item item){
         Objects.requireNonNull(item, "Cannot add a null item to the inventory");
         if(!hasEmptySlot()){
             return;
@@ -51,7 +51,7 @@ public class Inventory {
     public static class Builder{
 
         private int size;
-        private ItemInstance[] items;
+        private Item[] items;
 
         public Builder(){
 
@@ -62,7 +62,7 @@ public class Inventory {
             return this;
         }
 
-        public Builder items(ItemInstance[] items){
+        public Builder items(Item[] items){
             this.items = items;
             return this;
         }

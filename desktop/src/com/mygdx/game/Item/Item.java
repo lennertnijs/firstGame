@@ -9,6 +9,8 @@ public class Item {
     private final int stackSize;
     private final Texture texture;
 
+    private int amount;
+
     public Item(Builder builder){
         this.name = builder.name;
         this.stackSize = builder.stackSize;

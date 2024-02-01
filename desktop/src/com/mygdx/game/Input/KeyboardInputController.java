@@ -9,8 +9,6 @@ import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Interactive.InteractiveController;
-import com.mygdx.game.Item.ItemInstance;
-import com.mygdx.game.Item.ToolInstance;
 import com.mygdx.game.NPC.Activity;
 
 import static com.mygdx.game.Constants.NPC_HEIGHT;
@@ -73,13 +71,10 @@ public class KeyboardInputController {
     private void handleOtherInputs(){
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            ItemInstance itemInstance = playerController.getPlayer().getCurrentItem();
-            if(itemInstance instanceof ToolInstance){
                 // call command pattern class
                 // run animation
                 // check interactive collision
                 // command class runs execute() which calls interact() on whatever class necessary
-            }
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){

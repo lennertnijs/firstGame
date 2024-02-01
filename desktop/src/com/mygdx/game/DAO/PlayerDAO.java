@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.mygdx.game.Direction;
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.Item.ItemInstance;
+import com.mygdx.game.Item.Item;
 import com.mygdx.game.Player.Inventory;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.TextureRepository.CharacterTextureRepository;
@@ -54,7 +54,7 @@ public class PlayerDAO {
 
 
         return Player.builder().position(position).name("Bart")
-                .inventory(Inventory.builder().size(0).items(new ItemInstance[0]).build())
+                .inventory(Inventory.builder().size(0).items(new Item[0]).build())
                 .textureRepository(characterTextureRepository)
                 .build();
     }

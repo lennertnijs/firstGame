@@ -9,6 +9,8 @@ public class Weapon extends Item{
     private final int damage;
     private final WeaponType weaponType;
 
+    int durability;
+
     public Weapon(Builder builder){
         super(Item.itemBuilder().name(builder.name).texture(builder.texture).stackSize(builder.stackSize));
         this.damage = builder.damage;
