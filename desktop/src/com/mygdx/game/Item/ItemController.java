@@ -39,11 +39,6 @@ public class ItemController {
         itemService.useWeapon(weapon);
     }
 
-    public boolean isEmpty(Item item){
-        Objects.requireNonNull(item, "Cannot check if null is empty");
-        return itemService.isEmptyStack(item);
-    }
-
     public boolean canIncrease(Item item, int amount){
         Objects.requireNonNull(item, "Cannot increase a null item");
         if(amount < 0){
@@ -74,6 +69,11 @@ public class ItemController {
             throw new IllegalArgumentException("Cannot decrease an item by a negative amount");
         }
         itemService.decreaseByAmount(item, amount);
+    }
+
+    public boolean isEmpty(Item item){
+        Objects.requireNonNull(item, "Cannot check if null is empty");
+        return itemService.isEmptyStack(item);
     }
 }
 

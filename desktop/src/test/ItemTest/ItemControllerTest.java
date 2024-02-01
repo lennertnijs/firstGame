@@ -79,4 +79,66 @@ public class ItemControllerTest {
         );
     }
 
+    @Test
+    public void testCanIncreaseByAmount(){
+        Item item = Item.itemBuilder().itemId(0).stackSize(40).name("name").amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemController.canIncrease(item, 35)),
+                () -> Assertions.assertFalse(itemController.canIncrease(item, 36)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemController.canIncrease(item, -1)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> itemController.canIncrease(null, 1))
+        );
+    }
+
+
+    @Test
+    public void testIncreaseByAmount(){
+        Item item = Item.itemBuilder().itemId(0).stackSize(40).name("name").amount(5).build();
+        Assertions.assertAll(
+                () -> itemController.increase(item, 34),
+                () -> Assertions.assertEquals(item.getAmount(), 39),
+                () -> itemController.increase(item, 1),
+                () -> Assertions.assertEquals(item.getAmount(), 40),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemController.increase(item, -1)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> itemController.increase(null, 1))
+        );
+    }
+
+
+    @Test
+    public void testCanDecreaseByAmount(){
+        Item item = Item.itemBuilder().itemId(0).stackSize(40).name("name").amount(5).build();
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(itemController.canDecrease(item, 5)),
+                () -> Assertions.assertFalse(itemController.canDecrease(item, 6)),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemController.canDecrease(item, -1)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> itemController.canDecrease(null, 1))
+        );
+    }
+
+    @Test
+    public void testDecreaseByAmount(){
+        Item item = Item.itemBuilder().itemId(0).stackSize(40).name("name").amount(5).build();
+        Assertions.assertAll(
+                () -> itemController.decrease(item, 4),
+                () -> Assertions.assertEquals(item.getAmount(), 1),
+                () -> itemController.decrease(item, 1),
+                () -> Assertions.assertEquals(item.getAmount(), 0),
+                () -> Assertions.assertThrows(IllegalArgumentException.class, () -> itemController.decrease(item, -1)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> itemController.decrease(null, 1))
+        );
+    }
+
+    @Test
+    public void testIsEmpty(){
+        Item item = Item.itemBuilder().itemId(0).stackSize(40).name("name").amount(5).build();
+        itemController.decrease(item, 4);
+        Assertions.assertAll(
+                () -> Assertions.assertFalse(itemController.isEmpty(item)),
+                () -> itemController.decrease(item, 1),
+                () -> Assertions.assertTrue(itemController.isEmpty(item)),
+                () -> Assertions.assertThrows(NullPointerException.class, () -> itemController.isEmpty(null))
+        );
+    }
+
 }
