@@ -5,8 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Controller.PlayerController;
 import com.mygdx.game.Drawer.DrawerController;
+import com.mygdx.game.Player.PlayerController;
+import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Stone.StoneController;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
@@ -32,9 +33,10 @@ public class GameScreen implements Screen {
 
         this.game = game;
 
+        PlayerService playerService = new PlayerService();
         clockController = new ClockController();
         npcController = new NPCController(clockController);
-        playerController  = new PlayerController();
+        playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
         interactiveController = new InteractiveController(npcController, stoneController);
         drawerController = new DrawerController(game, npcController, playerController, stoneController);
@@ -49,7 +51,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
-        keyboardInput = new KeyboardInputController(stoneController, npcController, interactiveController, playerController);
+        keyboardInput = new KeyboardInputController(stoneController, npcController, interactiveController, playerService);
     }
 
 

@@ -3,9 +3,9 @@ package com.mygdx.game.Drawer;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Controller.NPCController;
-import com.mygdx.game.Controller.PlayerController;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Stone.Stone;
 import com.mygdx.game.Stone.StoneController;
 
@@ -26,7 +26,7 @@ public class DrawerController {
     public DrawerController(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController){
         this.game = game;
         npcDrawer = new NPCDrawer(game);
-        playerDrawer = new PlayerDrawer(game);
+        playerDrawer = new PlayerDrawer(game, playerController);
         stoneDrawer = new StoneDrawer(game);
         this.npcController = npcController;
         this.playerController = playerController;
@@ -47,7 +47,7 @@ public class DrawerController {
     }
 
     private void drawPlayer(){
-        playerDrawer.drawPlayer(playerController.getPlayer());
+        playerDrawer.drawPlayer();
     }
 
     private void drawStones(){

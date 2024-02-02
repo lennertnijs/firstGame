@@ -56,6 +56,7 @@ public class PlayerDAO {
         return Player.builder().position(position).name("Bart")
                 .inventory(Inventory.builder().size(0).items(new Item[0]).build())
                 .textureRepository(characterTextureRepository)
+                .currentItemIndex(0)
                 .build();
     }
 }

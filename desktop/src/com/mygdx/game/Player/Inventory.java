@@ -53,8 +53,7 @@ public class Inventory {
         private int size;
         private Item[] items;
 
-        public Builder(){
-
+        private Builder(){
         }
 
         public Builder size(int size){
@@ -68,7 +67,7 @@ public class Inventory {
         }
 
         public Inventory build(){
-            if(size < 0){
+            if(size <= 0){
                 throw new IllegalArgumentException("The size of the inventory must not be negative or 0");
             }
             Objects.requireNonNull(items, "The item list of the inventory must not be null");
