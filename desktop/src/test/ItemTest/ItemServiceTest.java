@@ -1,10 +1,11 @@
-package com.mygdx.game.Item;
+package ItemTest;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Headless.HeadlessApplication;
 import com.mygdx.game.Headless.HeadlessApplicationConfiguration;
+import com.mygdx.game.Item.*;
 import com.mygdx.game.MockGame;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +48,7 @@ public class ItemServiceTest {
         Tool tool = Tool.toolBuilder().itemId(0).name("axe").efficiency(5).durability(5).toolType(ToolType.AXE).build();
         Assertions.assertAll(
                 () -> Assertions.assertTrue(itemService.canUseTool(tool)),
-                () -> tool.setDurability(0),
+                () -> itemService.setToolDurability(tool, 0),
                 () -> Assertions.assertFalse(itemService.canUseTool(tool))
         );
     }
@@ -71,7 +72,7 @@ public class ItemServiceTest {
         Weapon weapon = Weapon.weaponBuilder().itemId(0).name("axe").damage(5).durability(5).weaponType(WeaponType.SWORD).build();
         Assertions.assertAll(
                 () -> Assertions.assertTrue(itemService.canUseWeapon(weapon)),
-                () -> weapon.setDurability(0),
+                () -> itemService.setWeaponDurability(weapon, 0),
                 () -> Assertions.assertFalse(itemService.canUseWeapon(weapon))
         );
     }

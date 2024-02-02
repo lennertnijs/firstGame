@@ -2,12 +2,38 @@ package com.mygdx.game.Item;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Objects;
+
 public class ItemService {
 
     private final ItemTextureRepository itemTextureRepository;
 
     public ItemService(){
         itemTextureRepository = new ItemTextureRepository();
+    }
+
+    public void setAmount(Item item, int amount){
+        Objects.requireNonNull(item, "Cannot change the amount of a null item");
+        if(amount < 0 || amount > item.getStackSize()){
+            throw new IllegalArgumentException("Cannot set the item amount to an amount out of its bounds");
+        }
+        item.setAmount(amount);
+    }
+
+    public void setToolDurability(Tool tool, int durability){
+        Objects.requireNonNull(tool, "Cannot change the durability of a null tool");
+        if(durability < 0 || durability > tool.getDurability()){
+            throw new IllegalArgumentException("Tool durability values must be positive and smaller than it's previous durability");
+        }
+        tool.setDurability(durability);
+    }
+
+    public void setWeaponDurability(Weapon weapon, int durability){
+        Objects.requireNonNull(weapon, "Cannot change the durability of a null weapon");
+        if(durability < 0 || durability > weapon.getDurability()){
+            throw new IllegalArgumentException("Weapon durability values must be positive and smaller than it's previous durability");
+        }
+        weapon.setDurability(durability);
     }
 
     public Texture getItemTexture(int itemId){
