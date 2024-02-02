@@ -2,7 +2,10 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Direction;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Item.Item;
 import com.mygdx.game.NPC.Activity;
+
+import java.util.Objects;
 
 public class PlayerService {
 
@@ -34,5 +37,21 @@ public class PlayerService {
 
     public void setDoingAnimation(boolean bool){
         playerRepository.getPlayer().setDoingAnimation(bool);
+    }
+
+    public void addItemToInventory(Item item){
+        Objects.requireNonNull(item, "Cannot add a null item to the inventory");
+        boolean freeItemSlot = playerRepository.getPlayer().getInventory().hasEmptySlot();
+        if(freeItemSlot){
+            playerRepository.getPlayer().getInventory().addItem(item);
+        }
+    }
+
+    public void removeItemFromInventory(int index){
+        Inventory inventory = playerRepository.getPlayer().getInventory();
+        if(index < 0 || index > inventory.getSize()){
+            throw new IllegalArgumentException("Index out of inventory bounds");
+        }
+        inventory.removeItem(index);
     }
 }

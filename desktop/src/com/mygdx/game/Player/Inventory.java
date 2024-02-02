@@ -2,23 +2,22 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Item.Item;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Inventory {
-    private final int size;
     private final Item[] items;
 
     public Inventory(Builder builder){
-        this.size = builder.size;
         this.items = builder.items;
-    }
-
-    public int getSize(){
-        return size;
     }
 
     public Item[] getItems(){
         return items;
+    }
+
+    public int getSize(){
+        return items.length;
     }
 
     public boolean hasEmptySlot(){
@@ -28,6 +27,13 @@ public class Inventory {
             }
         }
         return false;
+    }
+
+    public Item getItem(int index){
+        if(index < 0 || index >= items.length){
+            throw new IllegalArgumentException("Cannot fetch an item because the index is out of inventory bounds");
+        }
+        return items[index];
     }
 
     public void addItem(Item item){
@@ -43,6 +49,30 @@ public class Inventory {
         }
     }
 
+    public void removeItem(int index){
+        if(index < 0 || index >= items.length){
+            throw new IllegalArgumentException("Cannot remove an item at an index outside the inventory size");
+        }
+        items[index] = null;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof Inventory)){
+            return false;
+        }
+        Inventory inventory = (Inventory) o;
+        return Arrays.equals(items, inventory.getItems());
+    }
+
+    @Override
+    public int hashCode(){
+        return Arrays.hashCode(items);
+    }
+
 
     public static Builder builder(){
         return new Builder();
@@ -50,15 +80,9 @@ public class Inventory {
 
     public static class Builder{
 
-        private int size;
         private Item[] items;
 
         private Builder(){
-        }
-
-        public Builder size(int size){
-            this.size = size;
-            return this;
         }
 
         public Builder items(Item[] items){
@@ -67,13 +91,7 @@ public class Inventory {
         }
 
         public Inventory build(){
-            if(size <= 0){
-                throw new IllegalArgumentException("The size of the inventory must not be negative or 0");
-            }
             Objects.requireNonNull(items, "The item list of the inventory must not be null");
-            if(items.length != size){
-                throw new IllegalArgumentException("The size of the inventory does not match the amount of items");
-            }
             return new Inventory(this);
         }
     }
