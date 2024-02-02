@@ -19,6 +19,7 @@ public class ItemControllerTest {
     private String firstTextureString;
     private String secondTextureString;
     private ItemController itemController;
+    private ItemService itemService;
 
 
     @BeforeEach
@@ -26,7 +27,8 @@ public class ItemControllerTest {
         HeadlessApplication headlessApplication = new HeadlessApplication(new MockGame(),
                 new HeadlessApplicationConfiguration());
         Gdx.gl = mock(GL20.class);
-        itemController = new ItemController();
+        itemService = new ItemService();
+        itemController = new ItemController(itemService);
         firstTextureString = new Texture("items/pickaxe.png").toString();
         secondTextureString = new Texture("items/diamond_axe.png").toString();
 

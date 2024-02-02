@@ -8,8 +8,8 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    public ItemController(){
-        itemService = new ItemService();
+    public ItemController(ItemService itemService){
+        this.itemService = itemService;
     }
 
     public Texture getTexture(int id){
