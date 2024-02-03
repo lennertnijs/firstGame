@@ -15,7 +15,7 @@ public class CharacterTextureRepository {
     private float timeElapsed = 0;
     private boolean inAnimation = false;
 
-    public CharacterTextureRepository(Builder builder){
+    protected CharacterTextureRepository(Builder builder){
         this.movementAnimations = builder.movementAnimations;
         this.idleTextures = builder.idleTextures;
     }
@@ -31,6 +31,7 @@ public class CharacterTextureRepository {
      * Returns the moving animation textures of the player for the given direction.
      */
     public Animation<Texture> getMovingAnimation(Direction direction){
+        Objects.requireNonNull(direction, "Cannot fetch moving textures for null direction");
         return movementAnimations.get(direction);
     }
 
