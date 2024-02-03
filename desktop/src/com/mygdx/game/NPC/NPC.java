@@ -3,7 +3,7 @@ package com.mygdx.game.NPC;
 import com.mygdx.game.Direction;
 import com.mygdx.game.Entity.Entity;
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.TextureRepository.CharacterTextureRepository;
+import com.mygdx.game.Player.CharacterTextureRepository;
 
 import java.util.ArrayList;
 import java.util.List;

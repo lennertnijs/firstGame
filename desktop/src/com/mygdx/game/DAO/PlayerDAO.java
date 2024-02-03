@@ -8,7 +8,7 @@ import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Item.Item;
 import com.mygdx.game.Player.Inventory;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.TextureRepository.CharacterTextureRepository;
+import com.mygdx.game.Player.CharacterTextureRepository;
 
 import java.util.HashMap;
 

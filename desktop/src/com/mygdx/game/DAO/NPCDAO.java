@@ -7,18 +7,16 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Day;
 import com.mygdx.game.Direction;
-import com.mygdx.game.Drawer.NPCDrawer;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Map.Map;
 import com.mygdx.game.NPC.*;
-import com.mygdx.game.TextureRepository.CharacterTextureRepository;
+import com.mygdx.game.Player.CharacterTextureRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import static com.mygdx.game.Constants.MINUTES_PER_HOUR;
-import static com.mygdx.game.Constants.NPC_PATHNAME;
 import static java.lang.Integer.*;
 
 public class NPCDAO {
