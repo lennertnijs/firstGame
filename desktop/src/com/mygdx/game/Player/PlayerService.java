@@ -20,6 +20,10 @@ public class PlayerService {
     }
 
     public void setItemIndex(int index){
+        int inventorySize = playerRepository.getPlayer().getInventory().getSize();
+        if(index < 0 || index >= inventorySize){
+            throw new IllegalArgumentException("Cannot set the active item index to a value outside the inventory range");
+        }
         playerRepository.getPlayer().setCurrentItemIndex(index);
     }
 
