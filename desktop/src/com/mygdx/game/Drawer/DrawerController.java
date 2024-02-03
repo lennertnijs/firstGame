@@ -35,6 +35,7 @@ public class DrawerController {
 
     public void drawAll(){
         game.batch.draw(map, 0, 0, 4800 ,4800 );
+        game.font.draw(game.batch, Gdx.graphics.getFramesPerSecond() + "", 1200, 1200);
         drawStones();
         drawNPCS();
         drawPlayer();

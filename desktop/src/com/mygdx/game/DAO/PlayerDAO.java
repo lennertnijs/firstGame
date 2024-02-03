@@ -52,10 +52,10 @@ public class PlayerDAO {
 
         CharacterTextureRepository characterTextureRepository = CharacterTextureRepository.builder().idleTextures(map1).movementAnimations(map2).build();
 
-
         return Player.builder().position(position).name("Bart")
                 .inventory(Inventory.builder().items(new Item[0]).build())
                 .textureRepository(characterTextureRepository)
+                .direction(Direction.LEFT)
                 .currentItemIndex(0)
                 .build();
     }
