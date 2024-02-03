@@ -28,14 +28,17 @@ public class PlayerService {
     }
 
     public void setActivity(Activity activity){
+        Objects.requireNonNull(activity, "Cannot set the player activity to null");
         playerRepository.getPlayer().setActivity(activity);
     }
 
     public void setDirection(Direction direction){
+        Objects.requireNonNull(direction, "Cannot set the player direction to null");
         playerRepository.getPlayer().setDirection(direction);
     }
 
     public void setPosition(Position position){
+        Objects.requireNonNull("Cannot set the player position to null");
         playerRepository.getPlayer().setPosition(position);
     }
 
