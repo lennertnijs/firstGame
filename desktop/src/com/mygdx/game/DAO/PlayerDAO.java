@@ -44,9 +44,11 @@ public class PlayerDAO {
 
         String idlePath = file.getString("idlePath");
         String movingPath = file.getString("movingPath");
+        String miningPath = file.getString("miningPath");
         CharacterTextureRepository textureRepository = CharacterTextureRepository.builder()
                 .idleTextures(getIdleTextures(idlePath))
                 .movementAnimations(getMovingAnimations(movingPath))
+                .miningAnimations(getMiningAnimations(miningPath))
                 .build();
 
         return Player.builder()
@@ -122,6 +124,38 @@ public class PlayerDAO {
         textureRegions[3] = new TextureRegion(texture, 3*64, y, 64, 64);
         textureRegions[4] = new TextureRegion(texture, 4*64, y, 64, 64);
         textureRegions[5] = new TextureRegion(texture, 5*64, y, 64, 64);
+        return textureRegions;
+    }
+
+    private Map<Direction, Animation<TextureRegion>> getMiningAnimations(String spritePath){
+        Texture texture = new Texture(Gdx.files.internal(spritePath));
+        Map<Direction, Animation<TextureRegion>> miningAnimation = new HashMap<>();
+        Animation<TextureRegion> animationRight = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 0));
+        miningAnimation.put(Direction.RIGHT, animationRight);
+        Animation<TextureRegion> animationLeft = new Animation<>(1/4F, getTextureRegionLeftToRight(texture, 64));
+        miningAnimation.put(Direction.LEFT, animationLeft);
+        Animation<TextureRegion> animationDown = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 2*64));
+        miningAnimation.put(Direction.DOWN, animationDown);
+        Animation<TextureRegion> animationUp = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 3*64));
+        miningAnimation.put(Direction.UP, animationUp);
+        return miningAnimation;
+    }
+
+    private TextureRegion[] getTextureRegionRightToLeft(Texture texture, int y){
+        TextureRegion[] textureRegions = new TextureRegion[4];
+        textureRegions[0] = new TextureRegion(texture, 0, y, 64, 64);
+        textureRegions[1] = new TextureRegion(texture, 64, y, 64, 64);
+        textureRegions[2] = new TextureRegion(texture, 2*64, y, 64, 64);
+        textureRegions[3] = new TextureRegion(texture, 3*64, y, 64, 64);
+        return textureRegions;
+    }
+
+    private TextureRegion[] getTextureRegionLeftToRight(Texture texture, int y){
+        TextureRegion[] textureRegions = new TextureRegion[4];
+        textureRegions[0] = new TextureRegion(texture, 3*64, y, 64, 64);
+        textureRegions[1] = new TextureRegion(texture, 2*64, y, 64, 64);
+        textureRegions[2] = new TextureRegion(texture, 64, y, 64, 64);
+        textureRegions[3] = new TextureRegion(texture, 0, y, 64, 64);
         return textureRegions;
     }
 }

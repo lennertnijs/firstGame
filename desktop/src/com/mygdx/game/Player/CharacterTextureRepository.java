@@ -12,6 +12,7 @@ public class CharacterTextureRepository {
 
     private final Map<Direction, TextureRegion> idleTextures;
     private final Map<Direction, Animation<TextureRegion>> movementAnimations;
+    private final Map<Direction, Animation<TextureRegion>> miningAnimations;
 
     private float timeElapsed = 0;
     private boolean inAnimation = false;
@@ -19,6 +20,7 @@ public class CharacterTextureRepository {
     protected CharacterTextureRepository(Builder builder){
         this.movementAnimations = builder.movementAnimations;
         this.idleTextures = builder.idleTextures;
+        this.miningAnimations = builder.miningAnimations;
     }
 
     /**
@@ -35,6 +37,12 @@ public class CharacterTextureRepository {
         Objects.requireNonNull(direction, "Cannot fetch moving textures for null direction");
         return movementAnimations.get(direction);
     }
+
+
+    public Animation<TextureRegion> getMiningAnimation(Direction direction){
+        return miningAnimations.get(direction);
+    }
+
 
     public float getTimeElapsed(){
         return timeElapsed;
@@ -61,6 +69,7 @@ public class CharacterTextureRepository {
 
         private Map<Direction, TextureRegion> idleTextures;
         private Map<Direction, Animation<TextureRegion>> movementAnimations;
+        private Map<Direction, Animation<TextureRegion>> miningAnimations;
 
         private Builder(){
         }
@@ -72,6 +81,11 @@ public class CharacterTextureRepository {
 
         public Builder movementAnimations(Map<Direction, Animation<TextureRegion>> movementAnimations){
             this.movementAnimations = movementAnimations;
+            return this;
+        }
+
+        public Builder miningAnimations(Map<Direction, Animation<TextureRegion>> miningAnimations){
+            this.miningAnimations = miningAnimations;
             return this;
         }
 

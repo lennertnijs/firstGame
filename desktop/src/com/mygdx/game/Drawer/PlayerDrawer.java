@@ -33,8 +33,10 @@ public class PlayerDrawer {
             return;
         }
         if(activity == Activity.WALKING){
-            System.out.println("drawing");
             drawPlayerMoving();
+        }
+        if(activity == Activity.MINING){
+            drawPlayerMining();
         }
     }
 
@@ -59,6 +61,21 @@ public class PlayerDrawer {
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
             TextureRegion texture = player.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            draw(texture);
+            return;
+        }
+        endAnimation();
+        drawPlayerIdle();
+    }
+
+    private void drawPlayerMining(){
+        Player player = playerController.getPlayer();
+        initiateAnimationIfNecessary();
+        boolean animationInProgress = timeElapsed < ANIMATION_LENGTH;
+        if(animationInProgress){
+            timeElapsed += Gdx.graphics.getDeltaTime();
+            Direction direction = player.getDirection();
+            TextureRegion texture = player.getTextureRepository().getMiningAnimation(direction).getKeyFrame(timeElapsed, false);
             draw(texture);
             return;
         }

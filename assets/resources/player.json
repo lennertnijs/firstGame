@@ -1,6 +1,6 @@
 {
   "name": "Dix",
-  "x": "900",
+  "x": "1000",
   "y": "500",
   "inventory": [
       {
@@ -22,5 +22,6 @@
   "currentItemIndex": "0",
   "direction": "DOWN",
   "idlePath": "player/idle.png",
-  "movingPath": "player/movement.png"
+  "movingPath": "player/movement.png",
+  "miningPath": "player/mining.png"
 }
