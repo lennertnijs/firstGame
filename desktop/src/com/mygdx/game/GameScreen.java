@@ -13,8 +13,6 @@ import com.mygdx.game.Controller.StoneController;
 import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Input.KeyboardInputController;
-import com.mygdx.game.Interactive.InteractiveController;
-
 
 
 public class GameScreen implements Screen {
@@ -24,7 +22,6 @@ public class GameScreen implements Screen {
 
     ClockController clockController;
     KeyboardInputController keyboardInput;
-    InteractiveController interactiveController;
     NPCController npcController;
     PlayerController playerController;
     StoneController stoneController;
@@ -41,7 +38,6 @@ public class GameScreen implements Screen {
         npcController = new NPCController(clockController, clockService);
         playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
-        interactiveController = new InteractiveController(npcController, stoneController);
         drawerGod = new DrawerGod(game, npcController, playerController, stoneController);
 
 
@@ -54,7 +50,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
-        keyboardInput = new KeyboardInputController(stoneController, npcController, interactiveController, playerService);
+        keyboardInput = new KeyboardInputController(stoneController, npcController, playerService);
     }
 
 

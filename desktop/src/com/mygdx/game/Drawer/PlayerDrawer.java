@@ -89,7 +89,7 @@ public class PlayerDrawer {
     private void draw(TextureRegion texture){
         Player player = playerController.getPlayer();
         System.out.println(player.getDirection().toString());
-        game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), 192, 192);
+        game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY());
     }
 
     /**

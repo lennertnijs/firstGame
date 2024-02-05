@@ -1,11 +1,10 @@
 package com.mygdx.game.Stone;
 
 import com.mygdx.game.Entity.Position;
-import com.mygdx.game.Interactive.Interactive;
 
 import java.util.Objects;
 
-public class Stone implements Interactive {
+public class Stone{
 
     private final Position position;
     private float healthPoints;
