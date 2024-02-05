@@ -40,16 +40,16 @@ public class DrawerGod {
         drawNPCS();
         drawPlayer();
     }
-
+    private void drawPlayer(){
+        playerDrawer.drawPlayer();
+    }
     private void drawNPCS(){
         for(NPC npc: npcController.getNPCS()){
             npcDrawer.drawNPC(npc);
         }
     }
 
-    private void drawPlayer(){
-        playerDrawer.drawPlayer();
-    }
+
 
     private void drawStones(){
         for(Stone stone: stoneController.getAllStones()){

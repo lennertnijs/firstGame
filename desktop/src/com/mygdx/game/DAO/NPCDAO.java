@@ -23,60 +23,60 @@ public class NPCDAO {
     public NPCDAO(){
     }
 
-    public List<NPC> readNPCS(){
-        JsonReader reader = new JsonReader();
-        JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
-
-        List<NPC> npcs = new ArrayList<>();
-        for(JsonValue npcJSON: file){
-            npcs.add(readNPC(npcJSON));
-        }
-        return npcs;
-    }
+//    public List<NPC> readNPCS(){
+//        JsonReader reader = new JsonReader();
+//        JsonValue file = reader.parse(Gdx.files.internal("resources/NPC.json"));
+//
+//        List<NPC> npcs = new ArrayList<>();
+//        for(JsonValue npcJSON: file){
+//            npcs.add(readNPC(npcJSON));
+//        }
+//        return npcs;
+//    }
 
 
     /**
      * Reads a npc and returns it
      */
-    private NPC readNPC(JsonValue npcJSON){
-        String name = npcJSON.getString("name");
-
-        int x = npcJSON.getInt("x");
-        int y = npcJSON.getInt("y");
-        Position position = Position.builder().x(x).y(y).build();
-
-        Activity activity = Activity.valueOf(npcJSON.getString("activity"));
-
-        JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
-        WeekSchedule weekSchedule = readWeekSchedule(weekScheduleJSON);
-
-        JsonValue movementGraphJSON = npcJSON.get("movementGraph");
-        MovementGraph movementGraph = readMovementGraph(movementGraphJSON);
-
-        JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
-        ArrayList<Integer> dialogueOptions = readDialogueOptions(dialogueOptionsJSON);
-
-        JsonValue idlingJSON = npcJSON.get("idle");
-        HashMap<Direction, Texture> idleMap = readNPCIdleTextures(idlingJSON);
-
-        JsonValue movingJSON = npcJSON.get("moving");
-        HashMap<Direction, Animation<Texture>> movingMap = readNPCMovingTextures(movingJSON);
-
-        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder().idleTextures(idleMap)
-                .movementAnimations(movingMap).build();
-
-        NPC npc =  NPC.builder()
-                .position(position)
-                .name(name)
-                .activity(activity)
-                .weekSchedule(weekSchedule)
-                .movementPath(new ArrayList<>())
-                .movementGraph(movementGraph)
-                .dialogueOptions(dialogueOptions)
-                .characterTextureRepository(textureRepository)
-                .build();
-        return npc;
-    }
+//    private NPC readNPC(JsonValue npcJSON){
+//        String name = npcJSON.getString("name");
+//
+//        int x = npcJSON.getInt("x");
+//        int y = npcJSON.getInt("y");
+//        Position position = Position.builder().x(x).y(y).build();
+//
+//        Activity activity = Activity.valueOf(npcJSON.getString("activity"));
+//
+//        JsonValue weekScheduleJSON = npcJSON.get("weekSchedule");
+//        WeekSchedule weekSchedule = readWeekSchedule(weekScheduleJSON);
+//
+//        JsonValue movementGraphJSON = npcJSON.get("movementGraph");
+//        MovementGraph movementGraph = readMovementGraph(movementGraphJSON);
+//
+//        JsonValue dialogueOptionsJSON = npcJSON.get("dialogueOptions");
+//        ArrayList<Integer> dialogueOptions = readDialogueOptions(dialogueOptionsJSON);
+//
+//        JsonValue idlingJSON = npcJSON.get("idle");
+//        HashMap<Direction, Texture> idleMap = readNPCIdleTextures(idlingJSON);
+//
+//        JsonValue movingJSON = npcJSON.get("moving");
+//        HashMap<Direction, Animation<Texture>> movingMap = readNPCMovingTextures(movingJSON);
+//
+//        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder().idleTextures(idleMap)
+//                .movementAnimations(movingMap).build();
+//
+//        NPC npc =  NPC.builder()
+//                .position(position)
+//                .name(name)
+//                .activity(activity)
+//                .weekSchedule(weekSchedule)
+//                .movementPath(new ArrayList<>())
+//                .movementGraph(movementGraph)
+//                .dialogueOptions(dialogueOptions)
+//                .characterTextureRepository(textureRepository)
+//                .build();
+//        return npc;
+//    }
 
     /**
      * Reads the week schedule

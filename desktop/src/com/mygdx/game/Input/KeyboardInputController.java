@@ -2,6 +2,7 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.Direction;
 import com.mygdx.game.Interactive.Interactive;
 import com.mygdx.game.Item.Item;
 import com.mygdx.game.Item.Tool;
@@ -80,8 +81,8 @@ public class KeyboardInputController {
                 if(stone != null){
                     stoneController.mineStone(stone, 1);
                 }
-                playerService.setActivity(Activity.WALKING);
             }
+            playerService.setActivity(Activity.WALKING);
                 // call command pattern class
                 // run animation
                 // check interactive collision
@@ -121,6 +122,7 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX, currentY + diagonalMovement);
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            playerService.setDirection(Direction.UP);
             if(!collisionWithNPC && !collisionWithStone){
                 return newPosition;
             }
@@ -129,6 +131,7 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX + diagonalMovement, currentY);
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            playerService.setDirection(Direction.RIGHT);
             if(!collisionWithNPC && !collisionWithStone){
                 return newPosition;
             }
@@ -137,6 +140,7 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX , currentY - diagonalMovement);
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            playerService.setDirection(Direction.DOWN);
             if(!collisionWithNPC && !collisionWithStone){
                 return newPosition;
             }
@@ -145,6 +149,7 @@ public class KeyboardInputController {
             newPosition = buildNewPosition(currentX - diagonalMovement, currentY);
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition, NPC_WIDTH, NPC_HEIGHT);
+            playerService.setDirection(Direction.LEFT);
             if(!collisionWithNPC && !collisionWithStone){
                 return newPosition;
             }

@@ -2,6 +2,7 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
@@ -32,6 +33,7 @@ public class PlayerDrawer {
             return;
         }
         if(activity == Activity.WALKING){
+            System.out.println("drawing");
             drawPlayerMoving();
         }
     }
@@ -41,7 +43,7 @@ public class PlayerDrawer {
      */
     private void drawPlayerIdle(){
         Player player = playerController.getPlayer();
-        Texture texture = player.getTextureRepository().getIdleTexture(player.getDirection());
+        TextureRegion texture = player.getTextureRepository().getIdleTexture(player.getDirection());
         draw(texture);
     }
 
@@ -56,7 +58,7 @@ public class PlayerDrawer {
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
-            Texture texture = player.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            TextureRegion texture = player.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
             draw(texture);
             return;
         }
@@ -67,9 +69,10 @@ public class PlayerDrawer {
     /**
      * Draws the texture at the player location. Helper function.
      */
-    private void draw(Texture texture){
+    private void draw(TextureRegion texture){
         Player player = playerController.getPlayer();
-        game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), PLAYER_WIDTH, PLAYER_HEIGHT);
+        System.out.println(player.getDirection().toString());
+        game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), 192, 192);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.Activity;
@@ -31,11 +32,11 @@ public class NPCDrawer {
     }
 
     private void drawNPCIdle(NPC npc){
-        Texture texture = npc.getTextureRepository().getIdleTexture(npc.getDirection());
+        TextureRegion texture = npc.getTextureRepository().getIdleTexture(npc.getDirection());
         draw(texture, npc);
     }
 
-    private void draw(Texture texture, NPC npc){
+    private void draw(TextureRegion texture, NPC npc){
         game.batch.draw(texture, npc.getPosition().getX(), npc.getPosition().getY(), NPC_WIDTH, NPC_HEIGHT);
     }
 
@@ -46,7 +47,7 @@ public class NPCDrawer {
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = npc.getDirection();
-            Texture texture = npc.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, true);
+            TextureRegion texture = npc.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, true);
             draw(texture, npc);
             npc.getTextureRepository().setTimeElapsed(timeElapsed);
             return;

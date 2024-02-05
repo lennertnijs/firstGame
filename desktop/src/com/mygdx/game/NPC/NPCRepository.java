@@ -11,7 +11,8 @@ public class NPCRepository {
     private final List<NPC> npcs;
 
     public NPCRepository(){
-        this.npcs = new NPCDAO().readNPCS();
+        this.npcs = new ArrayList<>();
+        // this.npcs = new NPCDAO().readNPCS();
     }
 
     public List<NPC> getAllNpcs(){

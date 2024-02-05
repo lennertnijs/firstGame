@@ -3,6 +3,7 @@ package com.mygdx.game.DAO;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Direction;
@@ -41,8 +42,12 @@ public class PlayerDAO {
 
         Direction direction = Direction.valueOf(file.getString("direction"));
 
-        JsonValue textureRepositoryJson = file.get("textureRepository");
-        CharacterTextureRepository textureRepository = readTextureRepository(textureRepositoryJson);
+        String idlePath = file.getString("idlePath");
+        String movingPath = file.getString("movingPath");
+        CharacterTextureRepository textureRepository = CharacterTextureRepository.builder()
+                .idleTextures(getIdleTextures(idlePath))
+                .movementAnimations(getMovingAnimations(movingPath))
+                .build();
 
         return Player.builder()
                 .name(name)
@@ -85,41 +90,38 @@ public class PlayerDAO {
         return Inventory.builder().items(itemArray).build();
     }
 
-
-    private CharacterTextureRepository readTextureRepository(JsonValue textureRepositoryJson){
-        Map<Direction, Texture> idleTextures = readIdleTextures(textureRepositoryJson.get("IDLING"));
-        Map<Direction, Animation<Texture>> movingTextures = readAnimatedTextures(textureRepositoryJson.get("WALKING"));
-        return CharacterTextureRepository.builder()
-                .idleTextures(idleTextures)
-                .movementAnimations(movingTextures)
-                .build();
-
-    }
-
-    private Map<Direction, Texture> readIdleTextures(JsonValue idleJson){
-        Map<Direction, Texture> idleTextures = new HashMap<>();
-        idleTextures.put(Direction.UP, new Texture(idleJson.getString("UP")));
-        idleTextures.put(Direction.RIGHT, new Texture(idleJson.getString("RIGHT")));
-        idleTextures.put(Direction.DOWN, new Texture(idleJson.getString("DOWN")));
-        idleTextures.put(Direction.LEFT, new Texture(idleJson.getString("LEFT")));
+    private Map<Direction, TextureRegion> getIdleTextures(String spritePath){
+        Texture texture = new Texture(Gdx.files.internal(spritePath));
+        Map<Direction, TextureRegion> idleTextures = new HashMap<>();
+        idleTextures.put(Direction.RIGHT, new TextureRegion(texture, 0, 0, 64, 64));
+        idleTextures.put(Direction.LEFT, new TextureRegion(texture, 0, 64, 64, 64));
+        idleTextures.put(Direction.DOWN, new TextureRegion(texture, 0, 2*64, 64, 64));
+        idleTextures.put(Direction.UP, new TextureRegion(texture, 0, 3*64, 64, 64));
         return idleTextures;
     }
 
-    private Map<Direction, Animation<Texture>> readAnimatedTextures(JsonValue animatedJson){
-        Map<Direction, Animation<Texture>> animatedTextures = new HashMap<>();
-        ArrayList<Animation<Texture>> animationList = new ArrayList<>();
-        for(JsonValue oneDirectionJson : animatedJson){
-            Texture frame1 = new Texture(oneDirectionJson.getString("firstFrame"));
-            Texture frame2 = new Texture(oneDirectionJson.getString("secondFrame"));
-            Texture frame3 = new Texture(oneDirectionJson.getString("thirdFrame"));
-            Texture frame4 = new Texture(oneDirectionJson.getString("fourthFrame"));
-            Texture[] textureList = {frame1, frame2, frame3, frame4};
-            Animation<Texture> animation = new Animation<>(0.25F, textureList);
-            animationList.add(animation);
-        }
-        for(int i = 0; i < Direction.values().length; i++){
-            animatedTextures.put(Direction.values()[i], animationList.get(i));
-        }
-        return animatedTextures;
+    private Map<Direction, Animation<TextureRegion>> getMovingAnimations(String spritePath){
+        Texture texture = new Texture(Gdx.files.internal(spritePath));
+        Map<Direction, Animation<TextureRegion>> movingAnimations = new HashMap<>();
+        Animation<TextureRegion> animationRight = new Animation<>(((float) 1 /6) , getTextureRegionLine(texture, 0));
+        movingAnimations.put(Direction.RIGHT, animationRight);
+        Animation<TextureRegion> animationLeft = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 64));
+        movingAnimations.put(Direction.LEFT, animationLeft);
+        Animation<TextureRegion> animationDown = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 2*64));
+        movingAnimations.put(Direction.DOWN, animationDown);
+        Animation<TextureRegion> animationUp = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 3*64));
+        movingAnimations.put(Direction.UP, animationUp);
+        return movingAnimations;
+    }
+
+    private TextureRegion[] getTextureRegionLine(Texture texture, int y){
+        TextureRegion[] textureRegions = new TextureRegion[6];
+        textureRegions[0] = new TextureRegion(texture, 0, y, 64, 64);
+        textureRegions[1] = new TextureRegion(texture, 64, y, 64, 64);
+        textureRegions[2] = new TextureRegion(texture, 2*64, y, 64, 64);
+        textureRegions[3] = new TextureRegion(texture, 3*64, y, 64, 64);
+        textureRegions[4] = new TextureRegion(texture, 4*64, y, 64, 64);
+        textureRegions[5] = new TextureRegion(texture, 5*64, y, 64, 64);
+        return textureRegions;
     }
 }

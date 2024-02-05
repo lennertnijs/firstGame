@@ -2,6 +2,7 @@ package com.mygdx.game.Player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Direction;
 
 import java.util.Map;
@@ -9,8 +10,8 @@ import java.util.Objects;
 
 public class CharacterTextureRepository {
 
-    private final Map<Direction, Texture> idleTextures;
-    private final Map<Direction, Animation<Texture>> movementAnimations;
+    private final Map<Direction, TextureRegion> idleTextures;
+    private final Map<Direction, Animation<TextureRegion>> movementAnimations;
 
     private float timeElapsed = 0;
     private boolean inAnimation = false;
@@ -23,14 +24,14 @@ public class CharacterTextureRepository {
     /**
      * Returns the idle texture of the player for the given direction.
      */
-    public Texture getIdleTexture(Direction direction){
+    public TextureRegion getIdleTexture(Direction direction){
         return Objects.requireNonNull(idleTextures.get(direction), "No idle Texture was found for the Player");
     }
 
     /**
      * Returns the moving animation textures of the player for the given direction.
      */
-    public Animation<Texture> getMovingAnimation(Direction direction){
+    public Animation<TextureRegion> getMovingAnimation(Direction direction){
         Objects.requireNonNull(direction, "Cannot fetch moving textures for null direction");
         return movementAnimations.get(direction);
     }
@@ -58,18 +59,18 @@ public class CharacterTextureRepository {
 
     public static class Builder{
 
-        private Map<Direction, Texture> idleTextures;
-        private Map<Direction, Animation<Texture>> movementAnimations;
+        private Map<Direction, TextureRegion> idleTextures;
+        private Map<Direction, Animation<TextureRegion>> movementAnimations;
 
         private Builder(){
         }
 
-        public Builder idleTextures(Map<Direction, Texture> idleTextures){
+        public Builder idleTextures(Map<Direction, TextureRegion> idleTextures){
             this.idleTextures = idleTextures;
             return this;
         }
 
-        public Builder movementAnimations(Map<Direction, Animation<Texture>> movementAnimations){
+        public Builder movementAnimations(Map<Direction, Animation<TextureRegion>> movementAnimations){
             this.movementAnimations = movementAnimations;
             return this;
         }

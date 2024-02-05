@@ -20,6 +20,7 @@
       }
     ],
   "currentItemIndex": "0",
-  "direction": "UP",
-  "movingSprites": "player/movement.png"
+  "direction": "DOWN",
+  "idlePath": "player/idle.png",
+  "movingPath": "player/movement.png"
 }
