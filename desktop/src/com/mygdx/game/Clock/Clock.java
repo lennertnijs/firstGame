@@ -41,14 +41,14 @@ public class Clock {
     }
 
 
-    public int getSeasonLength(){
+    protected int getSeasonLength(){
         return calendar.getSeasonLength(season);
     }
 
     /**
      * @return The time in HH:MM format. 0's will be added to keep the size of each of the numbers consistent.
      */
-    public String getTimeInHHMM(){
+    protected String getTimeInHHMM(){
         int hours = timeInMinutes/MINUTES_PER_HOUR;
         int minutes = timeInMinutes%MINUTES_PER_HOUR;
         int hourDigits = numberOfDigitsInInt(HOURS_PER_DAY-1);
@@ -75,7 +75,7 @@ public class Clock {
     }
 
 
-    public void incrementTimeByOne(){
+    protected void incrementTimeByOne(){
         timeInMinutes++;
         handleDayChange();
         handleSeasonChange();
@@ -83,7 +83,7 @@ public class Clock {
     /**
      * Increases the clock's time with the given minutes. Also takes day and season into consideration.
      */
-    public void increaseTimeByMinutes(int minutes){
+    protected void increaseTimeByMinutes(int minutes){
         if(minutes < 0 ||  minutes > MINUTES_PER_DAY ){
             throw new IllegalArgumentException("Invalid amount of minutes to add");
         }

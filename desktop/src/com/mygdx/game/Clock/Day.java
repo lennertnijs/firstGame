@@ -17,8 +17,7 @@ public enum Day {
     }
 
     public Day next(){
-        int nextIndex = this.index+1;
-        int divisor = values().length;
-        return values()[nextIndex%divisor];
+        int nextIndex = (this.index + 1) % Day.values().length;
+        return values()[nextIndex];
     }
 }

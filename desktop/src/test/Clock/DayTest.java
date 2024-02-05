@@ -9,9 +9,10 @@ public class DayTest {
     @Test
     public void testDay(){
         for(int i = 0; i < Day.values().length; i++){
-            int index = (i+1)%Day.values().length;
-            Day next = Day.values()[index];
-            Assertions.assertEquals(Day.values()[i].next(), next);
+            Day currentDay = Day.values()[i];
+            int nextIndex = (i + 1) % Day.values().length;
+            Day nextDay = Day.values()[nextIndex];
+            Assertions.assertEquals(currentDay.next(), nextDay);
         }
     }
 }

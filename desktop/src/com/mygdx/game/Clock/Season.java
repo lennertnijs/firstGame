@@ -16,8 +16,7 @@ public enum Season {
      * Works circularly.
      */
     protected Season next(){
-        int divisor = values().length;
-        int nextIndex = (this.index + 1)/divisor;
+        int nextIndex = (this.index + 1) % Season.values().length;
         return values()[nextIndex];
     }
 }
