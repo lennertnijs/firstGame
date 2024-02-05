@@ -87,10 +87,6 @@ public class KeyboardInputController {
                 // check interactive collision
                 // command class runs execute() which calls interact() on whatever class necessary
         }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.E)){
-            playerService.setActivity(Activity.WALKING);
-        }
     }
 
 
