@@ -11,9 +11,13 @@ public enum Season {
         this.index = index;
     }
 
-    public Season next(){
-        int nextIndex = this.index + 1;
+    /**
+     * Will return the next {@code Season}.
+     * Works circularly.
+     */
+    protected Season next(){
         int divisor = values().length;
-        return values()[nextIndex%divisor];
+        int nextIndex = (this.index + 1)/divisor;
+        return values()[nextIndex];
     }
 }

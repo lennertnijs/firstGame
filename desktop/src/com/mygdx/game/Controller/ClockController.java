@@ -1,7 +1,7 @@
 package com.mygdx.game.Controller;
 
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Service.ClockService;
+import com.mygdx.game.Clock.ClockService;
 
 public class ClockController {
 

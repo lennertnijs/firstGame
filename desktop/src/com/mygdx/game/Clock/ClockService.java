@@ -1,4 +1,4 @@
-package com.mygdx.game.Service;
+package com.mygdx.game.Clock;
 
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.ClockRepository;

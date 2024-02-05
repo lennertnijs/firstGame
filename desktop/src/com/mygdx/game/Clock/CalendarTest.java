@@ -1,7 +1,5 @@
-package Clock;
+package com.mygdx.game.Clock;
 
-import com.mygdx.game.Clock.Calendar;
-import com.mygdx.game.Clock.Season;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +61,7 @@ public class CalendarTest {
 
         Calendar calendar = Calendar.builder().seasons(seasons).build();
         Assertions.assertAll(
-                () -> Assertions.assertEquals(calendar.amountOfSeasons(), 2)
+                () -> Assertions.assertEquals(calendar.getAmountOfSeasons(), 2)
         );
     }
 

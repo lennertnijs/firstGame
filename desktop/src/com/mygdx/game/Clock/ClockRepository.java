@@ -6,11 +6,18 @@ public class ClockRepository {
 
     private final Clock clock;
 
-    public ClockRepository(){
+    /**
+     * The repository in which the game's clock will be stored.
+     * The method is protected, because only the clock service class should use this constructor.
+     */
+    protected ClockRepository(){
         this.clock = new ClockDAO().readClock();
     }
 
-    public Clock getClock(){
+    /**
+     * @return The clock in the repository.
+     */
+    protected Clock getClock(){
         return clock;
     }
 }

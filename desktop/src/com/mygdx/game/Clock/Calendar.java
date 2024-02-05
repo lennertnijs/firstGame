@@ -6,21 +6,33 @@ import java.util.Objects;
 public class Calendar {
     private final Map<Season, Integer> seasons;
 
-    public Calendar(Builder builder){
+    protected Calendar(Builder builder){
         this.seasons = builder.seasons;
     }
 
+    /**
+     *
+     * @return The map of {@code Season}s and their respective lengths.
+     */
     public Map<Season, Integer> getSeasons(){
         return seasons;
     }
 
-    public int amountOfSeasons(){
+    /**
+     * @return The amount of {@code Season}'s in the {@code Calendar}.
+     */
+    public int getAmountOfSeasons(){
         return seasons.size();
     }
 
-    public int getSeasonLength(Season season){
+    /**
+     * Finds and returns the given {@code Season}'s length, if it exists.
+     * @param season The {@code Season}
+     * @return The {@code Season} length if the {@code Season} is on the {@code Calendar}. Returns {@code null} otherwise.
+     */
+    protected int getSeasonLength(Season season){
         Objects.requireNonNull(season, "Cannot find season length for a null season");
-        return seasons.get(season);
+        return Objects.requireNonNull(seasons.get(season), "No season length was found");
     }
 
     @Override
@@ -40,12 +52,13 @@ public class Calendar {
         return Objects.hash(seasons);
     }
 
+
+
     public static Builder builder(){
         return new Builder();
     }
 
     public static class Builder{
-
         private Map<Season, Integer> seasons = null;
 
         public Builder seasons(Map<Season, Integer> seasons){
@@ -54,7 +67,7 @@ public class Calendar {
         }
 
         public Calendar build(){
-            Objects.requireNonNull(seasons, "Cannot build a calendar with a null map");
+            Objects.requireNonNull(seasons, "Cannot build a calendar with a null season map");
             for(Season season: seasons.keySet()){
                 Objects.requireNonNull(season, "Null season not allowed in calendar");
                 Objects.requireNonNull(seasons.get(season), "Null lengths not allowed in the calendar");
