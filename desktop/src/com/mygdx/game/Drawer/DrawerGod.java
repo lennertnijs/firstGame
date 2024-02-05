@@ -7,9 +7,9 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Stone.Stone;
-import com.mygdx.game.Stone.StoneController;
+import com.mygdx.game.Controller.StoneController;
 
-public class DrawerController {
+public class DrawerGod {
 
     MyGame game;
     NPCDrawer npcDrawer;
@@ -23,7 +23,7 @@ public class DrawerController {
 
     Texture map = new Texture(Gdx.files.internal("images/untitled.png"));
 
-    public DrawerController(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController){
+    public DrawerGod(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController){
         this.game = game;
         npcDrawer = new NPCDrawer(game);
         playerDrawer = new PlayerDrawer(game, playerController);

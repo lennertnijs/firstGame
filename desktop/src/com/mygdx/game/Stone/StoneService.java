@@ -13,23 +13,23 @@ public class StoneService {
         stoneRepository = new StoneRepository();
     }
 
-    protected int getStoneAmount(){
+    public int getStoneAmount(){
         return stoneRepository.getRepositorySize();
     }
 
-    protected List<Stone> getStones(){
+    public List<Stone> getStones(){
         return stoneRepository.getStones();
     }
 
-    protected void addStone(Stone stone){
+    public void addStone(Stone stone){
         stoneRepository.add(stone);
     }
 
-    protected void removeStone(Stone stone){
+    public void removeStone(Stone stone){
         stoneRepository.remove(stone);
     }
 
-    protected void mine(Stone stone, float damage){
+    public void mine(Stone stone, float damage){
         boolean stoneBroken = stone.getHealthPoints() - damage <= 0;
         if(stoneBroken){
             stoneRepository.remove(stone);
@@ -40,7 +40,7 @@ public class StoneService {
     /**
      * Checks whether the given point at the given coordinates collides with any existing stones.
      */
-    protected boolean pointCollidesWithStone(int x, int y){
+    public boolean pointCollidesWithStone(int x, int y){
         for(Stone stone: stoneRepository.getStones()){
             int stoneX = stone.getPosition().getX();
             int stoneY = stone.getPosition().getY();
@@ -56,7 +56,7 @@ public class StoneService {
      * Checks whether the given hit box collides with any existing stones.
      * @return True if collision, false otherwise
      */
-    protected boolean hitBoxCollidesWithStone(int x, int y, int width, int height){
+    public boolean hitBoxCollidesWithStone(int x, int y, int width, int height){
         for(Stone stone: stoneRepository.getStones()){
             int stoneX = stone.getPosition().getX();
             int stoneY = stone.getPosition().getY();
@@ -73,7 +73,7 @@ public class StoneService {
      * Finds the colliding stone from the given point, if there is one.
      * @return The stone if colliding, null otherwise
      */
-    protected Stone getCollidingStoneFromPoint(int x, int y){
+    public Stone getCollidingStoneFromPoint(int x, int y){
         for(Stone stone: stoneRepository.getStones()){
             int stoneX = stone.getPosition().getX();
             int stoneY = stone.getPosition().getY();
@@ -89,7 +89,7 @@ public class StoneService {
      * Finds the colliding stone from the given hit box, if there is one.
      * @return The stone if collision, null otherwise
      */
-    protected Stone getCollidingStoneFromHitBox(int x, int y, int width, int height){
+    public Stone getCollidingStoneFromHitBox(int x, int y, int width, int height){
         for(Stone stone: stoneRepository.getStones()){
             int stoneX = stone.getPosition().getX();
             int stoneY = stone.getPosition().getY();

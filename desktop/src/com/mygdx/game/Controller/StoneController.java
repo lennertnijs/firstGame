@@ -1,6 +1,8 @@
-package com.mygdx.game.Stone;
+package com.mygdx.game.Controller;
 
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Stone.Stone;
+import com.mygdx.game.Stone.StoneService;
 
 import java.util.List;
 import java.util.Objects;

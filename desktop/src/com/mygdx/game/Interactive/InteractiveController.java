@@ -1,7 +1,7 @@
 package com.mygdx.game.Interactive;
 
 import com.mygdx.game.Stone.Stone;
-import com.mygdx.game.Stone.StoneController;
+import com.mygdx.game.Controller.StoneController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.NPC.NPC;
 

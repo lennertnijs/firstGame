@@ -1,7 +1,7 @@
 package Controller;
 
 import com.mygdx.game.Stone.Stone;
-import com.mygdx.game.Stone.StoneController;
+import com.mygdx.game.Controller.StoneController;
 import com.mygdx.game.Entity.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
