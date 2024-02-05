@@ -22,6 +22,6 @@
   "currentItemIndex": "0",
   "direction": "DOWN",
   "idlePath": "player/idle.png",
-  "movingPath": "player/movement.png",
+  "movingPath": "player/moving.png",
   "miningPath": "player/mining.png"
 }

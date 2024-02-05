@@ -105,25 +105,25 @@ public class PlayerDAO {
     private Map<Direction, Animation<TextureRegion>> getMovingAnimations(String spritePath){
         Texture texture = new Texture(Gdx.files.internal(spritePath));
         Map<Direction, Animation<TextureRegion>> movingAnimations = new HashMap<>();
-        Animation<TextureRegion> animationRight = new Animation<>(((float) 1 /6) , getTextureRegionLine(texture, 0));
-        movingAnimations.put(Direction.RIGHT, animationRight);
-        Animation<TextureRegion> animationLeft = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 64));
-        movingAnimations.put(Direction.LEFT, animationLeft);
-        Animation<TextureRegion> animationDown = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 2*64));
-        movingAnimations.put(Direction.DOWN, animationDown);
-        Animation<TextureRegion> animationUp = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 3*64));
+        Animation<TextureRegion> animationUp = new Animation<>(((float) 1 /6) , getTextureRegionLine(texture, 0));
         movingAnimations.put(Direction.UP, animationUp);
+        Animation<TextureRegion> animationRight = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 33));
+        movingAnimations.put(Direction.RIGHT, animationRight);
+        Animation<TextureRegion> animationDown = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 66));
+        movingAnimations.put(Direction.DOWN, animationDown);
+        Animation<TextureRegion> animationLeft = new Animation<>(((float) 1 /6), getTextureRegionLine(texture, 99));
+        movingAnimations.put(Direction.LEFT, animationLeft);
         return movingAnimations;
     }
 
     private TextureRegion[] getTextureRegionLine(Texture texture, int y){
         TextureRegion[] textureRegions = new TextureRegion[6];
-        textureRegions[0] = new TextureRegion(texture, 0, y, 64, 64);
-        textureRegions[1] = new TextureRegion(texture, 64, y, 64, 64);
-        textureRegions[2] = new TextureRegion(texture, 2*64, y, 64, 64);
-        textureRegions[3] = new TextureRegion(texture, 3*64, y, 64, 64);
-        textureRegions[4] = new TextureRegion(texture, 4*64, y, 64, 64);
-        textureRegions[5] = new TextureRegion(texture, 5*64, y, 64, 64);
+        textureRegions[0] = new TextureRegion(texture, 0, y, 18, 33);
+        textureRegions[1] = new TextureRegion(texture, 18, y, 18, 33);
+        textureRegions[2] = new TextureRegion(texture, 2*18, y, 18, 33);
+        textureRegions[3] = new TextureRegion(texture, 3*18, y, 18, 33);
+        textureRegions[4] = new TextureRegion(texture, 4*18, y, 18, 33);
+        textureRegions[5] = new TextureRegion(texture, 5*18, y, 18, 33);
         return textureRegions;
     }
 
