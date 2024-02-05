@@ -1,72 +1,60 @@
-[
-  {
-    "name": "Player",
-    "x": "900",
-    "y": "500",
-    "inventory": [
+{
+  "name": "Dix",
+  "x": "900",
+  "y": "500",
+  "inventory": [
       {
-        "itemId": "0",
-        "itemName": "Pickaxe",
-        "stackSize": "1",
-        "amount": "1"
+        "type": "tool",
+        "id": "0",
+        "name": "Pickaxe",
+        "efficiency": "1000",
+        "durability": "500",
+        "toolType": "PICKAXE"
       },
       {
-        "itemId": "1",
-        "itemName": "Axe",
-        "stackSize": "1",
-        "amount": "1"
+        "type": "misc",
+        "id": "1",
+        "name": "Stone",
+        "stackSize": "32",
+        "amount": "5"
       }
     ],
-    "currentItemIndex": "0",
-    "direction": "UP",
-    "textureRepository": [
-      {
-        "IDLING": [
-          {
-            "UP": "player/guy.png",
-            "RIGHT": "player/guy.png",
-            "DOWN": "player/guy.png",
-            "LEFT": "player/guy.png"
-          }
-
-        ],
-        "WALKING": [
-          {
-            "UP": [
-              {
-                "firstFrame" : "player/guy.png",
-                "secondFrame" : "player/guy_left.png",
-                "thirdFrame" : "player/guy.png",
-                "fourthFrame" : "player/guy_right.png"
-              }
-            ],
-            "RIGHT": [
-              {
-                "firstFrame" : "player/guy.png",
-                "secondFrame" : "player/guy_left.png",
-                "thirdFrame" : "player/guy.png",
-                "fourthFrame" : "player/guy_right.png"
-              }
-            ],
-            "DOWN": [
-              {
-                "firstFrame" : "player/guy.png",
-                "secondFrame" : "player/guy_left.png",
-                "thirdFrame" : "player/guy.png",
-                "fourthFrame" : "player/guy_right.png"
-              }
-            ],
-            "LEFT": [
-              {
-                "firstFrame" : "player/guy.png",
-                "secondFrame" : "player/guy_left.png",
-                "thirdFrame" : "player/guy.png",
-                "fourthFrame" : "player/guy_right.png"
-              }
-            ]
-          }
-        ]
-      }
-    ]
+  "currentItemIndex": "0",
+  "direction": "UP",
+  "textureRepository":
+  {
+    "IDLING":
+    {
+      "UP": "player/guy.png",
+      "RIGHT": "player/guy.png",
+      "DOWN": "player/guy.png",
+      "LEFT": "player/guy.png"
+    },
+    "WALKING": [
+        {
+            "firstFrame" : "player/guy.png",
+            "secondFrame" : "player/guy_left.png",
+            "thirdFrame" : "player/guy.png",
+            "fourthFrame" : "player/guy_right.png"
+          },
+        {
+          "firstFrame" : "player/guy.png",
+          "secondFrame" : "player/guy_left.png",
+          "thirdFrame" : "player/guy.png",
+          "fourthFrame" : "player/guy_right.png"
+        },
+        {
+          "firstFrame" : "player/guy.png",
+          "secondFrame" : "player/guy_left.png",
+          "thirdFrame" : "player/guy.png",
+          "fourthFrame" : "player/guy_right.png"
+        },
+        {
+          "firstFrame" : "player/guy.png",
+          "secondFrame" : "player/guy_left.png",
+          "thirdFrame" : "player/guy.png",
+          "fourthFrame" : "player/guy_right.png"
+        }
+      ]
   }
-]
+}

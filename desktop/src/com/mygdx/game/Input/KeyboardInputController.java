@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.Interactive.Interactive;
 import com.mygdx.game.Item.Item;
 import com.mygdx.game.Item.Tool;
+import com.mygdx.game.Item.ToolType;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Stone.Stone;
@@ -74,12 +75,12 @@ public class KeyboardInputController {
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             Item item = playerService.getPlayer().getCurrentItem();
-            if(item instanceof Tool){
+            if(item instanceof Tool && ((Tool) item).getToolType() == ToolType.PICKAXE){
                 Stone stone = stoneController.getCollisionStoneFromHitBox(playerService.getPlayer().getPosition(), PLAYER_WIDTH, PLAYER_HEIGHT);
                 if(stone != null){
                     stoneController.mineStone(stone, 1);
                 }
-                playerService.setActivity(Activity.MINING);
+                playerService.setActivity(Activity.WALKING);
             }
                 // call command pattern class
                 // run animation
