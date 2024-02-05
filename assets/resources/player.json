@@ -21,40 +21,5 @@
     ],
   "currentItemIndex": "0",
   "direction": "UP",
-  "textureRepository":
-  {
-    "IDLING":
-    {
-      "UP": "player/guy.png",
-      "RIGHT": "player/guy.png",
-      "DOWN": "player/guy.png",
-      "LEFT": "player/guy.png"
-    },
-    "WALKING": [
-        {
-            "firstFrame" : "player/guy.png",
-            "secondFrame" : "player/guy_left.png",
-            "thirdFrame" : "player/guy.png",
-            "fourthFrame" : "player/guy_right.png"
-          },
-        {
-          "firstFrame" : "player/guy.png",
-          "secondFrame" : "player/guy_left.png",
-          "thirdFrame" : "player/guy.png",
-          "fourthFrame" : "player/guy_right.png"
-        },
-        {
-          "firstFrame" : "player/guy.png",
-          "secondFrame" : "player/guy_left.png",
-          "thirdFrame" : "player/guy.png",
-          "fourthFrame" : "player/guy_right.png"
-        },
-        {
-          "firstFrame" : "player/guy.png",
-          "secondFrame" : "player/guy_left.png",
-          "thirdFrame" : "player/guy.png",
-          "fourthFrame" : "player/guy_right.png"
-        }
-      ]
-  }
+  "movingSprites": "player/movement.png"
 }
