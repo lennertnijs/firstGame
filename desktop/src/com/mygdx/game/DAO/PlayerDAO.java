@@ -95,10 +95,10 @@ public class PlayerDAO {
     private Map<Direction, TextureRegion> getIdleTextures(String spritePath){
         Texture texture = new Texture(Gdx.files.internal(spritePath));
         Map<Direction, TextureRegion> idleTextures = new HashMap<>();
-        idleTextures.put(Direction.RIGHT, new TextureRegion(texture, 0, 0, 64, 64));
-        idleTextures.put(Direction.LEFT, new TextureRegion(texture, 0, 64, 64, 64));
-        idleTextures.put(Direction.DOWN, new TextureRegion(texture, 0, 2*64, 64, 64));
-        idleTextures.put(Direction.UP, new TextureRegion(texture, 0, 3*64, 64, 64));
+        idleTextures.put(Direction.UP, new TextureRegion(texture, 0, 0, 16, 32));
+        idleTextures.put(Direction.RIGHT, new TextureRegion(texture, 16, 0, 16, 32));
+        idleTextures.put(Direction.DOWN, new TextureRegion(texture, 32, 0, 16, 32));
+        idleTextures.put(Direction.LEFT, new TextureRegion(texture, 48, 0, 16, 32));
         return idleTextures;
     }
 
