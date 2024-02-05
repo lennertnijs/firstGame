@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
         this.game = game;
 
         PlayerService playerService = new PlayerService();
-        ClockService clockService = new ClockService();
+        clockService = new ClockService();
         clockController = new ClockController(clockService);
         npcController = new NPCController(clockController, clockService);
         playerController  = new PlayerController(playerService);

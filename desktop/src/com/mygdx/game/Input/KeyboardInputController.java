@@ -3,6 +3,9 @@ package com.mygdx.game.Input;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.Interactive.Interactive;
+import com.mygdx.game.Item.Item;
+import com.mygdx.game.Item.Tool;
+import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Stone.Stone;
 import com.mygdx.game.Controller.StoneController;
@@ -11,8 +14,7 @@ import com.mygdx.game.Entity.Position;
 import com.mygdx.game.Interactive.InteractiveController;
 import com.mygdx.game.NPC.Activity;
 
-import static com.mygdx.game.Constants.NPC_HEIGHT;
-import static com.mygdx.game.Constants.NPC_WIDTH;
+import static com.mygdx.game.Constants.*;
 
 public class KeyboardInputController {
 
@@ -71,6 +73,14 @@ public class KeyboardInputController {
     private void handleOtherInputs(){
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+            Item item = playerService.getPlayer().getCurrentItem();
+            if(item instanceof Tool){
+                Stone stone = stoneController.getCollisionStoneFromHitBox(playerService.getPlayer().getPosition(), PLAYER_WIDTH, PLAYER_HEIGHT);
+                if(stone != null){
+                    stoneController.mineStone(stone, 1);
+                }
+                playerService.setActivity(Activity.MINING);
+            }
                 // call command pattern class
                 // run animation
                 // check interactive collision
@@ -79,15 +89,6 @@ public class KeyboardInputController {
 
         if(Gdx.input.isKeyPressed(Input.Keys.E)){
             playerService.setActivity(Activity.WALKING);
-            Interactive interactive = interactiveController.checkInteractions(playerService.getPlayer().getPosition().getX()+120, playerService.getPlayer().getPosition().getY()+50);
-            if(interactive instanceof Stone){
-                Position position = Position.builder().x(playerService.getPlayer().getPosition().getX()+120).y(playerService.getPlayer().getPosition().getY()+50).build();
-                Stone stone = stoneController.getCollisionStoneFromPoint(position);
-                if(stone != null){
-                    stoneController.mineStone(stone, 30);
-                }
-
-            }
         }
     }
 

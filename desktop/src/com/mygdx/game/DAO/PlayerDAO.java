@@ -25,10 +25,10 @@ public class PlayerDAO {
         Position position = Position.builder().x(960).y(510).build();
 
         Texture[] texture = new Texture[4];
-        Texture frame1 = new Texture(Gdx.files.internal("images/lmaoxd.png"));
-        Texture frame2 = new Texture(Gdx.files.internal("images/guy_right.png"));
-        Texture frame3 = new Texture(Gdx.files.internal("images/guy.png"));
-        Texture frame4 = new Texture(Gdx.files.internal("images/guy_left.png"));
+        Texture frame1 = new Texture(Gdx.files.internal("player/guy.png"));
+        Texture frame2 = new Texture(Gdx.files.internal("player/guy_right.png"));
+        Texture frame3 = new Texture(Gdx.files.internal("player/guy.png"));
+        Texture frame4 = new Texture(Gdx.files.internal("player/guy_left.png"));
         texture[0] = frame1;
         texture[1] = frame2;
 
