@@ -15,7 +15,7 @@ public enum Season {
      * Will return the next {@code Season}.
      * Works circularly.
      */
-    protected Season next(){
+    public Season next(){
         int nextIndex = (this.index + 1) % Season.values().length;
         return values()[nextIndex];
     }

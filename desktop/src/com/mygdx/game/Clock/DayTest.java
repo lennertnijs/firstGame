@@ -1,4 +1,4 @@
-package Clock;
+package com.mygdx.game.Clock;
 
 import com.mygdx.game.Clock.Day;
 import org.junit.jupiter.api.Assertions;

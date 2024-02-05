@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.Clock.ClockService;
 import com.mygdx.game.Drawer.DrawerController;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Player.PlayerService;
@@ -28,13 +29,15 @@ public class GameScreen implements Screen {
     PlayerController playerController;
     StoneController stoneController;
     DrawerController drawerController;
+    ClockService clockService;
 
     public GameScreen(final MyGame game) {
 
         this.game = game;
 
         PlayerService playerService = new PlayerService();
-        clockController = new ClockController();
+        ClockService clockService = new ClockService();
+        clockController = new ClockController(clockService);
         npcController = new NPCController(clockController);
         playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
@@ -65,7 +68,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
 
         npcController.updateNPCs();
-        clockController.updateClock();
+        clockService.updateClock();
 
         keyboardInput.handleMovement();
         drawerController.drawAll();
