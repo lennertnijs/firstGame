@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
         PlayerService playerService = new PlayerService();
         ClockService clockService = new ClockService();
         clockController = new ClockController(clockService);
-        npcController = new NPCController(clockController);
+        npcController = new NPCController(clockController, clockService);
         playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
         interactiveController = new InteractiveController(npcController, stoneController);

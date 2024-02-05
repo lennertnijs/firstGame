@@ -1,4 +1,4 @@
-package com.mygdx.game.Service;
+package com.mygdx.game.NPC;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Clock.*;
@@ -13,9 +13,11 @@ import static com.mygdx.game.Constants.*;
 public class NPCService {
 
     private final NPCRepository npcRepository;
+    private final ClockService clockService;
 
-    public NPCService(){
-        npcRepository = new NPCRepository(new NPCDAO().readNPCS());
+    public NPCService(ClockService clockService){
+        npcRepository = new NPCRepository();
+        this.clockService = clockService;
     }
 
 

@@ -1,8 +1,9 @@
 package com.mygdx.game.Controller;
 
+import com.mygdx.game.Clock.ClockService;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.Service.NPCService;
+import com.mygdx.game.NPC.NPCService;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class NPCController {
      * Constructor for the NPC controller.
      * Loads all the NPC data from the JSON file at creation.
      */
-    public NPCController(ClockController clockController) {
-        this.npcService = new NPCService();
+    public NPCController(ClockController clockController, ClockService clockService) {
+        this.npcService = new NPCService(clockService);
         this.clockController = clockController;
     }
 
