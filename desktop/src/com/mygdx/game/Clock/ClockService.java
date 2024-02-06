@@ -8,29 +8,45 @@ public class ClockService {
     private long lastUpdateTimeInMillis;
     private long timeElapsedInMillis;
 
+    /**
+     * The constructor for the {@code ClockService}.
+     * It contains all the necessary {@code Clock} business logic.
+     * Automatically generates a {@code ClockRepository} and reads clock.json for a valid {@code Clock}.
+     */
     public ClockService(){
         this.clockRepository = new ClockRepository();
     }
 
+    /**
+     * Fetches and returns the active {@code Clock}
+     * @return The active {@code Clock}
+     */
     public Clock getClock(){
         return clockRepository.getClock();
     }
 
+    /**
+     * Starts the {@code Clock} up.
+     */
     public void startClock(){
+        if(clockRepository.getClock().getActive()){
+            return;
+        }
         lastUpdateTimeInMillis = System.currentTimeMillis();
         timeElapsedInMillis = 0;
-        clockRepository.getClock().setActive(false);
-    }
-
-    public void pauseClock(){
         clockRepository.getClock().setActive(true);
     }
 
     /**
-     * Updates the clock on every frame.
-     * Uses the System.currentTimeMillis() to accurately get timeframes.
-     * Everytime a second has passed, one minute is added to the clock.
-     * Thus, the current clock takes 24 minutes to complete a day, aka 1 minute per hour.
+     * Pauses the {@code Clock}.
+     */
+    public void pauseClock(){
+        clockRepository.getClock().setActive(false);
+    }
+
+    /**
+     * Handles the update of the clock.
+     * If the {@code Clock} is paused, does nothing.
      */
     public void updateClock(){
         boolean clockActive = clockRepository.getClock().getActive();
@@ -39,6 +55,11 @@ public class ClockService {
         }
     }
 
+    /**
+     * Handles the update of the active {@code Clock}.
+     * Uses the {@code System.currentTimeMillis()}.
+     * Increments the {@code Clock}'s time by one every {@code MILLIS_PER_MINUTE}.
+     */
     private void updateActiveClock(){
         long currentMillis = System.currentTimeMillis();
         long timeDifference = currentMillis - lastUpdateTimeInMillis;

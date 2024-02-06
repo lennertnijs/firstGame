@@ -119,6 +119,38 @@ public class Clock {
         }
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof  Clock)){
+            return false;
+        }
+        Clock clock = (Clock) o;
+        return calendar.equals(clock.calendar) &&
+                season == clock.season &&
+                day == clock.day &&
+                timeInMinutes == clock.timeInMinutes &&
+                dayOfTheSeason == clock.dayOfTheSeason &&
+                active == clock.active;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(calendar, season, day, timeInMinutes, dayOfTheSeason, active);
+    }
+
+    @Override
+    public String toString(){
+        return  "Calendar: " + calendar.toString() + "\n" +
+                "Season: " + season.toString() + ", \n" +
+                "Day: " + day.toString() + ", \n" +
+                "TimeInMinutes: " + timeInMinutes + ", \n" +
+                "DayOfTheSeason: " + dayOfTheSeason + ", \n" +
+                "Active: " + active;
+    }
+
 
 
 

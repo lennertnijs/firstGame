@@ -1,10 +1,5 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.ClockService;
-import com.mygdx.game.Clock.Day;
-import com.mygdx.game.Clock.Season;
-
 public class ClockController {
 
     private final ClockService clockService;

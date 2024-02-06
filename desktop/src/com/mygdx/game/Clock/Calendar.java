@@ -59,6 +59,14 @@ public class Calendar {
         return Objects.hash(seasons);
     }
 
+    @Override
+    public String toString(){
+        String calendarString = "";
+        for(Season season: seasons.keySet()){
+            calendarString += season + ": " + seasons.get(season) + " ,";
+        }
+        return calendarString;
+    }
 
 
     public static Builder builder(){
