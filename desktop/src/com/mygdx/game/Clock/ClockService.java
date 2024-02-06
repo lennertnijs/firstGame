@@ -36,4 +36,8 @@ public class ClockService {
         }
         lastUpdateInMillis = currentMillis;
     }
+
+    public String getTimeInHHMM(){
+        return clockRepository.getClock().getTimeInHHMM();
+    }
 }

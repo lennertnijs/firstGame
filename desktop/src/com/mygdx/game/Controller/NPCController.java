@@ -11,7 +11,7 @@ import java.util.List;
 public class NPCController {
 
     private final NPCService npcService;
-    private final ClockController clockController;
+    private final ClockService clockService;
 
     /**
      * Constructor for the NPC controller.
@@ -19,12 +19,12 @@ public class NPCController {
      */
     public NPCController(ClockController clockController, ClockService clockService) {
         this.npcService = new NPCService(clockService);
-        this.clockController = clockController;
+        this.clockService = clockService;
     }
 
 
     public void updateNPCs(){
-        npcService.updateNPCS(clockController.getClock());
+        npcService.updateNPCS(clockService.getClock());
     }
 
 

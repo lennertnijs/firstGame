@@ -2,6 +2,7 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.Controller.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;
@@ -21,13 +22,17 @@ public class DrawerGod {
 
     StoneController stoneController;
 
+    ClockDrawer clockDrawer;
+    ClockController clockController;
+
     Texture map = new Texture(Gdx.files.internal("images/untitled.png"));
 
-    public DrawerGod(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController){
+    public DrawerGod(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController, ClockController clockController){
         this.game = game;
         npcDrawer = new NPCDrawer(game);
         playerDrawer = new PlayerDrawer(game, playerController);
         stoneDrawer = new StoneDrawer(game);
+        clockDrawer = new ClockDrawer(game, clockController);
         this.npcController = npcController;
         this.playerController = playerController;
         this.stoneController = stoneController;
@@ -38,10 +43,12 @@ public class DrawerGod {
         drawStones();
         drawNPCS();
         drawPlayer();
+        clockDrawer.drawClock(playerController.getPlayer().getPosition());
     }
     private void drawPlayer(){
         playerDrawer.drawPlayer();
     }
+
     private void drawNPCS(){
         for(NPC npc: npcController.getNPCS()){
             npcDrawer.drawNPC(npc);

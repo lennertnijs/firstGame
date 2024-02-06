@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
         npcController = new NPCController(clockController, clockService);
         playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
-        drawerGod = new DrawerGod(game, npcController, playerController, stoneController);
+        drawerGod = new DrawerGod(game, npcController, playerController, stoneController, clockController);
 
 
         // load the drop sound effect and the rain background "music"

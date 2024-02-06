@@ -23,5 +23,5 @@
   "direction": "DOWN",
   "idlePath": "player/idle.png",
   "movingPath": "player/moving.png",
-  "miningPath": "player/croppedmining.png"
+  "miningPath": "player/mining.png"
 }

@@ -2,6 +2,8 @@ package com.mygdx.game.Controller;
 
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.ClockService;
+import com.mygdx.game.Clock.Day;
+import com.mygdx.game.Clock.Season;
 
 public class ClockController {
 
@@ -11,7 +13,15 @@ public class ClockController {
         this.clockService = clockService;
     }
 
-    public Clock getClock(){
-        return clockService.getClock();
+    public Day getDay(){
+        return clockService.getClock().getDay();
+    }
+
+    public String getTime(){
+        return clockService.getTimeInHHMM();
+    }
+
+    public Season getSeason(){
+        return clockService.getClock().getSeason();
     }
 }
