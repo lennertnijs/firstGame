@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Controller.NPCController;
+import com.mygdx.game.Entity.Position;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.Player.PlayerController;
@@ -26,6 +27,7 @@ public class DrawerGod {
     ClockController clockController;
 
     Texture map = new Texture(Gdx.files.internal("images/untitled.png"));
+    Texture bar = new Texture(Gdx.files.internal("inventoryBar.png"));
 
     public DrawerGod(MyGame game, NPCController npcController, PlayerController playerController, StoneController stoneController, ClockController clockController){
         this.game = game;
@@ -44,6 +46,7 @@ public class DrawerGod {
         drawNPCS();
         drawPlayer();
         clockDrawer.drawClock(playerController.getPlayer().getPosition());
+        drawGameBar(playerController.getPlayer().getPosition());
     }
     private void drawPlayer(){
         playerDrawer.drawPlayer();
@@ -61,5 +64,9 @@ public class DrawerGod {
         for(Stone stone: stoneController.getAllStones()){
             stoneDrawer.drawStone(stone);
         }
+    }
+
+    private void drawGameBar(Position position){
+        game.batch.draw(bar, position.getX() - 256, position.getY() - 515, 512, 64);
     }
 }

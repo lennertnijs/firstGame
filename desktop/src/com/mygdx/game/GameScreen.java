@@ -67,9 +67,10 @@ public class GameScreen implements Screen {
         clockService.updateClock();
 
         keyboardInput.handleMovement();
+        camera.position.set(playerController.getPlayer().getPosition().getX(), playerController.getPlayer().getPosition().getY(), 0);
         drawerGod.drawAll();
 
-        camera.position.set(playerController.getPlayer().getPosition().getX(), playerController.getPlayer().getPosition().getY(), 0);
+
         game.batch.end();
     }
 
