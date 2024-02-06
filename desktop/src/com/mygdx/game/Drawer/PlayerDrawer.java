@@ -110,6 +110,7 @@ public class PlayerDrawer {
     private void initiateAnimationIfNecessary(){
         if(!(playerInAnimation)){
             playerInAnimation = true;
+            playerController.setInAnimation(true);
             timeElapsed = 0;
         }
     }
@@ -119,6 +120,7 @@ public class PlayerDrawer {
      */
     private void endAnimation(){
         playerController.setActivity(Activity.IDLING);
+        playerController.setInAnimation(false);
         timeElapsed = 0;
     }
 }

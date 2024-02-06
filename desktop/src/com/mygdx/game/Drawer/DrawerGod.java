@@ -2,7 +2,7 @@ package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Controller.ClockController;
+import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.NPC.NPC;

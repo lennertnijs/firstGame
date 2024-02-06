@@ -11,6 +11,7 @@ public class Clock {
     private Day day;
     private int timeInMinutes;
     private int dayOfTheSeason;
+    private boolean active;
 
     public Clock(Builder builder){
         this.calendar = builder.calendar;
@@ -18,6 +19,7 @@ public class Clock {
         this.day = builder.day;
         this.timeInMinutes = builder.timeInMinutes;
         this.dayOfTheSeason = builder.dayOfTheSeason;
+        this.active = true;
     }
 
     public Calendar getCalendar(){
@@ -40,15 +42,22 @@ public class Clock {
         return this.dayOfTheSeason;
     }
 
-
     protected int getSeasonLength(){
         return calendar.getSeasonLength(season);
+    }
+
+    public boolean getActive(){
+        return this.active;
+    }
+
+    protected void setActive(boolean active){
+        this.active = active;
     }
 
     /**
      * @return The time in HH:MM format. 0's will be added to keep the size of each of the numbers consistent.
      */
-    protected String getTimeInHHMM(){
+    public String getTimeInHHMM(){
         int hours = timeInMinutes/MINUTES_PER_HOUR;
         int minutes = timeInMinutes%MINUTES_PER_HOUR;
         int hourDigits = numberOfDigitsInInt(HOURS_PER_DAY-1);

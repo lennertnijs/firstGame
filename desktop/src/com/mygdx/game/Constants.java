@@ -21,4 +21,6 @@ public class Constants {
     public static final int STONE_HEIGHT = 96;
     public static final int STONE_WIDTH = 96;
 
+    public static final int MILLIS_PER_MINUTE = 1000;
+
 }

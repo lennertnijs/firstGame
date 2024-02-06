@@ -1,4 +1,0 @@
-to advance npc class, need multiple systems:
-quest system
-player system
-change movementnetwork -> movementGraph

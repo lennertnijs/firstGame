@@ -1,4 +1,4 @@
-package com.mygdx.game.Controller;
+package com.mygdx.game.Clock;
 
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.ClockService;
@@ -18,7 +18,7 @@ public class ClockController {
     }
 
     public String getTime(){
-        return clockService.getTimeInHHMM();
+        return clockService.getClock().getTimeInHHMM();
     }
 
     public Season getSeason(){

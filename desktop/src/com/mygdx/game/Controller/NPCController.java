@@ -1,5 +1,6 @@
 package com.mygdx.game.Controller;
 
+import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Clock.ClockService;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.NPC.NPC;

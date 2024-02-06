@@ -1,23 +1,29 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.ClockRepository;
-import com.mygdx.game.DAO.ClockDAO;
+import static com.mygdx.game.Constants.MILLIS_PER_MINUTE;
 
 public class ClockService {
 
-    long lastUpdateInMillis;
-    long timeElapsedInMillis;
     private final ClockRepository clockRepository;
+    private long lastUpdateTimeInMillis;
+    private long timeElapsedInMillis;
 
     public ClockService(){
         this.clockRepository = new ClockRepository();
-        lastUpdateInMillis = System.currentTimeMillis();
-        timeElapsedInMillis = 0;
     }
 
     public Clock getClock(){
         return clockRepository.getClock();
+    }
+
+    public void startClock(){
+        lastUpdateTimeInMillis = System.currentTimeMillis();
+        timeElapsedInMillis = 0;
+        clockRepository.getClock().setActive(false);
+    }
+
+    public void pauseClock(){
+        clockRepository.getClock().setActive(true);
     }
 
     /**
@@ -27,17 +33,20 @@ public class ClockService {
      * Thus, the current clock takes 24 minutes to complete a day, aka 1 minute per hour.
      */
     public void updateClock(){
-        long currentMillis = System.currentTimeMillis();
-        long timeDifference = currentMillis - lastUpdateInMillis;
-        timeElapsedInMillis += timeDifference;
-        if(timeElapsedInMillis >= 1000){
-            timeElapsedInMillis -= 1000;
-            clockRepository.getClock().incrementTimeByOne();
+        boolean clockActive = clockRepository.getClock().getActive();
+        if(clockActive){
+            updateActiveClock();
         }
-        lastUpdateInMillis = currentMillis;
     }
 
-    public String getTimeInHHMM(){
-        return clockRepository.getClock().getTimeInHHMM();
+    private void updateActiveClock(){
+        long currentMillis = System.currentTimeMillis();
+        long timeDifference = currentMillis - lastUpdateTimeInMillis;
+        timeElapsedInMillis += timeDifference;
+        if(timeElapsedInMillis >= MILLIS_PER_MINUTE){
+            timeElapsedInMillis -= MILLIS_PER_MINUTE;
+            clockRepository.getClock().incrementTimeByOne();
+        }
+        lastUpdateTimeInMillis = currentMillis;
     }
 }

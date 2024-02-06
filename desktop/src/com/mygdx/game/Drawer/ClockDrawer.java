@@ -1,7 +1,6 @@
 package com.mygdx.game.Drawer;
 
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Controller.ClockController;
+import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Entity.Position;
 import com.mygdx.game.MyGame;
 

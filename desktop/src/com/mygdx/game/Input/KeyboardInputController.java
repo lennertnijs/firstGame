@@ -69,21 +69,24 @@ public class KeyboardInputController {
     private void handleOtherInputs(){
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            Item item = playerService.getPlayer().getCurrentItem();
-            if(item instanceof Tool && ((Tool) item).getToolType() == ToolType.PICKAXE){
-                Stone stone = stoneController.getCollisionStoneFromHitBox(playerService.getPlayer().getPosition(), PLAYER_WIDTH, PLAYER_HEIGHT);
-                if(stone != null){
-                    stoneController.mineStone(stone, 1);
-                }
-            }
+
             playerService.setActivity(Activity.WALKING);
                 // call command pattern class
                 // run animation
                 // check interactive collision
                 // command class runs execute() which calls interact() on whatever class necessary
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.E)){
-            playerService.setActivity(Activity.MINING);
+        if(Gdx.input.isKeyPressed(Input.Keys.E) && !playerService.getPlayer().getDoingAnimation()){
+            Item item = playerService.getPlayer().getCurrentItem();
+            if(item instanceof Tool && ((Tool) item).getToolType() == ToolType.PICKAXE){
+                playerService.setActivity(Activity.MINING);
+                Position position = playerService.getPlayer().getPosition();
+                Position hit = Position.builder().x(position.getX()+50 + PLAYER_WIDTH).y(position.getY()).build();
+                Stone stone = stoneController.getCollisionStoneFromPoint(hit);
+                if(stone != null){
+                    stoneController.mineStone(stone, 10);
+                }
+            }
         }
     }
 

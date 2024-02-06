@@ -10,7 +10,7 @@ import com.mygdx.game.Drawer.DrawerGod;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Controller.StoneController;
-import com.mygdx.game.Controller.ClockController;
+import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Controller.NPCController;
 import com.mygdx.game.Input.KeyboardInputController;
 
