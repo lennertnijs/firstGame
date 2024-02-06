@@ -1,19 +1,23 @@
-package com.mygdx.game;
+package com.mygdx.game.Input;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
-public class MovementInputProcessor implements InputProcessor {
+public class GamePlayInputProcessor implements InputProcessor {
 
+    public GamePlayInputProcessor(){
+    }
 
     @Override
     public boolean keyDown(int keycode) {
         switch(keycode){
 
-
         }
         return false;
     }
+
+
+
+
 
     @Override
     public boolean keyUp(int keycode) {
