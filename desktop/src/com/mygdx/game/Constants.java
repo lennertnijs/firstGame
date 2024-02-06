@@ -5,10 +5,6 @@ public class Constants {
     public static int MINUTES_PER_HOUR = 60;
     public static int HOURS_PER_DAY = 24;
     public static int MINUTES_PER_DAY = MINUTES_PER_HOUR*HOURS_PER_DAY;
-    public static String JSON_PATHNAME = "resources/";
-
-    public static String NPC_PATHNAME = "npc/";
-
     public static int STANDARD_MOVEMENT_SPEED = 100;
 
     public static int NPC_WIDTH = 64;
