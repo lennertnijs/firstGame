@@ -1,6 +1,5 @@
 package com.mygdx.game.Clock;
 
-// TESTED
 public enum Season {
 
     LIGHT(0),

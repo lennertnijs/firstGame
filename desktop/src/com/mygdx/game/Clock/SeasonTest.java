@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class SeasonTest {
 
     @Test
-    public void testSeason(){
+    public void testSeasonNext(){
         for(int i = 0; i < Season.values().length; i++){
             Season currentSeason = Season.values()[i];
             int nextIndex = (i + 1) % Season.values().length;

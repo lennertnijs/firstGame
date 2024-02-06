@@ -11,7 +11,6 @@ public class Calendar {
     }
 
     /**
-     *
      * @return The map of {@code Season}s and their respective lengths.
      */
     public Map<Season, Integer> getSeasons(){
@@ -35,6 +34,11 @@ public class Calendar {
         return Objects.requireNonNull(seasons.get(season), "No season length was found");
     }
 
+    /**
+     * Compares this {@code Season} with the object.
+     * @param o The object to compare to this {@code Season}
+     * @return True if equal, false otherwise.
+     */
     @Override
     public boolean equals(Object o){
         if(o == this){
@@ -47,6 +51,9 @@ public class Calendar {
         return seasons.equals(calendar.seasons);
     }
 
+    /**
+     * @return The hash code
+     */
     @Override
     public int hashCode(){
         return Objects.hash(seasons);
