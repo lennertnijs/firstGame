@@ -130,32 +130,32 @@ public class PlayerDAO {
     private Map<Direction, Animation<TextureRegion>> getMiningAnimations(String spritePath){
         Texture texture = new Texture(Gdx.files.internal(spritePath));
         Map<Direction, Animation<TextureRegion>> miningAnimation = new HashMap<>();
-        Animation<TextureRegion> animationRight = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 0));
-        miningAnimation.put(Direction.RIGHT, animationRight);
-        Animation<TextureRegion> animationLeft = new Animation<>(1/4F, getTextureRegionLeftToRight(texture, 64));
-        miningAnimation.put(Direction.LEFT, animationLeft);
-        Animation<TextureRegion> animationDown = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 2*64));
-        miningAnimation.put(Direction.DOWN, animationDown);
-        Animation<TextureRegion> animationUp = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 3*64));
+        Animation<TextureRegion> animationUp = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 0, 31));
         miningAnimation.put(Direction.UP, animationUp);
+        Animation<TextureRegion> animationRight = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 42, 42));
+        miningAnimation.put(Direction.RIGHT, animationRight);
+        Animation<TextureRegion> animationDown = new Animation<>(1/4F, getTextureRegionRightToLeft(texture, 84, 31));
+        miningAnimation.put(Direction.DOWN, animationDown);
+        Animation<TextureRegion> animationLeft = new Animation<>(1/4F, getTextureRegionLeftToRight(texture, 126, 42));
+        miningAnimation.put(Direction.LEFT, animationLeft);
         return miningAnimation;
     }
 
-    private TextureRegion[] getTextureRegionRightToLeft(Texture texture, int y){
+    private TextureRegion[] getTextureRegionRightToLeft(Texture texture, int y, int x_width){
         TextureRegion[] textureRegions = new TextureRegion[4];
-        textureRegions[0] = new TextureRegion(texture, 0, y, 64, 64);
-        textureRegions[1] = new TextureRegion(texture, 64, y, 64, 64);
-        textureRegions[2] = new TextureRegion(texture, 2*64, y, 64, 64);
-        textureRegions[3] = new TextureRegion(texture, 3*64, y, 64, 64);
+        textureRegions[0] = new TextureRegion(texture, 0, y, x_width, 42);
+        textureRegions[1] = new TextureRegion(texture, x_width, y, x_width, 42);
+        textureRegions[2] = new TextureRegion(texture, 2*x_width, y, x_width, 42);
+        textureRegions[3] = new TextureRegion(texture, 3*x_width, y, x_width, 42);
         return textureRegions;
     }
 
-    private TextureRegion[] getTextureRegionLeftToRight(Texture texture, int y){
+    private TextureRegion[] getTextureRegionLeftToRight(Texture texture, int y, int x_width){
         TextureRegion[] textureRegions = new TextureRegion[4];
-        textureRegions[0] = new TextureRegion(texture, 3*64, y, 64, 64);
-        textureRegions[1] = new TextureRegion(texture, 2*64, y, 64, 64);
-        textureRegions[2] = new TextureRegion(texture, 64, y, 64, 64);
-        textureRegions[3] = new TextureRegion(texture, 0, y, 64, 64);
+        textureRegions[0] = new TextureRegion(texture, 3*x_width, y, x_width, 42);
+        textureRegions[1] = new TextureRegion(texture, 2*x_width, y, x_width, 42);
+        textureRegions[2] = new TextureRegion(texture, x_width, y, x_width, 42);
+        textureRegions[3] = new TextureRegion(texture, 0, y, x_width, 42);
         return textureRegions;
     }
 }

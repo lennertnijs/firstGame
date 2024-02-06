@@ -76,7 +76,7 @@ public class PlayerDrawer {
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
             TextureRegion texture = player.getTextureRepository().getMiningAnimation(direction).getKeyFrame(timeElapsed, false);
-            draw(texture);
+            drawMining(texture);
             return;
         }
         endAnimation();
@@ -89,6 +89,18 @@ public class PlayerDrawer {
     private void draw(TextureRegion texture){
         Player player = playerController.getPlayer();
         game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), PLAYER_WIDTH, PLAYER_HEIGHT);
+    }
+
+    /**
+     * Draws the texture at the player location. Helper function.
+     */
+    private void drawMining(TextureRegion texture){
+        Player player = playerController.getPlayer();
+        if(player.getDirection() == Direction.UP || player.getDirection() == Direction.DOWN){
+            game.batch.draw(texture, player.getPosition().getX(), player.getPosition().getY(), 31*4, 42*4);
+            return;
+        }
+        game.batch.draw(texture, player.getPosition().getX()-50, player.getPosition().getY(), 42*4, 42*4);
     }
 
     /**
