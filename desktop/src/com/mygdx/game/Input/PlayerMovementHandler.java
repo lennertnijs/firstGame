@@ -48,7 +48,7 @@ public class PlayerMovementHandler {
 
     protected void notMovingDown(){
         this.down = false;
-        inputs.add(Direction.DOWN);
+        inputs.remove(Direction.DOWN);
     }
 
     protected void movingLeft(){
