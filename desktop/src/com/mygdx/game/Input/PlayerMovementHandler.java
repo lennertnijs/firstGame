@@ -100,17 +100,17 @@ public class PlayerMovementHandler {
         Direction lastInputDirection = inputs.get(1);
         switch (lastInputDirection){
             case UP:
-                playerService.setDirection(Direction.UP);
                 moveUp();
+                break;
             case RIGHT:
-                playerService.setDirection(Direction.RIGHT);
                 moveRight();
+                break;
             case DOWN:
-                playerService.setDirection(Direction.DOWN);
                 moveDown();
+                break;
             case LEFT:
-                playerService.setDirection(Direction.LEFT);
                 moveLeft();
+                break;
         }
     }
 
