@@ -63,13 +63,14 @@ public class PlayerMovementHandler {
 
 
     public void movePlayer(){
-        if(up && right && down && left){
+        boolean fourMovementInputs = up && right && down && left;
+        if(fourMovementInputs){
             playerService.setActivity(Activity.IDLING);
             return;
         }
 
         boolean threeMovementInputs = (up && right && down) || (right && down && left)
-                || (down && left && up) || (left && up && right);
+                                    || (down && left && up) || (left && up && right);
         if(threeMovementInputs){
             handleThreeMovementInputs();
             return;
@@ -81,7 +82,7 @@ public class PlayerMovementHandler {
             return;
         }
 
-        boolean twoMovementInput = up && right || right && down || down && left || left && up;
+        boolean twoMovementInput = (up && right) || (right && down) || (down && left) || (left && up);
         if(twoMovementInput){
             handleTwoMovementInputs();
             return;
@@ -96,26 +97,23 @@ public class PlayerMovementHandler {
     }
 
     private void handleTwoMovementInputs(){
-        if(inputs.get(1) == Direction.UP){
-            playerService.setDirection(Direction.UP);
-            moveUp();
-            return;
-        }
-        if(inputs.get(1) == Direction.RIGHT){
-            playerService.setDirection(Direction.RIGHT);
-            moveRight();
-            return;
-        }
-        if(inputs.get(1) == Direction.DOWN){
-            playerService.setDirection(Direction.DOWN);
-            moveDown();
-            return;
-        }
-        if(inputs.get(1) == Direction.LEFT){
-            playerService.setDirection(Direction.LEFT);
-            moveLeft();
+        Direction lastInputDirection = inputs.get(1);
+        switch (lastInputDirection){
+            case UP:
+                playerService.setDirection(Direction.UP);
+                moveUp();
+            case RIGHT:
+                playerService.setDirection(Direction.RIGHT);
+                moveRight();
+            case DOWN:
+                playerService.setDirection(Direction.DOWN);
+                moveDown();
+            case LEFT:
+                playerService.setDirection(Direction.LEFT);
+                moveLeft();
         }
     }
+
     private void handleThreeMovementInputs(){
         playerService.setActivity(Activity.WALKING);
         if(up && right && down){
@@ -159,7 +157,7 @@ public class PlayerMovementHandler {
         Player player = playerService.getPlayer();
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
-        int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
+        int movement = (int) Math.ceil(200 * Gdx.graphics.getDeltaTime());
         boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX, currentY + movement);
@@ -171,7 +169,7 @@ public class PlayerMovementHandler {
         Player player = playerService.getPlayer();
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
-        int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
+        int movement = (int) Math.ceil(200 * Gdx.graphics.getDeltaTime());
         boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX + movement, currentY);
@@ -183,7 +181,7 @@ public class PlayerMovementHandler {
         Player player = playerService.getPlayer();
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
-        int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
+        int movement = (int) Math.ceil(200 * Gdx.graphics.getDeltaTime());
         boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX, currentY - movement);
@@ -195,7 +193,7 @@ public class PlayerMovementHandler {
         Player player = playerService.getPlayer();
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
-        int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
+        int movement = (int) Math.ceil(200 * Gdx.graphics.getDeltaTime());
         boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX - movement, currentY);
