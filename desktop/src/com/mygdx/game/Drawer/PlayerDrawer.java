@@ -123,7 +123,6 @@ public class PlayerDrawer {
      * Ends the player's animation sequence.
      */
     private void endAnimation(){
-        playerController.setActivity(Activity.IDLING);
         playerController.setInAnimation(false);
         timeElapsed = 0;
     }

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.ClockService;
 import com.mygdx.game.Drawer.DrawerGod;
+import com.mygdx.game.Input.GamePlayInputProcessor;
+import com.mygdx.game.Input.PlayerMovementHandler;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Controller.StoneController;
@@ -27,6 +29,8 @@ public class GameScreen implements Screen {
     StoneController stoneController;
     DrawerGod drawerGod;
     ClockService clockService;
+    GamePlayInputProcessor gamePlayInputProcessor;
+    PlayerMovementHandler playerMovementHandler;
 
     public GameScreen(final MyGame game) {
 
@@ -40,6 +44,9 @@ public class GameScreen implements Screen {
         stoneController = new StoneController();
         drawerGod = new DrawerGod(game, npcController, playerController, stoneController, clockController);
 
+        playerMovementHandler = new PlayerMovementHandler(playerService);
+        gamePlayInputProcessor = new GamePlayInputProcessor(playerMovementHandler);
+        Gdx.input.setInputProcessor(gamePlayInputProcessor);
 
         // load the drop sound effect and the rain background "music"
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
@@ -62,11 +69,12 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        playerMovementHandler.movePlayer();
 
         npcController.updateNPCs();
         clockService.updateClock();
 
-        keyboardInput.handleMovement();
+        //keyboardInput.handleMovement();
         camera.position.set(playerController.getPlayer().getPosition().getX(), playerController.getPlayer().getPosition().getY(), 0);
         drawerGod.drawAll();
 

@@ -42,6 +42,14 @@ public class PlayerService {
         playerRepository.getPlayer().setPosition(position);
     }
 
+    public void setPosition(int x, int y){
+        if(x < 0 || y < 0){
+            throw new IllegalArgumentException("Cannot accept negative coordinates");
+        }
+        Position position = Position.builder().x(x).y(y).build();
+        playerRepository.getPlayer().setPosition(position);
+    }
+
     public void setDoingAnimation(boolean bool){
         playerRepository.getPlayer().setDoingAnimation(bool);
     }

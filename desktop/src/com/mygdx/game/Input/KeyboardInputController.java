@@ -45,7 +45,7 @@ public class KeyboardInputController {
         }
 
         boolean twoDirections = up && right || right && down || down && left || left && up;
-        if(twoDirections){
+        if(twoDirections && false){
             newPosition = handleTwoMovementInputs(up, right, down, left);
             boolean collisionWithNPC = npcController.checkCollision(newPosition);
             boolean collisionWithStone = stoneController.hitBoxCollidesWithStone(newPosition,  PLAYER_WIDTH, PLAYER_HEIGHT);

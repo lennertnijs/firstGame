@@ -1,26 +1,52 @@
 package com.mygdx.game.Input;
 
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 
 public class GamePlayInputProcessor implements InputProcessor {
 
-    public GamePlayInputProcessor(){
+    private final PlayerMovementHandler playerMovementHandler;
+
+
+    public GamePlayInputProcessor(PlayerMovementHandler playerMovementHandler){
+        this.playerMovementHandler = playerMovementHandler;
     }
 
     @Override
     public boolean keyDown(int keycode) {
         switch(keycode){
-
+            case Keys.UP:
+                playerMovementHandler.up(true);
+                break;
+            case Keys.RIGHT:
+                playerMovementHandler.right(true);
+                break;
+            case Keys.DOWN:
+                playerMovementHandler.down(true);
+                break;
+            case Keys.LEFT:
+                playerMovementHandler.left(true);
+                break;
         }
         return false;
     }
 
-
-
-
-
     @Override
     public boolean keyUp(int keycode) {
+        switch(keycode){
+            case Keys.UP:
+                playerMovementHandler.up(false);
+                break;
+            case Keys.RIGHT:
+                playerMovementHandler.right(false);
+                break;
+            case Keys.DOWN:
+                playerMovementHandler.down(false);
+                break;
+            case Keys.LEFT:
+                playerMovementHandler.left(false);
+                break;
+        }
         return false;
     }
 

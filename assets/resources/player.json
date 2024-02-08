@@ -20,7 +20,7 @@
       }
     ],
   "currentItemIndex": "0",
-  "direction": "DOWN",
+  "direction": "RIGHT",
   "idlePath": "player/idle.png",
   "movingPath": "player/moving.png",
   "miningPath": "player/mining.png"
