@@ -6,6 +6,8 @@ import com.mygdx.game.NPC.Activity;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.PlayerService;
 
+import java.util.ArrayList;
+
 public class PlayerMovementHandler {
 
     private final PlayerService playerService;
@@ -13,155 +15,142 @@ public class PlayerMovementHandler {
     private boolean right = false;
     private boolean down = false;
     private boolean left = false;
-    private final double sqrtTwo = 1/Math.sqrt(2);
+    private final ArrayList<Direction> inputs = new ArrayList<>();
 
     public PlayerMovementHandler(PlayerService playerService){
         this.playerService = playerService;
     }
 
-    public void up(boolean movingUp){
-        this.up = movingUp;
+    protected void movingUp(){
+        this.up = true;
+        inputs.add(Direction.UP);
     }
 
-    public void right(boolean movingRight){
-        this.right = movingRight;
+    protected void notMovingUp(){
+        this.up = false;
+        inputs.remove(Direction.UP);
     }
 
-    public void down(boolean movingDown){
-        this.down = movingDown;
-        System.out.println(movingDown);
+    protected void movingRight(){
+        this.right = true;
+        inputs.add(Direction.RIGHT);
     }
 
-    public void left(boolean movingLeft){
-        this.left = movingLeft;
+    protected void notMovingRight(){
+        this.right = false;
+        inputs.remove(Direction.RIGHT);
     }
+
+    protected void movingDown(){
+        this.down = true;
+        inputs.add(Direction.DOWN);
+    }
+
+    protected void notMovingDown(){
+        this.down = false;
+        inputs.add(Direction.DOWN);
+    }
+
+    protected void movingLeft(){
+        this.left = true;
+        inputs.add(Direction.LEFT);
+    }
+
+    protected void notMovingLeft(){
+        this.left = false;
+        inputs.remove(Direction.LEFT);
+    }
+
 
     public void movePlayer(){
-        if(up || right || down || left){
-            System.out.println(up + " - " + right + " - " + down + " - " + left);
-        }
-
-
         if(up && right && down && left){
             playerService.setActivity(Activity.IDLING);
             return;
         }
-        // 3
-        if(up && right && down){
-            playerService.setActivity(Activity.WALKING);
-            moveRight();
+
+        boolean threeMovementInputs = (up && right && down) || (right && down && left)
+                || (down && left && up) || (left && up && right);
+        if(threeMovementInputs){
+            handleThreeMovementInputs();
             return;
         }
-        if(right && down && left){
-            playerService.setActivity(Activity.WALKING);
-            moveDown();
-            return;
-        }
-        if(down && left && up){
-            playerService.setActivity(Activity.WALKING);
-            moveLeft();
-            return;
-        }
-        if(left && up && right){
-            playerService.setActivity(Activity.WALKING);
-            moveUp();
-            return;
-        }
-        if(up && down || right && left){
+
+        boolean twoOppositeInputs = up && down || left && right;
+        if(twoOppositeInputs){
             playerService.setActivity(Activity.IDLING);
             return;
         }
-        // 2
-        if(up && right){
-            playerService.setActivity(Activity.WALKING);
-            moveUpRight();
+
+        boolean twoMovementInput = up && right || right && down || down && left || left && up;
+        if(twoMovementInput){
+            handleTwoMovementInputs();
             return;
         }
-        if(right && down){
-            playerService.setActivity(Activity.WALKING);
-            moveRightDown();
-            return;
-        }
-        if(down && left){
-            playerService.setActivity(Activity.WALKING);
-            moveDownLeft();
-            return;
-        }
-        if(left && up){
-            playerService.setActivity(Activity.WALKING);
-            moveLeftUp();
-            return;
-        }
-        //1
-        if(up){
-            playerService.setActivity(Activity.WALKING);
-            moveUp();
-            return;
-        }
-        if(right){
-            playerService.setActivity(Activity.WALKING);
-            moveRight();
-            return ;
-        }
-        if(down){
-            playerService.setActivity(Activity.WALKING);
-            moveDown();
-            return;
-        }
-        if(left){
-            playerService.setActivity(Activity.WALKING);
-            moveLeft();
+
+        boolean oneMovementInput = up || right || down || left;
+        if(oneMovementInput){
+            handleOneMovementInput();
             return;
         }
         playerService.setActivity(Activity.IDLING);
     }
 
-
-    private void moveUpRight(){
-        playerService.setDirection(Direction.UP);
-        Player player = playerService.getPlayer();
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
-        int movement = (int)(Math.ceil(200*Gdx.graphics.getDeltaTime())*sqrtTwo);
-        boolean collision = anyCollisions(player);
-        if(!collision){
-            playerService.setPosition(currentX + movement, currentY + movement);
+    private void handleTwoMovementInputs(){
+        if(inputs.get(1) == Direction.UP){
+            playerService.setDirection(Direction.UP);
+            moveUp();
+            return;
+        }
+        if(inputs.get(1) == Direction.RIGHT){
+            playerService.setDirection(Direction.RIGHT);
+            moveRight();
+            return;
+        }
+        if(inputs.get(1) == Direction.DOWN){
+            playerService.setDirection(Direction.DOWN);
+            moveDown();
+            return;
+        }
+        if(inputs.get(1) == Direction.LEFT){
+            playerService.setDirection(Direction.LEFT);
+            moveLeft();
+        }
+    }
+    private void handleThreeMovementInputs(){
+        playerService.setActivity(Activity.WALKING);
+        if(up && right && down){
+            moveRight();
+            return;
+        }
+        if(right && down && left){
+            moveDown();
+            return;
+        }
+        if(down && left && up){
+            moveLeft();
+            return;
+        }
+        if(left && up && right){
+            moveUp();
         }
     }
 
-    private void moveRightDown(){
-        playerService.setDirection(Direction.DOWN);
-        Player player = playerService.getPlayer();
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
-        int movement = (int)(Math.ceil(200*Gdx.graphics.getDeltaTime())*sqrtTwo);
-        boolean collision = anyCollisions(player);
-        if(!collision){
-            playerService.setPosition(currentX + movement, currentY - movement);
+    private void handleOneMovementInput(){
+        playerService.setActivity(Activity.WALKING);
+        if(up){
+            moveUp();
+            return;
         }
-    }
-
-    private void moveDownLeft(){
-        playerService.setDirection(Direction.DOWN);
-        Player player = playerService.getPlayer();
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
-        int movement = (int)(Math.ceil(200*Gdx.graphics.getDeltaTime())*sqrtTwo);
-        boolean collision = anyCollisions(player);
-        if(!collision){
-            playerService.setPosition(currentX - movement, currentY - movement);
+        if(right){
+            moveRight();
+            return ;
         }
-    }
-
-    private void moveLeftUp(){
-        playerService.setDirection(Direction.UP);
-        Player player = playerService.getPlayer();
-        int currentX = player.getPosition().getX();
-        int currentY = player.getPosition().getY();
-        int movement = (int)(Math.ceil(200*Gdx.graphics.getDeltaTime())*sqrtTwo);
-        boolean collision = anyCollisions(player);
-        if(!collision){
-            playerService.setPosition(currentX - movement, currentY + movement);
+        if(down){
+            moveDown();
+            return;
+        }
+        if(left){
+            moveLeft();
         }
     }
 
@@ -171,7 +160,7 @@ public class PlayerMovementHandler {
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
         int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
-        boolean collision = anyCollisions(player);
+        boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX, currentY + movement);
         }
@@ -183,7 +172,7 @@ public class PlayerMovementHandler {
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
         int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
-        boolean collision = anyCollisions(player);
+        boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX + movement, currentY);
         }
@@ -195,7 +184,7 @@ public class PlayerMovementHandler {
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
         int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
-        boolean collision = anyCollisions(player);
+        boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX, currentY - movement);
         }
@@ -207,13 +196,13 @@ public class PlayerMovementHandler {
         int currentX = player.getPosition().getX();
         int currentY = player.getPosition().getY();
         int movement = (int) Math.ceil(200* Gdx.graphics.getDeltaTime());
-        boolean collision = anyCollisions(player);
+        boolean collision = anyCollisions();
         if(!collision){
             playerService.setPosition(currentX - movement, currentY);
         }
     }
 
-    private boolean anyCollisions(Player player){
+    private boolean anyCollisions(){
         boolean collidesWithNPC = false;
         boolean collidesWithStone = false;
         return collidesWithNPC && collidesWithStone;

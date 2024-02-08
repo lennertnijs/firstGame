@@ -16,16 +16,16 @@ public class GamePlayInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch(keycode){
             case Keys.UP:
-                playerMovementHandler.up(true);
+                playerMovementHandler.movingUp();
                 break;
             case Keys.RIGHT:
-                playerMovementHandler.right(true);
+                playerMovementHandler.movingRight();
                 break;
             case Keys.DOWN:
-                playerMovementHandler.down(true);
+                playerMovementHandler.movingDown();
                 break;
             case Keys.LEFT:
-                playerMovementHandler.left(true);
+                playerMovementHandler.movingLeft();
                 break;
         }
         return false;
@@ -35,16 +35,16 @@ public class GamePlayInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch(keycode){
             case Keys.UP:
-                playerMovementHandler.up(false);
+                playerMovementHandler.notMovingUp();
                 break;
             case Keys.RIGHT:
-                playerMovementHandler.right(false);
+                playerMovementHandler.notMovingRight();
                 break;
             case Keys.DOWN:
-                playerMovementHandler.down(false);
+                playerMovementHandler.notMovingDown();
                 break;
             case Keys.LEFT:
-                playerMovementHandler.left(false);
+                playerMovementHandler.notMovingLeft();
                 break;
         }
         return false;
