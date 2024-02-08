@@ -14,7 +14,6 @@ import com.mygdx.game.Player.PlayerService;
 import com.mygdx.game.Controller.StoneController;
 import com.mygdx.game.Clock.ClockController;
 import com.mygdx.game.Controller.NPCController;
-import com.mygdx.game.Input.KeyboardInputController;
 
 
 public class GameScreen implements Screen {
@@ -23,7 +22,6 @@ public class GameScreen implements Screen {
     OrthographicCamera camera;
 
     ClockController clockController;
-    KeyboardInputController keyboardInput;
     NPCController npcController;
     PlayerController playerController;
     StoneController stoneController;
@@ -56,8 +54,6 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-
-        keyboardInput = new KeyboardInputController(stoneController, npcController, playerService);
     }
 
 
