@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.ClockService;
 import com.mygdx.game.Drawer.DrawerGod;
 import com.mygdx.game.Input.GamePlayInputProcessor;
+import com.mygdx.game.Input.PlayerInteractHandler;
 import com.mygdx.game.Input.PlayerMovementHandler;
 import com.mygdx.game.Player.PlayerController;
 import com.mygdx.game.Player.PlayerService;
@@ -29,6 +30,7 @@ public class GameScreen implements Screen {
     ClockService clockService;
     GamePlayInputProcessor gamePlayInputProcessor;
     PlayerMovementHandler playerMovementHandler;
+    PlayerInteractHandler playerInteractHandler;
 
     public GameScreen(final MyGame game) {
 
@@ -41,9 +43,9 @@ public class GameScreen implements Screen {
         playerController  = new PlayerController(playerService);
         stoneController = new StoneController();
         drawerGod = new DrawerGod(game, npcController, playerController, stoneController, clockController);
-
+        playerInteractHandler = new PlayerInteractHandler(playerService);
         playerMovementHandler = new PlayerMovementHandler(playerService);
-        gamePlayInputProcessor = new GamePlayInputProcessor(playerMovementHandler);
+        gamePlayInputProcessor = new GamePlayInputProcessor(playerMovementHandler, playerInteractHandler);
         Gdx.input.setInputProcessor(gamePlayInputProcessor);
 
         // load the drop sound effect and the rain background "music"

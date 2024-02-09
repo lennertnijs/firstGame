@@ -6,10 +6,12 @@ import com.badlogic.gdx.InputProcessor;
 public class GamePlayInputProcessor implements InputProcessor {
 
     private final PlayerMovementHandler playerMovementHandler;
+    private final PlayerInteractHandler playerInteractHandler;
 
 
-    public GamePlayInputProcessor(PlayerMovementHandler playerMovementHandler){
+    public GamePlayInputProcessor(PlayerMovementHandler playerMovementHandler, PlayerInteractHandler playerInteractHandler){
         this.playerMovementHandler = playerMovementHandler;
+        this.playerInteractHandler = playerInteractHandler;
     }
 
     @Override
@@ -27,6 +29,8 @@ public class GamePlayInputProcessor implements InputProcessor {
             case Keys.LEFT:
                 playerMovementHandler.movingLeft();
                 break;
+            case Keys.Q:
+                playerInteractHandler.isMining();
         }
         return false;
     }
@@ -46,6 +50,8 @@ public class GamePlayInputProcessor implements InputProcessor {
             case Keys.LEFT:
                 playerMovementHandler.notMovingLeft();
                 break;
+            case Keys.Q:
+                playerInteractHandler.isNotMining();
         }
         return false;
     }
