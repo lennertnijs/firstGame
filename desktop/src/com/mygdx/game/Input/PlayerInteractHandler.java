@@ -15,6 +15,7 @@ public class PlayerInteractHandler {
     protected void isMining(){
         doingAction = true;
         playerService.setActivity(Activity.MINING);
+        System.out.println(playerService.getPlayer().getActivity());
     }
 
     protected void isNotMining(){

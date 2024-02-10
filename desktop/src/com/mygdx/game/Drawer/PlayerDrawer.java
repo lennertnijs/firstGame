@@ -49,6 +49,7 @@ public class PlayerDrawer {
      */
     private void drawPlayerIdle(){
         Player player = playerController.getPlayer();
+        playerController.setActivity(Activity.IDLING);
         TextureRegion texture = player.getTextureRepository().getIdleTexture(player.getDirection());
         draw(texture);
     }

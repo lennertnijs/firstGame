@@ -17,6 +17,9 @@ public class GamePlayInputProcessor implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         switch(keycode){
+            case Keys.Q:
+                playerInteractHandler.isMining();
+                break;
             case Keys.UP:
                 playerMovementHandler.movingUp();
                 break;
@@ -29,8 +32,7 @@ public class GamePlayInputProcessor implements InputProcessor {
             case Keys.LEFT:
                 playerMovementHandler.movingLeft();
                 break;
-            case Keys.Q:
-                playerInteractHandler.isMining();
+
         }
         return false;
     }
@@ -52,6 +54,7 @@ public class GamePlayInputProcessor implements InputProcessor {
                 break;
             case Keys.Q:
                 playerInteractHandler.isNotMining();
+                break;
         }
         return false;
     }

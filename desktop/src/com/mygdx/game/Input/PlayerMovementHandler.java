@@ -65,7 +65,7 @@ public class PlayerMovementHandler {
     public void movePlayer(){
         boolean fourMovementInputs = up && right && down && left;
         if(fourMovementInputs){
-            playerService.setActivity(Activity.IDLING);
+            //playerService.setActivity(Activity.IDLING);
             return;
         }
 
@@ -78,7 +78,7 @@ public class PlayerMovementHandler {
 
         boolean twoOppositeInputs = up && down || left && right;
         if(twoOppositeInputs){
-            playerService.setActivity(Activity.IDLING);
+            //playerService.setActivity(Activity.IDLING);
             return;
         }
 
@@ -93,7 +93,7 @@ public class PlayerMovementHandler {
             handleOneMovementInput();
             return;
         }
-        playerService.setActivity(Activity.IDLING);
+        //playerService.setActivity(Activity.IDLING);
     }
 
     private void handleTwoMovementInputs(){

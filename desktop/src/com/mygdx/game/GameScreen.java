@@ -69,6 +69,8 @@ public class GameScreen implements Screen {
         game.batch.begin();
         playerMovementHandler.movePlayer();
 
+        // System.out.println(playerController.getPlayer().getActivity());
+
         npcController.updateNPCs();
         clockService.updateClock();
 
