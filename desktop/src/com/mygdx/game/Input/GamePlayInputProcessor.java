@@ -19,6 +19,8 @@ public class GamePlayInputProcessor implements InputProcessor {
         switch(keycode){
             case Keys.Q:
                 playerInteractHandler.isMining();
+                // HOW TO DEAL WITH INTERACTION KEYS?
+                // STILL WANT THE MOVEMENT INPUTS TO BE STORED, BUT NOT ACTUALLY MOVE
                 break;
             case Keys.UP:
                 playerMovementHandler.movingUp();
