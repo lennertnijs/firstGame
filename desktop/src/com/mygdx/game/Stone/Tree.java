@@ -49,4 +49,21 @@ public class Tree {
     protected boolean isBroken(){
         return this.health == 0;
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof Tree)){
+            return false;
+        }
+        Tree tree = (Tree) o;
+        return this.position.equals(tree.position) && this.health == tree.health && this.hardness == tree.hardness;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.position, this.health, this.hardness);
+    }
 }
