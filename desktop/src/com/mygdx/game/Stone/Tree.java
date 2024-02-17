@@ -25,4 +25,28 @@ public class Tree {
         }
         return new Tree(position, health, hardness);
     }
+
+    protected Position getPosition(){
+        return this.position;
+    }
+
+    protected float getHealth(){
+        return this.health;
+    }
+
+    protected int getHardness(){
+        return this.hardness;
+    }
+
+    protected void damage(float damage){
+        if(damage < 0){
+            throw new IllegalArgumentException("Cannot damage a tree with a negative amount. This would heal it.");
+        }
+        float newHealth = this.health - damage;
+        this.health = newHealth < 0 ? 0 : newHealth;
+    }
+
+    protected boolean isBroken(){
+        return this.health == 0;
+    }
 }
