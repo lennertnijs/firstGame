@@ -9,7 +9,7 @@ public class TreeTest {
     @Test
     public void testCreation(){
         Position position = Position.builder().x(500).y(500).build();
-        Tree tree = Tree.create(position, 250, 100);
+        Tree tree = Tree.create(position, 250, 100, BreakableType.TREE);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(tree.getPosition(), position),
                 () -> Assertions.assertEquals(tree.getHealth(), 250),
@@ -22,18 +22,18 @@ public class TreeTest {
         Position position = Position.builder().x(500).y(500).build();
         Assertions.assertAll(
                 () -> Assertions.assertThrows(NullPointerException.class,
-                        () -> Tree.create(null, 250, 100)),
+                        () -> Tree.create(null, 250, 100, BreakableType.TREE)),
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
-                        () -> Tree.create(position, 0, 100)),
+                        () -> Tree.create(position, 0, 100, BreakableType.TREE)),
                 () -> Assertions.assertThrows(IllegalArgumentException.class,
-                        () -> Tree.create(position, 250, 0))
+                        () -> Tree.create(position, 250, 0, BreakableType.TREE))
         );
     }
 
     @Test
     public void testDamageTree(){
         Position position = Position.builder().x(500).y(500).build();
-        Tree tree = Tree.create(position, 250, 100);
+        Tree tree = Tree.create(position, 250, 100, BreakableType.TREE);
         Assertions.assertAll(
                 () -> tree.damage(20.5f),
                 () -> Assertions.assertEquals(tree.getHealth(), 229.5f),
@@ -51,7 +51,7 @@ public class TreeTest {
     @Test
     public void testIsBroken(){
         Position position = Position.builder().x(500).y(500).build();
-        Tree tree = Tree.create(position, 250, 100);
+        Tree tree = Tree.create(position, 250, 100, BreakableType.TREE);
         Assertions.assertAll(
                 () -> Assertions.assertFalse(tree.isBroken()),
                 () -> tree.damage(250),
@@ -63,9 +63,9 @@ public class TreeTest {
     public void testEqualsAndHashCode(){
         Position position1 = Position.builder().x(500).y(500).build();
         Position position2 = Position.builder().x(250).y(250).build();
-        Tree tree1 = Tree.create(position1, 250, 100);
-        Tree tree2 = Tree.create(position2, 250, 100);
-        Tree tree3 = Tree.create(position1, 250, 100);
+        Tree tree1 = Tree.create(position1, 250, 100, BreakableType.TREE);
+        Tree tree2 = Tree.create(position2, 250, 100, BreakableType.TREE);
+        Tree tree3 = Tree.create(position1, 250, 100, BreakableType.TREE);
         Assertions.assertAll(
                 () -> Assertions.assertEquals(tree1, tree3),
                 () -> Assertions.assertEquals(tree1.hashCode(), tree3.hashCode()),

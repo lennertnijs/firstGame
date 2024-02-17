@@ -26,7 +26,7 @@ public class TreeDAO {
             Position position = Position.builder().x(x).y(y).build();
             float health = treeJson.getFloat("health");
             int hardness = treeJson.getInt("hardness");
-            trees.add(Tree.create(position, health, hardness));
+            trees.add(Tree.create(position, health, hardness, BreakableType.TREE));
         }
         return trees;
     }
