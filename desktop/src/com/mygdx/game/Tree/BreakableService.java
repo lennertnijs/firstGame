@@ -41,14 +41,19 @@ public class BreakableService {
         repository.remove(breakable);
     }
 
-    public void pointCollidesWithBreakable(Position position){
+    public boolean pointCollidesWithBreakable(Position position){
         Objects.requireNonNull(position, "Cannot check breakable collision with a null point");
-        int collisionX = position.getX();
-        int collisionY = position.getY();
+        int x = position.getX();
+        int y = position.getY();
         for(Breakable breakable: repository.getBreakables()){
             int breakableX = breakable.getPosition().getX();
             int breakableY = breakable.getPosition().getY();
-
+            boolean collides = x >= breakableX && x < breakableX + breakable.getWidth() &&
+                               y >= breakableY && y < breakableY + breakable.getHardness();
+            if(collides){
+                return true;
+            }
         }
+        return false;
     }
 }
