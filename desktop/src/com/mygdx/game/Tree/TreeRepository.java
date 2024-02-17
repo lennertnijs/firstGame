@@ -6,25 +6,25 @@ import java.util.stream.Collectors;
 
 public class TreeRepository {
 
-    private final List<Tree> treeList;
+    private final List<Breakable> breakableList;
 
     protected TreeRepository(){
-        this.treeList = new TreeDAO().readTrees().stream().filter(Objects::nonNull).collect(Collectors.toList());
+        this.breakableList = new TreeDAO().readTrees().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    protected List<Tree> getTrees(){
-        return this.treeList;
+    protected List<Breakable> getTrees(){
+        return this.breakableList;
     }
 
     protected int getTreeAmount(){
-        return treeList.size();
+        return breakableList.size();
     }
 
-    protected void add(Tree tree){
-        treeList.add(tree);
+    protected void add(Breakable breakable){
+        breakableList.add(breakable);
     }
 
-    protected void remove(Tree tree){
-        treeList.remove(tree);
+    protected void remove(Breakable breakable){
+        breakableList.remove(breakable);
     }
 }

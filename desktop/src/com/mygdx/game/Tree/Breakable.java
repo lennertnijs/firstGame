@@ -4,20 +4,20 @@ import com.mygdx.game.Entity.Position;
 
 import java.util.Objects;
 
-public class Tree{
+public class Breakable {
 
     private final Position position;
     private float health;
     private final int hardness;
     private final BreakableType type;
-    private Tree(Position position, float health, int hardness, BreakableType type){
+    private Breakable(Position position, float health, int hardness, BreakableType type){
         this.position = position;
         this.health = health;
         this.hardness = hardness;
         this.type = type;
     }
 
-    public static Tree create(Position position, float health, int hardness, BreakableType type){
+    public static Breakable create(Position position, float health, int hardness, BreakableType type){
         Objects.requireNonNull(position);
         if(health <= 0){
             throw new IllegalArgumentException("Tree health at creation must be strictly positive.");
@@ -25,7 +25,7 @@ public class Tree{
         if(hardness <= 0){
             throw new IllegalArgumentException("Tree hardness must be strictly positive.");
         }
-        return new Tree(position, health, hardness, type);
+        return new Breakable(position, health, hardness, type);
     }
 
     protected Position getPosition(){
@@ -60,11 +60,11 @@ public class Tree{
         if(this == o){
             return true;
         }
-        if(!(o instanceof Tree)){
+        if(!(o instanceof Breakable)){
             return false;
         }
-        Tree tree = (Tree) o;
-        return this.position.equals(tree.position) && this.health == tree.health && this.hardness == tree.hardness;
+        Breakable breakable = (Breakable) o;
+        return this.position.equals(breakable.position) && this.health == breakable.health && this.hardness == breakable.hardness;
     }
 
     @Override
