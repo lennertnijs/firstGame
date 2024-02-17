@@ -9,7 +9,7 @@ public class TreeRepository {
     private final List<Breakable> breakableList;
 
     protected TreeRepository(){
-        this.breakableList = new TreeDAO().readTrees().stream().filter(Objects::nonNull).collect(Collectors.toList());
+        this.breakableList = new BreakableDAO().readBreakables().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     protected List<Breakable> getTrees(){
