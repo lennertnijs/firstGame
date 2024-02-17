@@ -10,6 +10,8 @@ public class Breakable {
     private float health;
     private final int hardness;
     private final BreakableType type;
+    private int width = 200;
+    private int height = 200;
     private Breakable(Position position, float health, int hardness, BreakableType type){
         this.position = position;
         this.health = health;
@@ -41,6 +43,14 @@ public class Breakable {
     }
     protected BreakableType getBreakableType(){
         return this.type;
+    }
+
+    protected int getWidth(){
+        return this.width;
+    }
+
+    protected int getHeight(){
+        return this.height;
     }
 
     public void damage(float damage){
