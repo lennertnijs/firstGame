@@ -1,9 +1,10 @@
-package com.mygdx.game.Stone;
+package com.mygdx.game.Tree;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Entity.Position;
+import com.mygdx.game.Tree.Tree;
 
 import java.util.ArrayList;
 import java.util.List;

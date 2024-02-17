@@ -1,4 +1,4 @@
-package com.mygdx.game.Stone;
+package com.mygdx.game.Tree;
 
 import com.mygdx.game.Entity.Position;
 import org.junit.jupiter.api.Assertions;

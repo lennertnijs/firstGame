@@ -1,4 +1,4 @@
-package com.mygdx.game.Stone;
+package com.mygdx.game.Tree;
 
 import java.util.List;
 import java.util.Objects;
