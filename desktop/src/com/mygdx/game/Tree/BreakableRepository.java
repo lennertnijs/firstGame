@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class TreeRepository {
+public class BreakableRepository {
 
     private final List<Breakable> breakableList;
 
-    protected TreeRepository(){
+    protected BreakableRepository(){
         this.breakableList = new BreakableDAO().readBreakables().stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    protected List<Breakable> getTrees(){
+    protected List<Breakable> getBreakables(){
         return this.breakableList;
     }
 
-    protected int getTreeAmount(){
+    protected int getBreakableAmount(){
         return breakableList.size();
     }
 
