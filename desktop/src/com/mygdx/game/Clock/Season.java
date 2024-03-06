@@ -26,5 +26,27 @@ public class Season {
         return length;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(!(o instanceof Season)){
+            return false;
+        }
+        Season season = (Season) o;
+        return this.name.equals(season.name) && this.length == season.length;
+    }
 
+    @Override
+    public int hashCode(){
+        int result = name.hashCode();
+        result = 31 * result + length;
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Season[Name = %s, length = %d]", name, length);
+    }
 }
