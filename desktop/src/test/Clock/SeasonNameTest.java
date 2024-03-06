@@ -1,5 +1,6 @@
-package com.mygdx.game.Clock;
+package Clock;
 
+import com.mygdx.game.Clock.SeasonName;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
