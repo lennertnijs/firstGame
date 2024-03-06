@@ -3,12 +3,11 @@ package com.mygdx.game.DAO;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.Clock.Calendar;
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.Day;
-import com.mygdx.game.Clock.SeasonName;
+import com.mygdx.game.Clock.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.mygdx.game.Constants.MINUTES_PER_HOUR;
 import static java.lang.Integer.parseInt;
@@ -43,13 +42,13 @@ public class ClockDAO {
     }
 
     private Calendar readCalendar(JsonValue calendarJSON){
-        HashMap<SeasonName, Integer> seasons = new HashMap<>();
+        List<Season> seasons = new ArrayList<>();
         for(JsonValue seasonJSON: calendarJSON){
             SeasonName seasonName = SeasonName.valueOf(seasonJSON.getString("season"));
             int seasonLength = seasonJSON.getInt("length");
-            seasons.put(seasonName, seasonLength);
+            seasons.add(Season.create(seasonName, seasonLength));
         }
-        return Calendar.builder().seasons(seasons).build();
+        return Calendar.create(seasons);
     }
 
     /**

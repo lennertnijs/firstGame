@@ -1,53 +1,41 @@
 package com.mygdx.game.Clock;
 
-import java.util.Map;
-import java.util.Objects;
+import com.mygdx.game.Validator.Validator;
+
+import java.util.*;
 
 public class Calendar {
-    private final Map<SeasonName, Integer> seasons;
+    private final List<Season> seasons;
 
-    protected Calendar(Builder builder){
-        this.seasons = builder.seasons;
-    }
-
-    private Calendar(Map<SeasonName, Integer> seasonsAndLengths){
-        this.seasons = seasonsAndLengths;
+    private Calendar(List<Season> seasons){
+        this.seasons = seasons;
     }
 
 
-    public static Calendar create(Map<SeasonName, Integer> seasonsAndLengths){
-        // validate
-        return new Calendar(seasonsAndLengths);
+    public static Calendar create(List<Season> seasons){
+        Validator.notNullAndNotContainsNull(seasons, "Cannot create a Calendar with a null Season.");
+        return new Calendar(seasons);
     }
-    /**
-     * @return The map of {@code Season}s and their respective lengths.
-     */
-    public Map<SeasonName, Integer> getSeasons(){
+
+    public List<Season> getSeasons(){
         return seasons;
     }
 
-    /**
-     * @return The amount of {@code Season}'s in the {@code Calendar}.
-     */
     public int getAmountOfSeasons(){
         return seasons.size();
     }
 
-    /**
-     * Finds and returns the given {@code Season}'s length, if it exists.
-     * @param seasonName The {@code Season}
-     * @return The {@code Season} length if the {@code Season} is on the {@code Calendar}. Returns {@code null} otherwise.
-     */
-    protected int getSeasonLength(SeasonName seasonName){
-        Objects.requireNonNull(seasonName, "Cannot find season length for a null season");
-        return Objects.requireNonNull(seasons.get(seasonName), "No season length was found");
+    public int getSeasonLength(SeasonName name){
+        Validator.notNull(name, "Cannot find Season length for a null Season");
+        for(Season season : seasons){
+            if(season.getName() == name){
+                return season.getLength();
+            }
+        }
+        throw new NoSuchElementException("No Season with this name was found.");
     }
 
-    /**
-     * Compares this {@code Season} with the object.
-     * @param o The object to compare to this {@code Season}
-     * @return True if equal, false otherwise.
-     */
+
     @Override
     public boolean equals(Object o){
         if(o == this){
@@ -60,46 +48,18 @@ public class Calendar {
         return seasons.equals(calendar.seasons);
     }
 
-    /**
-     * @return The hash code
-     */
+
     @Override
     public int hashCode(){
-        return Objects.hash(seasons);
+        int result = 0;
+        for(Season season : seasons){
+            result = 31 * result + season.hashCode();
+        }
+        return result;
     }
 
     @Override
     public String toString(){
-        String calendarString = "";
-        for(SeasonName seasonName : seasons.keySet()){
-            calendarString += seasonName + ": " + seasons.get(seasonName) + " ,";
-        }
-        return calendarString;
-    }
-
-
-    public static Builder builder(){
-        return new Builder();
-    }
-
-    public static class Builder{
-        private Map<SeasonName, Integer> seasons = null;
-
-        public Builder seasons(Map<SeasonName, Integer> seasons){
-            this.seasons = seasons;
-            return this;
-        }
-
-        public Calendar build(){
-            Objects.requireNonNull(seasons, "Cannot build a calendar with a null season map");
-            for(SeasonName seasonName : seasons.keySet()){
-                Objects.requireNonNull(seasonName, "Null season not allowed in calendar");
-                Objects.requireNonNull(seasons.get(seasonName), "Null lengths not allowed in the calendar");
-                if(seasons.get(seasonName) < 0){
-                    throw new IllegalArgumentException("The length of a season cannot be negative");
-                }
-            }
-            return new Calendar(this);
-        }
+        return String.format("Calendar[Seasons = %s]", seasons);
     }
 }
