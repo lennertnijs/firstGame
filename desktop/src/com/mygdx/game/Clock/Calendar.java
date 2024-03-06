@@ -10,6 +10,15 @@ public class Calendar {
         this.seasons = builder.seasons;
     }
 
+    private Calendar(Map<Season, Integer> seasonsAndLengths){
+        this.seasons = seasonsAndLengths;
+    }
+
+
+    public static Calendar create(Map<Season, Integer> seasonsAndLengths){
+        // validate
+        return new Calendar(seasonsAndLengths);
+    }
     /**
      * @return The map of {@code Season}s and their respective lengths.
      */
