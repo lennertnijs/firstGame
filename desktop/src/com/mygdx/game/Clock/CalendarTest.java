@@ -10,9 +10,9 @@ public class CalendarTest {
 
     @Test
     public void testCalendar(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
@@ -28,9 +28,9 @@ public class CalendarTest {
     public void testCalendarInvalid(){
         Calendar.Builder builder = Calendar.builder();
 
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
@@ -52,9 +52,9 @@ public class CalendarTest {
 
     @Test
     public void testAmountOfSeasons(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
@@ -67,9 +67,9 @@ public class CalendarTest {
 
     @Test
     public void testGetSeasonLength(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
         }};
 
@@ -82,8 +82,8 @@ public class CalendarTest {
 
     @Test
     public void testGetSeasonLengthInvalid(){
-        Season one = Season.values()[0];
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
         }};
 
@@ -95,19 +95,19 @@ public class CalendarTest {
 
     @Test
     public void testEquals(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
-        HashMap<Season, Integer> seasons1 = new HashMap<Season, Integer>(){{
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
+        HashMap<SeasonName, Integer> seasons1 = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
 
-        HashMap<Season, Integer> seasons2 = new HashMap<Season, Integer>(){{
+        HashMap<SeasonName, Integer> seasons2 = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
 
-        HashMap<Season, Integer> seasons3 = new HashMap<Season, Integer>(){{
+        HashMap<SeasonName, Integer> seasons3 = new HashMap<SeasonName, Integer>(){{
             put(two, 28);
         }};
 

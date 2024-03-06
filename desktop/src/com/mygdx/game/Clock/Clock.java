@@ -7,7 +7,7 @@ import static com.mygdx.game.Constants.*;
 public class Clock {
 
     private final Calendar calendar;
-    private Season season;
+    private SeasonName seasonName;
     private Day day;
     private int timeInMinutes;
     private int dayOfTheSeason;
@@ -15,7 +15,7 @@ public class Clock {
 
     public Clock(Builder builder){
         this.calendar = builder.calendar;
-        this.season = builder.season;
+        this.seasonName = builder.seasonName;
         this.day = builder.day;
         this.timeInMinutes = builder.timeInMinutes;
         this.dayOfTheSeason = builder.dayOfTheSeason;
@@ -26,8 +26,8 @@ public class Clock {
         return this.calendar;
     }
 
-    public Season getSeason(){
-        return this.season;
+    public SeasonName getSeason(){
+        return this.seasonName;
     }
 
     public Day getDay(){
@@ -43,7 +43,7 @@ public class Clock {
     }
 
     protected int getSeasonLength(){
-        return calendar.getSeasonLength(season);
+        return calendar.getSeasonLength(seasonName);
     }
 
     public boolean getActive(){
@@ -111,11 +111,11 @@ public class Clock {
     }
 
     private void handleSeasonChange(){
-        boolean seasonChange = dayOfTheSeason > calendar.getSeasonLength(season);
+        boolean seasonChange = dayOfTheSeason > calendar.getSeasonLength(seasonName);
         while(seasonChange){
-            season = season.next();
+            seasonName = seasonName.next();
             dayOfTheSeason = 1;
-            seasonChange = dayOfTheSeason > calendar.getSeasonLength(season);
+            seasonChange = dayOfTheSeason > calendar.getSeasonLength(seasonName);
         }
     }
 
@@ -129,7 +129,7 @@ public class Clock {
         }
         Clock clock = (Clock) o;
         return calendar.equals(clock.calendar) &&
-                season == clock.season &&
+                seasonName == clock.seasonName &&
                 day == clock.day &&
                 timeInMinutes == clock.timeInMinutes &&
                 dayOfTheSeason == clock.dayOfTheSeason &&
@@ -138,13 +138,13 @@ public class Clock {
 
     @Override
     public int hashCode(){
-        return Objects.hash(calendar, season, day, timeInMinutes, dayOfTheSeason, active);
+        return Objects.hash(calendar, seasonName, day, timeInMinutes, dayOfTheSeason, active);
     }
 
     @Override
     public String toString(){
         return  "Calendar: " + calendar.toString() + "\n" +
-                "Season: " + season.toString() + ", \n" +
+                "Season: " + seasonName.toString() + ", \n" +
                 "Day: " + day.toString() + ", \n" +
                 "TimeInMinutes: " + timeInMinutes + ", \n" +
                 "DayOfTheSeason: " + dayOfTheSeason + ", \n" +
@@ -161,7 +161,7 @@ public class Clock {
 
     public static class Builder{
         private Calendar calendar;
-        private Season season;
+        private SeasonName seasonName;
         private Day day;
         private int timeInMinutes;
         private int dayOfTheSeason;
@@ -173,8 +173,8 @@ public class Clock {
             this.calendar = calendar;
             return this;
         }
-        public Builder season(Season season){
-            this.season = season;
+        public Builder season(SeasonName seasonName){
+            this.seasonName = seasonName;
             return this;
         }
 
@@ -195,12 +195,12 @@ public class Clock {
 
         public Clock build(){
             Objects.requireNonNull(calendar, "Cannot create a clock if the calendar is null");
-            Objects.requireNonNull(season, "Cannot create a clock if the current season is null");
+            Objects.requireNonNull(seasonName, "Cannot create a clock if the current season is null");
             Objects.requireNonNull(day, "Cannot create a clock if the current season is null");
             if(timeInMinutes < 0 || MINUTES_PER_DAY <= timeInMinutes){
                 throw new IllegalArgumentException("Clock's time is invalid");
             }
-            if(dayOfTheSeason <= 0 || calendar.getSeasonLength(season) < dayOfTheSeason){
+            if(dayOfTheSeason <= 0 || calendar.getSeasonLength(seasonName) < dayOfTheSeason){
                 throw new IllegalArgumentException("Clock's current day in the current season is invalid");
             }
             return new Clock(this);

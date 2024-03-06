@@ -29,14 +29,14 @@ public class ClockServiceTest {
 
     @Test
     public void testClockService(){
-        Map<Season, Integer> seasonLengths = new HashMap<Season, Integer>(){{
-            put(Season.LIGHT, 28);
-            put(Season.DARK, 28);
+        Map<SeasonName, Integer> seasonLengths = new HashMap<SeasonName, Integer>(){{
+            put(SeasonName.LIGHT, 28);
+            put(SeasonName.DARK, 28);
         }};
         Calendar calendar = Calendar.builder().seasons(seasonLengths).build();
-        Season season = Season.DARK;
+        SeasonName seasonName = SeasonName.DARK;
         Day day = Day.MONDAY;
-        Clock clock = Clock.builder().calendar(calendar).season(season).day(day).dayOfTheSeason(1).timeInMinutes(510).build();
+        Clock clock = Clock.builder().calendar(calendar).season(seasonName).day(day).dayOfTheSeason(1).timeInMinutes(510).build();
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(clockService.getClock(), clock)

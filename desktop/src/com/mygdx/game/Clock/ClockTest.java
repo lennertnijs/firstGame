@@ -1,6 +1,5 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Clock.*;
 import com.mygdx.game.Constants;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,10 @@ public class ClockTest {
 
     @Test
     public void testConstructor(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
 
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};
@@ -69,7 +68,7 @@ public class ClockTest {
 
     @Test
     public void testClockIncrements(){
-        Season two = Season.values()[1];
+        SeasonName two = SeasonName.values()[1];
         Clock clock = generateValidClockBuilder().build();
         Assertions.assertAll(
                 () -> Assertions.assertEquals(clock.getTimeInHHMM(), "23:59"),
@@ -93,10 +92,10 @@ public class ClockTest {
     }
 
     private Clock.Builder generateValidClockBuilder(){
-        Season one = Season.values()[0];
-        Season two = Season.values()[1];
+        SeasonName one = SeasonName.values()[0];
+        SeasonName two = SeasonName.values()[1];
 
-        HashMap<Season, Integer> seasons = new HashMap<Season, Integer>(){{
+        HashMap<SeasonName, Integer> seasons = new HashMap<SeasonName, Integer>(){{
             put(one, 28);
             put(two, 10);
         }};

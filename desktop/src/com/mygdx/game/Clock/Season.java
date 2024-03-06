@@ -1,21 +1,30 @@
 package com.mygdx.game.Clock;
 
-public enum Season {
+import com.mygdx.game.Validator.Validator;
 
-    LIGHT(0),
-    DARK(1);
+public class Season {
 
-    private final int index;
-    Season(int index){
-        this.index = index;
+    private final SeasonName name;
+    private final int length;
+
+    private Season(SeasonName name, int length){
+        this.name = name;
+        this.length = length;
     }
 
-    /**
-     * Will return the next {@code Season}.
-     * Works circularly.
-     */
-    public Season next(){
-        int nextIndex = (this.index + 1) % Season.values().length;
-        return values()[nextIndex];
+    public static Season create(SeasonName name, int length){
+        Validator.notNull(name, "Cannot create a Season with a null SeasonName.");
+        Validator.notNegative(length, "Cannot create a Season with a negative length.");
+        return new Season(name, length);
     }
+
+    public SeasonName getName(){
+        return name;
+    }
+
+    public int getLength(){
+        return length;
+    }
+
+
 }

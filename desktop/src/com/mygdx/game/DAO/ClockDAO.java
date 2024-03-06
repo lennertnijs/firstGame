@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Clock.Calendar;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.Day;
-import com.mygdx.game.Clock.Season;
+import com.mygdx.game.Clock.SeasonName;
 
 import java.util.HashMap;
 
@@ -25,7 +25,7 @@ public class ClockDAO {
         JsonValue calendarJSON = file.get("calendar");
         Calendar calendar = readCalendar(calendarJSON);
 
-        Season season = Season.valueOf(file.getString("season"));
+        SeasonName seasonName = SeasonName.valueOf(file.getString("season"));
 
         Day day = Day.valueOf(file.getString("day"));
 
@@ -35,7 +35,7 @@ public class ClockDAO {
 
         return Clock.builder()
                 .calendar(calendar)
-                .season(season)
+                .season(seasonName)
                 .day(day)
                 .timeInMinutes(time)
                 .dayOfTheSeason(dayInMonth)
@@ -43,11 +43,11 @@ public class ClockDAO {
     }
 
     private Calendar readCalendar(JsonValue calendarJSON){
-        HashMap<Season, Integer> seasons = new HashMap<>();
+        HashMap<SeasonName, Integer> seasons = new HashMap<>();
         for(JsonValue seasonJSON: calendarJSON){
-            Season season = Season.valueOf(seasonJSON.getString("season"));
+            SeasonName seasonName = SeasonName.valueOf(seasonJSON.getString("season"));
             int seasonLength = seasonJSON.getInt("length");
-            seasons.put(season, seasonLength);
+            seasons.put(seasonName, seasonLength);
         }
         return Calendar.builder().seasons(seasons).build();
     }

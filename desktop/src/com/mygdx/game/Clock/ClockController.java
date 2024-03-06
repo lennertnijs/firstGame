@@ -16,7 +16,7 @@ public class ClockController {
         return clockService.getClock().getTimeInHHMM();
     }
 
-    public Season getSeason(){
+    public SeasonName getSeason(){
         return clockService.getClock().getSeason();
     }
 }
