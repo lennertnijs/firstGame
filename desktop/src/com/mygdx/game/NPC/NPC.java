@@ -20,11 +20,13 @@ public class NPC extends Entity{
     private final String name;
     private final WeekSchedule weekSchedule;
     private List<Position> movementPath;
+    private final MovementGraph movementGraph;
     private Activity activity;
     private Direction direction = Direction.LEFT;
-    private final MovementGraph movementGraph;
-    private final List<Integer> dialogueOptions;
+
     private final CharacterTextureRepository textureRepository;
+    private final List<Integer> dialogueOptions;
+
 
 
     public NPC(Builder builder){

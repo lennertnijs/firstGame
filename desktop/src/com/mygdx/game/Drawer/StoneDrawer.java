@@ -18,6 +18,5 @@ public class StoneDrawer {
 
     public void drawStone(Stone stone){
         game.batch.draw(texture, stone.getPosition().getX(), stone.getPosition().getY(), STONE_WIDTH, STONE_HEIGHT);
-
     }
 }

@@ -65,7 +65,8 @@ public class PlayerDrawer {
         if(animationInProgress){
             timeElapsed += Gdx.graphics.getDeltaTime();
             Direction direction = player.getDirection();
-            TextureRegion texture = player.getTextureRepository().getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
+            TextureRegion texture = player.getTextureRepository()
+                    .getMovingAnimation(direction).getKeyFrame(timeElapsed, false);
             draw(texture);
             return;
         }
