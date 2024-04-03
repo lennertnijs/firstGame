@@ -29,7 +29,7 @@ public final class DaySchedule {
     public Activity getNextActivity(Time time){
         Validator.notNull(time);
         for(Activity activity : activities){
-            if(activity.getTime().isAfter(time)){
+            if(activity.getTime().after(time)){
                 return activity;
             }
         }

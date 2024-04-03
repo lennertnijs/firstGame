@@ -2,33 +2,34 @@ package com.mygdx.game.V2;
 
 public final class Time {
 
+    private final int hours;
     private final int minutes;
 
-    private Time(int minutes){
+    private Time(int hours, int minutes){
+        this.hours = hours;
         this.minutes = minutes;
     }
 
-    public static Time create(int minutes){
-        Validator.withinRange(minutes, 0, Settings.MAX_TIME);
-        return new Time(minutes);
+    public static Time create(int hours, int minutes){
+        Validator.withinRange(hours, 0, Settings.HOURS_PER_DAY);
+        Validator.withinRange(minutes, 0, Settings.MINUTES_PER_HOUR);
+        return new Time(hours, minutes);
     }
 
-    public static Time createWithHours(int hours, int minutes){
-        int timeInMinutes = hours * Settings.MINUTES_PER_HOUR + minutes;
-        Validator.withinRange(timeInMinutes, 0, Settings.MAX_TIME);
-        return new Time(timeInMinutes);
-    }
-
-    public int getTimeInMinutes(){
+    public int getMinutes(){
         return minutes;
     }
 
-    public boolean isBefore(Time time){
+    public int getHours(){
+        return hours;
+    }
+
+    public boolean before(Time time){
         Validator.notNull(time);
         return minutes < time.minutes;
     }
 
-    public boolean isAfter(Time time){
+    public boolean after(Time time){
         Validator.notNull(time);
         return minutes > time.minutes;
     }
@@ -39,7 +40,7 @@ public final class Time {
             return false;
         }
         Time t = (Time) other;
-        return minutes == t.getTimeInMinutes();
+        return minutes == t.minutes;
     }
 
     @Override

@@ -67,7 +67,10 @@ public final class Activity {
         public int x = -1;
         public int y = -1;
         public Position position;
-        public int timeInMinutes = -1;
+
+        public int hours;
+        public int minutes;
+
         public Time time;
         public NPCActivityType activityType;
         public String mapName;
@@ -93,8 +96,13 @@ public final class Activity {
             return this;
         }
 
-        public Builder timeInMinutes(int timeInMinutes){
-            this.timeInMinutes = timeInMinutes;
+        public Builder hours(int hours){
+            this.hours = hours;
+            return this;
+        }
+
+        public Builder minutes(int minutes){
+            this.minutes = minutes;
             return this;
         }
 
@@ -113,10 +121,8 @@ public final class Activity {
                 position = Position.create(x, y);
             }
             if(time == null){
-                time = Time.create(timeInMinutes);
+                time = Time.create(hours, minutes);
             }
-            Validator.notNull(position);
-            Validator.notNull(time);
             Validator.notNull(activityType);
             Validator.notNull(mapName);
             return new Activity(this);
