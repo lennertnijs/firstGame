@@ -42,7 +42,7 @@ public class PositionTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Position[x = 0, y = 0]";
+        String expectedString = "Position[x=0, y=0]";
         assertEquals(position1.toString(), expectedString);
     }
 }

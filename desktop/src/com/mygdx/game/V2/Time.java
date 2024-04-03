@@ -26,12 +26,12 @@ public final class Time {
 
     public boolean before(Time time){
         Validator.notNull(time);
-        return hours < time.hours || hours == time.hours && minutes < time.minutes;
+        return hours < time.hours || (hours == time.hours && minutes < time.minutes);
     }
 
     public boolean after(Time time){
         Validator.notNull(time);
-        return minutes > time.minutes;
+        return hours > time.hours || (hours == time.hours && minutes > time.minutes);
     }
 
     @Override
@@ -50,6 +50,6 @@ public final class Time {
 
     @Override
     public String toString(){
-        return String.format("Time[hours = %d, minutes = %d]", hours, minutes);
+        return String.format("Time[hours=%d, minutes=%d]", hours, minutes);
     }
 }

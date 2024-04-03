@@ -42,6 +42,6 @@ public final class Position {
 
     @Override
     public String toString(){
-        return String.format("Position[x = %d, y = %d]", x, y);
+        return String.format("Position[x=%d, y=%d]", x, y);
     }
 }

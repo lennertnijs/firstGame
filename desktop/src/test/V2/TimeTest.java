@@ -56,7 +56,7 @@ public class TimeTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Time[hours = 20, minutes = 15]";
+        String expectedString = "Time[hours=20, minutes=15]";
         assertEquals(time1.toString(), expectedString);
     }
 }
