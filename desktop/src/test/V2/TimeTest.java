@@ -1,11 +1,11 @@
 package V2;
 
 import com.mygdx.game.V2.Time;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class TimeTest {
 
@@ -28,9 +28,35 @@ public class TimeTest {
     }
 
     @Test
-    public void testIsBefore(){
-        Assertions.assertTrue(time2.before(time1));
-        Assertions.assertFalse(time1.before(time2));
-        Assertions.assertFalse(time2.before(time3));
+    public void testBefore(){
+        assertTrue(time1.before(time2));
+        assertFalse(time2.before(time1));
+        assertFalse(time1.before(time3));
+    }
+
+    @Test
+    public void testAfter(){
+        assertTrue(time2.after(time1));
+        assertFalse(time1.after(time2));
+        assertFalse(time1.after(time3));
+    }
+
+    @Test
+    public void testEquals(){
+        assertEquals(time1, time3);
+        assertNotEquals(time1, time2);
+        assertNotEquals(time1, new Object());
+    }
+
+    @Test
+    public void testHashCode(){
+        assertEquals(time1.hashCode(), time3.hashCode());
+        assertNotEquals(time1.hashCode(), time2.hashCode());
+    }
+
+    @Test
+    public void testToString(){
+        String expectedString = "Time[hours = 20, minutes = 15]";
+        assertEquals(time1.toString(), expectedString);
     }
 }
