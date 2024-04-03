@@ -22,7 +22,7 @@ public final class Validator {
         }
     }
 
-    public static void notNullAndNotContainsNull(List<?> objects){
+    public static void notContainsNull(List<?> objects){
         if(objects == null || objects.contains(null)){
             throw new IllegalArgumentException();
         }

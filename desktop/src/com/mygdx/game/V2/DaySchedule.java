@@ -12,7 +12,8 @@ public final class DaySchedule {
     }
 
     public static DaySchedule create(List<Activity> activities){
-        Validator.notNullAndNotContainsNull(activities);
+        Validator.notNull(activities);
+        Validator.notContainsNull(activities);
         return new DaySchedule(activities);
     }
 
@@ -20,7 +21,7 @@ public final class DaySchedule {
         return activities;
     }
 
-    public boolean isLastActivityOfDay(Activity activity){
+    public boolean isLastActivity(Activity activity){
         Validator.notNull(activity);
         int length = activities.size();
         return activities.get(length - 1).equals(activity);
@@ -52,6 +53,6 @@ public final class DaySchedule {
 
     @Override
     public String toString(){
-        return String.format("DaySchedule[Activities = %s]", activities);
+        return String.format("DaySchedule[Activities=%s]", activities);
     }
 }
