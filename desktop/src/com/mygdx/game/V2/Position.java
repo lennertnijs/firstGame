@@ -1,6 +1,6 @@
 package com.mygdx.game.V2;
 
-public class Position {
+public final class Position {
 
     private final int x;
     private final int y;

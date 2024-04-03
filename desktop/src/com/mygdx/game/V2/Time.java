@@ -8,12 +8,12 @@ public final class Time {
         this.minutes = minutes;
     }
 
-    public Time create(int minutes){
+    public static Time create(int minutes){
         Validator.withinRange(minutes, 0, Settings.MAX_TIME);
         return new Time(minutes);
     }
 
-    public Time createWithHours(int hours, int minutes){
+    public static Time createWithHours(int hours, int minutes){
         int timeInMinutes = hours * Settings.MINUTES_PER_HOUR + minutes;
         Validator.withinRange(timeInMinutes, 0, Settings.MAX_TIME);
         return new Time(timeInMinutes);
@@ -21,6 +21,16 @@ public final class Time {
 
     public int getTimeInMinutes(){
         return minutes;
+    }
+
+    public boolean isBefore(Time time){
+        Validator.notNull(time);
+        return minutes < time.minutes;
+    }
+
+    public boolean isAfter(Time time){
+        Validator.notNull(time);
+        return minutes > time.minutes;
     }
 
     @Override
