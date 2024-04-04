@@ -1,9 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.BFSPathFinder;
-import com.mygdx.game.V2.MapPosition;
-import com.mygdx.game.V2.Position;
-import com.mygdx.game.V2.Route;
+import com.mygdx.game.V2.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +18,7 @@ public class BFSPathFinderTest {
     private MapPosition mp5;
     private MapPosition mp6;
     private MapPosition mp7;
-    private Map<MapPosition, List<MapPosition>> mapping;
+    private final Graph<MapPosition> graph = new Graph<>();
     private final BFSPathFinder<MapPosition> bfsPathFinder = new BFSPathFinder<>();
 
     @BeforeEach
@@ -34,42 +31,36 @@ public class BFSPathFinderTest {
         mp6 = MapPosition.create("map2", Position.create(0,0));
         mp7 = MapPosition.create("map2", Position.create(50,0));
 
-        mapping = new HashMap<MapPosition, List<MapPosition>>(){{
-            put(mp1, new ArrayList<>(Arrays.asList(mp2, mp3)));
-            put(mp2, new ArrayList<>(Arrays.asList(mp1, mp4)));
-            put(mp3, new ArrayList<>(Arrays.asList(mp1, mp4)));
-            put(mp4, new ArrayList<>(Arrays.asList(mp2, mp3, mp5)));
-            put(mp5, new ArrayList<>(Arrays.asList(mp4, mp6)));
-            put(mp6, new ArrayList<>(Arrays.asList(mp5, mp7)));
-        }};
+        graph.addVertices(new ArrayList<>(Arrays.asList(mp1, mp2, mp3, mp4, mp5, mp6, mp7)));
+        graph.addEdges(mp1, new ArrayList<>(Arrays.asList(mp2, mp3)));
+        graph.addEdges(mp2, new ArrayList<>(Arrays.asList(mp1, mp4)));
+        graph.addEdges(mp3, new ArrayList<>(Arrays.asList(mp1, mp4)));
+        graph.addEdges(mp4, new ArrayList<>(Arrays.asList(mp2, mp3, mp5)));
+        graph.addEdges(mp5, new ArrayList<>(Arrays.asList(mp4, mp6)));
+        graph.addEdges(mp6, new ArrayList<>(Arrays.asList(mp5, mp7)));
     }
 
     @Test
     public void testFindPath1(){
-        assertEquals(bfsPathFinder.findPath(mp1, mp2, mapping), new ArrayList<>(Arrays.asList(mp1, mp2)));
+        assertEquals(bfsPathFinder.findPath(mp1, mp2, graph), new ArrayList<>(Arrays.asList(mp1, mp2)));
     }
 
     @Test
     public void testFindPath2(){
-        assertEquals(bfsPathFinder.findPath(mp1, mp7, mapping), new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7)));
+        assertEquals(bfsPathFinder.findPath(mp1, mp7, graph), new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7)));
     }
 
     @Test
     public void testFindPathWithNull(){
-        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(null, mp1, mapping));
-        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(mp1, null, mapping));
+        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(null, mp1, graph));
+        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(mp1, null, graph));
         assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(mp1, mp2, null));
-        mapping.put(null, new ArrayList<>(Arrays.asList(mp1, mp2)));
-        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(mp1, mp2, mapping));
-        mapping.remove(null);
-        mapping.put(mp1, new ArrayList<>(Arrays.asList(mp1, null)));
-        assertThrows(NullPointerException.class, () -> bfsPathFinder.findPath(mp1, mp2, mapping));
     }
 
     @Test
     public void testFindPathNoSuchElement(){
         MapPosition noSuch = MapPosition.create("map3", Position.create(0,0));
-        assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(noSuch, mp1, mapping));
-        assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(mp1, noSuch, mapping));
+        assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(noSuch, mp1, graph));
+        assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(mp1, noSuch, graph));
     }
 }
