@@ -19,7 +19,7 @@ public final class Route {
         return new Route(locations);
     }
 
-    public List<Location> getMapPositions(){
+    public List<Location> getLocations(){
         return locations;
     }
 

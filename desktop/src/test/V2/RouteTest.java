@@ -35,7 +35,7 @@ public class RouteTest {
 
     @Test
     public void testConstructor(){
-        assertEquals(route1.getMapPositions(), new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
+        assertEquals(route1.getLocations(), new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
     }
 
     @Test
