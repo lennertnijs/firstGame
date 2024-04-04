@@ -18,7 +18,7 @@ public class MovementNetworkTest {
     private MapPosition mp6;
     private MapPosition mp7;
     private Map<MapPosition, List<MapPosition>> mapping1;
-    private final BFSPathFinder bfsPathFinder = new BFSPathFinder();
+    private final BFSPathFinder<MapPosition> bfsPathFinder = new BFSPathFinder<>();
     private MovementNetwork network1;
     private MovementNetwork network2;
     private MovementNetwork network3;

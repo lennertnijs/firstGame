@@ -22,7 +22,7 @@ public class BFSPathFinderTest {
     private MapPosition mp6;
     private MapPosition mp7;
     private Map<MapPosition, List<MapPosition>> mapping;
-    private final BFSPathFinder bfsPathFinder = new BFSPathFinder();
+    private final BFSPathFinder<MapPosition> bfsPathFinder = new BFSPathFinder<>();
 
     @BeforeEach
     public void initialise(){
