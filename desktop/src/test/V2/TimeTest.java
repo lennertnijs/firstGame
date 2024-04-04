@@ -1,6 +1,5 @@
 package V2;
 
-import com.mygdx.game.V2.Settings;
 import com.mygdx.game.V2.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
