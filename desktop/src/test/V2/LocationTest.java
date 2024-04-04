@@ -47,7 +47,7 @@ public class LocationTest {
 
     @Test
     public void testToString(){
-        String expectedString = "MapPosition[mapName=map1, Position[x=0, y=0]]";
+        String expectedString = "Location[mapName=map1, Position[x=0, y=0]]";
         assertEquals(location1.toString(), expectedString);
     }
 }

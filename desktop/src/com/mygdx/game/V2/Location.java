@@ -46,6 +46,6 @@ public final class Location {
 
     @Override
     public String toString(){
-        return String.format("MapPosition[mapName=%s, %s]", mapName, position);
+        return String.format("Location[mapName=%s, %s]", mapName, position);
     }
 }

@@ -88,7 +88,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Activity[MapPosition[mapName=world, Position[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
+        String expectedString = "Activity[Location[mapName=world, Position[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
         assertEquals(activity1.toString(), expectedString);
     }
 }

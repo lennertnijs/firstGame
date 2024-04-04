@@ -90,7 +90,7 @@ public class RouteTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Route[positions=[MapPosition[mapName=Map1, Position[x=75, y=75]], MapPosition[mapName=Map1, Position[x=200, y=200]], MapPosition[mapName=Map1, Position[x=0, y=0]]]]";
+        String expectedString = "Route[positions=[Location[mapName=Map1, Position[x=75, y=75]], Location[mapName=Map1, Position[x=200, y=200]], Location[mapName=Map1, Position[x=0, y=0]]]]";
         assertEquals(route1.toString(), expectedString);
     }
 }
