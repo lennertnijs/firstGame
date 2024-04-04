@@ -1,6 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.MapPosition;
+import com.mygdx.game.V2.Location;
 import com.mygdx.game.V2.Position;
 import com.mygdx.game.V2.Route;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RouteTest {
 
-    private MapPosition pos1;
-    private MapPosition pos2;
-    private MapPosition pos3;
+    private Location pos1;
+    private Location pos2;
+    private Location pos3;
     private Route route1;
     private Route route2;
     private Route route3;
@@ -24,9 +24,9 @@ public class RouteTest {
 
     @BeforeEach
     public void initialise(){
-        pos1 = MapPosition.create("Map1", Position.create(75, 75));
-        pos2 = MapPosition.create("Map1", Position.create(200, 200));
-        pos3 = MapPosition.create("Map1", Position.create(0, 0));
+        pos1 = Location.create("Map1", Position.create(75, 75));
+        pos2 = Location.create("Map1", Position.create(200, 200));
+        pos3 = Location.create("Map1", Position.create(0, 0));
         route1 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
         route2 = Route.create(new ArrayList<>(Arrays.asList(pos3, pos2)));
         route3 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));

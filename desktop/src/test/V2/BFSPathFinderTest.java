@@ -11,25 +11,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BFSPathFinderTest {
 
-    private MapPosition mp1;
-    private MapPosition mp2;
-    private MapPosition mp3;
-    private MapPosition mp4;
-    private MapPosition mp5;
-    private MapPosition mp6;
-    private MapPosition mp7;
-    private final Graph<MapPosition> graph = new Graph<>();
-    private final BFSPathFinder<MapPosition> bfsPathFinder = new BFSPathFinder<>();
+    private Location mp1;
+    private Location mp2;
+    private Location mp3;
+    private Location mp4;
+    private Location mp5;
+    private Location mp6;
+    private Location mp7;
+    private final Graph<Location> graph = new Graph<>();
+    private final BFSPathFinder<Location> bfsPathFinder = new BFSPathFinder<>();
 
     @BeforeEach
     public void initialise(){
-        mp1 = MapPosition.create("map1", Position.create(0,0));
-        mp2 = MapPosition.create("map1", Position.create(50,0));
-        mp3 = MapPosition.create("map1", Position.create(0,50));
-        mp4 = MapPosition.create("map1", Position.create(50,50));
-        mp5 = MapPosition.create("map1", Position.create(50,100));
-        mp6 = MapPosition.create("map2", Position.create(0,0));
-        mp7 = MapPosition.create("map2", Position.create(50,0));
+        mp1 = Location.create("map1", Position.create(0,0));
+        mp2 = Location.create("map1", Position.create(50,0));
+        mp3 = Location.create("map1", Position.create(0,50));
+        mp4 = Location.create("map1", Position.create(50,50));
+        mp5 = Location.create("map1", Position.create(50,100));
+        mp6 = Location.create("map2", Position.create(0,0));
+        mp7 = Location.create("map2", Position.create(50,0));
 
         graph.addVertices(new ArrayList<>(Arrays.asList(mp1, mp2, mp3, mp4, mp5, mp6, mp7)));
         graph.addEdges(mp1, new ArrayList<>(Arrays.asList(mp2, mp3)));
@@ -59,7 +59,7 @@ public class BFSPathFinderTest {
 
     @Test
     public void testFindPathNoSuchElement(){
-        MapPosition noSuch = MapPosition.create("map3", Position.create(0,0));
+        Location noSuch = Location.create("map3", Position.create(0,0));
         assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(noSuch, mp1, graph));
         assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(mp1, noSuch, graph));
     }

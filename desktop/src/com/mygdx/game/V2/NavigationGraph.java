@@ -4,23 +4,24 @@ import java.util.*;
 
 public final class NavigationGraph {
 
-    private final Graph<MapPosition> graph;
+    private final Graph<Location> graph;
 
-    private NavigationGraph(Graph<MapPosition> graph){
+    private NavigationGraph(Graph<Location> graph){
         this.graph = graph;
     }
 
-    public static NavigationGraph create(Graph<MapPosition> graph){
+    public static NavigationGraph create(Graph<Location> graph){
         Objects.requireNonNull(graph, "Cannot create a MovementNetwork from null.");
         return new NavigationGraph(graph);
     }
 
-    public Graph<MapPosition> getGraph(){
+    public Graph<Location> getGraph(){
         return graph;
     }
 
-    public Route findPath(MapPosition start, MapPosition goal, PathFinderStrategy<MapPosition> strategy){
-        return Route.create(strategy.findPath(start, goal, graph));
+    public Route findPath(Location start, Location goal, PathFinderStrategy<Location> strategy){
+        List<Location> path = strategy.findPath(start, goal, graph);
+        return Route.create(path);
     }
 
     @Override
