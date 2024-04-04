@@ -22,9 +22,6 @@ public final class MovementNetwork{
     }
 
     public List<MapPosition> findPath(MapPosition start, MapPosition goal, PathFinderStrategy pathFinderStrategy){
-        Objects.requireNonNull(start, "Cannot find a path starting in null.");
-        Objects.requireNonNull(goal, "Cannot find a path ending in null.");
-        Objects.requireNonNull(pathFinderStrategy, "Cannot use a null path finding strategy.");
         return pathFinderStrategy.findPath(start, goal, mapping);
     }
 
