@@ -4,20 +4,18 @@ import java.util.Objects;
 
 public final class Activity {
 
-    private final Position position;
+    private final Location location;
     private final Time time;
     private final NPCActivityType type;
-    private final String mapName;
 
     private Activity(Builder builder){
-        this.position = builder.position;
+        this.location = builder.location;
         this.time = builder.time;
         this.type = builder.type;
-        this.mapName = builder.mapName;
     }
 
-    public Position getPosition(){
-        return position;
+    public Location getLocation(){
+        return location;
     }
 
     public Time getTime(){
@@ -28,35 +26,29 @@ public final class Activity {
         return type;
     }
 
-    public String getMapName(){
-        return mapName;
-    }
-
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Activity)){
             return false;
         }
         Activity activity = (Activity) other;
-        return position.equals(activity.position) &&
+        return location.equals(activity.location) &&
                 time.equals(activity.time) &&
-                type.equals(activity.type) &&
-                mapName.equals(activity.mapName);
+                type.equals(activity.type);
     }
 
     @Override
     public int hashCode(){
-        int result = position.hashCode();
+        int result = location.hashCode();
         result = result * 31 + time.hashCode();
         result = result * 31 + type.hashCode();
-        result = result * 31 + mapName.hashCode();
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Activity[%s, %s, Type=%s, MapName=%s]",
-                position, time, type, mapName);
+        return String.format("Activity[%s, %s, Type=%s]",
+                location, time, type);
     }
 
 
@@ -70,6 +62,8 @@ public final class Activity {
         private int x = -1;
         private int y = -1;
         private Position position;
+        private String mapName;
+        private Location location;
 
         // Time related fields
         private int hours = -1;
@@ -78,7 +72,6 @@ public final class Activity {
 
         // The others
         private NPCActivityType type;
-        private String mapName;
 
         private Builder(){
 
@@ -96,6 +89,11 @@ public final class Activity {
 
         public Builder position(Position position){
             this.position = position;
+            return this;
+        }
+
+        public Builder location(Location location){
+            this.location = location;
             return this;
         }
 
@@ -125,14 +123,17 @@ public final class Activity {
         }
 
         public Activity build(){
-            if(position == null){
-                position = Position.create(x, y);
+            Objects.requireNonNull(mapName, "Cannot create an Activity with a null map name.");
+            if (location == null) {
+                if(position == null){
+                    position = Position.create(x, y);
+                }
+                location = Location.create(mapName, position);
             }
             if(time == null){
                 time = Time.create(hours, minutes);
             }
             Objects.requireNonNull(type, "Cannot create an Activity with a null ActivityType.");
-            Objects.requireNonNull(mapName, "Cannot create an Activity with a null map name.");
             return new Activity(this);
         }
     }

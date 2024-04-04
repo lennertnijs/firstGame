@@ -1,9 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.Activity;
-import com.mygdx.game.V2.NPCActivityType;
-import com.mygdx.game.V2.Position;
-import com.mygdx.game.V2.Time;
+import com.mygdx.game.V2.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +32,9 @@ public class ActivityTest {
         String mapName = "world";
         Activity activity = Activity.builder().position(position).time(time).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getPosition(), position);
+        assertEquals(activity.getLocation(), Location.create(mapName, position));
         assertEquals(activity.getTime(), time);
         assertEquals(activity.getType(), type);
-        assertEquals(activity.getMapName(), mapName);
     }
 
     @Test
@@ -51,10 +47,9 @@ public class ActivityTest {
         String mapName = "world";
         Activity activity = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getPosition(), Position.create(x, y));
+        assertEquals(activity.getLocation(), Location.create(mapName, Position.create(x, y)));
         assertEquals(activity.getTime(), Time.create(hours, minutes));
         assertEquals(activity.getType(), type);
-        assertEquals(activity.getMapName(), mapName);
     }
 
     @Test
@@ -93,7 +88,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Activity[Position[x=5, y=15], Time[hours=16, minutes=55], Type=IDLING, MapName=world]";
+        String expectedString = "Activity[MapPosition[mapName=world, Position[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
         assertEquals(activity1.toString(), expectedString);
     }
 }
