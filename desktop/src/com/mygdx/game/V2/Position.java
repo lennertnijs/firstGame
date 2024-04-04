@@ -11,8 +11,8 @@ public final class Position {
     }
 
     public static Position create(int x, int y){
-        Validator.notNegative(x);
-        Validator.notNegative(y);
+        if(x < 0 || y < 0)
+            throw new IllegalArgumentException("Cannot create a Position with a negative coordinate value.");
         return new Position(x,y);
     }
 
@@ -29,8 +29,8 @@ public final class Position {
         if(!(other instanceof Position)){
             return false;
         }
-        Position p = (Position) other;
-        return x == p.x && y == p.y;
+        Position position = (Position) other;
+        return x == position.x && y == position.y;
     }
 
     @Override

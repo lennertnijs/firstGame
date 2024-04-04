@@ -27,6 +27,18 @@ public final class DaySchedule {
         return activities.get(length - 1).equals(activity);
     }
 
+
+    public Activity getNextActivity(Activity activity){
+        Validator.notNull(activity);
+        for(int i = 0; i < activities.size() - 1; i++){
+            if(activities.get(i).equals(activity)){
+                return activities.get(i + 1);
+            }
+        }
+        throw new NoSuchElementException();
+    }
+
+
     public Activity getNextActivity(Time time){
         Validator.notNull(time);
         for(Activity activity : activities){

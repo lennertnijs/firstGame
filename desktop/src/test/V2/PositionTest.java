@@ -4,8 +4,7 @@ import com.mygdx.game.V2.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PositionTest {
 
@@ -25,6 +24,12 @@ public class PositionTest {
         Position position = Position.create(10, 6);
         assertEquals(position.getX(), 10);
         assertEquals(position.getY(), 6);
+    }
+
+    @Test
+    public void testConstructorIllegal(){
+        assertThrows(IllegalArgumentException.class, () -> Position.create(-1, 0));
+        assertThrows(IllegalArgumentException.class, () -> Position.create(0, -1));
     }
 
     @Test
