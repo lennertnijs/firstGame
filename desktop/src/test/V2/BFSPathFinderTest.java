@@ -46,13 +46,12 @@ public class BFSPathFinderTest {
 
     @Test
     public void testFindPath1(){
-        assertEquals(bfsPathFinder.findPath(mp1, mp2, mapping), Route.create(new ArrayList<>(Arrays.asList(mp1, mp2))));
+        assertEquals(bfsPathFinder.findPath(mp1, mp2, mapping), new ArrayList<>(Arrays.asList(mp1, mp2)));
     }
 
     @Test
     public void testFindPath2(){
-        assertEquals(bfsPathFinder.findPath(mp1, mp7, mapping),
-                Route.create(new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7))));
+        assertEquals(bfsPathFinder.findPath(mp1, mp7, mapping), new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7)));
     }
 
     @Test
