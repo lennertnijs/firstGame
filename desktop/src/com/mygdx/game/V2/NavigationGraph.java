@@ -5,23 +5,25 @@ import java.util.*;
 public final class NavigationGraph {
 
     private final Graph<Location> graph;
+    private final PathFinderStrategy<Location> strategy;
 
-    private NavigationGraph(Graph<Location> graph){
+    private NavigationGraph(Graph<Location> graph,  PathFinderStrategy<Location> strategy){
         this.graph = graph;
+        this.strategy = strategy;
     }
 
-    public static NavigationGraph create(Graph<Location> graph){
-        Objects.requireNonNull(graph, "Cannot create a MovementNetwork from null.");
-        return new NavigationGraph(graph);
+    public static NavigationGraph create(Graph<Location> graph, PathFinderStrategy<Location> strategy){
+        Objects.requireNonNull(graph, "Cannot create a NavigationGraph with a null Graph.");
+        Objects.requireNonNull(strategy, "Cannot create a NavigationGraph with a null strategy.");
+        return new NavigationGraph(graph, strategy);
     }
 
     public Graph<Location> getGraph(){
         return graph;
     }
 
-    public Route findPath(Location start, Location goal, PathFinderStrategy<Location> strategy){
-        List<Location> path = strategy.findPath(start, goal, graph);
-        return Route.create(path);
+    public List<Location> findPath(Location start, Location goal){
+        return strategy.findPath(start, goal, graph);
     }
 
     @Override

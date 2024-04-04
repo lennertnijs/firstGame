@@ -23,10 +23,6 @@ public final class Graph<T>{
             adjacencyList.put(vertex, new ArrayList<>());
     }
 
-    public void removeVertex(T vertex){
-        adjacencyList.remove(vertex);
-    }
-
     public void addEdge(T start, T end){
         Objects.requireNonNull(start, "Cannot add an Edge from a null Vertex.");
         Objects.requireNonNull(end, "Cannot add an Edge to a null Vertex.");
@@ -61,6 +57,10 @@ public final class Graph<T>{
             endEdges.add(start);
             adjacencyList.put(end, endEdges);
         }
+    }
+
+    public void removeVertex(T vertex){
+        adjacencyList.remove(vertex);
     }
 
     public void removeEdge(T start, T end){
