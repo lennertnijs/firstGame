@@ -31,9 +31,9 @@ public class TimeTest {
     @Test
     public void testConstructorInvalid(){
         assertThrows(IllegalArgumentException.class, () -> Time.create(-1, 0));
-        assertThrows(IllegalArgumentException.class, () -> Time.create(Settings.HOURS_PER_DAY, 50));
+        assertThrows(IllegalArgumentException.class, () -> Time.create(Time.HOURS_PER_DAY, 50));
         assertThrows(IllegalArgumentException.class, () -> Time.create(0, -1));
-        assertThrows(IllegalArgumentException.class, () -> Time.create(0, Settings.MINUTES_PER_HOUR));
+        assertThrows(IllegalArgumentException.class, () -> Time.create(0, Time.MINUTES_PER_HOUR));
     }
 
     @Test

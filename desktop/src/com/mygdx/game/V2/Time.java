@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public final class Time {
 
+    public static int HOURS_PER_DAY = 24;
+    public static int MINUTES_PER_HOUR = 60;
     private final int hours;
     private final int minutes;
 
@@ -13,9 +15,9 @@ public final class Time {
     }
 
     public static Time create(int hours, int minutes){
-        if(hours < 0 || hours >= Settings.HOURS_PER_DAY)
+        if(hours < 0 || hours >= HOURS_PER_DAY)
             throw new IllegalArgumentException("Cannot create a Time object because the hours value is invalid.");
-        if(minutes < 0 || minutes >= Settings.MINUTES_PER_HOUR)
+        if(minutes < 0 || minutes >= MINUTES_PER_HOUR)
             throw new IllegalArgumentException("Cannot create a Time object because the minutes value is invalid.");
         return new Time(hours, minutes);
     }
