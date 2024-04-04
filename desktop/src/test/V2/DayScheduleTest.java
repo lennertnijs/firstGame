@@ -78,22 +78,22 @@ public class DayScheduleTest {
 
     @Test
     public void testNextActivityByActivityWithNull(){
-        assertThrows(NullPointerException.class, () -> schedule1.getNextActivity((Activity) null));
+        assertThrows(NullPointerException.class, () -> schedule1.getNextActivity(null));
     }
 
     @Test
-    public void testNextActivityByTime(){
+    public void testGetFirstActivityAfter(){
         Time time1 = Time.create(5, 0);
         Time time2 = Time.create(7, 0);
         Time time3 = Time.create(10, 59);
-        assertEquals(schedule1.getNextActivity(time1), activity2);
-        assertEquals(schedule1.getNextActivity(time2), activity3);
-        assertThrows(NoSuchElementException.class, () -> schedule1.getNextActivity(time3));
+        assertEquals(schedule1.getFirstActivityAfter(time1), activity2);
+        assertEquals(schedule1.getFirstActivityAfter(time2), activity3);
+        assertThrows(NoSuchElementException.class, () -> schedule1.getFirstActivityAfter(time3));
     }
 
     @Test
     public void testNextActivityByTimeWithNull(){
-        assertThrows(NullPointerException.class, () -> schedule1.getNextActivity((Time) null));
+        assertThrows(NullPointerException.class, () -> schedule1.getFirstActivityAfter(null));
     }
 
     @Test
