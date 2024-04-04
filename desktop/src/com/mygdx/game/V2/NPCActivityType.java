@@ -1,6 +1,6 @@
 package com.mygdx.game.V2;
 
-public enum ActivityType {
+public enum NPCActivityType {
     IDLING,
     WALKING,
     RUNNING

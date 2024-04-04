@@ -6,7 +6,7 @@ public final class Activity {
 
     private final Position position;
     private final Time time;
-    private final ActivityType type;
+    private final NPCActivityType type;
     private final String mapName;
 
     private Activity(Builder builder){
@@ -24,7 +24,7 @@ public final class Activity {
         return time;
     }
 
-    public ActivityType getType(){
+    public NPCActivityType getType(){
         return type;
     }
 
@@ -77,7 +77,7 @@ public final class Activity {
         private Time time;
 
         // The others
-        private ActivityType type;
+        private NPCActivityType type;
         private String mapName;
 
         private Builder(){
@@ -114,7 +114,7 @@ public final class Activity {
             return this;
         }
 
-        public Builder type(ActivityType type){
+        public Builder type(NPCActivityType type){
             this.type = type;
             return this;
         }
