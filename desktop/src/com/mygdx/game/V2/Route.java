@@ -1,49 +1,50 @@
 package com.mygdx.game.V2;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public final class Route {
 
-    private final List<Position> positions;
+    private final List<MapPosition> mapPositions;
 
-    private Route(List<Position> positions){
-        this.positions = positions;
+    private Route(List<MapPosition> mapPositions){
+        this.mapPositions = mapPositions;
     }
 
-    public static Route create(List<Position> positions){
-        Objects.requireNonNull(positions, "Cannot create a Route from null.");
-        if(positions.contains(null))
+    public static Route create(List<MapPosition> mapPositions){
+        Objects.requireNonNull(mapPositions, "Cannot create a Route from null.");
+        if(mapPositions.contains(null))
             throw new NullPointerException("Cannot create a Route with a null Position.");
-        return new Route(positions);
+        return new Route(mapPositions);
     }
 
-    public List<Position> getPositions(){
-        return positions;
+    public List<MapPosition> getMapPositions(){
+        return mapPositions;
     }
 
     public int getLength(){
-        return positions.size();
+        return mapPositions.size();
     }
 
     public boolean isEmpty(){
-        return positions.isEmpty();
+        return mapPositions.isEmpty();
     }
 
-    public Position getNext(){
-        if(positions.isEmpty())
+    public MapPosition getNext(){
+        if(mapPositions.isEmpty())
             throw new NoSuchElementException("No more Positions are left in the Route.");
-        return positions.get(0);
+        return mapPositions.get(0);
     }
 
 
-    public Position getAndRemoveNext(){
-        if(positions.isEmpty())
+    public MapPosition getAndRemoveNext(){
+        if(mapPositions.isEmpty())
             throw new NoSuchElementException("No more Positions are left in the Route.");
-        Position nextPosition = positions.get(0);
-        positions.remove(0);
-        return nextPosition;
+        MapPosition nextMapPosition = mapPositions.get(0);
+        mapPositions.remove(0);
+        return nextMapPosition;
     }
 
     @Override
@@ -52,16 +53,16 @@ public final class Route {
             return false;
         }
         Route route = (Route) other;
-        return positions.equals(route.positions);
+        return mapPositions.equals(route.mapPositions);
     }
 
     @Override
     public int hashCode(){
-        return positions.hashCode();
+        return mapPositions.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("Route[positions=%s]", positions.toString());
+        return String.format("Route[positions=%s]", mapPositions.toString());
     }
 }

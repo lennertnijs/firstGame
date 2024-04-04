@@ -1,5 +1,6 @@
 package V2;
 
+import com.mygdx.game.V2.MapPosition;
 import com.mygdx.game.V2.Position;
 import com.mygdx.game.V2.Route;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RouteTest {
 
-    private Position pos1;
-    private Position pos2;
-    private Position pos3;
+    private MapPosition pos1;
+    private MapPosition pos2;
+    private MapPosition pos3;
     private Route route1;
     private Route route2;
     private Route route3;
@@ -23,9 +24,9 @@ public class RouteTest {
 
     @BeforeEach
     public void initialise(){
-        pos1 = Position.create(75, 75);
-        pos2 = Position.create(200, 200);
-        pos3 = Position.create(0, 0);
+        pos1 = MapPosition.create("Map1", Position.create(75, 75));
+        pos2 = MapPosition.create("Map1", Position.create(200, 200));
+        pos3 = MapPosition.create("Map1", Position.create(0, 0));
         route1 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
         route2 = Route.create(new ArrayList<>(Arrays.asList(pos3, pos2)));
         route3 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
@@ -34,7 +35,7 @@ public class RouteTest {
 
     @Test
     public void testConstructor(){
-        assertEquals(route1.getPositions(), new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
+        assertEquals(route1.getMapPositions(), new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
     }
 
     @Test
@@ -89,7 +90,7 @@ public class RouteTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Route[positions=[Position[x=75, y=75], Position[x=200, y=200], Position[x=0, y=0]]]";
+        String expectedString = "Route[positions=[MapPosition[mapName=Map1, Position[x=75, y=75]], MapPosition[mapName=Map1, Position[x=200, y=200]], MapPosition[mapName=Map1, Position[x=0, y=0]]]]";
         assertEquals(route1.toString(), expectedString);
     }
 }

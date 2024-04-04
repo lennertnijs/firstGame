@@ -1,9 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.BFSPathFinder;
-import com.mygdx.game.V2.MapPosition;
-import com.mygdx.game.V2.MovementNetwork;
-import com.mygdx.game.V2.Position;
+import com.mygdx.game.V2.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -83,9 +80,12 @@ public class MovementNetworkTest {
 
     @Test
     public void testFindPath(){
-        assertEquals(network1.findPath(mp1, mp7, bfsPathFinder), new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7)));
-        assertEquals(network2.findPath(mp1, mp4, bfsPathFinder), new ArrayList<>(Arrays.asList(mp1, mp2, mp4)));
-        assertEquals(network3.findPath(mp1, mp7, bfsPathFinder), new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7)));
+        assertEquals(network1.findPath(mp1, mp7, bfsPathFinder),
+                Route.create(new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7))));
+        assertEquals(network2.findPath(mp1, mp4, bfsPathFinder),
+                Route.create(new ArrayList<>(Arrays.asList(mp1, mp2, mp4))));
+        assertEquals(network3.findPath(mp1, mp7, bfsPathFinder),
+                Route.create(new ArrayList<>(Arrays.asList(mp1, mp2, mp4, mp5, mp6, mp7))));
     }
 
     @Test

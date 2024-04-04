@@ -9,7 +9,7 @@ public class BFSPathFinder implements PathFinderStrategy{
     }
 
     @Override
-    public List<MapPosition> findPath(MapPosition start, MapPosition goal, Map<MapPosition, List<MapPosition>> network) {
+    public Route findPath(MapPosition start, MapPosition goal, Map<MapPosition, List<MapPosition>> network) {
         Objects.requireNonNull(start, "Cannot find a path using BFS starting in null.");
         Objects.requireNonNull(goal, "Cannot find a path using BFS ending in null.");
         Objects.requireNonNull(network, "Cannot find a path using BFS over a null network.");
@@ -28,7 +28,7 @@ public class BFSPathFinder implements PathFinderStrategy{
                 if(!visited){
                     clonedPath.add(mapPosition);
                     if(mapPosition.equals(goal))
-                        return clonedPath;
+                        return Route.create(clonedPath);
                     else
                         queue.addLast(clonedPath);
                 }
