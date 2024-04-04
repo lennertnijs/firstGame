@@ -7,8 +7,7 @@ import com.mygdx.game.V2.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {
 
@@ -56,6 +55,27 @@ public class ActivityTest {
         assertEquals(activity.getTime(), Time.create(hours, minutes));
         assertEquals(activity.getType(), type);
         assertEquals(activity.getMapName(), mapName);
+    }
+
+    @Test
+    public void testConstructorInvalid(){
+        int x = 5;
+        int y = 15;
+        int hours = 6;
+        int minutes = 40;
+        ActivityType type = ActivityType.IDLING;
+        String mapName = "world";
+
+        Activity.Builder invalidPosition = Activity.builder().x(x).y(-1).hours(hours).minutes(minutes).type(type).mapName(mapName);
+        Activity.Builder invalidTime = Activity.builder().x(x).y(y).hours(hours).minutes(-1).type(type).mapName(mapName);
+        Activity.Builder invalidType = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(null).mapName(mapName);
+        Activity.Builder invalidMapName = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(null);
+
+        assertThrows(IllegalArgumentException.class, invalidPosition::build);
+        assertThrows(IllegalArgumentException.class, invalidTime::build);
+        assertThrows(NullPointerException.class, invalidType::build);
+        assertThrows(NullPointerException.class, invalidMapName::build);
+
     }
 
     @Test

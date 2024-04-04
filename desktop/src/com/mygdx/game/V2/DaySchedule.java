@@ -2,6 +2,7 @@ package com.mygdx.game.V2;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public final class DaySchedule {
 
@@ -12,8 +13,9 @@ public final class DaySchedule {
     }
 
     public static DaySchedule create(List<Activity> activities){
-        Validator.notNull(activities);
-        Validator.notContainsNull(activities);
+        Objects.requireNonNull(activities, "Cannot create a DaySchedule with null.");
+        if(activities.contains(null))
+            throw new NullPointerException("Cannot create a DaySchedule with a null Activity.");
         return new DaySchedule(activities);
     }
 
@@ -22,31 +24,31 @@ public final class DaySchedule {
     }
 
     public boolean isLastActivity(Activity activity){
-        Validator.notNull(activity);
+        Objects.requireNonNull(activity, "Cannot check whether null is the last Activity.");
         int length = activities.size();
         return activities.get(length - 1).equals(activity);
     }
 
 
     public Activity getNextActivity(Activity activity){
-        Validator.notNull(activity);
+        Objects.requireNonNull(activity, "Cannot get the next Activity of null.");
         for(int i = 0; i < activities.size() - 1; i++){
             if(activities.get(i).equals(activity)){
                 return activities.get(i + 1);
             }
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("The given Activity was not found, or was the last Activity of the DaySchedule.");
     }
 
 
     public Activity getNextActivity(Time time){
-        Validator.notNull(time);
+        Objects.requireNonNull(time, "Cannot get the next Activity after null.");
         for(Activity activity : activities){
             if(activity.getTime().after(time)){
                 return activity;
             }
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("No Activity was found after the given Time.");
     }
 
     @Override

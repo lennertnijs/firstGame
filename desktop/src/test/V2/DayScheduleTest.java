@@ -1,11 +1,12 @@
 package V2;
 
 import com.mygdx.game.V2.*;
-import com.sun.tools.javac.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +49,14 @@ public class DayScheduleTest {
     }
 
     @Test
+    public void testConstructorInvalid(){
+        assertThrows(NullPointerException.class, () -> DaySchedule.create(null));
+        List<Activity> activitiesWithNull = new ArrayList<>();
+        activitiesWithNull.add(null);
+        assertThrows(NullPointerException.class, () -> DaySchedule.create(activitiesWithNull));
+    }
+
+    @Test
     public void testIsLastActivity(){
         assertTrue(schedule1.isLastActivity(activity3));
         assertFalse(schedule1.isLastActivity(activity2));
@@ -55,10 +64,21 @@ public class DayScheduleTest {
     }
 
     @Test
+    public void testIsLastActivityWithNull(){
+        assertThrows(NullPointerException.class, () -> schedule1.isLastActivity(null));
+    }
+
+    @Test
     public void testNextActivityByActivity(){
         assertEquals(schedule1.getNextActivity(activity1), activity2);
         assertEquals(schedule1.getNextActivity(activity2), activity3);
         assertThrows(NoSuchElementException.class, () -> schedule1.getNextActivity(activity3));
+        assertThrows(NoSuchElementException.class, () -> schedule1.getNextActivity(activity4));
+    }
+
+    @Test
+    public void testNextActivityByActivityWithNull(){
+        assertThrows(NullPointerException.class, () -> schedule1.getNextActivity((Activity) null));
     }
 
     @Test
@@ -69,6 +89,11 @@ public class DayScheduleTest {
         assertEquals(schedule1.getNextActivity(time1), activity2);
         assertEquals(schedule1.getNextActivity(time2), activity3);
         assertThrows(NoSuchElementException.class, () -> schedule1.getNextActivity(time3));
+    }
+
+    @Test
+    public void testNextActivityByTimeWithNull(){
+        assertThrows(NullPointerException.class, () -> schedule1.getNextActivity((Time) null));
     }
 
     @Test

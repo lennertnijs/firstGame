@@ -1,5 +1,7 @@
 package com.mygdx.game.V2;
 
+import java.util.Objects;
+
 public final class Time {
 
     private final int hours;
@@ -11,26 +13,28 @@ public final class Time {
     }
 
     public static Time create(int hours, int minutes){
-        Validator.withinRange(hours, 0, Settings.HOURS_PER_DAY);
-        Validator.withinRange(minutes, 0, Settings.MINUTES_PER_HOUR);
+        if(hours < 0 || hours >= Settings.HOURS_PER_DAY)
+            throw new IllegalArgumentException("Cannot create a Time object because the hours value is invalid.");
+        if(minutes < 0 || minutes >= Settings.MINUTES_PER_HOUR)
+            throw new IllegalArgumentException("Cannot create a Time object because the minutes value is invalid.");
         return new Time(hours, minutes);
-    }
-
-    public int getMinutes(){
-        return minutes;
     }
 
     public int getHours(){
         return hours;
     }
 
+    public int getMinutes(){
+        return minutes;
+    }
+
     public boolean before(Time time){
-        Validator.notNull(time);
+        Objects.requireNonNull(time, "Cannot check whether a null Time is before this Time.");
         return hours < time.hours || (hours == time.hours && minutes < time.minutes);
     }
 
     public boolean after(Time time){
-        Validator.notNull(time);
+        Objects.requireNonNull(time, "Cannot check whether a null Time is after this Time.");
         return hours > time.hours || (hours == time.hours && minutes > time.minutes);
     }
 

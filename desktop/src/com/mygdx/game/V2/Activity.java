@@ -1,5 +1,7 @@
 package com.mygdx.game.V2;
 
+import java.util.Objects;
+
 public final class Activity {
 
     private final Position position;
@@ -64,12 +66,17 @@ public final class Activity {
 
     public static final class Builder{
 
+        // Position related fields
         private int x = -1;
         private int y = -1;
         private Position position;
+
+        // Time related fields
         private int hours = -1;
         private int minutes = -1;
         private Time time;
+
+        // The others
         private ActivityType type;
         private String mapName;
 
@@ -124,8 +131,8 @@ public final class Activity {
             if(time == null){
                 time = Time.create(hours, minutes);
             }
-            Validator.notNull(type);
-            Validator.notNull(mapName);
+            Objects.requireNonNull(type, "Cannot create an Activity with a null ActivityType.");
+            Objects.requireNonNull(mapName, "Cannot create an Activity with a null map name.");
             return new Activity(this);
         }
     }

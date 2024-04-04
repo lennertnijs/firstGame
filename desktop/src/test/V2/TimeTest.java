@@ -1,5 +1,6 @@
 package V2;
 
+import com.mygdx.game.V2.Settings;
 import com.mygdx.game.V2.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,14 @@ public class TimeTest {
     }
 
     @Test
+    public void testConstructorInvalid(){
+        assertThrows(IllegalArgumentException.class, () -> Time.create(-1, 0));
+        assertThrows(IllegalArgumentException.class, () -> Time.create(Settings.HOURS_PER_DAY, 50));
+        assertThrows(IllegalArgumentException.class, () -> Time.create(0, -1));
+        assertThrows(IllegalArgumentException.class, () -> Time.create(0, Settings.MINUTES_PER_HOUR));
+    }
+
+    @Test
     public void testBefore(){
         assertTrue(time1.before(time2));
         assertFalse(time2.before(time1));
@@ -35,10 +44,20 @@ public class TimeTest {
     }
 
     @Test
+    public void testBeforeWithNull(){
+        assertThrows(NullPointerException.class, () -> time1.before(null));
+    }
+
+    @Test
     public void testAfter(){
         assertTrue(time2.after(time1));
         assertFalse(time1.after(time2));
         assertFalse(time1.after(time3));
+    }
+
+    @Test
+    public void testAfterWithNull(){
+        assertThrows(NullPointerException.class, () -> time1.after(null));
     }
 
     @Test
