@@ -21,8 +21,8 @@ public final class MovementNetwork{
         return mapping;
     }
 
-    public Route findPath(MapPosition start, MapPosition goal, PathFinderStrategy<MapPosition> pathFinderStrategy){
-        return Route.create(pathFinderStrategy.findPath(start, goal, mapping));
+    public Route findPath(MapPosition start, MapPosition goal, PathFinderStrategy<MapPosition> strategy){
+        return Route.create(strategy.findPath(start, goal, mapping));
     }
 
     @Override
