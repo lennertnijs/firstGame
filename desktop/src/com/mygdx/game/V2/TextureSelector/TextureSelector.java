@@ -10,6 +10,8 @@ public final class TextureSelector {
     private final DeltaTime deltaTime;
     private final AnimationRepo<Texture> animationRepo;
 
+    private IAnimation<Texture> animation;
+
     private TextureSelector(NPCActivityType type, DeltaTime deltaTime, AnimationRepo<Texture> animationRepo){
         this.type = type;
         this.deltaTime = deltaTime;

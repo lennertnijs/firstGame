@@ -1,8 +1,6 @@
 package com.mygdx.game.V2.TextureSelector;
 
-import com.badlogic.gdx.graphics.Texture;
+public interface IAnimation<T> {
 
-public interface IAnimation {
-
-    Texture getTexture(float delta);
+    T get(float delta);
 }
