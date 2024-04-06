@@ -14,11 +14,11 @@ public final class TextureSelector implements ITextureSelector{
     private LoopAnimation<Texture> activeAnimation;
     private final IDeltaTime deltaTime;
 
-    public TextureSelector(ActivityType activityType, Direction direction, IDeltaTime deltaTime, IAnimationRepository<Texture> repo){
-        this.activityType = activityType;
-        this.direction = direction;
-        this.deltaTime = deltaTime;
-        this.animationRepo = repo;
+    public TextureSelector(Builder builder){
+        this.activityType = builder.activityType;
+        this.direction = builder.direction;
+        this.animationRepo = builder.animationRepo;
+        this.deltaTime = builder.deltaTime;
         updateActiveAnimation();
     }
 
@@ -47,5 +47,48 @@ public final class TextureSelector implements ITextureSelector{
 
     public Texture getTexture(){
         return activeAnimation.getFrame(deltaTime.getDelta());
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+
+        private ActivityType activityType;
+        private Direction direction;
+        private IAnimationRepository<Texture> animationRepo;
+        private IDeltaTime deltaTime;
+
+        private Builder(){
+        }
+
+        public Builder activityType(ActivityType activityType){
+            this.activityType = activityType;
+            return this;
+        }
+
+        public Builder direction(Direction direction){
+            this.direction = direction;
+            return this;
+        }
+
+        public Builder animationRepository(IAnimationRepository<Texture> animationRepo){
+            this.animationRepo = animationRepo;
+            return this;
+        }
+
+        public Builder deltaTime(IDeltaTime deltaTime){
+            this.deltaTime = deltaTime;
+            return this;
+        }
+
+        public TextureSelector build(){
+            Objects.requireNonNull(activityType, "Cannot create a TextureSelector with a null ActivityType.");
+            Objects.requireNonNull(direction, "Cannot create a TextureSelector with a null Direction.");
+            Objects.requireNonNull(animationRepo, "Cannot create a TextureSelector with a null IAnimationRepository.");
+            Objects.requireNonNull(deltaTime, "Cannot create a TextureSelector with a null DeltaTime.");
+            return new TextureSelector(this);
+        }
     }
 }
