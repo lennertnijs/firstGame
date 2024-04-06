@@ -10,8 +10,8 @@ public final class DeltaTime implements IDeltaTime{
 
     private DeltaTime(TimeProvider timeProvider){
         delta = 0;
-        previousSystemTime = timeProvider.getTimeInMillis();
         this.timeProvider = timeProvider;
+        previousSystemTime = timeProvider.getTimeInMillis();
     }
 
     public static DeltaTime create(TimeProvider timeProvider){
@@ -24,9 +24,17 @@ public final class DeltaTime implements IDeltaTime{
      *
      * @return The delta in seconds.
      */
+    @Override
     public float getDelta(){
         update();
         return delta/(float)1000;
+    }
+
+    @Override
+    public void reset(){
+        delta = 0;
+        timeProvider.reset();
+        previousSystemTime = timeProvider.getTimeInMillis();
     }
 
     private void update(){

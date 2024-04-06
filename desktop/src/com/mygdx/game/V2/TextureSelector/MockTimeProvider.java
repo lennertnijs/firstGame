@@ -13,6 +13,11 @@ public final class MockTimeProvider implements TimeProvider{
         return mockValue;
     }
 
+    @Override
+    public void reset(){
+        this.mockValue = 0;
+    }
+
     public void incrementMockValue(){
         mockValue += 1000;
     }

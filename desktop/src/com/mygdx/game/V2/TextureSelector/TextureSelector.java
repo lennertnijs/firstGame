@@ -12,7 +12,7 @@ public final class TextureSelector implements ITextureSelector{
     private Direction direction;
     private final IAnimationRepository<Texture> animationRepo;
     private LoopAnimation<Texture> activeAnimation;
-    private IDeltaTime deltaTime;
+    private final IDeltaTime deltaTime;
 
     public TextureSelector(Builder builder){
         this.activityType = builder.activityType;
@@ -51,7 +51,7 @@ public final class TextureSelector implements ITextureSelector{
     private void updateActiveAnimation(){
         Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
         this.activeAnimation = new InfiniteLoopAnimation<>(animation);
-        this.deltaTime = DeltaTime.create(new SystemTimeProvider());
+        this.deltaTime.reset();
     }
 
     public Texture getTexture(){

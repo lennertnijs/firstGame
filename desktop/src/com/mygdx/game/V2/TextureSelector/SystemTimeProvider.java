@@ -9,4 +9,8 @@ public final class SystemTimeProvider implements TimeProvider{
     public long getTimeInMillis(){
         return System.currentTimeMillis();
     }
+
+    @Override
+    public void reset(){
+    }
 }
