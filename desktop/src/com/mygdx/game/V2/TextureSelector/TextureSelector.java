@@ -6,37 +6,46 @@ import com.mygdx.game.V2.Direction;
 
 import java.util.Objects;
 
-public final class TextureSelector {
+public final class TextureSelector implements ITextureSelector{
 
+    private ActivityType activityType;
+    private Direction direction;
     private final IAnimationRepository<Texture> animationRepo;
     private LoopAnimation<Texture> activeAnimation;
     private final IDeltaTime deltaTime;
 
-    public TextureSelector(IDeltaTime deltaTime, IAnimationRepository<Texture> repo, LoopAnimation<Texture> activeAnimation){
+    public TextureSelector(ActivityType activityType, Direction direction, IDeltaTime deltaTime, IAnimationRepository<Texture> repo){
+        this.activityType = activityType;
+        this.direction = direction;
         this.deltaTime = deltaTime;
         this.animationRepo = repo;
-        this.activeAnimation = activeAnimation;
+        updateActiveAnimation();
     }
 
-    public Texture getTexture(){
-        return activeAnimation.getFrame(deltaTime.getDelta());
+    public void setActivityType(ActivityType activityType){
+        Objects.requireNonNull(activityType, "Cannot set the ActivityType to null.");
+        if(this.activityType == activityType){
+            return;
+        }
+        this.activityType = activityType;
+        updateActiveAnimation();
     }
 
-    public void changeAnimation(ActivityType activityType, Direction direction){
-        validate(activityType, direction);
+    public void setDirection(Direction direction){
+        Objects.requireNonNull(direction, "Cannot set the Direction to null.");
+        if(this.direction == direction){
+            return;
+        }
+        this.direction = direction;
+        updateActiveAnimation();
+    }
+
+    private void updateActiveAnimation(){
         Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
         this.activeAnimation = new InfiniteLoopAnimation<>(animation);
     }
 
-    public void changeAnimation(ActivityType activityType, Direction direction, int maxLoops){
-        validate(activityType, direction);
-        Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
-        Animation<Texture> idleAnimation = animationRepo.getAnimation(ActivityType.IDLING, direction);
-        this.activeAnimation = new FiniteLoopAnimation<>(animation, maxLoops, idleAnimation);
-    }
-
-    private void validate(ActivityType activityType, Direction direction){
-        Objects.requireNonNull(activityType, "Cannot change the active IAnimation because the type is null.");
-        Objects.requireNonNull(direction, "Cannot change the active IAnimation because the direction is null.");
+    public Texture getTexture(){
+        return activeAnimation.getFrame(deltaTime.getDelta());
     }
 }
