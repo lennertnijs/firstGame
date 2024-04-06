@@ -10,9 +10,9 @@ public final class TextureSelector {
 
     private final IDeltaTime deltaTime;
     private final IAnimationRepository<Texture> animationRepo;
-    private IAnimation<Texture> activeAnimation;
+    private ILoopedAnimation<Texture> activeAnimation;
 
-    public TextureSelector(IDeltaTime deltaTime, IAnimationRepository<Texture> repo, IAnimation<Texture> activeAnimation){
+    public TextureSelector(IDeltaTime deltaTime, IAnimationRepository<Texture> repo, ILoopedAnimation<Texture> activeAnimation){
         this.deltaTime = deltaTime;
         this.animationRepo = repo;
         this.activeAnimation = activeAnimation;
@@ -23,17 +23,20 @@ public final class TextureSelector {
     }
 
     public void changeAnimation(ActivityType activityType, Direction direction){
-        Objects.requireNonNull(activityType, "Cannot change the active IAnimation because the type is null.");
-        Objects.requireNonNull(direction, "Cannot change the active IAnimation because the direction is null.");
+        validate(activityType, direction);
         Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
         this.activeAnimation = new InfiniteLoopedAnimation<>(animation);
     }
 
     public void changeAnimation(ActivityType activityType, Direction direction, int maxLoops){
-        Objects.requireNonNull(activityType, "Cannot change the active IAnimation because the type is null.");
-        Objects.requireNonNull(direction, "Cannot change the active IAnimation because the direction is null.");
+        validate(activityType, direction);
         Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
         Animation<Texture> idleAnimation = animationRepo.getAnimation(ActivityType.IDLING, direction);
         this.activeAnimation = new FiniteLoopAnimation<>(animation, maxLoops, idleAnimation);
+    }
+
+    private void validate(ActivityType activityType, Direction direction){
+        Objects.requireNonNull(activityType, "Cannot change the active IAnimation because the type is null.");
+        Objects.requireNonNull(direction, "Cannot change the active IAnimation because the direction is null.");
     }
 }

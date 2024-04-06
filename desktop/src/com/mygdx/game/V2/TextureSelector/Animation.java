@@ -3,7 +3,7 @@ package com.mygdx.game.V2.TextureSelector;
 import java.util.Arrays;
 import java.util.Objects;
 
-public final class Animation<T> {
+public final class Animation<T> implements IAnimation<T>{
 
     private final T[] frames;
     private final float duration;

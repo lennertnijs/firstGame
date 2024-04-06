@@ -2,7 +2,7 @@ package com.mygdx.game.V2.TextureSelector;
 
 import java.util.Objects;
 
-public final class FiniteLoopAnimation<T> implements IAnimation<T>{
+public final class FiniteLoopAnimation<T> implements ILoopedAnimation<T> {
 
 
     private final Animation<T> animation;
