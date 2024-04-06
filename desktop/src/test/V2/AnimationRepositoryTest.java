@@ -36,7 +36,7 @@ public class AnimationRepositoryTest {
         runningMap.put(Direction.DOWN, animation3);
         runningDirectionRepo = new DirectionAnimationRepo<>(runningMap);
 
-        Map<Direction, Animation<Integer>> walkingMap = new LinkedHashMap<Direction, Animation<Integer>>();
+        Map<Direction, Animation<Integer>> walkingMap = new LinkedHashMap<>();
         walkingMap.put(Direction.UP, animation1);
         DirectionAnimationRepo<Integer> walkingDirectionRepo = new DirectionAnimationRepo<>(walkingMap);
 
