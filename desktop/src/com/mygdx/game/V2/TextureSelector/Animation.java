@@ -26,6 +26,12 @@ public final class Animation<T> {
         return duration;
     }
 
+    /**
+     * Returns the frame associated with the delta (in seconds).
+     * @param delta The delta in seconds. Cannot be negative, or equal/bigger than the animation's duration.
+     *
+     * @return The frame
+     */
     public T getFrame(float delta){
         if(delta < 0 || delta >= duration)
             throw new IllegalArgumentException("Cannot get a frame from an invalid delta.");

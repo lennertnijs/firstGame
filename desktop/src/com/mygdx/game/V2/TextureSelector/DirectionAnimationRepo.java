@@ -8,11 +8,11 @@ import java.util.Objects;
 
 public class DirectionAnimationRepo<T> {
 
-    private final Map<Direction, Animation<T>> dirAnimMap;
+    private final Map<Direction, Animation<T>> directionMapping;
 
-    public DirectionAnimationRepo(Map<Direction, Animation<T>> dirAnimMap){
-        validateMap(dirAnimMap);
-        this.dirAnimMap = dirAnimMap;
+    public DirectionAnimationRepo(Map<Direction, Animation<T>> directionMapping){
+        validateMap(directionMapping);
+        this.directionMapping = directionMapping;
     }
 
     private void validateMap(Map<Direction, Animation<T>> map){
@@ -21,15 +21,11 @@ public class DirectionAnimationRepo<T> {
             throw new NullPointerException("Cannot make a DirectionAnimationRepo with a null value.");
     }
 
-    public Map<Direction, Animation<T>> getMapping(){
-        return dirAnimMap;
-    }
-
     public Animation<T> getAnimation(Direction direction){
         Objects.requireNonNull(direction, "Cannot retrieve an Animation for null.");
-        if(!dirAnimMap.containsKey(direction))
+        if(!directionMapping.containsKey(direction))
             throw new NoSuchElementException("No mapping for the given Direction exists.");
-        return dirAnimMap.get(direction);
+        return directionMapping.get(direction);
     }
 
     @Override
@@ -37,16 +33,16 @@ public class DirectionAnimationRepo<T> {
         if(!(other instanceof DirectionAnimationRepo<?>))
             return false;
         DirectionAnimationRepo<?> repo = (DirectionAnimationRepo<?>) other;
-        return dirAnimMap.equals(repo.dirAnimMap);
+        return directionMapping.equals(repo.directionMapping);
     }
 
     @Override
     public int hashCode(){
-        return dirAnimMap.hashCode();
+        return directionMapping.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("DirectionAnimationRepo[Mapping=%s]", dirAnimMap);
+        return String.format("DirectionAnimationRepo[Mapping=%s]", directionMapping);
     }
 }

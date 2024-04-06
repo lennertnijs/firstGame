@@ -52,11 +52,6 @@ public class DirectionAnimationRepoTest {
     }
 
     @Test
-    public void testConstructor(){
-        assertEquals(repo1.getMapping(), map1);
-    }
-
-    @Test
     public void testConstructorInvalid(){
         assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(null));
         Map<Direction, Animation<Integer>> map1 = new HashMap<Direction, Animation<Integer>>(){{
