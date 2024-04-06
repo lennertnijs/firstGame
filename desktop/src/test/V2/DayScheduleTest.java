@@ -30,7 +30,7 @@ public class DayScheduleTest {
         Time time2 = Time.create(5, 55);
         Time time3 = Time.create(10, 55);
         Time time4 = Time.create(15,55);
-        NPCActivityType type = NPCActivityType.IDLING;
+        ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
         activity1 = Activity.builder().position(position1).time(time1).type(type).mapName(mapName).build();

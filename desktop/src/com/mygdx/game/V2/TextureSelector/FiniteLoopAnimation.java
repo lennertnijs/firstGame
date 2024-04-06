@@ -30,5 +30,4 @@ public class FiniteLoopAnimation<T> implements IAnimation<T>{
             return fallBackAnimation.getFrame(deltaWithinRange);
         return animation.getFrame(deltaWithinRange);
     }
-
 }

@@ -16,7 +16,7 @@ public class ActivityTest {
         Position position1 = Position.create(5, 15);
         Position position2 = Position.create(10, 20);
         Time time = Time.create(16, 55);
-        NPCActivityType type = NPCActivityType.IDLING;
+        ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
         activity1 = Activity.builder().position(position1).time(time).type(type).mapName(mapName).build();
@@ -28,7 +28,7 @@ public class ActivityTest {
     public void testDirectConstructor(){
         Position position = Position.create(5, 15);
         Time time = Time.create(16, 55);
-        NPCActivityType type = NPCActivityType.IDLING;
+        ActivityType type = ActivityType.IDLING;
         String mapName = "world";
         Activity activity = Activity.builder().position(position).time(time).type(type).mapName(mapName).build();
 
@@ -43,7 +43,7 @@ public class ActivityTest {
         int y = 15;
         int hours = 6;
         int minutes = 40;
-        NPCActivityType type = NPCActivityType.IDLING;
+        ActivityType type = ActivityType.IDLING;
         String mapName = "world";
         Activity activity = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(mapName).build();
 
@@ -58,7 +58,7 @@ public class ActivityTest {
         int y = 15;
         int hours = 6;
         int minutes = 40;
-        NPCActivityType type = NPCActivityType.IDLING;
+        ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
         Activity.Builder invalidPosition = Activity.builder().x(x).y(-1).hours(hours).minutes(minutes).type(type).mapName(mapName);
