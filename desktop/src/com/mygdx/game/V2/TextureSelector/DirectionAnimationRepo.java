@@ -31,4 +31,22 @@ public class DirectionAnimationRepo<T> {
             throw new NoSuchElementException("No mapping for the given Direction exists.");
         return dirAnimMap.get(direction);
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof DirectionAnimationRepo<?>))
+            return false;
+        DirectionAnimationRepo<?> repo = (DirectionAnimationRepo<?>) other;
+        return dirAnimMap.equals(repo.dirAnimMap);
+    }
+
+    @Override
+    public int hashCode(){
+        return dirAnimMap.hashCode();
+    }
+
+    @Override
+    public String toString(){
+        return String.format("DirectionAnimationRepo[Mapping=%s]", dirAnimMap);
+    }
 }

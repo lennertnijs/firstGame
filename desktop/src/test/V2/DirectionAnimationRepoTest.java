@@ -7,11 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DirectionAnimationRepoTest {
 
@@ -29,17 +29,17 @@ public class DirectionAnimationRepoTest {
         animation2 = new Animation<>(new Integer[]{1,2,3}, 3);
         animation3 = new Animation<>(new Integer[]{1,2,3,4,5,6}, 3);
 
-        map1 = new HashMap<Direction, Animation<Integer>>(){{
+        map1 = new LinkedHashMap<Direction, Animation<Integer>>(){{
             put(Direction.UP, animation1);
             put(Direction.RIGHT, animation2);
             put(Direction.DOWN, animation3);
         }};
 
-        Map<Direction, Animation<Integer>> map2 = new HashMap<Direction, Animation<Integer>>(){{
+        Map<Direction, Animation<Integer>> map2 = new LinkedHashMap<Direction, Animation<Integer>>(){{
                 put(Direction.UP, animation1);
         }};
 
-        Map<Direction, Animation<Integer>> map3 = new HashMap<Direction, Animation<Integer>>(){{
+        Map<Direction, Animation<Integer>> map3 = new LinkedHashMap<Direction, Animation<Integer>>(){{
             put(Direction.RIGHT, animation2);
             put(Direction.UP, animation1);
             put(Direction.DOWN, animation3);
@@ -79,5 +79,24 @@ public class DirectionAnimationRepoTest {
     @Test
     public void testGetAnimationWithNull(){
         assertThrows(NullPointerException.class, () -> repo1.getAnimation(null));
+    }
+
+    @Test
+    public void testEquals(){
+        assertEquals(repo1, repo3);
+        assertNotEquals(repo1, repo2);
+        assertNotEquals(repo1, new Object());
+    }
+
+    @Test
+    public void testHashCode(){
+        assertEquals(repo1.hashCode(), repo3.hashCode());
+        assertNotEquals(repo1.hashCode(), repo2.hashCode());
+    }
+
+    @Test
+    public void testToString(){
+        String expectedString = "DirectionAnimationRepo[Mapping={UP=Animation[Frames=[1, 2, 3, 4, 5, 6], Duration=3.000000], RIGHT=Animation[Frames=[1, 2, 3], Duration=3.000000], DOWN=Animation[Frames=[1, 2, 3, 4, 5, 6], Duration=3.000000]}]";
+        assertEquals(repo1.toString(), expectedString);
     }
 }
