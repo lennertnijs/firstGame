@@ -8,27 +8,19 @@ import java.util.Objects;
 
 public final class TextureSelector {
 
-    private final DeltaTime deltaTime;
-    private final AnimationRepo<Texture> animationRepo;
+    private final IDeltaTime deltaTime;
+    private final IAnimationRepository<Texture> animationRepo;
     private IAnimation<Texture> activeAnimation;
 
-    public TextureSelector(DeltaTime deltaTime, AnimationRepo<Texture> repo, IAnimation<Texture> activeAnimation){
+    public TextureSelector(IDeltaTime deltaTime, IAnimationRepository<Texture> repo, IAnimation<Texture> activeAnimation){
         this.deltaTime = deltaTime;
         this.animationRepo = repo;
+        this.activeAnimation = activeAnimation;
     }
 
-    public DeltaTime getDeltaTime(){
-        return deltaTime;
+    public Texture getTexture(){
+        return activeAnimation.getFrame(deltaTime.getDelta());
     }
-
-    public AnimationRepo<Texture> getAnimationRepo(){
-        return animationRepo;
-    }
-
-    public IAnimation<Texture> getActiveAnimation(){
-        return activeAnimation;
-    }
-
 
     public void changeAnimation(ActivityType activityType, Direction direction){
         Objects.requireNonNull(activityType, "Cannot change the active IAnimation because the type is null.");
@@ -43,9 +35,5 @@ public final class TextureSelector {
         Animation<Texture> animation = animationRepo.getAnimation(activityType, direction);
         Animation<Texture> idleAnimation = animationRepo.getAnimation(ActivityType.IDLING, direction);
         this.activeAnimation = new FiniteLoopAnimation<>(animation, maxLoops, idleAnimation);
-    }
-
-    public Texture getTexture(){
-        return activeAnimation.get(deltaTime.getDelta());
     }
 }

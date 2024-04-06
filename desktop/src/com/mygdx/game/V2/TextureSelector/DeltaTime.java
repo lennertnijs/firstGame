@@ -2,7 +2,7 @@ package com.mygdx.game.V2.TextureSelector;
 
 import java.util.Objects;
 
-public final class DeltaTime {
+public final class DeltaTime implements IDeltaTime{
 
     private float delta;
     private long previousSystemTime;

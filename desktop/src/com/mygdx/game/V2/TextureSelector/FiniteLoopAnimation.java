@@ -21,7 +21,7 @@ public class FiniteLoopAnimation<T> implements IAnimation<T>{
 
 
     @Override
-    public T get(float delta) {
+    public T getFrame(float delta) {
         if(delta < 0)
             throw new IllegalArgumentException("Cannot have a negative delta.");
         float deltaWithinRange = delta % animation.getDuration();

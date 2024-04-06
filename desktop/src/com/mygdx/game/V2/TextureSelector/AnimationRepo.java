@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class AnimationRepo<T> {
+public class AnimationRepo<T> implements IAnimationRepository<T>{
 
     private final Map<ActivityType, DirectionAnimationRepo<T>> activityMapping;
 
@@ -22,9 +22,6 @@ public class AnimationRepo<T> {
             throw new NullPointerException("Cannot make a DirectionAnimationRepo with a null value.");
     }
 
-    public Map<ActivityType, DirectionAnimationRepo<T>> getMapping(){
-        return activityMapping;
-    }
 
     public Animation<T> getAnimation(ActivityType type, Direction direction){
         Objects.requireNonNull(type, "Cannot get an Animation for a null ActivityType.");
