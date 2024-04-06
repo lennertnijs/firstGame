@@ -14,6 +14,6 @@ public final class MockTimeProvider implements TimeProvider{
     }
 
     public void incrementMockValue(){
-        mockValue++;
+        mockValue += 1000;
     }
 }

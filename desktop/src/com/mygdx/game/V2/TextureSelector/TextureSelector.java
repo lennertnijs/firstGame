@@ -8,9 +8,9 @@ import java.util.Objects;
 
 public final class TextureSelector {
 
-    private final IDeltaTime deltaTime;
     private final IAnimationRepository<Texture> animationRepo;
     private LoopAnimation<Texture> activeAnimation;
+    private final IDeltaTime deltaTime;
 
     public TextureSelector(IDeltaTime deltaTime, IAnimationRepository<Texture> repo, LoopAnimation<Texture> activeAnimation){
         this.deltaTime = deltaTime;

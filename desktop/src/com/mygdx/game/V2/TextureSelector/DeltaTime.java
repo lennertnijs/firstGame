@@ -26,7 +26,7 @@ public final class DeltaTime implements IDeltaTime{
      */
     public float getDelta(){
         update();
-        return delta;
+        return delta/(float)1000;
     }
 
     private void update(){
