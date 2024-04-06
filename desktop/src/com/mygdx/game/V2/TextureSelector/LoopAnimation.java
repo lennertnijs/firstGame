@@ -1,6 +1,6 @@
 package com.mygdx.game.V2.TextureSelector;
 
-public interface ILoopedAnimation<T> {
+public interface LoopAnimation<T> {
 
     T getFrame(float delta);
 }
