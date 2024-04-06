@@ -1,6 +1,7 @@
 package com.mygdx.game.V2.TextureSelector;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public final class Animation<T> {
 
@@ -8,6 +9,11 @@ public final class Animation<T> {
     private final float duration;
 
     public Animation(T[] frames, float animationDuration){
+        Objects.requireNonNull(frames, "Cannot create an Animation with null as frames.");
+        if(Arrays.stream(frames).anyMatch(Objects::isNull))
+            throw new NullPointerException("Cannot create an Animation with a null frame.");
+        if(animationDuration <= 0)
+            throw new IllegalArgumentException("Cannot create an Animation with a negative or 0 duration.");
         this.frames = frames;
         this.duration = animationDuration;
     }
@@ -21,10 +27,10 @@ public final class Animation<T> {
     }
 
     public T getFrame(float delta){
-        if(delta < 0 || delta > duration)
+        if(delta < 0 || delta >= duration)
             throw new IllegalArgumentException("Cannot get a frame from an invalid delta.");
         float frameDuration = (duration / frames.length);
-        int frameNumber = (int) Math.ceil(delta / frameDuration);
+        int frameNumber = (int) (delta / frameDuration);
         return frames[frameNumber];
     }
 

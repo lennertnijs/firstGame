@@ -8,23 +8,27 @@ import java.util.Objects;
 
 public class DirectionAnimationRepo<T> {
 
-    private final Map<Direction, Animation<T>> animationsPerDirection;
+    private final Map<Direction, Animation<T>> dirAnimMap;
 
-    private DirectionAnimationRepo(Map<Direction, Animation<T>> animationsPerDirection){
-        this.animationsPerDirection = animationsPerDirection;
+    public DirectionAnimationRepo(Map<Direction, Animation<T>> dirAnimMap){
+        validateMap(dirAnimMap);
+        this.dirAnimMap = dirAnimMap;
     }
 
-    public static <T> DirectionAnimationRepo<T> create(Map<Direction, Animation<T>> animationsPerDirection){
-        Objects.requireNonNull(animationsPerDirection, "Cannot make a DirectionAnimationRepo from null.");
-        if(animationsPerDirection.containsKey(null) || animationsPerDirection.containsValue(null))
+    private void validateMap(Map<Direction, Animation<T>> map){
+        Objects.requireNonNull(map, "Cannot make a DirectionAnimationRepo from null.");
+        if(map.containsKey(null) || map.containsValue(null))
             throw new NullPointerException("Cannot make a DirectionAnimationRepo with a null value.");
-        return new DirectionAnimationRepo<>(animationsPerDirection);
+    }
+
+    public Map<Direction, Animation<T>> getMapping(){
+        return dirAnimMap;
     }
 
     public Animation<T> getAnimation(Direction direction){
-        Objects.requireNonNull(direction, "Cannot retrieve an Animation with null.");
-        if(!animationsPerDirection.containsKey(direction))
-            throw new NoSuchElementException("No Animation was found for the given Direction.");
-        return animationsPerDirection.get(direction);
+        Objects.requireNonNull(direction, "Cannot retrieve an Animation for null.");
+        if(!dirAnimMap.containsKey(direction))
+            throw new NoSuchElementException("No mapping for the given Direction exists.");
+        return dirAnimMap.get(direction);
     }
 }
