@@ -27,22 +27,4 @@ public final class DirectionAnimationRepo<T> implements IDirectionAnimationRepos
             throw new NoSuchElementException("No mapping for the given Direction exists.");
         return directionMapping.get(direction);
     }
-
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof DirectionAnimationRepo<?>))
-            return false;
-        DirectionAnimationRepo<?> repo = (DirectionAnimationRepo<?>) other;
-        return directionMapping.equals(repo.directionMapping);
-    }
-
-    @Override
-    public int hashCode(){
-        return directionMapping.hashCode();
-    }
-
-    @Override
-    public String toString(){
-        return String.format("DirectionAnimationRepo[Mapping=%s]", directionMapping);
-    }
 }

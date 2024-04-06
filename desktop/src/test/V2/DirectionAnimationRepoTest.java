@@ -18,80 +18,52 @@ public class DirectionAnimationRepoTest {
     private Animation<Integer> animation1;
     private Animation<Integer> animation2;
     private Animation<Integer> animation3;
-    private Map<Direction, Animation<Integer>> map1;
-    private DirectionAnimationRepo<Integer> repo1;
-    private DirectionAnimationRepo<Integer> repo2;
-    private DirectionAnimationRepo<Integer> repo3;
+    private DirectionAnimationRepo<Integer> repo;
 
     @BeforeEach
     public void initialise(){
         animation1 = new Animation<>(new Integer[]{1,2,3,4,5,6}, 3);
         animation2 = new Animation<>(new Integer[]{1,2,3}, 3);
-        animation3 = new Animation<>(new Integer[]{1,2,3,4,5,6}, 3);
+        animation3 = new Animation<>(new Integer[]{4,5,6}, 3);
 
-        map1 = new LinkedHashMap<Direction, Animation<Integer>>(){{
-            put(Direction.UP, animation1);
-            put(Direction.RIGHT, animation2);
-            put(Direction.DOWN, animation3);
-        }};
+        Map<Direction, Animation<Integer>> map = new LinkedHashMap<>();
+        map.put(Direction.UP, animation1);
+        map.put(Direction.RIGHT, animation2);
+        map.put(Direction.DOWN, animation3);
 
-        Map<Direction, Animation<Integer>> map2 = new LinkedHashMap<Direction, Animation<Integer>>(){{
-                put(Direction.UP, animation1);
-        }};
-
-        Map<Direction, Animation<Integer>> map3 = new LinkedHashMap<Direction, Animation<Integer>>(){{
-            put(Direction.RIGHT, animation2);
-            put(Direction.UP, animation1);
-            put(Direction.DOWN, animation3);
-        }};
+        repo = new DirectionAnimationRepo<>(map);
+    }
 
 
-        repo1 = new DirectionAnimationRepo<>(map1);
-        repo2 = new DirectionAnimationRepo<>(map2);
-        repo3 = new DirectionAnimationRepo<>(map3);
+    @Test
+    public void testConstructorWithNull(){
+        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(null));
     }
 
     @Test
-    public void testConstructorInvalid(){
-        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(null));
-        Map<Direction, Animation<Integer>> map1 = new HashMap<Direction, Animation<Integer>>(){{
-            put(null, animation1);
-        }};
-        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(map1));
-        Map<Direction, Animation<Integer>> map2 = new HashMap<Direction, Animation<Integer>>(){{
-            put(Direction.UP, null);
-        }};
-        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(map2));
+    public void testConstructorWithNullKey(){
+        Map<Direction, Animation<Integer>> nullKeyMap = new HashMap<>();
+        nullKeyMap.put(null, animation1);
+        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(nullKeyMap));
+    }
+    @Test
+    public void testConstructorWithNullValue(){
+        Map<Direction, Animation<Integer>> nullValueMap = new HashMap<>();
+        nullValueMap.put(Direction.UP, null);
+        assertThrows(NullPointerException.class, () -> new DirectionAnimationRepo<>(nullValueMap));
     }
 
     @Test
     public void testGetAnimation(){
-        assertEquals(repo1.getAnimation(Direction.UP), animation1);
-        assertEquals(repo1.getAnimation(Direction.DOWN), animation3);
-        assertThrows(NoSuchElementException.class, () -> repo1.getAnimation(Direction.LEFT));
+        assertEquals(repo.getAnimation(Direction.UP), animation1);
+        assertEquals(repo.getAnimation(Direction.RIGHT), animation2);
+        assertEquals(repo.getAnimation(Direction.DOWN), animation3);
+        assertThrows(NoSuchElementException.class, () -> repo.getAnimation(Direction.LEFT));
     }
 
     @Test
     public void testGetAnimationWithNull(){
-        assertThrows(NullPointerException.class, () -> repo1.getAnimation(null));
+        assertThrows(NullPointerException.class, () -> repo.getAnimation(null));
     }
 
-    @Test
-    public void testEquals(){
-        assertEquals(repo1, repo3);
-        assertNotEquals(repo1, repo2);
-        assertNotEquals(repo1, new Object());
-    }
-
-    @Test
-    public void testHashCode(){
-        assertEquals(repo1.hashCode(), repo3.hashCode());
-        assertNotEquals(repo1.hashCode(), repo2.hashCode());
-    }
-
-    @Test
-    public void testToString(){
-        String expectedString = "DirectionAnimationRepo[Mapping={UP=Animation[Frames=[1, 2, 3, 4, 5, 6], Duration=3.000000], RIGHT=Animation[Frames=[1, 2, 3], Duration=3.000000], DOWN=Animation[Frames=[1, 2, 3, 4, 5, 6], Duration=3.000000]}]";
-        assertEquals(repo1.toString(), expectedString);
-    }
 }
