@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class AnimationRepo<T> implements IAnimationRepository<T>{
+public final class AnimationRepo<T> implements IAnimationRepository<T>{
 
     private final Map<ActivityType, DirectionAnimationRepo<T>> activityMapping;
 

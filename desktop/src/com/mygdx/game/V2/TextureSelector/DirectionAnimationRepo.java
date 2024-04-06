@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class DirectionAnimationRepo<T> {
+public final class DirectionAnimationRepo<T> {
 
     private final Map<Direction, Animation<T>> directionMapping;
 
