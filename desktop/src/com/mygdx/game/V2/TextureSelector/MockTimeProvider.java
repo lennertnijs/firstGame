@@ -1,6 +1,6 @@
 package com.mygdx.game.V2.TextureSelector;
 
-public class MockTimeProvider implements TimeProvider{
+public final class MockTimeProvider implements TimeProvider{
 
     private long mockValue;
 
