@@ -21,9 +21,6 @@ public class TextureSelectorTest {
     private Texture texture2;
     private Texture texture3;
     private Texture texture4;
-    private Animation<Texture> animation1;
-    private Animation<Texture> animation2;
-    private Animation<Texture> animation3;
     private MockTimeProvider timeProvider;
     private DeltaTime deltaTime;
     private AnimationRepo<Texture> repository;
@@ -35,9 +32,9 @@ public class TextureSelectorTest {
         texture3 = Mockito.mock(Texture.class);
         texture4 = Mockito.mock(Texture.class);
 
-        animation1 = new Animation<>(new Texture[]{texture1, texture2, texture3}, 3);
-        animation2 = new Animation<>(new Texture[]{texture2, texture3}, 2);
-        animation3 = new Animation<>(new Texture[]{texture3, texture4}, 2);
+        Animation<Texture> animation1 = new Animation<>(new Texture[]{texture1, texture2, texture3}, 3);
+        Animation<Texture> animation2 = new Animation<>(new Texture[]{texture2, texture3}, 2);
+        Animation<Texture> animation3 = new Animation<>(new Texture[]{texture3, texture4}, 2);
 
         Map<Direction, Animation<Texture>> runningMap = new LinkedHashMap<>();
         runningMap.put(Direction.UP, animation1);
@@ -65,6 +62,34 @@ public class TextureSelectorTest {
                 .deltaTime(deltaTime)
                 .animationRepository(repository)
                 .build();
+    }
+
+    @Test
+    public void testBuilderWithNullActivityType(){
+        TextureSelector.Builder nullActivityType = TextureSelector.builder().activityType(null)
+                .direction(Direction.UP).deltaTime(deltaTime).animationRepository(repository);
+        assertThrows(NullPointerException.class, nullActivityType::build);
+    }
+
+    @Test
+    public void testBuilderWithNullDirection(){
+        TextureSelector.Builder nullDirection = TextureSelector.builder().activityType(ActivityType.IDLING)
+                .direction(null).deltaTime(deltaTime).animationRepository(repository);
+        assertThrows(NullPointerException.class, nullDirection::build);
+    }
+
+    @Test
+    public void testBuilderWithNullDeltaTime(){
+        TextureSelector.Builder nullDeltaTime = TextureSelector.builder().activityType(ActivityType.IDLING)
+                .direction(Direction.UP).deltaTime(null).animationRepository(repository);
+        assertThrows(NullPointerException.class, nullDeltaTime::build);
+    }
+
+    @Test
+    public void testBuilderWithNullRepository(){
+        TextureSelector.Builder nullRepository = TextureSelector.builder().activityType(ActivityType.IDLING)
+                .direction(Direction.UP).deltaTime(deltaTime).animationRepository(null);
+        assertThrows(NullPointerException.class, nullRepository::build);
     }
 
     @Test
