@@ -4,20 +4,33 @@ import com.mygdx.game.V2.Direction;
 import com.mygdx.game.V2.ActivityType;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class AnimationRepo<T> {
 
-    private final Map<ActivityType, DirectionAnimationRepo<T>> texturesPerActivityType;
+    private final Map<ActivityType, DirectionAnimationRepo<T>> activityMapping;
 
-    private AnimationRepo(Map<ActivityType, DirectionAnimationRepo<T>> texturesPerActivityType){
-        this.texturesPerActivityType = texturesPerActivityType;
+    public AnimationRepo(Map<ActivityType, DirectionAnimationRepo<T>> activityMapping){
+        validateMap(activityMapping);
+        this.activityMapping = activityMapping;
     }
 
-    public static <T> AnimationRepo<T> create(Map<ActivityType, DirectionAnimationRepo<T>> texturesPerActivityType){
-        return new AnimationRepo<>(texturesPerActivityType);
+    private void validateMap(Map<ActivityType, DirectionAnimationRepo<T>> map){
+        Objects.requireNonNull(map, "Cannot make a DirectionAnimationRepo from null.");
+        if(map.containsKey(null) || map.containsValue(null))
+            throw new NullPointerException("Cannot make a DirectionAnimationRepo with a null value.");
+    }
+
+    public Map<ActivityType, DirectionAnimationRepo<T>> getMapping(){
+        return activityMapping;
     }
 
     public Animation<T> getAnimation(ActivityType type, Direction direction){
-        return texturesPerActivityType.get(type).getAnimation(direction);
+        Objects.requireNonNull(type, "Cannot get an Animation for a null ActivityType.");
+        if(!activityMapping.containsKey(type))
+            throw new NoSuchElementException("No mapping for the given ActivityType was found.");
+        Objects.requireNonNull(direction, "Cannot get an Animation for a null Direction.");
+        return activityMapping.get(type).getAnimation(direction);
     }
 }

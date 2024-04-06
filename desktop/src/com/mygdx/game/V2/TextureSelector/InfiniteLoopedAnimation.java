@@ -6,7 +6,7 @@ public final class InfiniteLoopedAnimation<T> implements IAnimation<T>{
 
     private final Animation<T> animation;
 
-    private InfiniteLoopedAnimation(Animation<T> animation){
+    public InfiniteLoopedAnimation(Animation<T> animation){
         Objects.requireNonNull(animation, "Cannot create a LoopedAnimation from null.");
         this.animation = animation;
     }
