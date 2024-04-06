@@ -9,14 +9,14 @@ import java.util.Objects;
 
 public final class AnimationRepo<T> implements IAnimationRepository<T>{
 
-    private final Map<ActivityType, DirectionAnimationRepo<T>> activityMapping;
+    private final Map<ActivityType, IDirectionAnimationRepository<T>> activityMapping;
 
-    public AnimationRepo(Map<ActivityType, DirectionAnimationRepo<T>> activityMapping){
+    public AnimationRepo(Map<ActivityType, IDirectionAnimationRepository<T>> activityMapping){
         validateMap(activityMapping);
         this.activityMapping = activityMapping;
     }
 
-    private void validateMap(Map<ActivityType, DirectionAnimationRepo<T>> map){
+    private void validateMap(Map<ActivityType, IDirectionAnimationRepository<T>> map){
         Objects.requireNonNull(map, "Cannot make a DirectionAnimationRepo from null.");
         if(map.containsKey(null) || map.containsValue(null))
             throw new NullPointerException("Cannot make a DirectionAnimationRepo with a null value.");
