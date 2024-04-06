@@ -25,7 +25,7 @@ public final class FiniteLoopAnimation<T> implements LoopAnimation<T> {
         if(delta < 0)
             throw new IllegalArgumentException("Cannot have a negative delta.");
         float deltaWithinRange = delta % animation.getDuration();
-        boolean finishedLoops = delta / animation.getDuration() > maxLoops;
+        boolean finishedLoops = delta / animation.getDuration() >= maxLoops;
         if(finishedLoops)
             return fallBackAnimation.getFrame(deltaWithinRange);
         return animation.getFrame(deltaWithinRange);
