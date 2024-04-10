@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public final class AnimationRepository<T> {
+public final class AnimationRepository<T> implements IAnimationRepository<T>{
 
     private final Map<AnimationKey, IAnimation<T>> mapping;
 
