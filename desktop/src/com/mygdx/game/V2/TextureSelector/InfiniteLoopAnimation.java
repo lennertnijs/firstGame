@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public final class InfiniteLoopAnimation<T> implements LoopAnimation<T> {
 
-    private final Animation<T> animation;
+    private final IAnimation<T> animation;
 
-    public InfiniteLoopAnimation(Animation<T> animation){
+    public InfiniteLoopAnimation(IAnimation<T> animation){
         Objects.requireNonNull(animation, "Cannot create a LoopedAnimation from null.");
         this.animation = animation;
     }

@@ -17,24 +17,24 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TextureSelectorTest {
 
-//    private Texture texture1;
-//    private Texture texture2;
-//    private Texture texture3;
-//    private Texture texture4;
+    private Texture texture1;
+    private Texture texture2;
+    private Texture texture3;
+    private Texture texture4;
 //    private MockTimeProvider timeProvider;
 //    private DeltaTime deltaTime;
 //    private AnimationRepo<Texture> repository;
 //    private TextureSelector textureSelector;
-//    @BeforeEach
-//    public void initialise(){
-//        texture1 = Mockito.mock(Texture.class);
-//        texture2 = Mockito.mock(Texture.class);
-//        texture3 = Mockito.mock(Texture.class);
-//        texture4 = Mockito.mock(Texture.class);
-//
-//        Animation<Texture> animation1 = new Animation<>(new Texture[]{texture1, texture2, texture3}, 3);
-//        Animation<Texture> animation2 = new Animation<>(new Texture[]{texture2, texture3}, 2);
-//        Animation<Texture> animation3 = new Animation<>(new Texture[]{texture3, texture4}, 2);
+    @BeforeEach
+    public void initialise(){
+        texture1 = Mockito.mock(Texture.class);
+        texture2 = Mockito.mock(Texture.class);
+        texture3 = Mockito.mock(Texture.class);
+        texture4 = Mockito.mock(Texture.class);
+
+        Animation<Texture> animation1 = new Animation<>(new Texture[]{texture1, texture2, texture3}, 3);
+        Animation<Texture> animation2 = new Animation<>(new Texture[]{texture2, texture3}, 2);
+        Animation<Texture> animation3 = new Animation<>(new Texture[]{texture3, texture4}, 2);
 //
 //        Map<Direction, Animation<Texture>> runningMap = new LinkedHashMap<>();
 //        runningMap.put(Direction.UP, animation1);
@@ -53,6 +53,8 @@ public class TextureSelectorTest {
 //        repoMap.put(ActivityType.WALKING, walkingDirectionRepo);
 //        repository = new AnimationRepo<>(repoMap);
 //
+          Map<AnimationKey, Animation<Texture>> mapping = new HashMap<>();
+          mapping.put(AnimationKey.create(ActivityType.RUNNING, Direction.UP), animation1);
 //        timeProvider = new MockTimeProvider();
 //        deltaTime = DeltaTime.create(timeProvider);
 //
@@ -62,7 +64,7 @@ public class TextureSelectorTest {
 //                .deltaTime(deltaTime)
 //                .animationRepository(repository)
 //                .build();
-//    }
+    }
 //
 //    @Test
 //    public void testBuilderWithNullActivityType(){

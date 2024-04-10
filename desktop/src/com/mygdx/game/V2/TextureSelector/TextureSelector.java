@@ -49,7 +49,7 @@ public final class TextureSelector implements ITextureSelector{
     }
 
     private void updateActiveAnimation(){
-        Animation<Texture> animation = animationRepo.getAnimation(AnimationKey.create(activityType, direction));
+        IAnimation<Texture> animation = animationRepo.getAnimation(AnimationKey.create(activityType, direction));
         this.activeAnimation = new InfiniteLoopAnimation<>(animation);
         this.deltaTime.reset();
     }
