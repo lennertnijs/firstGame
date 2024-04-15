@@ -2,7 +2,7 @@ package com.mygdx.game.V2.Dialogue;
 
 import java.util.Objects;
 
-public class DialogueLine {
+public final class DialogueLine implements Line{
 
     private final String text;
 
