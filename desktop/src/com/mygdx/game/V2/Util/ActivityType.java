@@ -1,4 +1,4 @@
-package com.mygdx.game.V2;
+package com.mygdx.game.V2.Util;
 
 public enum ActivityType {
     IDLING,

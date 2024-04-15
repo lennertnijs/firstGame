@@ -1,15 +1,14 @@
 package V2;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.ActivityType;
-import com.mygdx.game.V2.Direction;
+import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Direction;
 import com.mygdx.game.V2.TextureSelector.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,4 +1,4 @@
-package com.mygdx.game.V2;
+package com.mygdx.game.V2.Util;
 
 import java.util.Objects;
 

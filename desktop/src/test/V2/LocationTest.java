@@ -1,7 +1,7 @@
 package V2;
 
-import com.mygdx.game.V2.Location;
-import com.mygdx.game.V2.Position;
+import com.mygdx.game.V2.WeekSchedule.Location;
+import com.mygdx.game.V2.Util.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

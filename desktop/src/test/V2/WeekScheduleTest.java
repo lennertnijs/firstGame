@@ -1,6 +1,9 @@
 package V2;
 
-import com.mygdx.game.V2.*;
+import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Time;
+import com.mygdx.game.V2.WeekSchedule.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

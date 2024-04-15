@@ -1,4 +1,8 @@
-package com.mygdx.game.V2;
+package com.mygdx.game.V2.WeekSchedule;
+
+import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Time;
 
 import java.util.Objects;
 

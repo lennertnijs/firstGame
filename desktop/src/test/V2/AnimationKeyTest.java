@@ -1,7 +1,7 @@
 package V2;
 
-import com.mygdx.game.V2.ActivityType;
-import com.mygdx.game.V2.Direction;
+import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Direction;
 import com.mygdx.game.V2.TextureSelector.AnimationKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

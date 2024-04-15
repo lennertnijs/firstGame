@@ -1,5 +1,7 @@
 package com.mygdx.game.V2;
 
+import com.mygdx.game.V2.WeekSchedule.Location;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;

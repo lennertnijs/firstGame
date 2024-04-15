@@ -1,8 +1,8 @@
 package com.mygdx.game.V2.TextureSelector;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.ActivityType;
-import com.mygdx.game.V2.Direction;
+import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Direction;
 
 import java.util.Objects;
 
