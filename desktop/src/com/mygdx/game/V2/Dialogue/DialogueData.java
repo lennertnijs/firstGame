@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DialogueData implements IDialogueData{
+public final class DialogueData implements IDialogueData{
 
     private final List<Line> active;
     private final IDialogueRepository repository;
