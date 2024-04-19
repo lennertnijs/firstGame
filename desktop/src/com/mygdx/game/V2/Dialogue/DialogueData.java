@@ -11,17 +11,13 @@ public final class DialogueData implements IDialogueData{
     private final List<String> active;
     private final IDialogueRepository repository;
 
-    private DialogueData(List<String> active, IDialogueRepository repository){
-        this.active = active;
-        this.repository = repository;
-    }
-
-    public static DialogueData create(List<String> active, IDialogueRepository repository){
+    public DialogueData(List<String> active, IDialogueRepository repository){
         Objects.requireNonNull(active, "List of active lines is null.");
         if(active.contains(null))
             throw new NullPointerException("List of active Lines contains null.");
         Objects.requireNonNull(repository, "IDialogueRepository is null.");
-        return new DialogueData(active, repository);
+        this.active = active;
+        this.repository = repository;
     }
 
     @Override

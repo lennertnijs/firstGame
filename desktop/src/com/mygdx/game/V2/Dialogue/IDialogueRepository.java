@@ -3,6 +3,7 @@ package com.mygdx.game.V2.Dialogue;
 import java.util.NoSuchElementException;
 
 /**
+ * IMMUTABLE
  * Holds all the dialogue related data.
  * Maps input lines to {@link IResponseData}s.
  */

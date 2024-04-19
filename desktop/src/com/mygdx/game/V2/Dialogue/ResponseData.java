@@ -13,7 +13,7 @@ public final class ResponseData implements IResponseData {
     private final List<Action> actions;
 
     /**
-     * Creates a new {@link ResponseData}.
+     * Creates a new immutable {@link ResponseData}.
      * @param response The response. Cannot be null.
      * @param newInputs The new inputs. Cannot be null. Cannot contain null.
      * @param actions The actions to be executed. Cannot be null. Cannot contain null.

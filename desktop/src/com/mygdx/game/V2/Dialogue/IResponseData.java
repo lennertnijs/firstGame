@@ -5,6 +5,7 @@ import com.mygdx.game.V2.Action;
 import java.util.List;
 
 /**
+ * IMMUTABLE
  * Represents the response to a dialogue input.
  */
 public interface IResponseData {

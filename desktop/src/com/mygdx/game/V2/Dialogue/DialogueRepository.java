@@ -10,7 +10,7 @@ public final class DialogueRepository implements IDialogueRepository{
     private final Map<String, IResponseData> mapping;
 
     /**
-     * Creates a new {@link DialogueRepository}.
+     * Creates a new immutable {@link DialogueRepository}.
      * @param mapping The mapping. Cannot be null. Cannot contain a null key or value.
      */
     public DialogueRepository(Map<String, IResponseData> mapping){
