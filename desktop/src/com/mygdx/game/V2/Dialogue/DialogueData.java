@@ -4,36 +4,55 @@ import com.mygdx.game.V2.Action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public final class DialogueData implements IDialogueData{
 
-    private final List<String> active;
+    private final List<String> activeInputs;
     private final IDialogueRepository repository;
 
-    public DialogueData(List<String> active, IDialogueRepository repository){
-        Objects.requireNonNull(active, "List of active lines is null.");
-        if(active.contains(null))
-            throw new NullPointerException("List of active Lines contains null.");
-        Objects.requireNonNull(repository, "IDialogueRepository is null.");
-        this.active = active;
+    /**
+     * Creates a new {@link DialogueData}.
+     * Cannot be modified, but it modifies itself.
+     * @param activeInputs The active inputs. Cannot be null. Cannot contain null.
+     * @param repository The {@link IDialogueRepository}. Cannot be null.
+     *
+     * @throws NoSuchElementException If an active input does not have a mapping in the {@link DialogueRepository}.
+     */
+    public DialogueData(List<String> activeInputs, IDialogueRepository repository){
+        Objects.requireNonNull(activeInputs, "Active inputs is null.");
+        if(activeInputs.contains(null))
+            throw new NullPointerException("List contains a null input.");
+        for(String input : activeInputs){
+            repository.getResponseData(input);
+        }
+        Objects.requireNonNull(repository, "Dialogue repository is null.");
+        this.activeInputs = activeInputs;
         this.repository = repository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<String> getActive(){
-        return new ArrayList<>(active);
+    public List<String> getActiveInputs(){
+        return new ArrayList<>(activeInputs);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void process(String line){
-        Objects.requireNonNull(line, "Text is null.");
-        if(!active.contains(line))
+    public void process(String input){
+        Objects.requireNonNull(input, "Input is null.");
+        if(!activeInputs.contains(input))
             return;
-        IResponseData responseData = repository.getResponseData(line);
-        // display response?
+        activeInputs.remove(input);
+        IResponseData responseData = repository.getResponseData(input);
+        String response = responseData.getResponse();
         for(Action action : responseData.getActions())
             action.execute();
-        active.addAll(responseData.getNewInputs());
+        activeInputs.addAll(responseData.getNewInputs());
     }
 }
