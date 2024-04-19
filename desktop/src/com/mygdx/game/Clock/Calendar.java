@@ -1,7 +1,5 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Validator.Validator;
-
 import java.util.*;
 
 public class Calendar {
@@ -13,7 +11,9 @@ public class Calendar {
 
 
     public static Calendar create(List<Season> seasons){
-        Validator.notNullAndNotContainsNull(seasons, "Cannot create a Calendar with a null Season.");
+        Objects.requireNonNull(seasons);
+        if(seasons.contains(null))
+            throw new NullPointerException();
         return new Calendar(seasons);
     }
 
@@ -26,7 +26,7 @@ public class Calendar {
     }
 
     public int getSeasonLength(SeasonName name){
-        Validator.notNull(name, "Cannot find Season length for a null Season");
+        Objects.requireNonNull(name, "Cannot find Season length for a null Season");
         for(Season season : seasons){
             if(season.getName() == name){
                 return season.getLength();

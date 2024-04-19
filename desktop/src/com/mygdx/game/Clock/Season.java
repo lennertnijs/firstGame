@@ -1,6 +1,6 @@
 package com.mygdx.game.Clock;
 
-import com.mygdx.game.Validator.Validator;
+import java.util.Objects;
 
 public class Season {
 
@@ -13,8 +13,9 @@ public class Season {
     }
 
     public static Season create(SeasonName name, int length){
-        Validator.notNull(name, "Cannot create a Season with a null SeasonName.");
-        Validator.notNegative(length, "Cannot create a Season with a negative length.");
+        Objects.requireNonNull(name, "Cannot create a Season with a null SeasonName.");
+        if(length < 0)
+            throw new IllegalArgumentException("Cannot create a Season with a negative length.");
         return new Season(name, length);
     }
 
