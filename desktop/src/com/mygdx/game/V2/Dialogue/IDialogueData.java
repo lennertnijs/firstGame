@@ -23,5 +23,5 @@ public interface IDialogueData {
      * If the input was not part of the active inputs, returns.
      * @param input The input. Cannot be null.
      */
-    void process(String input);
+    void processInput(String input);
 }

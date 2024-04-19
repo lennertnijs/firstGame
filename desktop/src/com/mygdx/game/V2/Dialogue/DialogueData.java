@@ -44,7 +44,7 @@ public final class DialogueData implements IDialogueData{
      * {@inheritDoc}
      */
     @Override
-    public void process(String input){
+    public void processInput(String input){
         Objects.requireNonNull(input, "Input is null.");
         if(!activeInputs.contains(input))
             return;

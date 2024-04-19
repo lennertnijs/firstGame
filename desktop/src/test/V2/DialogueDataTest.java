@@ -60,21 +60,21 @@ public class DialogueDataTest {
 
     @Test
     public void testProcessInput(){
-        dialogueData.process(input1);
+        dialogueData.processInput(input1);
         assertEquals(new ArrayList<>(Collections.singletonList(input2)), dialogueData.getActiveInputs());
 
-        dialogueData.process(input1);
+        dialogueData.processInput(input1);
         assertEquals(new ArrayList<>(Collections.singletonList(input2)), dialogueData.getActiveInputs());
     }
 
     @Test
     public void testProcessWithInputNotInActive(){
-        dialogueData.process(input2);
+        dialogueData.processInput(input2);
         assertEquals(activeInputs, dialogueData.getActiveInputs());
     }
 
     @Test
     public void testProcessInputWithNull(){
-        assertThrows(NullPointerException.class, () -> dialogueData.process(null));
+        assertThrows(NullPointerException.class, () -> dialogueData.processInput(null));
     }
 }
