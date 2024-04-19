@@ -40,14 +40,14 @@ public final class ResponseData implements IResponseData {
      * {@inheritDoc}
      */
     public List<String> getNewInputs(){
-        return newInputs;
+        return new ArrayList<>(newInputs);
     }
 
     /**
      * {@inheritDoc}
      */
     public List<Action> getActions(){
-        return actions;
+        return new ArrayList<>(actions);
     }
 
     @Override
