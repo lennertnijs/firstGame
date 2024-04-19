@@ -1,6 +1,5 @@
 package com.mygdx.game.V2.Dialogue;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -20,26 +19,10 @@ public final class DialogueRepository implements IDialogueRepository{
     }
 
     @Override
-    public Line getResponse(Line line){
+    public IResponseData getResponse(Line line){
         Objects.requireNonNull(line, "The Line is null.");
         if(!mapping.containsKey(line))
             throw new NullPointerException("No mapping was found.");
-        return mapping.get(line).getResponse();
-    }
-
-    @Override
-    public List<Action> getActions(Line line){
-        Objects.requireNonNull(line, "The Line is null.");
-        if(!mapping.containsKey(line))
-            throw new NullPointerException("No mapping was found.");
-        return mapping.get(line).getActions();
-    }
-
-    @Override
-    public List<Line> getNextPrompts(Line line){
-        Objects.requireNonNull(line, "The Line is null.");
-        if(!mapping.containsKey(line))
-            throw new NullPointerException("No mapping was found.");
-        return mapping.get(line).getNextPrompts();
+        return mapping.get(line);
     }
 }

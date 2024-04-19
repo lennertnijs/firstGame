@@ -36,12 +36,10 @@ public final class DialogueData implements IDialogueData{
         DialogueLine line = DialogueLine.create(text);
         if(!active.contains(line))
             return;
-        Line response = repository.getResponse(line);
+        IResponseData responseData = repository.getResponse(line);
         // display response?
-        List<Action> actions = repository.getActions(line);
-        for(Action action : actions)
+        for(Action action : responseData.getActions())
             action.execute();
-        List<Line> newLines = repository.getNextPrompts(line);
-        active.addAll(newLines);
+        active.addAll( responseData.getNextPrompts());
     }
 }

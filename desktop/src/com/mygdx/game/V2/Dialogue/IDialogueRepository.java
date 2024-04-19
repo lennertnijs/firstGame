@@ -4,7 +4,5 @@ import java.util.List;
 
 public interface IDialogueRepository {
 
-    Line getResponse(Line line);
-    List<Action> getActions(Line line);
-    List<Line> getNextPrompts(Line line);
+    IResponseData getResponse(Line line);
 }
