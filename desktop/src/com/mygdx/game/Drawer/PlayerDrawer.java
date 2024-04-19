@@ -1,7 +1,6 @@
 package com.mygdx.game.Drawer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Direction;
 import com.mygdx.game.MyGame;
