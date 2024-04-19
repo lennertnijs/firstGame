@@ -17,12 +17,10 @@ public class PlayerDrawer {
     private final PlayerController playerController;
     private float timeElapsed = 0;
     private boolean playerInAnimation = false;
-    private final InventoryDrawer inventoryDrawer;
 
     public PlayerDrawer(MyGame game, PlayerController playerController){
         this.game = game;
         this.playerController = playerController;
-        this.inventoryDrawer = new InventoryDrawer(game);
 
     }
 
@@ -31,7 +29,6 @@ public class PlayerDrawer {
      */
     public void drawPlayer(){
         Activity activity = playerController.getPlayer().getActivity();
-        inventoryDrawer.drawInventory(playerController.getPlayer().getInventory());
         if(activity == Activity.IDLING){
             drawPlayerIdle();
             return;
