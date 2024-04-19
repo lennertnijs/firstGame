@@ -1,28 +1,35 @@
 package com.mygdx.game.V2.Dialogue;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.NoSuchElementException;
 
 public final class DialogueRepository implements IDialogueRepository{
 
     private final Map<String, IResponseData> mapping;
 
-    private DialogueRepository(Map<String, IResponseData> mapping){
-        this.mapping = mapping;
+    /**
+     * Creates a new {@link DialogueRepository}.
+     * @param mapping The mapping. Cannot be null. Cannot contain a null key or value.
+     */
+    public DialogueRepository(Map<String, IResponseData> mapping){
+        Objects.requireNonNull(mapping, "Mapping is null.");
+        if(mapping.containsKey(null))
+            throw new NullPointerException("Mapping contains a null key.");
+        if(mapping.containsValue(null))
+            throw new NullPointerException("Mapping contains a null value.");
+        this.mapping = new HashMap<>(mapping);
     }
 
-    public static DialogueRepository create(Map<String, IResponseData> mapping){
-        Objects.requireNonNull(mapping, "Cannot create a DialogueRepository with null.");
-        if(mapping.containsKey(null) || mapping.containsValue(null))
-            throw new NullPointerException("Cannot create a DialogueRepository with a null key or value.");
-        return new DialogueRepository(mapping);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public IResponseData getResponse(String line){
-        Objects.requireNonNull(line, "The Line is null.");
-        if(!mapping.containsKey(line))
-            throw new NullPointerException("No mapping was found.");
-        return mapping.get(line);
+    public IResponseData getResponseData(String input){
+        Objects.requireNonNull(input, "Input is null.");
+        if(!mapping.containsKey(input))
+            throw new NoSuchElementException("Input is not mapped.");
+        return mapping.get(input);
     }
 }

@@ -32,7 +32,7 @@ public final class DialogueData implements IDialogueData{
         Objects.requireNonNull(line, "Text is null.");
         if(!active.contains(line))
             return;
-        IResponseData responseData = repository.getResponse(line);
+        IResponseData responseData = repository.getResponseData(line);
         // display response?
         for(Action action : responseData.getActions())
             action.execute();
