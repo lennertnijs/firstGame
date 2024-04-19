@@ -7,31 +7,45 @@ import java.util.Objects;
 public final class ResponseData implements IResponseData {
 
     private final String response;
-    private final List<String> nextPrompts;
+    private final List<String> newInputs;
     private final List<Action> actions;
 
-
-    public ResponseData(String response, List<Action> actions, List<String> nextPrompts){
+    /**
+     * Creates a new {@link ResponseData}.
+     * @param response The response. Cannot be null.
+     * @param newInputs The new inputs. Cannot be null. Cannot contain null.
+     * @param actions The actions to be executed. Cannot be null. Cannot contain null.
+     */
+    public ResponseData(String response, List<String> newInputs, List<Action> actions){
         Objects.requireNonNull(response, "Response is null.");
-        Objects.requireNonNull(actions, "Actions List is null.");
+        Objects.requireNonNull(actions, "Actions list is null.");
         if(actions.contains(null))
             throw new NullPointerException("List contains a null Action.");
-        Objects.requireNonNull(nextPrompts, "Next prompts is null.");
-        if(nextPrompts.contains(null))
-            throw new NullPointerException("List contains a null next prompt.");
+        Objects.requireNonNull(newInputs, "New input list is null.");
+        if(newInputs.contains(null))
+            throw new NullPointerException("List contains a null input.");
         this.response = response;
+        this.newInputs = new ArrayList<>(newInputs);
         this.actions = new ArrayList<>(actions);
-        this.nextPrompts = new ArrayList<>(nextPrompts);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getResponse(){
         return response;
     }
 
-    public List<String> getNextPrompts(){
-        return nextPrompts;
+    /**
+     * {@inheritDoc}
+     */
+    public List<String> getNewInputs(){
+        return newInputs;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public List<Action> getActions(){
         return actions;
     }
@@ -43,20 +57,20 @@ public final class ResponseData implements IResponseData {
         ResponseData data = (ResponseData) other;
         return response.equals(data.response) &&
                 actions.equals(data.actions) &&
-                nextPrompts.equals(data.nextPrompts);
+                newInputs.equals(data.newInputs);
     }
 
     @Override
     public int hashCode(){
         int result = response.hashCode();
         result = result * 31 + actions.hashCode();
-        result = result * 31 + nextPrompts.hashCode();
+        result = result * 31 + newInputs.hashCode();
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("ResponseData[Response=%s, Actions=%s, NextPrompt=%s]",
-                response, actions, nextPrompts);
+        return String.format("ResponseData[Response=%s, NewInputs=%s, Actions=%s]",
+                response, actions, newInputs);
     }
 }

@@ -36,6 +36,6 @@ public final class DialogueData implements IDialogueData{
         // display response?
         for(Action action : responseData.getActions())
             action.execute();
-        active.addAll(responseData.getNextPrompts());
+        active.addAll(responseData.getNewInputs());
     }
 }
