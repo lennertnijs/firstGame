@@ -1,10 +1,10 @@
 package V2;
 
+import com.mygdx.game.V2.Action.Action;
+import com.mygdx.game.V2.Action.MockAction;
 import com.mygdx.game.V2.Dialogue.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -15,8 +15,6 @@ public class DialogueDataTest {
 
     private String input1;
     private String input2;
-    private IResponseData responseData1;
-    private IResponseData responseData2;
     private List<String> activeInputs;
     private IDialogueRepository dialogueRepository;
     private DialogueData dialogueData;
@@ -25,8 +23,10 @@ public class DialogueDataTest {
         input1 = "input1";
         input2 = "input2";
 
-        responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList(input2)), new ArrayList<>());
-        responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList(input2)), new ArrayList<>());
+        MockAction mockAction = new MockAction();
+        List<Action> actions = new ArrayList<>(Collections.singletonList(mockAction));
+        IResponseData responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList(input2)), actions);
+        IResponseData responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList(input2)), actions);
 
         activeInputs = new ArrayList<>(Collections.singletonList(input1));
         Map<String, IResponseData> mapping = new HashMap<>();
@@ -68,9 +68,8 @@ public class DialogueDataTest {
     }
 
     @Test
-    public void testProcessWithInputInActive(){
+    public void testProcessWithInputNotInActive(){
         dialogueData.process(input2);
-        // no changes
         assertEquals(activeInputs, dialogueData.getActiveInputs());
     }
 

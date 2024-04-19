@@ -1,6 +1,6 @@
 package com.mygdx.game.V2.Dialogue;
 
-import com.mygdx.game.V2.Action;
+import com.mygdx.game.V2.Action.Action;
 
 import java.util.ArrayList;
 import java.util.List;

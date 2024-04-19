@@ -1,6 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.Action;
+import com.mygdx.game.V2.Action.Action;
 import com.mygdx.game.V2.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
