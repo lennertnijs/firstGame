@@ -32,6 +32,16 @@ public final class DialogueData implements IDialogueData{
 
     @Override
     public void process(String text){
-        // process.
+        Objects.requireNonNull(text, "Text is null.");
+        DialogueLine line = DialogueLine.create(text);
+        if(!active.contains(line))
+            return;
+        Line response = repository.getResponse(line);
+        // display response?
+        List<Action> actions = repository.getActions(line);
+        for(Action action : actions)
+            action.execute();
+        List<Line> newLines = repository.getNextPrompts(line);
+        active.addAll(newLines);
     }
 }
