@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface IDialogueRepository {
 
-    IResponseData getResponse(Line line);
+    IResponseData getResponse(String line);
 }

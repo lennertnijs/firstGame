@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public final class ResponseData implements IResponseData {
 
-    private final Line response;
+    private final String response;
     private final List<Action> actions;
-    private final List<Line> nextPrompts;
+    private final List<String> nextPrompts;
 
     private ResponseData(Builder builder){
         this.response = builder.response;
@@ -15,7 +15,7 @@ public final class ResponseData implements IResponseData {
         this.nextPrompts = builder.nextPrompts;
     }
 
-    public Line getResponse(){
+    public String getResponse(){
         return response;
     }
 
@@ -23,7 +23,7 @@ public final class ResponseData implements IResponseData {
         return actions;
     }
 
-    public List<Line> getNextPrompts(){
+    public List<String> getNextPrompts(){
         return nextPrompts;
     }
 
@@ -61,11 +61,11 @@ public final class ResponseData implements IResponseData {
         private Builder(){
         }
 
-        private Line response;
+        private String response;
         private List<Action> actions;
-        private List<Line> nextPrompts;
+        private List<String> nextPrompts;
 
-        public Builder response(Line response){
+        public Builder response(String response){
             this.response = response;
             return this;
         }
@@ -75,7 +75,7 @@ public final class ResponseData implements IResponseData {
             return this;
         }
 
-        public Builder nextPrompts(List<Line> nextPrompts){
+        public Builder nextPrompts(List<String> nextPrompts){
             this.nextPrompts = nextPrompts;
             return this;
         }

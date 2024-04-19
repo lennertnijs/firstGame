@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IResponseData {
 
-    Line getResponse();
+    String getResponse();
     List<Action> getActions();
-    List<Line> getNextPrompts();
+    List<String> getNextPrompts();
 }

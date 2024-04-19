@@ -5,13 +5,13 @@ import java.util.Objects;
 
 public final class DialogueRepository implements IDialogueRepository{
 
-    private final Map<Line, IResponseData> mapping;
+    private final Map<String, IResponseData> mapping;
 
-    private DialogueRepository(Map<Line, IResponseData> mapping){
+    private DialogueRepository(Map<String, IResponseData> mapping){
         this.mapping = mapping;
     }
 
-    public static DialogueRepository create(Map<Line, IResponseData> mapping){
+    public static DialogueRepository create(Map<String, IResponseData> mapping){
         Objects.requireNonNull(mapping, "Cannot create a DialogueRepository with null.");
         if(mapping.containsKey(null) || mapping.containsValue(null))
             throw new NullPointerException("Cannot create a DialogueRepository with a null key or value.");
@@ -19,7 +19,7 @@ public final class DialogueRepository implements IDialogueRepository{
     }
 
     @Override
-    public IResponseData getResponse(Line line){
+    public IResponseData getResponse(String line){
         Objects.requireNonNull(line, "The Line is null.");
         if(!mapping.containsKey(line))
             throw new NullPointerException("No mapping was found.");
