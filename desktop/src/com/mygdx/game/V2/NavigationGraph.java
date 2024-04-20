@@ -1,13 +1,14 @@
 package com.mygdx.game.V2;
 
 import com.mygdx.game.V2.Generic.Graph;
+import com.mygdx.game.V2.Generic.IUnweightedGraph;
 import com.mygdx.game.V2.WeekSchedule.Location;
 
 import java.util.*;
 
 public final class NavigationGraph {
 
-    private final Graph<Location> graph;
+    private final IUnweightedGraph<Location> graph;
     private final PathFinderStrategy<Location> strategy;
 
     private NavigationGraph(Graph<Location> graph,  PathFinderStrategy<Location> strategy){
@@ -21,7 +22,7 @@ public final class NavigationGraph {
         return new NavigationGraph(graph, strategy);
     }
 
-    public Graph<Location> getGraph(){
+    public IUnweightedGraph<Location> getGraph(){
         return graph;
     }
 
