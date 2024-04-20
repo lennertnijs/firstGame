@@ -4,7 +4,7 @@ import java.util.*;
 
 public final class Graph<T> implements IGraph<T>{
 
-    private Map<T, List<T>> adjacencyMap;
+    private Map<Vertex<T>, List<Edge<T>>> adjacencyMap;
 
     public Graph(){
         this.adjacencyMap = new HashMap<>();
@@ -23,61 +23,44 @@ public final class Graph<T> implements IGraph<T>{
                     throw new NoSuchElementException();
             }
         }
-
-
     }
 
-    public void addVertex(T vertex){
-        Objects.requireNonNull(vertex, "Cannot add a null Vertex to the Graph.");
+    public void addVertex(T t){
+        Vertex<T> vertex = new Vertex<>(t);
+        if(adjacencyMap.containsKey(vertex))
+            throw new IllegalArgumentException("The value already exists in the Graph.");
         adjacencyMap.put(vertex, new ArrayList<>());
     }
 
-    public void addVertices(List<T> vertices){
-        Objects.requireNonNull(vertices, "Cannot add vertices from null.");
-        if(vertices.contains(null))
-            throw new NullPointerException("Cannot add a null Vertex to the Graph.");
-        for(T vertex : vertices)
-            adjacencyMap.put(vertex, new ArrayList<>());
+    public void addVertices(List<T> values){
+        Objects.requireNonNull(values, "Values list is null.");
+        for(T value : values)
+            addVertex(value);
     }
 
     public void addEdge(T start, T end){
-        Objects.requireNonNull(start, "Cannot add an Edge from a null Vertex.");
-        Objects.requireNonNull(end, "Cannot add an Edge to a null Vertex.");
-        if(!adjacencyMap.containsKey(start))
-            throw new NoSuchElementException("Cannot add the Edge because the starting Vertex does not exist in the Graph.");
-        if(!adjacencyMap.containsKey(end))
-            throw new NoSuchElementException("Cannot add the Edge because the end Vertex does not exist in the Graph.");
-        List<T> startEdges = adjacencyMap.get(start);
-        startEdges.add(end);
-        adjacencyMap.put(start, startEdges);
-        List<T> endEdges = adjacencyMap.get(end);
-        endEdges.add(start);
-        adjacencyMap.put(end, endEdges);
+        Vertex<T> startVertex = new Vertex<>(start);
+        if(!adjacencyMap.containsKey(startVertex))
+            throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
+        Vertex<T> endVertex = new Vertex<>(end);
+        if(!adjacencyMap.containsKey(endVertex))
+            throw new NoSuchElementException("Ending Vertex is not part of the Graph.");
+
+        Edge<T> edge1 = new Edge<>(startVertex, endVertex, 0);
+        adjacencyMap.get(startVertex).add(edge1);
+        Edge<T> edge2 = new Edge<>(endVertex, startVertex, 0);
+        adjacencyMap.get(endVertex).add(edge2);
     }
 
     public void addEdges(T start, List<T> ends){
-        Objects.requireNonNull(start, "Cannot add an Edge from a null Vertex.");
-        Objects.requireNonNull(ends, "Cannot add Edges from null.");
-        if(ends.contains(null))
-            throw new NullPointerException("Cannot add an Edge to a null Vertex.");
-        if(!adjacencyMap.containsKey(start))
-            throw new NoSuchElementException("Cannot add the Edge because the starting Vertex does not exist in the Graph.");
-        for(T end : ends){
-            if(!adjacencyMap.containsKey(end))
-                throw new NoSuchElementException("Cannot add the Edge because the end Vertex does not exist in the Graph.");
-        }
-        List<T> startEdges = adjacencyMap.get(start);
-        startEdges.addAll(ends);
-        adjacencyMap.put(start, startEdges);
-        for(T end : ends){
-            List<T> endEdges = adjacencyMap.get(end);
-            endEdges.add(start);
-            adjacencyMap.put(end, endEdges);
-        }
+        Objects.requireNonNull(ends, "End values list is null.");
+        for(T value : ends)
+            addEdge(start, value);
+
     }
 
-    public void removeVertex(T vertex){
-        adjacencyMap.remove(vertex);
+    public void removeVertex(T value){
+        adjacencyMap.remove(new Vertex<>(value));
     }
 
     public void removeEdge(T start, T end){
@@ -101,30 +84,42 @@ public final class Graph<T> implements IGraph<T>{
         return adjacencyMap.get(vertex);
     }
 
-    public boolean hasVertex(T vertex){
-        return adjacencyMap.containsKey(vertex);
+    public boolean hasVertex(T t){
+        return adjacencyMap.containsKey(new Vertex<>(t));
     }
 
     public boolean hasEdge(T start, T end){
         return adjacencyMap.get(start).contains(end);
     }
 
+    /**
+     * @return True if the {@link Graph} is empty. False otherwise.
+     */
     public boolean isEmpty(){
         return adjacencyMap.isEmpty();
     }
 
+    /**
+     * @return The amount of vertices in this {@link Graph}.
+     */
     public int vertexCount(){
         return adjacencyMap.keySet().size();
     }
 
+    /**
+     * @return The amount of edges in this {@link Graph}.
+     */
     public int edgeCount(){
         int edgeCount = 0;
-        for(T vertex : adjacencyMap.keySet()){
+        for(Vertex<T> vertex : adjacencyMap.keySet()){
             edgeCount += adjacencyMap.get(vertex).size();
         }
         return edgeCount;
     }
 
+    /**
+     * Clears the entire {@link Graph}.
+     */
     public void clear(){
         adjacencyMap = new HashMap<>();
     }
