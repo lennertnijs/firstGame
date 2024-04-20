@@ -7,6 +7,10 @@ public interface IGraph<T> {
 
     void addVertex(T vertex);
     void addVertices(List<T> vertices);
+    void addEdge(T startVertex, T endVertex);
+    void addEdges(T startVertex, List<T> endVertices);
+//    void addEdge(T startVertex, T endVertex, int weight);
+//    void addEdges(T startVertex, List<T> endVertices, List<Integer> weights);
     void removeVertex(T vertex);
     void removeEdge(T startVertex, T endVertex);
     Set<T> getVertices();

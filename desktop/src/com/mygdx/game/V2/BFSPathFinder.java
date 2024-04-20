@@ -1,6 +1,6 @@
 package com.mygdx.game.V2;
 
-import com.mygdx.game.V2.Generic.IUnweightedGraph;
+import com.mygdx.game.V2.Generic.IGraph;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ public class BFSPathFinder<T> implements PathFinderStrategy<T>{
     }
 
     @Override
-    public List<T> findPath(T start, T goal, IUnweightedGraph<T> graph) {
+    public List<T> findPath(T start, T goal, IGraph<T> graph) {
         Objects.requireNonNull(start, "Cannot find a path using BFS starting in null.");
         Objects.requireNonNull(goal, "Cannot find a path using BFS ending in null.");
         Objects.requireNonNull(graph, "Cannot find a path using BFS over a null network.");

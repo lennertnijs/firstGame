@@ -2,6 +2,7 @@ package V2;
 
 import com.mygdx.game.V2.*;
 import com.mygdx.game.V2.Generic.Graph;
+import com.mygdx.game.V2.Generic.IGraph;
 import com.mygdx.game.V2.WeekSchedule.Location;
 import com.mygdx.game.V2.Util.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,7 @@ public class BFSPathFinderTest {
     private Location mp5;
     private Location mp6;
     private Location mp7;
-    private final Graph<Location> graph = new Graph<>();
+    private final IGraph<Location> graph = new Graph<>();
     private final BFSPathFinder<Location> bfsPathFinder = new BFSPathFinder<>();
 
     @BeforeEach
