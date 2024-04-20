@@ -2,7 +2,7 @@ package com.mygdx.game.V2.Generic;
 
 import java.util.*;
 
-public final class Graph<T>{
+public final class Graph<T> implements IGraph<T>{
 
     private Map<T, List<T>> adjacencyList;
 
@@ -72,6 +72,13 @@ public final class Graph<T>{
         return adjacencyList.keySet();
     }
 
+    public int getDegree(T vertex){
+        Objects.requireNonNull(vertex, "Vertex is null.");
+        if(!adjacencyList.containsKey(vertex))
+            throw new NoSuchElementException("Vertex not found.");
+        return adjacencyList.get(vertex).size();
+    }
+
     public List<T> getNeighbors(T vertex){
         Objects.requireNonNull(vertex, "Cannot fetch the neighbors of null.");
         return adjacencyList.get(vertex);
@@ -85,19 +92,15 @@ public final class Graph<T>{
         return adjacencyList.get(start).contains(end);
     }
 
-    public boolean areConnected(T start, T end){
-        return adjacencyList.get(start).contains(end) && adjacencyList.get(end).contains(start);
-    }
-
     public boolean isEmpty(){
         return adjacencyList.isEmpty();
     }
 
-    public int amountOfVertices(){
+    public int vertexCount(){
         return adjacencyList.keySet().size();
     }
 
-    public int amountOfEdges(){
+    public int edgeCount(){
         int edgeCount = 0;
         for(T vertex : adjacencyList.keySet()){
             edgeCount += adjacencyList.get(vertex).size();
