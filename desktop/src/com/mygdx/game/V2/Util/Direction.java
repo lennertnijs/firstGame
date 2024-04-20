@@ -1,4 +1,4 @@
-package com.mygdx.game.V2.TextureSelector;
+package com.mygdx.game.V2.Util;
 
 public enum Direction {
     UP,
