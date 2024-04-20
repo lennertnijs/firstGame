@@ -2,7 +2,7 @@ package com.mygdx.game.V2.Generic;
 
 import java.util.*;
 
-public final class Graph<T> implements IGraph<T>{
+public final class Graph<T> implements IUnweightedGraph<T>{
 
     private Map<T, List<T>> adjacencyList;
 
