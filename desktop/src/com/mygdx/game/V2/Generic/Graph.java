@@ -1,4 +1,4 @@
-package com.mygdx.game.V2;
+package com.mygdx.game.V2.Generic;
 
 import java.util.*;
 

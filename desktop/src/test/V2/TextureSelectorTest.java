@@ -1,8 +1,8 @@
 package V2;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Direction;
+import com.mygdx.game.V2.TextureSelector.ActivityType;
+import com.mygdx.game.V2.TextureSelector.Direction;
 import com.mygdx.game.V2.TextureSelector.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

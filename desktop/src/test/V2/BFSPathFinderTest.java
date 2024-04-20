@@ -1,6 +1,7 @@
 package V2;
 
 import com.mygdx.game.V2.*;
+import com.mygdx.game.V2.Generic.Graph;
 import com.mygdx.game.V2.WeekSchedule.Location;
 import com.mygdx.game.V2.Util.Position;
 import org.junit.jupiter.api.BeforeEach;

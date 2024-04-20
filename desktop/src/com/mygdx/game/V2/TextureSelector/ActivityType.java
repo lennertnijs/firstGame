@@ -1,4 +1,4 @@
-package com.mygdx.game.V2.Util;
+package com.mygdx.game.V2.TextureSelector;
 
 public enum ActivityType {
     IDLING,

@@ -1,6 +1,6 @@
 package com.mygdx.game.V2.WeekSchedule;
 
-import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.TextureSelector.ActivityType;
 import com.mygdx.game.V2.Util.Position;
 import com.mygdx.game.V2.Util.Time;
 

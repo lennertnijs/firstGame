@@ -1,5 +1,7 @@
 package com.mygdx.game.V2;
 
+import com.mygdx.game.V2.Generic.Graph;
+
 import java.util.*;
 
 public class BFSPathFinder<T> implements PathFinderStrategy<T>{

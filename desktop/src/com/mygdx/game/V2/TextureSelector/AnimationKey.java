@@ -1,8 +1,5 @@
 package com.mygdx.game.V2.TextureSelector;
 
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Direction;
-
 import java.util.Objects;
 
 public final class AnimationKey {
