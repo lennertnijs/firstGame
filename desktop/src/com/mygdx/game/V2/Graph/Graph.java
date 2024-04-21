@@ -10,6 +10,9 @@ public final class Graph<T> implements IGraph<T>{
         this.adjacencyMap = new HashMap<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addVertex(T t){
         Vertex<T> vertex = new Vertex<>(t);
@@ -18,6 +21,9 @@ public final class Graph<T> implements IGraph<T>{
         adjacencyMap.put(vertex, new ArrayList<>());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addVertices(List<T> values){
         Objects.requireNonNull(values, "Values list is null.");
@@ -25,6 +31,9 @@ public final class Graph<T> implements IGraph<T>{
             addVertex(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEdge(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
@@ -32,6 +41,9 @@ public final class Graph<T> implements IGraph<T>{
         createAndStoreEdge(startVertex, endVertex, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEdge(T start, T end, int weight) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -41,6 +53,9 @@ public final class Graph<T> implements IGraph<T>{
         createAndStoreEdge(startVertex, endVertex, weight);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEdges(T start, List<T> ends){
         Objects.requireNonNull(ends, "End values list is null.");
@@ -48,12 +63,17 @@ public final class Graph<T> implements IGraph<T>{
             addEdge(start, value);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEdges(T startVertex, List<T> endVertices, List<Integer> weights) {
         //todo
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connect(T start, T end) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -62,6 +82,9 @@ public final class Graph<T> implements IGraph<T>{
         createAndStoreEdge(endVertex, startVertex, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connect(T start, List<T> end) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -72,6 +95,9 @@ public final class Graph<T> implements IGraph<T>{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connect(T start, T end, int weight) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -80,6 +106,9 @@ public final class Graph<T> implements IGraph<T>{
         createAndStoreEdge(endVertex, startVertex, weight);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void connect(T start, List<T> end, List<Integer> weights) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -92,6 +121,9 @@ public final class Graph<T> implements IGraph<T>{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void disconnect(T start, T end) {
         Vertex<T> startVertex = new Vertex<>(start);
@@ -109,13 +141,18 @@ public final class Graph<T> implements IGraph<T>{
         adjacencyMap.get(startVertex).add(edge);
     }
 
-
-
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void removeVertex(T value){
         adjacencyMap.remove(new Vertex<>(value));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void removeEdge(T start, T end){
         Vertex<T> v1 = new Vertex<>(start);
         Vertex<T> v2 = new Vertex<>(end);
@@ -127,6 +164,10 @@ public final class Graph<T> implements IGraph<T>{
         adjacencyMap.get(v2).removeIf(edge -> edge.getStart().equals(v2) && edge.getEnd().equals(v1));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<T> getVertices(){
         List<T> valuesSet = new ArrayList<>();
         for(Vertex<T> vertex : adjacencyMap.keySet())
@@ -134,11 +175,18 @@ public final class Graph<T> implements IGraph<T>{
         return valuesSet;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<T> getNeighbors(T vertex) {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getWeight(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
@@ -146,6 +194,10 @@ public final class Graph<T> implements IGraph<T>{
         return 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public int getDegree(T value){
         Vertex<T> vertex = new Vertex<>(value);
         if(!adjacencyMap.containsKey(vertex))
@@ -153,10 +205,18 @@ public final class Graph<T> implements IGraph<T>{
         return adjacencyMap.get(vertex).size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean hasVertex(T t){
         return adjacencyMap.containsKey(new Vertex<>(t));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean hasEdge(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
@@ -170,22 +230,25 @@ public final class Graph<T> implements IGraph<T>{
     }
 
     /**
-     * @return True if the {@link Graph} is empty. False otherwise.
+     * {@inheritDoc}
      */
+    @Override
     public boolean isEmpty(){
         return adjacencyMap.isEmpty();
     }
 
     /**
-     * @return The amount of vertices in this {@link Graph}.
+     * {@inheritDoc}
      */
+    @Override
     public int vertexCount(){
         return adjacencyMap.keySet().size();
     }
 
     /**
-     * @return The amount of edges in this {@link Graph}.
+     * {@inheritDoc}
      */
+    @Override
     public int edgeCount(){
         int edgeCount = 0;
         for(Vertex<T> vertex : adjacencyMap.keySet()){
@@ -195,8 +258,9 @@ public final class Graph<T> implements IGraph<T>{
     }
 
     /**
-     * Clears the entire {@link Graph}.
+     * {@inheritDoc}
      */
+    @Override
     public void clear(){
         adjacencyMap = new HashMap<>();
     }
