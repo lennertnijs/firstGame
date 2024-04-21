@@ -10,78 +10,147 @@ public final class Graph<T> implements IGraph<T>{
         this.adjacencyMap = new HashMap<>();
     }
 
-    public Graph(Map<T, List<T>> adjacencyMap){
-        Objects.requireNonNull(adjacencyMap, "Adjacency map is null.");
-        for(T key : adjacencyMap.keySet())
-            Objects.requireNonNull(key, "Adjacency map contains a null key.");
-        for(List<T> value : adjacencyMap.values()) {
-            Objects.requireNonNull(value, "Adjacency map contains a null value list.");
-            if(value.contains(null))
-                throw new NullPointerException("Adjacency map value list contains a null.");
-            for(T edge : value){
-                if(!adjacencyMap.containsKey(edge))
-                    throw new NoSuchElementException();
-            }
-        }
-    }
-
+    @Override
     public void addVertex(T t){
         Vertex<T> vertex = new Vertex<>(t);
         if(adjacencyMap.containsKey(vertex))
-            throw new IllegalArgumentException("The value already exists in the Graph.");
+            throw new IllegalStateException("The value already exists in the Graph.");
         adjacencyMap.put(vertex, new ArrayList<>());
     }
 
+    @Override
     public void addVertices(List<T> values){
         Objects.requireNonNull(values, "Values list is null.");
         for(T value : values)
             addVertex(value);
     }
 
+    @Override
     public void addEdge(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
-        if(!adjacencyMap.containsKey(startVertex))
-            throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
         Vertex<T> endVertex = new Vertex<>(end);
-        if(!adjacencyMap.containsKey(endVertex))
-            throw new NoSuchElementException("Ending Vertex is not part of the Graph.");
-
-        Edge<T> edge1 = new Edge<>(startVertex, endVertex, 0);
-        adjacencyMap.get(startVertex).add(edge1);
-        Edge<T> edge2 = new Edge<>(endVertex, startVertex, 0);
-        adjacencyMap.get(endVertex).add(edge2);
+        createAndStoreEdge(startVertex, endVertex, 0);
     }
 
+    @Override
+    public void addEdge(T start, T end, int weight) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        if(weight < 0)
+            throw new IllegalArgumentException("The weight is negative.");
+        createAndStoreEdge(startVertex, endVertex, weight);
+    }
+
+    @Override
     public void addEdges(T start, List<T> ends){
         Objects.requireNonNull(ends, "End values list is null.");
         for(T value : ends)
             addEdge(start, value);
-
     }
+
+
+    @Override
+    public void addEdges(T startVertex, List<T> endVertices, List<Integer> weights) {
+        //todo
+    }
+
+    @Override
+    public void connect(T start, T end) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        createAndStoreEdge(startVertex, endVertex, 0);
+        createAndStoreEdge(endVertex, startVertex, 0);
+    }
+
+    @Override
+    public void connect(T start, List<T> end) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        for(T value : end) {
+            Vertex<T> endVertex = new Vertex<>(value);
+            createAndStoreEdge(startVertex, endVertex, 0);
+            createAndStoreEdge(endVertex, startVertex, 0);
+        }
+    }
+
+    @Override
+    public void connect(T start, T end, int weight) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        createAndStoreEdge(startVertex, endVertex, weight);
+        createAndStoreEdge(endVertex, startVertex, weight);
+    }
+
+    @Override
+    public void connect(T start, List<T> end, List<Integer> weights) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        int i = 0;
+        for(T value : end) {
+            Vertex<T> endVertex = new Vertex<>(value);
+            createAndStoreEdge(startVertex, endVertex, weights.get(i));
+            createAndStoreEdge(endVertex, startVertex, weights.get(i));
+            i++;
+        }
+    }
+
+    @Override
+    public void disconnect(T start, T end) {
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        adjacencyMap.get(startVertex).removeIf(edge -> edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex));
+        adjacencyMap.get(startVertex).removeIf(edge -> edge.getStart().equals(endVertex) && edge.getEnd().equals(startVertex));
+    }
+
+    private void createAndStoreEdge(Vertex<T> startVertex, Vertex<T> endVertex, int weight){
+        if(!adjacencyMap.containsKey(startVertex))
+            throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
+        if(!adjacencyMap.containsKey(endVertex))
+            throw new NoSuchElementException("Ending Vertex is not part of the Graph.");
+        Edge<T> edge = new Edge<>(startVertex, endVertex, weight);
+        adjacencyMap.get(startVertex).add(edge);
+    }
+
+
+
 
     public void removeVertex(T value){
         adjacencyMap.remove(new Vertex<>(value));
     }
 
     public void removeEdge(T start, T end){
-        adjacencyMap.get(start).remove(end);
-        adjacencyMap.get(end).remove(start);
+        Vertex<T> v1 = new Vertex<>(start);
+        Vertex<T> v2 = new Vertex<>(end);
+        if(!adjacencyMap.containsKey(v1))
+            throw new NoSuchElementException("No vertex.");
+        if(!adjacencyMap.containsKey(v2))
+            throw new NoSuchElementException("No vertex.");
+        adjacencyMap.get(v1).removeIf(edge -> edge.getStart().equals(v1) && edge.getEnd().equals(v2));
+        adjacencyMap.get(v2).removeIf(edge -> edge.getStart().equals(v2) && edge.getEnd().equals(v1));
     }
 
-    public Set<T> getVertices(){
-        return adjacencyMap.keySet();
+    public List<T> getVertices(){
+        List<T> valuesSet = new ArrayList<>();
+        for(Vertex<T> vertex : adjacencyMap.keySet())
+            valuesSet.add(vertex.getValue());
+        return valuesSet;
     }
 
-    public int getDegree(T vertex){
-        Objects.requireNonNull(vertex, "Vertex is null.");
+    @Override
+    public List<T> getNeighbors(T vertex) {
+        return null;
+    }
+
+    public int getWeight(T start, T end){
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        // todo
+        return 1;
+    }
+
+    public int getDegree(T value){
+        Vertex<T> vertex = new Vertex<>(value);
         if(!adjacencyMap.containsKey(vertex))
             throw new NoSuchElementException("Vertex not found.");
         return adjacencyMap.get(vertex).size();
-    }
-
-    public List<T> getNeighbors(T vertex){
-        Objects.requireNonNull(vertex, "Cannot fetch the neighbors of null.");
-        return adjacencyMap.get(vertex);
     }
 
     public boolean hasVertex(T t){
@@ -89,7 +158,15 @@ public final class Graph<T> implements IGraph<T>{
     }
 
     public boolean hasEdge(T start, T end){
-        return adjacencyMap.get(start).contains(end);
+        Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
+        if(!adjacencyMap.containsKey(startVertex))
+            throw new NoSuchElementException("Start Vertex not found.");
+        for(Edge<T> edge : adjacencyMap.get(startVertex)){
+            if(edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex))
+                return true;
+        }
+        return false;
     }
 
     /**
