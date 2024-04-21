@@ -1,4 +1,4 @@
-package com.mygdx.game.V2.Generic;
+package com.mygdx.game.V2.Graph;
 
 public final class Edge<T> {
 

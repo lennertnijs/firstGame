@@ -1,6 +1,6 @@
 package com.mygdx.game.V2;
 
-import com.mygdx.game.V2.Generic.IGraph;
+import com.mygdx.game.V2.Graph.IGraph;
 
 import java.util.*;
 
