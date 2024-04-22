@@ -35,6 +35,11 @@ public class GraphTest {
     }
 
     @Test
+    public void testHasVertexWithNull(){
+        assertThrows(NullPointerException.class, () -> graph.hasVertex(null));
+    }
+
+    @Test
     public void testAddVertex() {
         assertEquals(new HashSet<>(), graph.getVertices());
         graph.addVertex(str1);
@@ -61,10 +66,19 @@ public class GraphTest {
         assertEquals(new HashSet<>(), graph.getVertices());
         graph.addVertices(Arrays.asList(str1, str2, str3));
         assertEquals(new HashSet<>(Arrays.asList(str1, str2, str3)), graph.getVertices());
+        assertTrue(graph.hasVertex(str1));
+        assertTrue(graph.hasVertex(str2));
+        assertTrue(graph.hasVertex(str3));
+        assertFalse(graph.hasVertex(str4));
     }
 
     @Test
-    public void testAddVerticesWithNull() {
+    public void testAddVerticesWithNullList() {
+        assertThrows(NullPointerException.class, () -> graph.addVertices(null));
+    }
+
+    @Test
+    public void testAddVerticesWithNullElement() {
         assertThrows(NullPointerException.class, () -> graph.addVertices(Arrays.asList(str1, str2, null)));
     }
 
@@ -78,11 +92,13 @@ public class GraphTest {
         assertEquals(0, graph.vertexCount());
         graph.addVertex(str1);
         assertEquals(1, graph.vertexCount());
+        assertTrue(graph.hasVertex(str1));
         graph.addVertices(Arrays.asList(str2, str3, str4));
         assertEquals(4, graph.vertexCount());
+        assertTrue(graph.hasVertex(str2));
+        assertTrue(graph.hasVertex(str3));
+        assertTrue(graph.hasVertex(str4));
     }
-
-
 
     @Test
     public void testIsEmpty() {
@@ -95,8 +111,35 @@ public class GraphTest {
     public void testClear() {
         graph.addVertex(str1);
         assertFalse(graph.isEmpty());
+        assertTrue(graph.hasVertex(str1));
         graph.clear();
         assertTrue(graph.isEmpty());
+        assertFalse(graph.hasVertex(str1));
+    }
+
+    @Test
+    public void testHasEdge(){
+        graph.addVertices(Arrays.asList(str1, str2, str3));
+        assertFalse(graph.hasEdge(str1, str2));
+        graph.addEdge(str1, str2);
+        assertTrue(graph.hasEdge(str1, str2));
+        assertFalse(graph.hasEdge(str2, str1));
+        graph.addEdge(str2, str1);
+        assertTrue(graph.hasEdge(str2, str1));
+    }
+
+    @Test
+    public void testHasEdgeWithNull(){
+        assertThrows(NullPointerException.class, () -> graph.hasEdge(null, str1));
+        graph.addVertex(str1);
+        assertThrows(NullPointerException.class, () -> graph.hasEdge(str1, null));
+    }
+
+    @Test
+    public void testHasEdgeNotExists(){
+        assertThrows(NoSuchElementException.class, () -> graph.hasEdge(str1, str2));
+        graph.addVertex(str1);
+        assertThrows(NoSuchElementException.class, () -> graph.hasEdge(str1, str2));
     }
 
     @Test
@@ -219,27 +262,6 @@ public class GraphTest {
         assertThrows(NoSuchElementException.class, () -> graph.getNeighbors(str1));
     }
 
-    @Test
-    public void testHasEdge(){
-        graph.addVertices(Arrays.asList(str1, str2, str3));
-        assertFalse(graph.hasEdge(str1, str2));
-        graph.addEdge(str1, str2);
-        assertTrue(graph.hasEdge(str1, str2));
-    }
-
-    @Test
-    public void testHasEdgeWithNullObject(){
-        assertThrows(NullPointerException.class, () -> graph.hasEdge(null, str1));
-        graph.addVertex(str1);
-        assertThrows(NullPointerException.class, () -> graph.hasEdge(str1, null));
-    }
-
-    @Test
-    public void testHasEdgeNotExists(){
-        assertThrows(NoSuchElementException.class, () -> graph.hasEdge(str1, str2));
-        graph.addVertex(str1);
-        assertThrows(NoSuchElementException.class, () -> graph.hasEdge(str1, str2));
-    }
 
     @Test
     public void testAddEdges() {
@@ -269,18 +291,23 @@ public class GraphTest {
 
     @Test
     public void testAddWeightedEdgesWithNullWeightsList() {
-        graph.addVertex(str1);
-        graph.addVertex(str2);
+        graph.addVertices(Arrays.asList(str1, str2));
         assertThrows(NullPointerException.class,
                 () -> graph.addEdges(str1, Collections.singletonList(str2), null));
     }
 
     @Test
     public void testAddWeightedEdgesWithListLengthsDifferent() {
-        graph.addVertex(str1);
-        graph.addVertex(str2);
+        graph.addVertices(Arrays.asList(str1, str2));
         assertThrows(IllegalArgumentException.class,
                 () -> graph.addEdges(str1, Collections.singletonList(str2), Arrays.asList(1, 2, 3)));
+    }
+
+    @Test
+    public void testAddWeightedEdgesWithNullWeight(){
+        graph.addVertices(Arrays.asList(str1, str2, str3));
+        assertThrows(NullPointerException.class,
+                () -> graph.addEdges(str1, Arrays.asList(str2, str3), Arrays.asList(1, null)));
     }
 
     @Test
@@ -337,19 +364,22 @@ public class GraphTest {
 
     @Test
     public void testConnectAllWeightedWithNullWeightsList(){
-        graph.addVertex(str1);
-        graph.addVertex(str2);
-        graph.addVertex(str3);
+        graph.addVertices(Arrays.asList(str1, str2, str3));
         assertThrows(NullPointerException.class, () -> graph.connectAll(str1, Arrays.asList(str2, str3), null));
     }
 
     @Test
     public void testConnectAllWeightedWithListLengthsDifferent(){
-        graph.addVertex(str1);
-        graph.addVertex(str2);
-        graph.addVertex(str3);
+        graph.addVertices(Arrays.asList(str1, str2, str3));
         assertThrows(IllegalArgumentException.class,
                 () -> graph.connectAll(str1, Arrays.asList(str2, str3), Arrays.asList(1, 2, 3)));
+    }
+
+    @Test
+    public void testConnectAllWeightedWithNullWeight(){
+        graph.addVertices(Arrays.asList(str1, str2, str3));
+        assertThrows(NullPointerException.class,
+                () -> graph.connectAll(str1, Arrays.asList(str2, str3), Arrays.asList(1, null)));
     }
 
     @Test

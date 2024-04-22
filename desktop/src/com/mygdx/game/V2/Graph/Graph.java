@@ -220,11 +220,12 @@ public final class Graph<T> implements IGraph<T>{
     @Override
     public int getWeight(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
+        Vertex<T> endVertex = new Vertex<>(end);
         if(!adjacencyMap.containsKey(startVertex))
             throw new NoSuchElementException("Start object is not a vertex in the Graph.");
-        Vertex<T> endVertex = new Vertex<>(end);
+        Edge<T> dummyEdge = new Edge<>(startVertex, endVertex, 0);
         for(Edge<T> edge : adjacencyMap.get(startVertex))
-            if(edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex))
+            if(edge.hasSameVertices(dummyEdge))
                 return edge.getWeight();
         throw new NoSuchElementException("No edge between the two objects was found.");
     }
