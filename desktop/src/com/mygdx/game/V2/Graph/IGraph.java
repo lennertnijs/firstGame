@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * Represents an interface for basic interactions with a graph.
- * For the graph to work as intended, the objects being stored should override the equals() and hashCode() methods.
+ * For the graph to work as intended, the objects being stored MUST override the equals() and hashCode() methods.
  */
 public interface IGraph<T> {
 
