@@ -374,9 +374,9 @@ public class GraphTest {
 
     @Test
     public void testRemoveEdgeVertexDoesntExist(){
-        assertThrows(NoSuchElementException.class, () -> graph.removeEdge(str1, str2));
-        graph.addVertex(str1);
-        assertThrows(NoSuchElementException.class, () -> graph.removeEdge(str1, str2));
+        assertTrue(graph.isEmpty());
+        graph.removeEdge(str1, str2);
+        assertTrue(graph.isEmpty());
     }
 
     @Test

@@ -169,11 +169,10 @@ public final class Graph<T> implements IGraph<T>{
     public void removeEdge(T start, T end){
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
+        Edge<T> dummyEdge = new Edge<>(startVertex, endVertex, 0);
         if(!adjacencyMap.containsKey(startVertex))
-            throw new NoSuchElementException("Starting vertex is not part of the Graph.");
-        if(!adjacencyMap.containsKey(endVertex))
-            throw new NoSuchElementException("End vertex is not part of the Graph.");
-        adjacencyMap.get(startVertex).removeIf(edge -> edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex));
+            return;
+        adjacencyMap.get(startVertex).removeIf(edge -> edge.hasSameVertices(dummyEdge));
     }
 
 
