@@ -33,14 +33,14 @@ public final class Point {
     /**
      * @return The x coordinate of this {@link Point}.
      */
-    public int getX(){
+    public int x(){
         return x;
     }
 
     /**
      * @return The y coordinate of this {@link Point}.
      */
-    public int getY(){
+    public int y(){
         return y;
     }
 
