@@ -11,6 +11,13 @@ public final class Graph<T> implements IGraph<T>{
         this.adjacencyMap = new HashMap<>();
     }
 
+    public Graph(Graph<T> graph){
+        Objects.requireNonNull(graph, "Graph is null.");
+        this.adjacencyMap = new HashMap<>();
+        for(Vertex<T> vertex : graph.adjacencyMap.keySet())
+            this.adjacencyMap.put(vertex, new HashSet<>(graph.adjacencyMap.get(vertex)));
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -301,6 +308,17 @@ public final class Graph<T> implements IGraph<T>{
 
     @Override
     public String toString(){
-        return String.format("Graph[adjacencyMap=%s]", adjacencyMap);
+        StringBuilder builder = new StringBuilder();
+        builder.append("Graph[");
+        for(Vertex<T> vertex : adjacencyMap.keySet()){
+            builder.append(String.format("Vertex[%s] -> {", vertex.getValue()));
+            for(Edge<T> edge : adjacencyMap.get(vertex))
+                builder.append(String.format("Vertex[%s]", edge.getEnd().getValue()));
+            builder.append("}, ");
+        }
+        if(!adjacencyMap.isEmpty())
+            builder.delete(builder.length() - 2, builder.length());
+        builder.append("]");
+        return builder.toString();
     }
 }

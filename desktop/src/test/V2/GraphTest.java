@@ -16,7 +16,6 @@ public class GraphTest {
     private String str2;
     private String str3;
     private String str4;
-    private String str5;
     private IGraph<String> graph;
 
     @BeforeEach
@@ -25,7 +24,6 @@ public class GraphTest {
         str2 = "Second";
         str3 = "Third";
         str4 = "Fourth";
-        str5 = "Fifth";
         graph = new Graph<>();
     }
 
@@ -99,7 +97,7 @@ public class GraphTest {
 
     @Test
     public void testAddEdge() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         assertEquals(0, graph.edgeCount());
         graph.addEdge(str1, str2);
         assertEquals(1, graph.edgeCount());
@@ -131,7 +129,7 @@ public class GraphTest {
 
     @Test
     public void testAddWeightedEdge() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         assertEquals(0, graph.edgeCount());
         graph.addEdge(str1, str2, 15);
         assertEquals(1, graph.edgeCount());
@@ -190,7 +188,7 @@ public class GraphTest {
 
     @Test
     public void testGetDegree() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         graph.addEdge(str1, str2);
         assertEquals(1, graph.getDegree(str1));
         graph.addEdge(str1, str3);
@@ -205,7 +203,7 @@ public class GraphTest {
 
     @Test
     public void testGetNeighbors() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         graph.addEdge(str1, str2);
         graph.addEdge(str1, str3);
         graph.addEdge(str3, str1);
@@ -241,9 +239,9 @@ public class GraphTest {
 
     @Test
     public void testAddEdges() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
-        graph.addEdges(str1, Arrays.asList(str2, str3, str4, str5));
-        assertEquals(graph.getNeighbors(str1), new HashSet<>(Arrays.asList(str2, str3, str4, str5)));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
+        graph.addEdges(str1, Arrays.asList(str2, str3, str4));
+        assertEquals(graph.getNeighbors(str1), new HashSet<>(Arrays.asList(str2, str3, str4)));
     }
 
     @Test
@@ -254,9 +252,9 @@ public class GraphTest {
 
     @Test
     public void testAddWeightedEdges() {
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
-        graph.addEdges(str1, Arrays.asList(str2, str3, str4, str5), Arrays.asList(2, 3, 4, 5));
-        assertEquals(graph.getNeighbors(str1), new HashSet<>(Arrays.asList(str2, str3, str4, str5)));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
+        graph.addEdges(str1, Arrays.asList(str2, str3, str4), Arrays.asList(2, 3, 4));
+        assertEquals(graph.getNeighbors(str1), new HashSet<>(Arrays.asList(str2, str3, str4)));
     }
 
     @Test
@@ -316,7 +314,7 @@ public class GraphTest {
 
     @Test
     public void testConnectAllWeighted(){
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         graph.connectAll(str1, Arrays.asList(str2, str3), Arrays.asList(2, 3));
         assertEquals(new HashSet<>(Arrays.asList(str2, str3)), graph.getNeighbors(str1));
         assertEquals(2, graph.getWeight(str1, str2));
@@ -365,7 +363,7 @@ public class GraphTest {
 
     @Test
     public void testRemoveEdge(){
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         graph.connectAll(str1, Arrays.asList(str2, str3, str4));
         assertEquals(6, graph.edgeCount());
         graph.removeEdge(str1, str2);
@@ -383,7 +381,7 @@ public class GraphTest {
 
     @Test
     public void testDisconnect(){
-        graph.addVertices(Arrays.asList(str1, str2, str3, str4, str5));
+        graph.addVertices(Arrays.asList(str1, str2, str3, str4));
         graph.connectAll(str1, Arrays.asList(str2, str3, str4));
         graph.disconnect(str1, str2);
         assertEquals(4, graph.edgeCount());
@@ -394,15 +392,11 @@ public class GraphTest {
     @Test
     public void testEquals(){
         Graph<String> graph1 = new Graph<>();
-        Graph<String> graph2 = new Graph<>();
-        Graph<String> graph3 = new Graph<>();
-        Graph<String> differentGraph = new Graph<>();
         graph1.addVertices(Arrays.asList(str1, str2, str3));
         graph1.connectAll(str1, Arrays.asList(str2, str3));
-        graph2.addVertices(Arrays.asList(str1, str2, str3));
-        graph2.connectAll(str1, Arrays.asList(str2, str3));
-        graph3.addVertices(Arrays.asList(str1, str2, str3));
-        graph3.connectAll(str1, Arrays.asList(str2, str3));
+        Graph<String> graph2 = new Graph<>(graph1);
+        Graph<String> graph3 = new Graph<>(graph1);
+        Graph<String> differentGraph = new Graph<>();
         differentGraph.addVertices(Arrays.asList(str1, str2, str3));
         differentGraph.connectAll(str1, Arrays.asList(str2, str3), Arrays.asList(1, 2));
         // reflexive
@@ -423,15 +417,11 @@ public class GraphTest {
     @Test
     public void testHashCode(){
         Graph<String> graph1 = new Graph<>();
-        Graph<String> graph2 = new Graph<>();
-        Graph<String> graph3 = new Graph<>();
-        Graph<String> differentGraph = new Graph<>();
         graph1.addVertices(Arrays.asList(str1, str2, str3));
         graph1.connectAll(str1, Arrays.asList(str2, str3));
-        graph2.addVertices(Arrays.asList(str1, str2, str3));
-        graph2.connectAll(str1, Arrays.asList(str2, str3));
-        graph3.addVertices(Arrays.asList(str1, str2, str3));
-        graph3.connectAll(str1, Arrays.asList(str2, str3));
+        Graph<String> graph2 = new Graph<>(graph1);
+        Graph<String> graph3 = new Graph<>(graph1);
+        Graph<String> differentGraph = new Graph<>();
         differentGraph.addVertices(Arrays.asList(str1, str2, str3));
         // reflexive
         assertEquals(graph1.hashCode(), graph2.hashCode());
@@ -450,7 +440,7 @@ public class GraphTest {
     public void testToString(){
         graph.addVertices(Arrays.asList(str1, str2));
         graph.connectAll(str1, Collections.singletonList(str2));
-        String expected = "Graph[adjacencyMap={Vertex[value=Second]=[Edge[start=Vertex[value=Second], end=Vertex[value=First], weight=0]], Vertex[value=First]=[Edge[start=Vertex[value=First], end=Vertex[value=Second], weight=0]]}]";
+        String expected = "Graph[Vertex[Second] -> {Vertex[First]}, Vertex[First] -> {Vertex[Second]}]";
         assertEquals(expected, graph.toString());
     }
 
