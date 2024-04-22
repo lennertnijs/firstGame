@@ -1,7 +1,7 @@
 package V2;
 
 import com.mygdx.game.V2.WeekSchedule.Location;
-import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,20 +15,20 @@ public class LocationTest {
 
     @BeforeEach
     public void initialise(){
-        location1 = Location.create("map1", Position.create(0,0));
-        location2 = Location.create("map2", Position.create(0,0));
-        location3 = Location.create("map1", Position.create(0,0));
+        location1 = Location.create("map1", new Point(0,0));
+        location2 = Location.create("map2", new Point(0,0));
+        location3 = Location.create("map1", new Point(0,0));
     }
 
     @Test
     public void testConstructor(){
         assertEquals(location1.getMapName(), "map1");
-        assertEquals(location1.getPosition(), Position.create(0,0));
+        assertEquals(location1.getPosition(), new Point(0,0));
     }
 
     @Test
     public void testConstructorInvalid(){
-        assertThrows(NullPointerException.class, () -> Location.create(null, Position.create(0,0)));
+        assertThrows(NullPointerException.class, () -> Location.create(null, new Point(0,0)));
         assertThrows(NullPointerException.class, () -> Location.create("map1", null));
     }
 
@@ -47,7 +47,7 @@ public class LocationTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Location[mapName=map1, Position[x=0, y=0]]";
+        String expectedString = "Location[mapName=map1, Point[x=0, y=0]]";
         assertEquals(location1.toString(), expectedString);
     }
 }

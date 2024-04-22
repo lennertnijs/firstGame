@@ -1,7 +1,7 @@
 package V2;
 
 import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,26 +16,26 @@ public class ActivityTest {
     private Activity activity3;
     @BeforeEach
     public void initialise(){
-        Position position1 = Position.create(5, 15);
-        Position position2 = Position.create(10, 20);
+        Point point1 = new Point(5, 15);
+        Point point2 = new Point(10, 20);
         Time time = Time.create(16, 55);
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
-        activity1 = Activity.builder().position(position1).time(time).type(type).mapName(mapName).build();
-        activity2 = Activity.builder().position(position2).time(time).type(type).mapName(mapName).build();
-        activity3 = Activity.builder().position(position1).time(time).type(type).mapName(mapName).build();
+        activity1 = Activity.builder().position(point1).time(time).type(type).mapName(mapName).build();
+        activity2 = Activity.builder().position(point2).time(time).type(type).mapName(mapName).build();
+        activity3 = Activity.builder().position(point1).time(time).type(type).mapName(mapName).build();
     }
 
     @Test
     public void testDirectConstructor(){
-        Position position = Position.create(5, 15);
+        Point point = new Point(5, 15);
         Time time = Time.create(16, 55);
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
-        Activity activity = Activity.builder().position(position).time(time).type(type).mapName(mapName).build();
+        Activity activity = Activity.builder().position(point).time(time).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getLocation(), Location.create(mapName, position));
+        assertEquals(activity.getLocation(), Location.create(mapName, point));
         assertEquals(activity.getTime(), time);
         assertEquals(activity.getType(), type);
     }
@@ -50,7 +50,7 @@ public class ActivityTest {
         String mapName = "world";
         Activity activity = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getLocation(), Location.create(mapName, Position.create(x, y)));
+        assertEquals(activity.getLocation(), Location.create(mapName, new Point(x, y)));
         assertEquals(activity.getTime(), Time.create(hours, minutes));
         assertEquals(activity.getType(), type);
     }
@@ -91,7 +91,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Activity[Location[mapName=world, Position[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
+        String expectedString = "Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
         assertEquals(activity1.toString(), expectedString);
     }
 }

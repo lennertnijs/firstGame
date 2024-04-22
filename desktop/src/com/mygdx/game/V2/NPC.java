@@ -12,7 +12,8 @@ public final class NPC extends Character{
     private final IDialogueRepository dialogueRepository;
     private final NPCStats stats;
 
-    private NPC(String name, ITextureSelector selector, Route route, WeekSchedule weekSchedule, NavigationGraph graph, IDialogueRepository repository, NPCStats stats){
+    private NPC(String name, ITextureSelector selector, Route route, WeekSchedule weekSchedule,
+                NavigationGraph graph, IDialogueRepository repository, NPCStats stats){
         super(name, selector);
         this.currentRoute = route;
         this.weekSchedule = weekSchedule;

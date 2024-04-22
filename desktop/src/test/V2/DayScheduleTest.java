@@ -2,7 +2,7 @@ package V2;
 
 import com.mygdx.game.V2.WeekSchedule.Activity;
 import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.DaySchedule;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,8 +28,8 @@ public class DayScheduleTest {
 
     @BeforeEach
     public void initialise(){
-        Position position1 = Position.create(5, 15);
-        Position position2 = Position.create(10, 20);
+        Point point1 = new Point(5, 15);
+        Point point2 = new Point(10, 20);
         Time time1 = Time.create(0, 55);
         Time time2 = Time.create(5, 55);
         Time time3 = Time.create(10, 55);
@@ -37,10 +37,10 @@ public class DayScheduleTest {
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
-        activity1 = Activity.builder().position(position1).time(time1).type(type).mapName(mapName).build();
-        activity2 = Activity.builder().position(position2).time(time2).type(type).mapName(mapName).build();
-        activity3 = Activity.builder().position(position1).time(time3).type(type).mapName(mapName).build();
-        activity4 = Activity.builder().position(position1).time(time4).type(type).mapName(mapName).build();
+        activity1 = Activity.builder().position(point1).time(time1).type(type).mapName(mapName).build();
+        activity2 = Activity.builder().position(point2).time(time2).type(type).mapName(mapName).build();
+        activity3 = Activity.builder().position(point1).time(time3).type(type).mapName(mapName).build();
+        activity4 = Activity.builder().position(point1).time(time4).type(type).mapName(mapName).build();
 
         schedule1 = DaySchedule.create(Arrays.asList(activity1, activity2, activity3));
         schedule2 = DaySchedule.create(Arrays.asList(activity2, activity3, activity4));
@@ -115,7 +115,7 @@ public class DayScheduleTest {
 
     @Test
     public void testToString(){
-        String expectedString = "DaySchedule[Activities=[Activity[Location[mapName=world, Position[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, Position[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, Position[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]]";
+        String expectedString = "DaySchedule[Activities=[Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]]";
         assertEquals(schedule1.toString(), expectedString);
     }
 }

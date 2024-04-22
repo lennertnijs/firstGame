@@ -1,7 +1,7 @@
 package com.mygdx.game.V2.WeekSchedule;
 
 import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 
 import java.util.Objects;
@@ -65,7 +65,7 @@ public final class Activity {
         // Position related fields
         private int x = -1;
         private int y = -1;
-        private Position position;
+        private Point point;
         private String mapName;
         private Location location;
 
@@ -91,8 +91,8 @@ public final class Activity {
             return this;
         }
 
-        public Builder position(Position position){
-            this.position = position;
+        public Builder position(Point point){
+            this.point = point;
             return this;
         }
 
@@ -129,10 +129,10 @@ public final class Activity {
         public Activity build(){
             Objects.requireNonNull(mapName, "Cannot create an Activity with a null map name.");
             if (location == null) {
-                if(position == null){
-                    position = Position.create(x, y);
+                if(point == null){
+                    point = new Point(x, y);
                 }
-                location = Location.create(mapName, position);
+                location = Location.create(mapName, point);
             }
             if(time == null){
                 time = Time.create(hours, minutes);

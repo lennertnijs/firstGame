@@ -1,32 +1,32 @@
 package com.mygdx.game.V2.WeekSchedule;
 
-import com.mygdx.game.V2.Util.Position;
+import com.mygdx.game.V2.Util.Point;
 
 import java.util.Objects;
 
 public final class Location {
 
     private final String mapName;
-    private final Position position;
+    private final Point point;
 
 
-    private Location(String mapName, Position position){
+    private Location(String mapName, Point point){
         this.mapName = mapName;
-        this.position = position;
+        this.point = point;
     }
 
-    public static Location create(String mapName, Position position){
+    public static Location create(String mapName, Point point){
         Objects.requireNonNull(mapName, "Cannot create a MapPosition with a null map name.");
-        Objects.requireNonNull(position, "Cannot create a MapPosition from a null Position.");
-        return new Location(mapName, position);
+        Objects.requireNonNull(point, "Cannot create a MapPosition from a null Position.");
+        return new Location(mapName, point);
     }
 
     public String getMapName(){
         return mapName;
     }
 
-    public Position getPosition(){
-        return position;
+    public Point getPosition(){
+        return point;
     }
 
     @Override
@@ -36,18 +36,18 @@ public final class Location {
         }
         Location location = (Location) other;
         return mapName.equals(location.mapName) &&
-                position.equals(location.position);
+                point.equals(location.point);
     }
 
     @Override
     public int hashCode(){
         int result = mapName.hashCode();
-        result = result * 31 + position.hashCode();
+        result = result * 31 + point.hashCode();
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Location[mapName=%s, %s]", mapName, position);
+        return String.format("Location[mapName=%s, %s]", mapName, point);
     }
 }
