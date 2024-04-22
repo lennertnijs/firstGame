@@ -11,6 +11,11 @@ public final class Graph<T> implements IGraph<T>{
         this.adjacencyMap = new HashMap<>();
     }
 
+    /**
+     * Creates a copy of the given {@link Graph}.
+     * The copy will be fully separate of the original, as long as the objects the vertices hold are immutable.
+     * @param graph The graph. Cannot be null.
+     */
     public Graph(Graph<T> graph){
         Objects.requireNonNull(graph, "Graph is null.");
         this.adjacencyMap = new HashMap<>();
@@ -135,8 +140,6 @@ public final class Graph<T> implements IGraph<T>{
     private void createAndStoreEdge(T start, T end, int weight){
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
-        if(weight < 0)
-            throw new IllegalArgumentException("The weight is negative.");
         if(!adjacencyMap.containsKey(startVertex))
             throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
         if(!adjacencyMap.containsKey(endVertex))
