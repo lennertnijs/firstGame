@@ -11,20 +11,22 @@ import java.util.Set;
 public interface IGraph<T> {
 
     /**
-     * Stores the given object as a vertex in the graph.
-     * Initiates the vertex with no edges.
+     * Adds a new vertex to the graph with the given object.
+     * The vertex is initialized with no edges.
      * @param object The object. Cannot be null.
      *
      * @throws IllegalStateException If the object already was a vertex in the graph.
+     * @throws NullPointerException If the object is null.
      */
     void addVertex(T object);
 
     /**
-     * Stores each object within the {@link List} as a vertex in the graph.
-     * Initiates each vertex with no edges.
-     * @param objects The objects. Cannot be null. Cannot contain null.
+     * Adds a new vertex to graph for each of the objects.
+     * Each vertex is initialized with no edges.
+     * @param objects The list of objects. Cannot be null. Cannot contain null.
      *
-     * @throws IllegalStateException If an object already was a vertex in the graph.
+     * @throws IllegalStateException If one of the objects already was a vertex in the graph.
+     * @throws NoSuchElementException If the list of objects is null, or contains a null.
      */
     void addVertices(List<T> objects);
 
