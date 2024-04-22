@@ -2,6 +2,7 @@ package com.mygdx.game.V2.Graph;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Represents an interface for basic interactions with a graph.
@@ -84,7 +85,7 @@ public interface IGraph<T> {
      *
      * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
      */
-    void connect(T start, List<T> ends);
+    void connectAll(T start, List<T> ends);
 
     /**
      * Adds two edges connecting the objects both ways with the given weight.
@@ -107,7 +108,7 @@ public interface IGraph<T> {
      * @throws IllegalArgumentException If the list of weights is a different length as the list of end objects.
      * @throws IllegalArgumentException If any of the weights are negative.
      */
-    void connect(T start, List<T> ends, List<Integer> weights);
+    void connectAll(T start, List<T> ends, List<Integer> weights);
 
     /**
      * Removes the given object from the graph. Also removes all outgoing, and incoming edges.
@@ -139,7 +140,7 @@ public interface IGraph<T> {
      *
      * @return All vertex' objects.
      */
-    List<T> getVertices();
+    Set<T> getVertices();
 
     /**
      * Fetches and returns all the objects that are directly linked by an edge with the given object.
@@ -148,7 +149,7 @@ public interface IGraph<T> {
      * @return The neighboring objects.
      * @throws NoSuchElementException If the object is not a vertex in the graph.
      */
-    List<T> getNeighbors(T object);
+    Set<T> getNeighbors(T object);
 
     /**
      * Fetches and returns the weight of the edge from the start object to the end object.

@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public final class Graph<T> implements IGraph<T>{
 
-    private Map<Vertex<T>, List<Edge<T>>> adjacencyMap;
+    private Map<Vertex<T>, Set<Edge<T>>> adjacencyMap;
 
     public Graph(){
         this.adjacencyMap = new HashMap<>();
@@ -19,7 +19,7 @@ public final class Graph<T> implements IGraph<T>{
         Vertex<T> vertex = new Vertex<>(object);
         if(adjacencyMap.containsKey(vertex))
             throw new IllegalStateException("The Vertex already exists in the Graph.");
-        adjacencyMap.put(vertex, new ArrayList<>());
+        adjacencyMap.put(vertex, new HashSet<>());
     }
 
     /**
@@ -84,7 +84,7 @@ public final class Graph<T> implements IGraph<T>{
      * {@inheritDoc}
      */
     @Override
-    public void connect(T start, List<T> ends) {
+    public void connectAll(T start, List<T> ends) {
         Objects.requireNonNull(ends, "List is null.");
         for(T end : ends) {
             createAndStoreEdge(start, end, 0);
@@ -105,7 +105,7 @@ public final class Graph<T> implements IGraph<T>{
      * {@inheritDoc}
      */
     @Override
-    public void connect(T start, List<T> ends, List<Integer> weights) {
+    public void connectAll(T start, List<T> ends, List<Integer> weights) {
         Objects.requireNonNull(ends, "List is null.");
         Objects.requireNonNull(weights, "List is null.");
         if(weights.size() != ends.size())
@@ -134,6 +134,9 @@ public final class Graph<T> implements IGraph<T>{
             throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
         if(!adjacencyMap.containsKey(endVertex))
             throw new NoSuchElementException("Ending Vertex is not part of the Graph.");
+        if(adjacencyMap.get(startVertex).stream()
+                .anyMatch(e -> e.getStart().equals(startVertex) && e.getEnd().equals(endVertex)))
+            throw new IllegalStateException("Edge already exists.");
         Edge<T> edge = new Edge<>(startVertex, endVertex, weight);
         adjacencyMap.get(startVertex).add(edge);
     }
@@ -144,7 +147,7 @@ public final class Graph<T> implements IGraph<T>{
     @Override
     public void removeVertex(T object){
         adjacencyMap.remove(new Vertex<>(object));
-        for(List<Edge<T>> edgeList : adjacencyMap.values()){
+        for(Set<Edge<T>> edgeList : adjacencyMap.values()){
             edgeList.removeIf(edge -> edge.getEnd().equals(object));
         }
     }
@@ -161,7 +164,6 @@ public final class Graph<T> implements IGraph<T>{
         if(!adjacencyMap.containsKey(endVertex))
             throw new NoSuchElementException("End vertex is not part of the Graph.");
         adjacencyMap.get(startVertex).removeIf(edge -> edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex));
-        adjacencyMap.get(endVertex).removeIf(edge -> edge.getStart().equals(endVertex) && edge.getEnd().equals(startVertex));
     }
 
 
@@ -178,43 +180,47 @@ public final class Graph<T> implements IGraph<T>{
      * {@inheritDoc}
      */
     @Override
-    public List<T> getVertices(){
-        return adjacencyMap.keySet().stream().map(Vertex::getValue).collect(Collectors.toList());
+    public Set<T> getVertices(){
+        return adjacencyMap.keySet().stream().map(Vertex::getValue).collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<T> getNeighbors(T object) {
+    public Set<T> getNeighbors(T object) {
         Vertex<T> vertex = new Vertex<>(object);
         if(!adjacencyMap.containsKey(vertex))
             throw new NoSuchElementException("The object is not a vertex in the Graph.");
         return adjacencyMap.get(vertex).stream()
                 .map(Edge::getEnd)
                 .map(Vertex::getValue)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * {@inheritDoc} ACTIVELY WORKING HERE.
-     */
-    @Override
-    public int getWeight(T start, T end){
-        Vertex<T> startVertex = new Vertex<>(start);
-        Vertex<T> endVertex = new Vertex<>(end);
-        // todo
-        return 1;
+                .collect(Collectors.toSet());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getDegree(T value){
-        Vertex<T> vertex = new Vertex<>(value);
+    public int getWeight(T start, T end){
+        Vertex<T> startVertex = new Vertex<>(start);
+        if(!adjacencyMap.containsKey(startVertex))
+            throw new NoSuchElementException("Start object is not a vertex in the Graph.");
+        Vertex<T> endVertex = new Vertex<>(end);
+        for(Edge<T> edge : adjacencyMap.get(startVertex))
+            if(edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex))
+                return edge.getWeight();
+        throw new NoSuchElementException("No edge between the two objects was found.");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDegree(T object){
+        Vertex<T> vertex = new Vertex<>(object);
         if(!adjacencyMap.containsKey(vertex))
-            throw new NoSuchElementException("Vertex not found.");
+            throw new NoSuchElementException("Object is not a Vertex in the Graph.");
         return adjacencyMap.get(vertex).size();
     }
 
@@ -222,8 +228,8 @@ public final class Graph<T> implements IGraph<T>{
      * {@inheritDoc}
      */
     @Override
-    public boolean hasVertex(T t){
-        return adjacencyMap.containsKey(new Vertex<>(t));
+    public boolean hasVertex(T object){
+        return adjacencyMap.containsKey(new Vertex<>(object));
     }
 
     /**
@@ -235,6 +241,8 @@ public final class Graph<T> implements IGraph<T>{
         Vertex<T> endVertex = new Vertex<>(end);
         if(!adjacencyMap.containsKey(startVertex))
             throw new NoSuchElementException("Start Vertex not found.");
+        if(!adjacencyMap.containsKey(endVertex))
+            throw new NoSuchElementException("End Vertex not found.");
         for(Edge<T> edge : adjacencyMap.get(startVertex)){
             if(edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex))
                 return true;
