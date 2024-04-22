@@ -253,8 +253,9 @@ public final class Graph<T> implements IGraph<T>{
             throw new NoSuchElementException("Start Vertex not found.");
         if(!adjacencyMap.containsKey(endVertex))
             throw new NoSuchElementException("End Vertex not found.");
+        Edge<T> firstEdge = new Edge<>(startVertex, endVertex, 0);
         for(Edge<T> edge : adjacencyMap.get(startVertex)){
-            if(edge.getStart().equals(startVertex) && edge.getEnd().equals(endVertex))
+            if(firstEdge.hasSameVertices(edge))
                 return true;
         }
         return false;
