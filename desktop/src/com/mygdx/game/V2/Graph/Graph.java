@@ -79,6 +79,8 @@ public final class Graph<T> implements IGraph<T>{
         Objects.requireNonNull(weights, "List is null.");
         if(weights.size() != ends.size())
             throw new IllegalArgumentException("The List of weights is not the same length as the list of end objects.");
+        if(weights.contains(null))
+            throw new NullPointerException("A weight is null.");
         for(int i = 0; i < ends.size(); i++)
             createAndStoreEdge(start, ends.get(i), weights.get(i));
     }
@@ -91,6 +93,17 @@ public final class Graph<T> implements IGraph<T>{
         createAndStoreEdge(start, end, 0);
         createAndStoreEdge(end, start, 0);
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void connect(T start, T end, int weight) {
+        createAndStoreEdge(start, end, weight);
+        createAndStoreEdge(end, start, weight);
+    }
+
 
     /**
      * {@inheritDoc}
@@ -108,32 +121,27 @@ public final class Graph<T> implements IGraph<T>{
      * {@inheritDoc}
      */
     @Override
-    public void connect(T start, T end, int weight) {
-        createAndStoreEdge(start, end, weight);
-        createAndStoreEdge(end, start, weight);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void connectAll(T start, List<T> ends, List<Integer> weights) {
         Objects.requireNonNull(ends, "List is null.");
         Objects.requireNonNull(weights, "List is null.");
         if(weights.size() != ends.size())
             throw new IllegalArgumentException("The List of weights is not the same length as the list of end objects.");
+        if(weights.contains(null))
+            throw new NullPointerException("A weight is null.");
         for(int i = 0; i < ends.size(); i++){
-            createAndStoreEdge(start, ends.get(i), weights.get(i));
-            createAndStoreEdge(ends.get(i), start, weights.get(i));
+            int weight = weights.get(i);
+            createAndStoreEdge(start, ends.get(i), weight);
+            createAndStoreEdge(ends.get(i), start, weight);
         }
     }
 
     /**
-     * Creates and stores an edge starting at the given object and ending in the other, with the given weight.
+     * Creates and stores a directed edge starting at the given object and ending in the other, with the given weight.
      * @param start The start object. Cannot be null.
      * @param end The end object. Cannot be null.
      * @param weight The weight. Cannot be negative.
      *
+     * @throws IllegalStateException If an edge already existed between the two objects.
      * @throws IllegalArgumentException If the weight is negative.
      * @throws NoSuchElementException If the start or end object is not a vertex in the graph.
      */
@@ -141,13 +149,12 @@ public final class Graph<T> implements IGraph<T>{
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
         if(!adjacencyMap.containsKey(startVertex))
-            throw new NoSuchElementException("Starting Vertex is not part of the Graph.");
+            throw new NoSuchElementException("Start Vertex is not part of the Graph.");
         if(!adjacencyMap.containsKey(endVertex))
-            throw new NoSuchElementException("Ending Vertex is not part of the Graph.");
-        if(adjacencyMap.get(startVertex).stream()
-                .anyMatch(e -> e.getStart().equals(startVertex) && e.getEnd().equals(endVertex)))
-            throw new IllegalStateException("Edge already exists.");
+            throw new NoSuchElementException("End Vertex is not part of the Graph.");
         Edge<T> edge = new Edge<>(startVertex, endVertex, weight);
+        if(adjacencyMap.get(startVertex).stream().anyMatch(e -> e.hasSameVertices(edge)))
+            throw new IllegalStateException("Edge already exists in the Graph.");
         adjacencyMap.get(startVertex).add(edge);
     }
 

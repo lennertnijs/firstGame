@@ -28,11 +28,20 @@ public class GraphTest {
     }
 
     @Test
+    public void testHasVertex() {
+        assertFalse(graph.hasVertex(str1));
+        graph.addVertex(str1);
+        assertTrue(graph.hasVertex(str1));
+    }
+
+    @Test
     public void testAddVertex() {
         assertEquals(new HashSet<>(), graph.getVertices());
         graph.addVertex(str1);
+        assertTrue(graph.hasVertex(str1));
         assertEquals(new HashSet<>(Collections.singletonList(str1)), graph.getVertices());
         graph.addVertex(str2);
+        assertTrue(graph.hasVertex(str2));
         assertEquals(new HashSet<>(Arrays.asList(str1, str2)), graph.getVertices());
     }
 
@@ -73,12 +82,7 @@ public class GraphTest {
         assertEquals(4, graph.vertexCount());
     }
 
-    @Test
-    public void testHasVertex() {
-        assertFalse(graph.hasVertex(str1));
-        graph.addVertex(str1);
-        assertTrue(graph.hasVertex(str1));
-    }
+
 
     @Test
     public void testIsEmpty() {

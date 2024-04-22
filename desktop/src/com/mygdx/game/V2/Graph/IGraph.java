@@ -31,84 +31,100 @@ public interface IGraph<T> {
     void addVertices(List<T> objects);
 
     /**
-     * Adds an edge between the given start and end objects with a weight of 0.
+     * Adds a directed edge from the start object to the end object with a weight of 0.
      * @param start The start object. Cannot be null.
      * @param end The end object. Cannot be null.
      *
      * @throws NoSuchElementException If the start or end object is not a vertex in the graph.
+     * @throws IllegalStateException If an edge between the two objects already existed.
+     * @throws NullPointerException If the start object or end object is null.
      */
     void addEdge(T start, T end);
 
     /**
-     * Adds an edge from the start object to end object with the given weight.
+     * Adds a directed edge from the start object to end object with the given weight.
      * @param start The start object. Cannot be null.
      * @param end The end object. Cannot be null.
      * @param weight The weight. Cannot be negative.
      *
      * @throws NoSuchElementException If the start or end object is not a vertex in the graph.
+     * @throws IllegalStateException If an edge between the two objects already existed.
      * @throws IllegalArgumentException If the weight is negative.
+     * @throws NullPointerException If the start object or end object is null.
      */
     void addEdge(T start, T end, int weight);
 
     /**
-     * Adds edges from the start object to all the end objects with a weight of 0.
+     * Adds directed edges from the start object to all the end objects with a weight of 0.
      * @param start The start object. Cannot be null.
-     * @param ends The end objects. Cannot be null. Cannot contain null.
+     * @param ends The list of end objects. Cannot be null. Cannot contain null.
      *
      * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
+     * @throws IllegalStateException If an edge between any pair of objects already existed.
+     * @throws NullPointerException If the start object, the list or any of the end objects are null.
      */
     void addEdges(T start, List<T> ends);
 
     /**
-     * Adds edges from the start object to all the end objects with the weights
+     * Adds directed edges from the start object to all the end objects with the respective weights.
      * @param start The start object. Cannot be null.
-     * @param ends The end objects. Cannot be null. Cannot contain null.
-     * @param weights The weights. Cannot be null. Cannot contain null. Cannot contain a negative value.
+     * @param ends The list of end objects. Cannot be null. Cannot contain null.
+     * @param weights The list of weights. Cannot be null. Cannot contain null. Cannot contain a negative value.
      *
      * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
+     * @throws IllegalStateException If an edge between any pair of objects already existed. (weight does not matter)
      * @throws IllegalArgumentException If the list of weights is a different length as the list of end objects.
      * @throws IllegalArgumentException If any of the weights are negative.
+     * @throws NullPointerException If the start object, the two lists, or any of the elements in the lists are null.
      */
     void addEdges(T start, List<T> ends, List<Integer> weights);
 
     /**
-     * Adds two edges connecting the objects both ways, with a weight of 0.
+     * Adds two edges connecting start object with the end object both ways, with a weight of 0.
      * @param start The start object. Cannot be null.
      * @param end The end object. Cannot be null.
      *
      * @throws NoSuchElementException If the start object or end object are not a vertex in the graph.
+     * @throws IllegalStateException If an edge between the two objects already existed.
+     * @throws NullPointerException If the start object or end object is null.
      */
     void connect(T start, T end);
 
     /**
-     * Adds two edges connecting the start object with each of the end objects both ways, with a weight of 0.
-     * @param start The start object. Cannot be null.
-     * @param ends The end objects. Cannot be null. Cannot contain null.
-     *
-     * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
-     */
-    void connectAll(T start, List<T> ends);
-
-    /**
-     * Adds two edges connecting the objects both ways with the given weight.
+     * Adds two edges connecting start object with the end object both ways, with the given weight.
      * @param start The start object. Cannot be null.
      * @param end The end object. Cannot be null.
      * @param weight The weight. Cannot be negative.
      *
      * @throws NoSuchElementException If the start object or end object are not a vertex in the graph.
+     * @throws IllegalStateException If an edge between the two objects already existed.
      * @throws IllegalArgumentException If the weight is negative.
+     * @throws NullPointerException If the start or end object is null.
      */
     void connect(T start, T end, int weight);
 
     /**
-     * Adds two edges connecting the start object to all the end objects with the given weights.
+     * Adds two edges connecting the start object with each of the end objects both ways, with a weight of 0.
      * @param start The start object. Cannot be null.
-     * @param ends The end objects. Cannot be null. Cannot contain null.
-     * @param weights The weights. Cannot be null. Cannot contain null. Cannot contain a negative value.
+     * @param ends The list of end objects. Cannot be null. Cannot contain null.
      *
      * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
+     * @throws IllegalStateException If any of the edges already existed.
+     * @throws NullPointerException If the given start object, list, or any of the end objects are null.
+     */
+    void connectAll(T start, List<T> ends);
+
+    /**
+     * Adds two edges connecting the start object to all the end objects with the given weights.
+     * @param start The start object. Cannot be null.
+     * @param ends The list of end objects. Cannot be null. Cannot contain null.
+     * @param weights The list of weights. Cannot be null. Cannot contain null. Cannot contain a negative value.
+     *
+     * @throws NoSuchElementException If the start object or any of the end objects are not a vertex in the graph.
+     * @throws IllegalStateException If an edge between any pair of objects already existed.
      * @throws IllegalArgumentException If the list of weights is a different length as the list of end objects.
      * @throws IllegalArgumentException If any of the weights are negative.
+     * @throws NullPointerException If the start object, the two lists, or any of the elements in the lists are null.
      */
     void connectAll(T start, List<T> ends, List<Integer> weights);
 
