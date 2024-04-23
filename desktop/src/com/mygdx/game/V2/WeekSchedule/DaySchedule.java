@@ -46,7 +46,7 @@ public final class DaySchedule {
     public Activity getFirstActivityAfter(Time time){
         Objects.requireNonNull(time, "Cannot get the next Activity after null.");
         for(Activity activity : activities){
-            if(activity.getTime().after(time)){
+            if(activity.time().after(time)){
                 return activity;
             }
         }
