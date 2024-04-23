@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * Represents a location in the game.
  * A location means both a map & a position.
+ * IMMUTABLE
  */
 public final class Location {
 

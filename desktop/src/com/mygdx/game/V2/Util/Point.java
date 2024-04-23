@@ -2,6 +2,7 @@ package com.mygdx.game.V2.Util;
 
 /**
  * Class to represent a 2-dimensional point.
+ * IMMUTABLE
  */
 public final class Point {
 

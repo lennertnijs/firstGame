@@ -55,9 +55,8 @@ public final class DaySchedule {
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof DaySchedule)){
+        if(!(other instanceof DaySchedule))
             return false;
-        }
         DaySchedule schedule = (DaySchedule) other;
         return activities.equals(schedule.activities);
     }

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a moment in time, so hours & minutes.
+ * IMMUTABLE
  */
 public final class Time {
 

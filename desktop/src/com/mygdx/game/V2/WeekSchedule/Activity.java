@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  * Represents a concrete activity.
+ * IMMUTABLE
  */
 public final class Activity {
 
