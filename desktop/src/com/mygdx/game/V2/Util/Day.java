@@ -1,5 +1,8 @@
-package com.mygdx.game.V2.WeekSchedule;
+package com.mygdx.game.V2.Util;
 
+/**
+ * Represents a day.
+ */
 public enum Day {
 
     MONDAY,

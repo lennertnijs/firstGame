@@ -115,7 +115,7 @@ public class DayScheduleTest {
 
     @Test
     public void testToString(){
-        String expectedString = "DaySchedule[Activities=[Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]]";
+        String expectedString = "DaySchedule[Activities=[Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]]";
         assertEquals(schedule1.toString(), expectedString);
     }
 }

@@ -1,6 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.WeekSchedule.Location;
+import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Route;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,9 +24,9 @@ public class RouteTest {
 
     @BeforeEach
     public void initialise(){
-        pos1 = Location.create("Map1", new Point(75, 75));
-        pos2 = Location.create("Map1", new Point(200, 200));
-        pos3 = Location.create("Map1", new Point(0, 0));
+        pos1 = new Location("Map1", new Point(75, 75));
+        pos2 = new Location("Map1", new Point(200, 200));
+        pos3 = new Location("Map1", new Point(0, 0));
         route1 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
         route2 = Route.create(new ArrayList<>(Arrays.asList(pos3, pos2)));
         route3 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
@@ -90,7 +90,7 @@ public class RouteTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Route[positions=[Location[mapName=Map1, Point[x=75, y=75]], Location[mapName=Map1, Point[x=200, y=200]], Location[mapName=Map1, Point[x=0, y=0]]]]";
+        String expectedString = "Route[positions=[Location[mapName=Map1, position=Point[x=75, y=75]], Location[mapName=Map1, position=Point[x=200, y=200]], Location[mapName=Map1, position=Point[x=0, y=0]]]]";
         assertEquals(route1.toString(), expectedString);
     }
 }

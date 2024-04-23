@@ -1,7 +1,7 @@
 package com.mygdx.game.V2;
 
 import com.mygdx.game.V2.Graph.IGraph;
-import com.mygdx.game.V2.WeekSchedule.Location;
+import com.mygdx.game.V2.Util.Location;
 
 import java.util.*;
 

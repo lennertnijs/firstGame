@@ -1,5 +1,7 @@
 package com.mygdx.game.V2.WeekSchedule;
 
+import com.mygdx.game.V2.Util.Day;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;

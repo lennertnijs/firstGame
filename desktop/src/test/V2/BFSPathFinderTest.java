@@ -3,7 +3,7 @@ package V2;
 import com.mygdx.game.V2.*;
 import com.mygdx.game.V2.Graph.Graph;
 import com.mygdx.game.V2.Graph.IGraph;
-import com.mygdx.game.V2.WeekSchedule.Location;
+import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,13 +29,13 @@ public class BFSPathFinderTest {
 
     @BeforeEach
     public void initialise(){
-        mp1 = Location.create("map1", new Point(0,0));
-        mp2 = Location.create("map1", new Point(50,0));
-        mp3 = Location.create("map1", new Point(0,50));
-        mp4 = Location.create("map1", new Point(50,50));
-        mp5 = Location.create("map1", new Point(50,100));
-        mp6 = Location.create("map2", new Point(0,0));
-        mp7 = Location.create("map2", new Point(50,0));
+        mp1 = new Location("map1", new Point(0,0));
+        mp2 = new Location("map1", new Point(50,0));
+        mp3 = new Location("map1", new Point(0,50));
+        mp4 = new Location("map1", new Point(50,50));
+        mp5 = new Location("map1", new Point(50,100));
+        mp6 = new Location("map2", new Point(0,0));
+        mp7 = new Location("map2", new Point(50,0));
 
         graph.addVertices(new ArrayList<>(Arrays.asList(mp1, mp2, mp3, mp4, mp5, mp6, mp7)));
         graph.addEdges(mp1, new ArrayList<>(Arrays.asList(mp2, mp3)));
@@ -60,7 +60,7 @@ public class BFSPathFinderTest {
 
     @Test
     public void testFindPathNoSuchElement(){
-        Location noSuch = Location.create("map3", new Point(0,0));
+        Location noSuch = new Location("map3", new Point(0,0));
         assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(noSuch, mp1, graph));
         assertThrows(NoSuchElementException.class, () -> bfsPathFinder.findPath(mp1, noSuch, graph));
     }

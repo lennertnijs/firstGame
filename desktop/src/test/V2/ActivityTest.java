@@ -1,6 +1,7 @@
 package V2;
 
 import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.*;
@@ -35,7 +36,7 @@ public class ActivityTest {
         String mapName = "world";
         Activity activity = Activity.builder().position(point).time(time).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getLocation(), Location.create(mapName, point));
+        assertEquals(activity.getLocation(), new Location(mapName, point));
         assertEquals(activity.getTime(), time);
         assertEquals(activity.getType(), type);
     }
@@ -50,7 +51,7 @@ public class ActivityTest {
         String mapName = "world";
         Activity activity = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(mapName).build();
 
-        assertEquals(activity.getLocation(), Location.create(mapName, new Point(x, y)));
+        assertEquals(activity.getLocation(), new Location(mapName, new Point(x, y)));
         assertEquals(activity.getTime(), new Time(hours, minutes));
         assertEquals(activity.getType(), type);
     }
@@ -91,7 +92,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
+        String expectedString = "Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=16, minutes=55], Type=IDLING]";
         assertEquals(activity1.toString(), expectedString);
     }
 }

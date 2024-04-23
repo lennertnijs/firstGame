@@ -1,6 +1,7 @@
 package com.mygdx.game.V2.WeekSchedule;
 
 import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 
@@ -132,7 +133,7 @@ public final class Activity {
                 if(point == null){
                     point = new Point(x, y);
                 }
-                location = Location.create(mapName, point);
+                location = new Location(mapName, point);
             }
             if(time == null){
                 time = new Time(hours, minutes);

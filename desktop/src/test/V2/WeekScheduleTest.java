@@ -1,6 +1,7 @@
 package V2;
 
 import com.mygdx.game.V2.Util.ActivityType;
+import com.mygdx.game.V2.Util.Day;
 import com.mygdx.game.V2.Util.Point;
 import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.*;
@@ -109,7 +110,7 @@ public class WeekScheduleTest {
 
     @Test
     public void testToString(){
-        String expectedString = "WeekSchedule[DaySchedules={MONDAY=DaySchedule[Activities=[Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]], TUESDAY=DaySchedule[Activities=[Activity[Location[mapName=world, Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=15, minutes=55], Type=IDLING]]], WEDNESDAY=DaySchedule[Activities=[Activity[Location[mapName=world, Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING]]]}]";
+        String expectedString = "WeekSchedule[DaySchedules={MONDAY=DaySchedule[Activities=[Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING]]], TUESDAY=DaySchedule[Activities=[Activity[Location[mapName=world, position=Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=10, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=15, minutes=55], Type=IDLING]]], WEDNESDAY=DaySchedule[Activities=[Activity[Location[mapName=world, position=Point[x=5, y=15]], Time[hours=0, minutes=55], Type=IDLING], Activity[Location[mapName=world, position=Point[x=10, y=20]], Time[hours=5, minutes=55], Type=IDLING]]]}]";
         assertEquals(weekSchedule1.toString(), expectedString);
     }
 }
