@@ -15,24 +15,24 @@ public class TimeTest {
     private Time time3;
     @BeforeEach
     public void initialise(){
-        time1 = Time.create(20, 15);
-        time2 = Time.create(23, 59);
-        time3 = Time.create(20, 15);
+        time1 = new Time(20, 15);
+        time2 = new Time(23, 59);
+        time3 = new Time(20, 15);
     }
 
     @Test
     public void testConstructor(){
-        Time time = Time.create(6, 30);
+        Time time = new Time(6, 30);
         assertEquals(time.getMinutes(), 30);
         assertEquals(time.getHours(), 6);
     }
 
     @Test
     public void testConstructorInvalid(){
-        assertThrows(IllegalArgumentException.class, () -> Time.create(-1, 0));
-        assertThrows(IllegalArgumentException.class, () -> Time.create(Time.HOURS_PER_DAY, 50));
-        assertThrows(IllegalArgumentException.class, () -> Time.create(0, -1));
-        assertThrows(IllegalArgumentException.class, () -> Time.create(0, Time.MINUTES_PER_HOUR));
+        assertThrows(IllegalArgumentException.class, () -> new Time(-1, 0));
+        assertThrows(IllegalArgumentException.class, () -> new Time(Time.HOURS_PER_DAY, 50));
+        assertThrows(IllegalArgumentException.class, () -> new Time(0, -1));
+        assertThrows(IllegalArgumentException.class, () -> new Time(0, Time.MINUTES_PER_HOUR));
     }
 
     @Test

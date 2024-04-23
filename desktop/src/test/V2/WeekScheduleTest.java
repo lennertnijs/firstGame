@@ -27,10 +27,10 @@ public class WeekScheduleTest {
     public void initialise(){
         Point point1 = new Point(5, 15);
         Point point2 = new Point(10, 20);
-        Time time1 = Time.create(0, 55);
-        Time time2 = Time.create(5, 55);
-        Time time3 = Time.create(10, 55);
-        Time time4 = Time.create(15,55);
+        Time time1 = new Time(0, 55);
+        Time time2 = new Time(5, 55);
+        Time time3 = new Time(10, 55);
+        Time time4 = new Time(15,55);
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 

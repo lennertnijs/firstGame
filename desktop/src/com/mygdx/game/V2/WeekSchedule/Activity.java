@@ -135,7 +135,7 @@ public final class Activity {
                 location = Location.create(mapName, point);
             }
             if(time == null){
-                time = Time.create(hours, minutes);
+                time = new Time(hours, minutes);
             }
             Objects.requireNonNull(type, "Cannot create an Activity with a null ActivityType.");
             return new Activity(this);

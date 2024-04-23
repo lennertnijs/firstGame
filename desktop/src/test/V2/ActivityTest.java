@@ -18,7 +18,7 @@ public class ActivityTest {
     public void initialise(){
         Point point1 = new Point(5, 15);
         Point point2 = new Point(10, 20);
-        Time time = Time.create(16, 55);
+        Time time = new Time(16, 55);
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
 
@@ -30,7 +30,7 @@ public class ActivityTest {
     @Test
     public void testDirectConstructor(){
         Point point = new Point(5, 15);
-        Time time = Time.create(16, 55);
+        Time time = new Time(16, 55);
         ActivityType type = ActivityType.IDLING;
         String mapName = "world";
         Activity activity = Activity.builder().position(point).time(time).type(type).mapName(mapName).build();
@@ -51,7 +51,7 @@ public class ActivityTest {
         Activity activity = Activity.builder().x(x).y(y).hours(hours).minutes(minutes).type(type).mapName(mapName).build();
 
         assertEquals(activity.getLocation(), Location.create(mapName, new Point(x, y)));
-        assertEquals(activity.getTime(), Time.create(hours, minutes));
+        assertEquals(activity.getTime(), new Time(hours, minutes));
         assertEquals(activity.getType(), type);
     }
 
