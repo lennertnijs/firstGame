@@ -19,6 +19,7 @@ public final class Schedule {
     /**
      * Creates a new immutable {@link Schedule}.
      * @param activities The list of {@link Activity} objects. Cannot be null. Cannot contain null.
+     *                   Cannot contain two {@link Activity} objects that happen at the exact same {@link Time}.
      *
      * @throws IllegalArgumentException If two {@link Activity} instances happen at the exact same {@link Time}.
      */
@@ -39,10 +40,8 @@ public final class Schedule {
      * @throws IllegalArgumentException If two {@link Activity} instances happen at the exact same {@link Time}.
      */
     private void checkForActivitiesAtSameTime(List<Activity> activities){
-        Set<Time> uniqueTimes = new HashSet<>();
-        for(Activity activity : activities)
-            if(!uniqueTimes.add(activity.time()))
-                throw new IllegalArgumentException("Two activities happen at the exact same Time.");
+        if(activities.stream().map(Activity::time).distinct().count() < activities.size())
+            throw new IllegalArgumentException("Two activities happen at the exact same Time.");
     }
 
     /**
@@ -53,30 +52,31 @@ public final class Schedule {
     }
 
     /**
-     * Checks whether this {@link Schedule} contains any {@link Activity} objects that happen
-     * at or after the given {@link Time}.
+     * Checks whether this {@link Schedule} contains any {@link Activity} objects that happen at the given {@link Time}.
      * @param time The {@link Time}. Cannot be null.
      *
-     * @return True if any {@link Activity} happens at or after the {@link Time}. False otherwise.
+     * @return True if any {@link Activity} happens at the {@link Time}. False otherwise.
      */
-    public boolean hasActivitiesAfter(Time time){
+    public boolean hasActivityAt(Time time){
         Objects.requireNonNull(time, "Time is null.");
-        return activities.stream().anyMatch(activity -> activity.time().compareTo(time) >= 0);
+        return activities.stream().anyMatch(activity -> activity.time().compareTo(time) == 0);
     }
 
     /**
-     * Fetches and returns the first {@link Activity} that will happen at or after the given {@link Time}.
+     * Fetches and returns the {@link Activity} that will happen at the given {@link Time}.
+     * Will throw an {@link NoSuchElementException} if no {@link Activity} happens at this {@link Time}.
+     * Use hasActivityAt() to check for the presence of an {@link Activity}.
      * @param time The {@link Time}. Cannot be null.
      *
      * @return The {@link Activity}.
-     * @throws NoSuchElementException If no {@link Activity} at or after was found.
+     * @throws NoSuchElementException If no {@link Activity} happens at the given {@link Time}.
      */
-    public Activity getActivityAfter(Time time){
+    public Activity getActivityAt(Time time){
         Objects.requireNonNull(time, "Time is null.");
         return activities.stream()
-                .filter(activity -> activity.time().compareTo(time) >= 0)
+                .filter(activity -> activity.time().compareTo(time) == 0)
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("No Activity happens at or after this Time."));
+                .orElseThrow(() -> new NoSuchElementException("No Activity happens at this Time."));
     }
 
     /**
