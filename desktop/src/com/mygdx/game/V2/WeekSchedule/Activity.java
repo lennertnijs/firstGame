@@ -10,7 +10,7 @@ import java.util.Objects;
  * Represents a concrete activity.
  * IMMUTABLE
  */
-public final class Activity {
+public final class Activity{
 
     /**
      * The location.
@@ -93,5 +93,4 @@ public final class Activity {
     public String toString(){
         return String.format("Activity[%s, %s, Type=%s]", location, time, type);
     }
-
 }

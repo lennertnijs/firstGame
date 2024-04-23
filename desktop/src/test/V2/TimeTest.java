@@ -4,6 +4,8 @@ import com.mygdx.game.V2.Util.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -110,5 +112,19 @@ public class TimeTest {
     public void testToString(){
         String expected = "Time[hours=5, minutes=10]";
         assertEquals(expected, time.toString());
+    }
+
+    @Test
+    public void testCompareTo(){
+        Time time1 = new Time(5, 9);
+        Time time2 = new Time(5, 10);
+        assertEquals(-1, time1.compareTo(time2));
+        assertEquals(0, time2.compareTo(time2));
+        assertEquals(1, time2.compareTo(time1));
+    }
+
+    @Test
+    public void testCompareToWithNull(){
+        assertThrows(NullPointerException.class, () -> time.compareTo(null));
     }
 }

@@ -6,7 +6,7 @@ import java.util.Objects;
  * Represents a moment in time, so hours & minutes.
  * IMMUTABLE
  */
-public final class Time {
+public final class Time implements Comparable<Time>{
 
     /**
      * The amount of hours per day.
@@ -100,5 +100,18 @@ public final class Time {
     @Override
     public String toString(){
         return String.format("Time[hours=%d, minutes=%d]", hours(), minutes());
+    }
+
+    /**
+     * Compares this {@link Time} to the given {@link Time}.
+     * Returns -1 if before, 0 is equal, and 1 if after.
+     * @param time The second {@link Time}. Cannot be null.
+     *
+     * @return -1 if smaller, 0 if equal or 1 if larger
+     */
+    @Override
+    public int compareTo(Time time) {
+        Objects.requireNonNull(time, "Time is null.");
+        return Integer.compare(minutes, time.minutes);
     }
 }
