@@ -1,6 +1,5 @@
 package com.mygdx.game.V2;
 
-import com.mygdx.game.NPC.WeekSchedule;
 import com.mygdx.game.V2.Dialogue.IDialogueRepository;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
 import com.mygdx.game.V2.WeekSchedule.IWeekSchedule;
