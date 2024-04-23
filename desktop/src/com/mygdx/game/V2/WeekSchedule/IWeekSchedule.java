@@ -25,7 +25,7 @@ public interface IWeekSchedule {
      * @return The {@link Schedule}.
      * @throws NoSuchElementException If no mapping for the given {@link Day} exists.
      */
-    Schedule getSchedule(Day day);
+    Schedule getDaySchedule(Day day);
 
     /**
      * Returns whether there is an {@link Activity} at the given {@link Time} in the {@link Schedule}

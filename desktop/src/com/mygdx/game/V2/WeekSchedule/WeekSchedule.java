@@ -43,7 +43,7 @@ public final class WeekSchedule implements IWeekSchedule{
     /**
      * {@inheritDoc}
      */
-    public Schedule getSchedule(Day day){
+    public Schedule getDaySchedule(Day day){
         validateDay(day);
         return schedules.get(day);
     }
