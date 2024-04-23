@@ -38,14 +38,14 @@ public final class Time {
     /**
      * @return The hours.
      */
-    public int getHours(){
+    public int hours(){
         return minutes / MINUTES_PER_HOUR;
     }
 
     /**
      * @return The minutes.
      */
-    public int getMinutes(){
+    public int minutes(){
         return minutes % MINUTES_PER_HOUR;
     }
 
@@ -98,6 +98,6 @@ public final class Time {
      */
     @Override
     public String toString(){
-        return String.format("Time[hours=%d, minutes=%d]", getHours(), getMinutes());
+        return String.format("Time[hours=%d, minutes=%d]", hours(), minutes());
     }
 }

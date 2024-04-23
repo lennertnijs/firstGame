@@ -9,72 +9,106 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeTest {
 
+    private Time time;
 
-    private Time time1;
-    private Time time2;
-    private Time time3;
     @BeforeEach
     public void initialise(){
-        time1 = new Time(20, 15);
-        time2 = new Time(23, 59);
-        time3 = new Time(20, 15);
+        time = new Time(5, 10);
     }
 
     @Test
-    public void testConstructor(){
-        Time time = new Time(6, 30);
-        assertEquals(time.getMinutes(), 30);
-        assertEquals(time.getHours(), 6);
-    }
-
-    @Test
-    public void testConstructorInvalid(){
+    public void testConstructorInvalidHours(){
         assertThrows(IllegalArgumentException.class, () -> new Time(-1, 0));
-        assertThrows(IllegalArgumentException.class, () -> new Time(Time.HOURS_PER_DAY, 50));
+        assertThrows(IllegalArgumentException.class, () -> new Time(Time.HOURS_PER_DAY, 0));
+    }
+
+    @Test
+    public void testConstructorInvalidMinutes(){
         assertThrows(IllegalArgumentException.class, () -> new Time(0, -1));
         assertThrows(IllegalArgumentException.class, () -> new Time(0, Time.MINUTES_PER_HOUR));
     }
 
     @Test
-    public void testBefore(){
-        assertTrue(time1.before(time2));
-        assertFalse(time2.before(time1));
-        assertFalse(time1.before(time3));
+    public void testGetHours(){
+        assertEquals(5, time.hours());
     }
 
     @Test
-    public void testBeforeWithNull(){
-        assertThrows(NullPointerException.class, () -> time1.before(null));
+    public void testMinutes(){
+        assertEquals(10, time.minutes());
+    }
+
+    @Test
+    public void testBefore(){
+        Time time1 = new Time(5, 9);
+        Time time2 = new Time(5, 11);
+        assertTrue(time1.before(time));
+        assertFalse(time.before(time));
+        assertFalse(time2.before(time));
+    }
+
+    @Test
+    public void testBeforeNull(){
+        assertThrows(NullPointerException.class, () -> time.before(null));
     }
 
     @Test
     public void testAfter(){
-        assertTrue(time2.after(time1));
-        assertFalse(time1.after(time2));
-        assertFalse(time1.after(time3));
+        Time time1 = new Time(5, 9);
+        Time time2 = new Time(5, 11);
+        assertTrue(time2.after(time));
+        assertFalse(time.after(time));
+        assertFalse(time1.after(time));
     }
 
     @Test
-    public void testAfterWithNull(){
-        assertThrows(NullPointerException.class, () -> time1.after(null));
+    public void testAfterNull(){
+        assertThrows(NullPointerException.class, () -> time.after(null));
     }
 
     @Test
     public void testEquals(){
+        Time time1 = new Time(5, 10);
+        Time time2 = new Time(5, 10);
+        Time time3 = new Time(5, 10);
+        Time diffTime = new Time(10, 10);
+        // reflexive
+        assertEquals(time1, time1);
+        // symmetrical
+        assertEquals(time1, time2);
+        assertEquals(time2, time1);
+        // transitive
+        assertEquals(time1, time2);
+        assertEquals(time2, time3);
         assertEquals(time1, time3);
-        assertNotEquals(time1, time2);
+        // not equals
+        assertNotEquals(time1, diffTime);
         assertNotEquals(time1, new Object());
+        assertNotEquals(time1, null);
     }
 
     @Test
     public void testHashCode(){
+        Time time1 = new Time(5, 10);
+        Time time2 = new Time(5, 10);
+        Time time3 = new Time(5, 10);
+        Time diffTime = new Time(10, 10);
+        // reflexive
+        assertEquals(time1.hashCode(), time1.hashCode());
+        // symmetrical
+        assertEquals(time1.hashCode(), time2.hashCode());
+        assertEquals(time2.hashCode(), time1.hashCode());
+        // transitive
+        assertEquals(time1.hashCode(), time2.hashCode());
+        assertEquals(time2.hashCode(), time3.hashCode());
         assertEquals(time1.hashCode(), time3.hashCode());
-        assertNotEquals(time1.hashCode(), time2.hashCode());
+        // not equals
+        assertNotEquals(time1.hashCode(), diffTime.hours());
     }
 
     @Test
     public void testToString(){
-        String expectedString = "Time[hours=20, minutes=15]";
-        assertEquals(time1.toString(), expectedString);
+        String expected = "Time[hours=5, minutes=10]";
+        assertEquals(expected, time.toString());
     }
 }
