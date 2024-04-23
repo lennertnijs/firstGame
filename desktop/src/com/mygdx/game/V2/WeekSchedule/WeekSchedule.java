@@ -13,7 +13,7 @@ import java.util.Objects;
  * A week schedule maps days to schedules.
  * IMMUTABLE
  */
-public final class WeekSchedule {
+public final class WeekSchedule implements IWeekSchedule{
 
     /**
      * The schedules, mapped onto by their relevant day.
