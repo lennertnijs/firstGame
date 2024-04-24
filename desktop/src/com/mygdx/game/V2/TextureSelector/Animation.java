@@ -1,63 +1,59 @@
 package com.mygdx.game.V2.TextureSelector;
 
-import java.util.Arrays;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public final class Animation<T> implements IAnimation<T>{
+public final class Animation{
 
-    private final T[] frames;
+    private final List<TextureRegion> frames;
     private final float duration;
 
-    public Animation(T[] frames, float animationDuration){
-        Objects.requireNonNull(frames, "Cannot create an Animation with null as frames.");
-        if(Arrays.stream(frames).anyMatch(Objects::isNull))
-            throw new NullPointerException("Cannot create an Animation with a null frame.");
-        if(animationDuration <= 0)
-            throw new IllegalArgumentException("Cannot create an Animation with a negative or 0 duration.");
-        this.frames = frames;
-        this.duration = animationDuration;
+    public Animation(List<TextureRegion> frames, float duration){
+        Objects.requireNonNull(frames, "List is null.");
+        if(frames.contains(null))
+            throw new NullPointerException("List contains null.");
+        if(duration <= 0)
+            throw new IllegalArgumentException("Duration is negative or zero.");
+        this.frames = new ArrayList<>(frames);
+        this.duration = duration;
     }
 
-    public T[] getFrames(){
-        return frames;
+    public List<TextureRegion> frames(){
+        return new ArrayList<>(frames);
     }
 
-    public float getDuration(){
+    public float duration(){
         return duration;
     }
 
-    /**
-     * Returns the frame associated with the delta (in seconds).
-     * @param delta The delta in seconds. Cannot be negative, or equal/bigger than the animation's duration.
-     *
-     * @return The frame
-     */
-    public T getFrame(float delta){
-        if(delta < 0 || delta >= duration)
-            throw new IllegalArgumentException("Cannot get a frame from an invalid delta.");
-        float frameDuration = (duration / frames.length);
-        int frameNumber = (int) (delta / frameDuration);
-        return frames[frameNumber];
+    public TextureRegion getTexture(float delta){
+        if(delta < 0)
+            throw new IllegalArgumentException("Delta is negative.");
+        float frameLength = duration / frames.size();
+        int index = (int) (delta / frameLength);
+        return frames.get(index);
     }
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Animation<?>))
+        if(!(other instanceof Animation))
             return false;
-        Animation<?> animation = (Animation<?>) other;
-        return Arrays.equals(frames, animation.frames) &&
-                duration == animation.duration;
+        Animation animation = (Animation) other;
+        return frames.equals(animation.frames) && duration == animation.duration;
     }
 
     @Override
     public int hashCode(){
-        int result = Arrays.hashCode(frames);
-        result = result * 31 + (int) duration;
+        int result = frames.hashCode();
+        result = result * 31 + Float.hashCode(duration);
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Animation[Frames=%s, Duration=%f]", Arrays.toString(frames), duration);
+        return String.format("Animation[frames=%s, duration=%f]", frames, duration);
     }
 }

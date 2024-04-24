@@ -27,7 +27,7 @@ public final class DeltaTime implements IDeltaTime{
     @Override
     public float getDelta(){
         update();
-        return delta/(float)1000;
+        return delta/1000f;
     }
 
     @Override

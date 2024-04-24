@@ -5,18 +5,18 @@ import java.util.Objects;
 public final class FiniteLoopAnimation<T> implements LoopAnimation<T> {
 
 
-    private final Animation<T> animation;
+    private final OldAnimation<T> oldAnimation;
     private final int maxLoops;
-    private final Animation<T> fallBackAnimation;
+    private final OldAnimation<T> fallBackOldAnimation;
 
-    public FiniteLoopAnimation(Animation<T> animation, int maxLoops, Animation<T> fallBackAnimation){
-        Objects.requireNonNull(animation, "Cannot create a FiniteLoopAnimation with null Animation.");
+    public FiniteLoopAnimation(OldAnimation<T> oldAnimation, int maxLoops, OldAnimation<T> fallBackOldAnimation){
+        Objects.requireNonNull(oldAnimation, "Cannot create a FiniteLoopAnimation with null Animation.");
         if(maxLoops < 0)
             throw new IllegalArgumentException("Cannot have a negative amount of loops.");
-        Objects.requireNonNull(fallBackAnimation, "Cannot create a FiniteLoopAnimation with null fallback Animation.");
-        this.animation = animation;
+        Objects.requireNonNull(fallBackOldAnimation, "Cannot create a FiniteLoopAnimation with null fallback Animation.");
+        this.oldAnimation = oldAnimation;
         this.maxLoops = maxLoops;
-        this.fallBackAnimation = fallBackAnimation;
+        this.fallBackOldAnimation = fallBackOldAnimation;
     }
 
 
@@ -24,10 +24,10 @@ public final class FiniteLoopAnimation<T> implements LoopAnimation<T> {
     public T getFrame(float delta) {
         if(delta < 0)
             throw new IllegalArgumentException("Cannot have a negative delta.");
-        float deltaWithinRange = delta % animation.getDuration();
-        boolean finishedLoops = delta / animation.getDuration() >= maxLoops;
+        float deltaWithinRange = delta % oldAnimation.getDuration();
+        boolean finishedLoops = delta / oldAnimation.getDuration() >= maxLoops;
         if(finishedLoops)
-            return fallBackAnimation.getFrame(deltaWithinRange);
-        return animation.getFrame(deltaWithinRange);
+            return fallBackOldAnimation.getFrame(deltaWithinRange);
+        return oldAnimation.getFrame(deltaWithinRange);
     }
 }

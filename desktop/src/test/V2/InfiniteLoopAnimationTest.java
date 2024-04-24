@@ -1,6 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.TextureSelector.Animation;
+import com.mygdx.game.V2.TextureSelector.OldAnimation;
 import com.mygdx.game.V2.TextureSelector.InfiniteLoopAnimation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class InfiniteLoopAnimationTest {
 
     private Integer[] frames;
-    private Animation<Integer> animation;
+    private OldAnimation<Integer> oldAnimation;
     private InfiniteLoopAnimation<Integer> infAnimation;
     @BeforeEach
     public void initialise(){
         frames = new Integer[]{1,2,3,4,5,6};
-        animation = new Animation<>(frames, 3);
-        infAnimation = new InfiniteLoopAnimation<>(animation);
+        oldAnimation = new OldAnimation<>(frames, 3);
+        infAnimation = new InfiniteLoopAnimation<>(oldAnimation);
     }
 
 
