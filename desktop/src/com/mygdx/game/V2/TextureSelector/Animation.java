@@ -26,11 +26,15 @@ public final class Animation{
      * This {@link Animation} is immutable, besides the fact that the underlying {@link TextureRegion} is mutable.
      * @param frames The list of frames. Cannot be null. Cannot contain null.
      * @param durationInMillis The duration in milliseconds. Cannot be negative or 0.
+     *
+     * @throws IllegalArgumentException If the list of frames contains no frames.
      */
     public Animation(List<TextureRegion> frames, float durationInMillis){
         Objects.requireNonNull(frames, "List is null.");
         if(frames.contains(null))
             throw new NullPointerException("List contains null.");
+        if(frames.size() == 0)
+            throw new IllegalArgumentException("List contains no TextureRegion.");
         if(durationInMillis <= 0)
             throw new IllegalArgumentException("Duration is negative or zero.");
         this.frames = new ArrayList<>(frames);

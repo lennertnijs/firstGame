@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +39,11 @@ public class AnimationTest {
     @Test
     public void testConstructorListContainsNull(){
         assertThrows(NullPointerException.class, () -> new Animation(Arrays.asList(frame1, null), duration));
+    }
+
+    @Test
+    public void testConstructorListEmpty(){
+        assertThrows(IllegalArgumentException.class, () -> new Animation(new ArrayList<>(), 0.5f));
     }
 
     @Test
