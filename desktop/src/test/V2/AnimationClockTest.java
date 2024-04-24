@@ -94,4 +94,13 @@ public class AnimationClockTest {
         String expected = "AnimationClock[deltaInMillis=0.000000]";
         assertEquals(expected, clock.toString());
     }
+
+    @Test
+    public void testCopy(){
+        AnimationClock copy = clock.copy();
+        assertEquals(clock, copy);
+        clock.increase(100);
+        assertNotEquals(clock, copy);
+
+    }
 }

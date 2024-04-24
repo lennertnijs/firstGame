@@ -72,4 +72,13 @@ public final class AnimationClock {
     public String toString(){
         return String.format("AnimationClock[deltaInMillis=%f]", deltaInMillis);
     }
+
+    /**
+     * @return A copy of this {@link AnimationClock}.
+     */
+    public AnimationClock copy(){
+        AnimationClock copy = new AnimationClock();
+        copy.increase((long)this.deltaInMillis);
+        return copy;
+    }
 }

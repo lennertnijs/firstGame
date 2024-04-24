@@ -40,7 +40,7 @@ public final class TextureSelector implements ITextureSelector{
         Objects.requireNonNull(clock, "Clock is null.");
         this.key = key;
         this.repo = repo;
-        this.clock = clock;
+        this.clock = clock.copy();
     }
 
     /**
@@ -118,5 +118,12 @@ public final class TextureSelector implements ITextureSelector{
     @Override
     public String toString(){
         return String.format("TextureSelector[key=%s, repository=%s, clock=%s]", key, repo, clock);
+    }
+
+    /**
+     * @return A copy of this {@link TextureSelector}.
+     */
+    public TextureSelector copy(){
+        return new TextureSelector(key, repo, clock.copy());
     }
 }
