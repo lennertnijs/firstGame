@@ -10,22 +10,18 @@ public final class AnimationKey {
     private final ActivityType activityType;
     private final Direction direction;
 
-    private AnimationKey(ActivityType activityType, Direction direction){
+    public AnimationKey(ActivityType activityType, Direction direction){
+        Objects.requireNonNull(activityType, "Activity type is null.");
+        Objects.requireNonNull(direction, "Direction is null.");
         this.activityType = activityType;
         this.direction = direction;
     }
 
-    public static AnimationKey create(ActivityType activityType, Direction direction){
-        Objects.requireNonNull(activityType, "Cannot create an AnimationKey with a null ActivityType.");
-        Objects.requireNonNull(direction, "Cannot create an AnimationKey with a null Direction.");
-        return new AnimationKey(activityType, direction);
-    }
-
-    public ActivityType getActivityType(){
+    public ActivityType activityType(){
         return activityType;
     }
 
-    public Direction getDirection(){
+    public Direction direction(){
         return direction;
     }
 

@@ -10,50 +10,80 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationKeyTest {
 
-
-    private AnimationKey key1;
-    private AnimationKey key2;
-    private AnimationKey key3;
+    private ActivityType activityType;
+    private Direction direction;
+    private AnimationKey key;
 
     @BeforeEach
     public void initialise(){
-        key1 = AnimationKey.create(ActivityType.RUNNING, Direction.UP);
-        key2 = AnimationKey.create(ActivityType.RUNNING, Direction.RIGHT);
-        key3 = AnimationKey.create(ActivityType.RUNNING, Direction.UP);
-    }
-
-    @Test
-    public void testConstructor(){
-        assertEquals(key1.getDirection(), Direction.UP);
-        assertEquals(key1.getActivityType(), ActivityType.RUNNING);
+        activityType = ActivityType.RUNNING;
+        direction = Direction.UP;
+        key = new AnimationKey(activityType, direction);
     }
 
     @Test
     public void testConstructorWithNullActivityType(){
-        assertThrows(NullPointerException.class, () -> AnimationKey.create(null, Direction.DOWN));
+        assertThrows(NullPointerException.class, () -> new AnimationKey(null, Direction.DOWN));
     }
 
     @Test
     public void testConstructorWithNullDirection(){
-        assertThrows(NullPointerException.class, () -> AnimationKey.create(ActivityType.RUNNING, null));
+        assertThrows(NullPointerException.class, () -> new AnimationKey(ActivityType.RUNNING, null));
+    }
+
+    @Test
+    public void testActivityType(){
+        assertEquals(activityType, key.activityType());
+    }
+
+    @Test
+    public void testDirection(){
+        assertEquals(direction, key.direction());
     }
 
     @Test
     public void testEquals(){
+        AnimationKey key1 = new AnimationKey(activityType, direction);
+        AnimationKey key2 = new AnimationKey(activityType, direction);
+        AnimationKey key3 = new AnimationKey(activityType, direction);
+        AnimationKey diffKey = new AnimationKey(activityType, Direction.RIGHT);
+        // reflexive
+        assertEquals(key1, key1);
+        // symmetrical
+        assertEquals(key1, key2);
+        assertEquals(key2, key1);
+        // transitive
+        assertEquals(key1, key2);
+        assertEquals(key2, key3);
         assertEquals(key1, key3);
-        assertNotEquals(key1, key2);
+        // not equals
+        assertNotEquals(key1, diffKey);
         assertNotEquals(key1, new Object());
+        assertNotEquals(key1, null);
     }
 
     @Test
     public void testHashCode(){
+        AnimationKey key1 = new AnimationKey(activityType, direction);
+        AnimationKey key2 = new AnimationKey(activityType, direction);
+        AnimationKey key3 = new AnimationKey(activityType, direction);
+        AnimationKey diffKey = new AnimationKey(activityType, Direction.RIGHT);
+        // reflexive
+        assertEquals(key1.hashCode(), key1.hashCode());
+        // symmetrical
+        assertEquals(key1.hashCode(), key2.hashCode());
+        assertEquals(key2.hashCode(), key1.hashCode());
+        // transitive
+        assertEquals(key1.hashCode(), key2.hashCode());
+        assertEquals(key2.hashCode(), key3.hashCode());
         assertEquals(key1.hashCode(), key3.hashCode());
-        assertNotEquals(key1.hashCode(), key2.hashCode());
+        // not equals
+        assertNotEquals(key1.hashCode(), diffKey.hashCode());
     }
 
     @Test
     public void testToString(){
         String expectedString = "AnimationKey[ActivityType=RUNNING, Direction=UP]";
-        assertEquals(key1.toString(), expectedString);
+        assertEquals(key.toString(), expectedString);
     }
 }

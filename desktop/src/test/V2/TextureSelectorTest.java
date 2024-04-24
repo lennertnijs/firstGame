@@ -36,12 +36,12 @@ public class TextureSelectorTest {
         OldAnimation<Texture> oldAnimation3 = new OldAnimation<>(new Texture[]{texture3, texture4}, 2);
 
         Map<AnimationKey, IAnimation<Texture>> mapping = new HashMap<>();
-        mapping.put(AnimationKey.create(ActivityType.RUNNING, Direction.UP), oldAnimation1);
-        mapping.put(AnimationKey.create(ActivityType.RUNNING, Direction.RIGHT), oldAnimation2);
-        mapping.put(AnimationKey.create(ActivityType.RUNNING, Direction.DOWN), oldAnimation3);
-        mapping.put(AnimationKey.create(ActivityType.WALKING, Direction.UP), oldAnimation3);
-        mapping.put(AnimationKey.create(ActivityType.WALKING, Direction.RIGHT), oldAnimation2);
-        mapping.put(AnimationKey.create(ActivityType.WALKING, Direction.DOWN), oldAnimation1);
+        mapping.put(new AnimationKey(ActivityType.RUNNING, Direction.UP), oldAnimation1);
+        mapping.put(new AnimationKey(ActivityType.RUNNING, Direction.RIGHT), oldAnimation2);
+        mapping.put(new AnimationKey(ActivityType.RUNNING, Direction.DOWN), oldAnimation3);
+        mapping.put(new AnimationKey(ActivityType.WALKING, Direction.UP), oldAnimation3);
+        mapping.put(new AnimationKey(ActivityType.WALKING, Direction.RIGHT), oldAnimation2);
+        mapping.put(new AnimationKey(ActivityType.WALKING, Direction.DOWN), oldAnimation1);
 
         repository = new AnimationRepository<>(mapping);
         timeProvider = new MockTimeProvider();
