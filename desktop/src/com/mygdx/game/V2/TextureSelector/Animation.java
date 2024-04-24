@@ -6,11 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents an animation.
+ * An animation means frames and a duration (in milliseconds).
+ */
 public final class Animation{
 
+    /**
+     * The frames. (as {@link TextureRegion}s.
+     */
     private final List<TextureRegion> frames;
+    /**
+     * The animation duration in milliseconds.
+     */
     private final float durationInMillis;
 
+    /**
+     * Creates a new {@link Animation}.
+     * This {@link Animation} is immutable, besides the fact that the underlying {@link TextureRegion} is mutable.
+     * @param frames The list of frames. Cannot be null. Cannot contain null.
+     * @param durationInMillis The duration in milliseconds. Cannot be negative or 0.
+     */
     public Animation(List<TextureRegion> frames, float durationInMillis){
         Objects.requireNonNull(frames, "List is null.");
         if(frames.contains(null))
@@ -21,22 +37,41 @@ public final class Animation{
         this.durationInMillis = durationInMillis;
     }
 
+    /**
+     * @return The frames. (Note that the list has been copied defensively, but the {@link TextureRegion}s are the original.)
+     */
     public List<TextureRegion> frames(){
         return new ArrayList<>(frames);
     }
 
+    /**
+     * @return The duration in millis.
+     */
     public float duration(){
         return durationInMillis;
     }
 
-    public TextureRegion getFrame(float delta){
-        if(delta < 0)
+    /**
+     * Fetches and returns the {@link TextureRegion} for the given delta in millis.
+     * The {@link Animation} will loop, so for a delta bigger than the duration, it will loop back to the start.
+     * @param deltaInMillis The delta in milliseconds. Cannot be negative.
+     *
+     * @return The {@link TextureRegion}.
+     */
+    public TextureRegion getFrame(float deltaInMillis){
+        if(deltaInMillis < 0)
             throw new IllegalArgumentException("Delta is negative.");
         float frameLength = durationInMillis / frames.size();
-        int index = (int) (delta % durationInMillis / frameLength);
+        int index = (int) (deltaInMillis % durationInMillis / frameLength);
         return frames.get(index);
     }
 
+    /**
+     * Compares this {@link Animation} to the given object and returns true if they're equal. Returns false otherwise.
+     * Two {@link Animation}s are equal if they hold the same frames & have the same duration.
+     *
+     * @return True if equal. False otherwise.
+     */
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Animation))
@@ -45,6 +80,9 @@ public final class Animation{
         return frames.equals(animation.frames) && durationInMillis == animation.durationInMillis;
     }
 
+    /**
+     * @return The hash code of this {@link Animation}.
+     */
     @Override
     public int hashCode(){
         int result = frames.hashCode();
@@ -52,6 +90,9 @@ public final class Animation{
         return result;
     }
 
+    /**
+     * @return The string representation of this {@link Animation}.
+     */
     @Override
     public String toString(){
         return String.format("Animation[frames=%s, durationInMillis=%f]", frames, durationInMillis);
