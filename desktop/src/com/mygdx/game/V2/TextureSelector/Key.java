@@ -10,7 +10,7 @@ import java.util.Objects;
  * A key holds an activity type and a direction.
  * IMMUTABLE
  */
-public final class AnimationKey {
+public final class Key {
 
     /**
      * The activity type.
@@ -22,11 +22,11 @@ public final class AnimationKey {
     private final Direction direction;
 
     /**
-     * Creates a new immutable {@link AnimationKey}.
+     * Creates a new immutable {@link Key}.
      * @param activityType The {@link ActivityType}. Cannot be null.
      * @param direction The {@link Direction}. Cannot be null.
      */
-    public AnimationKey(ActivityType activityType, Direction direction){
+    public Key(ActivityType activityType, Direction direction){
         Objects.requireNonNull(activityType, "Activity type is null.");
         Objects.requireNonNull(direction, "Direction is null.");
         this.activityType = activityType;
@@ -48,21 +48,21 @@ public final class AnimationKey {
     }
 
     /**
-     * Compares this {@link AnimationKey} to the given object and returns true if they're equal. Returns false otherwise.
-     * Two {@link AnimationKey}s are equal if they have the same activity type and direction.
+     * Compares this {@link Key} to the given object and returns true if they're equal. Returns false otherwise.
+     * Two {@link Key}s are equal if they have the same activity type and direction.
      *
      * @return True if equal. False otherwise.
      */
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof AnimationKey))
+        if(!(other instanceof Key))
             return false;
-        AnimationKey key = (AnimationKey) other;
+        Key key = (Key) other;
         return activityType == key.activityType && direction == key.direction;
     }
 
     /**
-     * @return The hash code of this {@link AnimationKey}.
+     * @return The hash code of this {@link Key}.
      */
     @Override
     public int hashCode(){
@@ -72,7 +72,7 @@ public final class AnimationKey {
     }
 
     /**
-     * @return The string representation of this {@link AnimationKey}.
+     * @return The string representation of this {@link Key}.
      */
     @Override
     public String toString(){

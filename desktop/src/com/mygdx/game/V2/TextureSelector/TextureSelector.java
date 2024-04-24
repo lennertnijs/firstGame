@@ -6,23 +6,23 @@ import com.mygdx.game.V2.Util.Direction;
 
 public final class TextureSelector implements ITextureSelector{
 
-    private AnimationKey key;
+    private Key key;
     private final AnimationRepository repository;
     private final AnimationClock clock;
 
     public TextureSelector(ActivityType activityType, Direction direction, AnimationRepository repository, AnimationClock clock){
-        this.key = new AnimationKey(activityType, direction);
+        this.key = new Key(activityType, direction);
         this.repository = repository;
         this.clock = clock;
     }
 
     public void setActivityType(ActivityType activityType){
-        key = new AnimationKey(activityType, key.direction());
+        key = new Key(activityType, key.direction());
         clock.reset();
     }
 
     public void setDirection(Direction direction){
-        key = new AnimationKey(key.activityType(), direction);
+        key = new Key(key.activityType(), direction);
         clock.reset();
     }
 
@@ -31,6 +31,6 @@ public final class TextureSelector implements ITextureSelector{
     }
 
     public TextureRegion getTexture(){
-        return repository.getAnimation(key).getFrame(clock.delta());
+        return repository.get(key).getFrame(clock.delta());
     }
 }

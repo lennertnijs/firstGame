@@ -7,26 +7,26 @@ import java.util.Objects;
 
 public final class AnimationRepository {
 
-    private final Map<AnimationKey, Animation> mapping;
+    private final Map<Key, Animation> map;
 
-    public AnimationRepository(Map<AnimationKey, Animation> mapping){
-        Objects.requireNonNull(mapping, "Mapping is null.");
-        if(mapping.containsKey(null))
-            throw new NullPointerException("Mapping contains a null key.");
-        if(mapping.containsValue(null))
-            throw new NullPointerException("Mapping contains a null value.");
-        this.mapping = new HashMap<>(mapping);
+    public AnimationRepository(Map<Key, Animation> map){
+        Objects.requireNonNull(map, "Map is null.");
+        if(map.containsKey(null))
+            throw new NullPointerException("Map contains a null key.");
+        if(map.containsValue(null))
+            throw new NullPointerException("Map contains a null value.");
+        this.map = new HashMap<>(map);
     }
 
-    public Map<AnimationKey, Animation> mapping(){
-        return new HashMap<>(mapping);
+    public Map<Key, Animation> map(){
+        return new HashMap<>(map);
     }
 
-    public Animation getAnimation(AnimationKey key){
+    public Animation get(Key key){
         Objects.requireNonNull(key, "Animation key is null.");
-        if(!mapping.containsKey(key))
+        if(!map.containsKey(key))
             throw new NoSuchElementException("No mapping found.");
-        return mapping.get(key);
+        return map.get(key);
     }
 
     @Override
@@ -34,16 +34,16 @@ public final class AnimationRepository {
         if(!(other instanceof AnimationRepository))
             return false;
         AnimationRepository repository = (AnimationRepository) other;
-        return mapping.equals(repository.mapping);
+        return map.equals(repository.map);
     }
 
     @Override
     public int hashCode(){
-        return mapping.hashCode();
+        return map.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("AnimationRepository[mapping=%s]", mapping);
+        return String.format("AnimationRepository[map=%s]", map);
     }
 }
