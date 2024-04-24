@@ -9,16 +9,16 @@ import java.util.Objects;
 public final class Animation{
 
     private final List<TextureRegion> frames;
-    private final float duration;
+    private final float durationInMillis;
 
-    public Animation(List<TextureRegion> frames, float duration){
+    public Animation(List<TextureRegion> frames, float durationInMillis){
         Objects.requireNonNull(frames, "List is null.");
         if(frames.contains(null))
             throw new NullPointerException("List contains null.");
-        if(duration <= 0)
+        if(durationInMillis <= 0)
             throw new IllegalArgumentException("Duration is negative or zero.");
         this.frames = new ArrayList<>(frames);
-        this.duration = duration;
+        this.durationInMillis = durationInMillis;
     }
 
     public List<TextureRegion> frames(){
@@ -26,14 +26,14 @@ public final class Animation{
     }
 
     public float duration(){
-        return duration;
+        return durationInMillis;
     }
 
-    public TextureRegion getTexture(float delta){
+    public TextureRegion getFrame(float delta){
         if(delta < 0)
             throw new IllegalArgumentException("Delta is negative.");
-        float frameLength = duration / frames.size();
-        int index = (int) (delta / frameLength);
+        float frameLength = durationInMillis / frames.size();
+        int index = (int) (delta % durationInMillis / frameLength);
         return frames.get(index);
     }
 
@@ -42,18 +42,18 @@ public final class Animation{
         if(!(other instanceof Animation))
             return false;
         Animation animation = (Animation) other;
-        return frames.equals(animation.frames) && duration == animation.duration;
+        return frames.equals(animation.frames) && durationInMillis == animation.durationInMillis;
     }
 
     @Override
     public int hashCode(){
         int result = frames.hashCode();
-        result = result * 31 + Float.hashCode(duration);
+        result = result * 31 + Float.hashCode(durationInMillis);
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Animation[frames=%s, duration=%f]", frames, duration);
+        return String.format("Animation[frames=%s, durationInMillis=%f]", frames, durationInMillis);
     }
 }
