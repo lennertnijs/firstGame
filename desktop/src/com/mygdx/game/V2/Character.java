@@ -1,6 +1,7 @@
 package com.mygdx.game.V2;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
 import com.mygdx.game.V2.Util.ActivityType;
 import com.mygdx.game.V2.Util.Direction;
@@ -21,7 +22,7 @@ public abstract class Character {
         return name;
     }
 
-    public Texture getTexture(){
+    public TextureRegion getTexture(){
         return textureSelector.getTexture();
     }
 
