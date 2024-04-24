@@ -7,6 +7,7 @@ import com.mygdx.game.V2.WeekSchedule.IWeekSchedule;
 
 public final class NPC extends Character{
 
+    //todo Probably want to remove the clock from TextureSelector and pass in some arbitrary data from the actual game clock.
     private Route currentRoute;
     private final NavigationGraph graph; //todo Add the current route to the NavigationData class
     private final IWeekSchedule weekSchedule;
