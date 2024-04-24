@@ -25,14 +25,4 @@ public abstract class Character {
     public TextureRegion getTexture(){
         return textureSelector.getTexture();
     }
-
-    public void setDirection(Direction direction){
-        Objects.requireNonNull(direction, "Direction is null.");
-        textureSelector.setDirection(direction);
-    }
-
-    public void setActivity(ActivityType activityType){
-        Objects.requireNonNull(activityType, "Activity type is null.");
-        textureSelector.setActivityType(activityType);
-    }
 }
