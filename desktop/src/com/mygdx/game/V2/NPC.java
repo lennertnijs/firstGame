@@ -2,24 +2,33 @@ package com.mygdx.game.V2;
 
 import com.mygdx.game.V2.Dialogue.IDialogueData;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
+import com.mygdx.game.V2.Util.Day;
+import com.mygdx.game.V2.Util.Time;
+import com.mygdx.game.V2.WeekSchedule.Activity;
 import com.mygdx.game.V2.WeekSchedule.IWeekSchedule;
 
-public final class NPC extends Character{
+public final class NPC{
 
-    //todo Probably want to remove the clock from TextureSelector and pass in some arbitrary data from the actual game clock.
-    private Route currentRoute;
-    private final NavigationGraph graph; //todo Add the current route to the NavigationData class
+    private final String name;
+    private final ITextureSelector selector;
+    private final NavigationGraph graph;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
     private final NPCStats stats;
 
-    private NPC(String name, ITextureSelector selector, Route route, IWeekSchedule weekSchedule,
+    private NPC(String name, ITextureSelector selector, IWeekSchedule weekSchedule,
                 NavigationGraph graph, IDialogueData dialogueData, NPCStats stats){
-        super(name, selector);
-        this.currentRoute = route;
+        this.name = name;
+        this.selector = selector;
         this.weekSchedule = weekSchedule;
         this.graph = graph;
         this.dialogueData = dialogueData;
         this.stats = stats;
+    }
+
+    public void update(Day day, Time time){
+        if(weekSchedule.hasActivity(day, time)){
+            Activity activity = weekSchedule.getActivity(day, time);
+        }
     }
 }

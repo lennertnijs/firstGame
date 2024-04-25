@@ -9,6 +9,7 @@ public final class NavigationGraph {
 
     private final IGraph<Location> graph;
     private final PathFinderStrategy<Location> strategy;
+    private Route currentRoute;
 
     private NavigationGraph(IGraph<Location> graph, PathFinderStrategy<Location> strategy){
         this.graph = graph;
