@@ -1,7 +1,7 @@
 package V2;
 
-import com.mygdx.game.V2.Graph.Graph;
-import com.mygdx.game.V2.Graph.IGraph;
+import com.mygdx.game.V2.Navigation.Graph;
+import com.mygdx.game.V2.Navigation.IGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -474,7 +474,7 @@ public class GraphTest {
     public void testToString(){
         graph.addVertices(Arrays.asList(str1, str2));
         graph.connectAll(str1, Collections.singletonList(str2));
-        String expected = "Graph[Vertex[Second] -> {Vertex[First]}, Vertex[First] -> {Vertex[Second]}]";
+        String expected = "Navigation[Vertex[Second] -> {Vertex[First]}, Vertex[First] -> {Vertex[Second]}]";
         assertEquals(expected, graph.toString());
     }
 

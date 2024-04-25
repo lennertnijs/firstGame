@@ -1,4 +1,4 @@
-package com.mygdx.game.V2.Graph;
+package com.mygdx.game.V2.Navigation;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ public final class Graph<T> implements IGraph<T>{
      * @param graph The graph. Cannot be null.
      */
     public Graph(Graph<T> graph){
-        Objects.requireNonNull(graph, "Graph is null.");
+        Objects.requireNonNull(graph, "Navigation is null.");
         this.adjacencyMap = new HashMap<>();
         for(Vertex<T> vertex : graph.adjacencyMap.keySet())
             this.adjacencyMap.put(vertex, new HashSet<>(graph.adjacencyMap.get(vertex)));
@@ -30,7 +30,7 @@ public final class Graph<T> implements IGraph<T>{
     public void addVertex(T object){
         Vertex<T> vertex = new Vertex<>(object);
         if(adjacencyMap.containsKey(vertex))
-            throw new IllegalStateException("The Vertex already exists in the Graph.");
+            throw new IllegalStateException("The Vertex already exists in the Navigation.");
         adjacencyMap.put(vertex, new HashSet<>());
     }
 
@@ -149,12 +149,12 @@ public final class Graph<T> implements IGraph<T>{
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
         if(!adjacencyMap.containsKey(startVertex))
-            throw new NoSuchElementException("Start Vertex is not part of the Graph.");
+            throw new NoSuchElementException("Start Vertex is not part of the Navigation.");
         if(!adjacencyMap.containsKey(endVertex))
-            throw new NoSuchElementException("End Vertex is not part of the Graph.");
+            throw new NoSuchElementException("End Vertex is not part of the Navigation.");
         Edge<T> edge = new Edge<>(startVertex, endVertex, weight);
         if(adjacencyMap.get(startVertex).stream().anyMatch(e -> e.hasSameVertices(edge)))
-            throw new IllegalStateException("Edge already exists in the Graph.");
+            throw new IllegalStateException("Edge already exists in the Navigation.");
         adjacencyMap.get(startVertex).add(edge);
     }
 
@@ -207,7 +207,7 @@ public final class Graph<T> implements IGraph<T>{
     public Set<T> getNeighbors(T object) {
         Vertex<T> vertex = new Vertex<>(object);
         if(!adjacencyMap.containsKey(vertex))
-            throw new NoSuchElementException("The object is not a vertex in the Graph.");
+            throw new NoSuchElementException("The object is not a vertex in the Navigation.");
         return adjacencyMap.get(vertex).stream()
                 .map(Edge::getEnd)
                 .map(Vertex::getValue)
@@ -222,7 +222,7 @@ public final class Graph<T> implements IGraph<T>{
         Vertex<T> startVertex = new Vertex<>(start);
         Vertex<T> endVertex = new Vertex<>(end);
         if(!adjacencyMap.containsKey(startVertex))
-            throw new NoSuchElementException("Start object is not a vertex in the Graph.");
+            throw new NoSuchElementException("Start object is not a vertex in the Navigation.");
         Edge<T> dummyEdge = new Edge<>(startVertex, endVertex, 0);
         for(Edge<T> edge : adjacencyMap.get(startVertex))
             if(edge.hasSameVertices(dummyEdge))
@@ -237,7 +237,7 @@ public final class Graph<T> implements IGraph<T>{
     public int getDegree(T object){
         Vertex<T> vertex = new Vertex<>(object);
         if(!adjacencyMap.containsKey(vertex))
-            throw new NoSuchElementException("Object is not a Vertex in the Graph.");
+            throw new NoSuchElementException("Object is not a Vertex in the Navigation.");
         return adjacencyMap.get(vertex).size();
     }
 
@@ -320,7 +320,7 @@ public final class Graph<T> implements IGraph<T>{
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
-        builder.append("Graph[");
+        builder.append("Navigation[");
         for(Vertex<T> vertex : adjacencyMap.keySet()){
             builder.append(String.format("Vertex[%s] -> {", vertex.getValue()));
             for(Edge<T> edge : adjacencyMap.get(vertex))

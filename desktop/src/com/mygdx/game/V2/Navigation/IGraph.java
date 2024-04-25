@@ -1,4 +1,4 @@
-package com.mygdx.game.V2.Graph;
+package com.mygdx.game.V2.Navigation;
 
 import java.util.List;
 import java.util.NoSuchElementException;

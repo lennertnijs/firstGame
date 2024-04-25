@@ -1,10 +1,8 @@
-package com.mygdx.game.V2;
-
-import com.mygdx.game.V2.Graph.IGraph;
+package com.mygdx.game.V2.Navigation;
 
 import java.util.*;
 
-public class BFSPathFinder<T> implements PathFinderStrategy<T>{
+public class BFSPathFinder<T> implements PathFinderStrategy<T> {
 
 
     public BFSPathFinder(){

@@ -1,6 +1,6 @@
 package V2;
 
-import com.mygdx.game.V2.Graph.Vertex;
+import com.mygdx.game.V2.Navigation.Vertex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

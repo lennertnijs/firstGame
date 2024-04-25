@@ -1,6 +1,4 @@
-package com.mygdx.game.V2;
-
-import com.mygdx.game.V2.Graph.IGraph;
+package com.mygdx.game.V2.Navigation;
 
 import java.util.List;
 
