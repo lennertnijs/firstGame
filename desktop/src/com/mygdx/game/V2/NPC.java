@@ -1,6 +1,7 @@
 package com.mygdx.game.V2;
 
 import com.mygdx.game.V2.Dialogue.IDialogueData;
+import com.mygdx.game.V2.Navigation.NavigationData;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
 import com.mygdx.game.V2.Util.Day;
 import com.mygdx.game.V2.Util.Time;
@@ -11,13 +12,13 @@ public final class NPC{
 
     private final String name;
     private final ITextureSelector selector;
-    private final NavigationGraph graph;
+    private final NavigationData graph;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
     private final NPCStats stats;
 
     private NPC(String name, ITextureSelector selector, IWeekSchedule weekSchedule,
-                NavigationGraph graph, IDialogueData dialogueData, NPCStats stats){
+                NavigationData graph, IDialogueData dialogueData, NPCStats stats){
         this.name = name;
         this.selector = selector;
         this.weekSchedule = weekSchedule;

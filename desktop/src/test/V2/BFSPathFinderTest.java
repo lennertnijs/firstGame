@@ -1,8 +1,8 @@
 package V2;
 
-import com.mygdx.game.V2.*;
-import com.mygdx.game.V2.Graph.Graph;
-import com.mygdx.game.V2.Graph.IGraph;
+import com.mygdx.game.V2.Navigation.BFSPathFinder;
+import com.mygdx.game.V2.Navigation.Graph;
+import com.mygdx.game.V2.Navigation.IGraph;
 import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import org.junit.jupiter.api.BeforeEach;

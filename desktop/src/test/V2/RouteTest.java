@@ -2,7 +2,7 @@ package V2;
 
 import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
-import com.mygdx.game.V2.Route;
+import com.mygdx.game.V2.Navigation.Route;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

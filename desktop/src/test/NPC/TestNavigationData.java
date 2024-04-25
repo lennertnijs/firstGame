@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-public class TestNavigationGraph {
+public class TestNavigationData {
 
     @Test
     public void testConstructor() {
