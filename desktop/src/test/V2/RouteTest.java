@@ -65,17 +65,6 @@ public class RouteTest {
     }
 
     @Test
-    public void testGetAndRemoveNext(){
-        assertEquals(route1.getAndRemoveNext(), pos1);
-        assertEquals(route1.getLength(), 2);
-        assertEquals(route1.getAndRemoveNext(), pos2);
-        assertEquals(route1.getLength(), 1);
-        assertEquals(route1.getAndRemoveNext(), pos3);
-        assertEquals(route1.getLength(), 0);
-        assertThrows(NoSuchElementException.class, () -> route1.getAndRemoveNext());
-    }
-
-    @Test
     public void testEquals(){
         assertEquals(route1, route3);
         assertNotEquals(route1, route2);

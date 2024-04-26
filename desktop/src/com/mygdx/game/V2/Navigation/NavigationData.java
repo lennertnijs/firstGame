@@ -57,6 +57,7 @@ public final class NavigationData implements INavigationData{
     /**
      * {@inheritDoc}
      */
+    // does not work -> stuck on first
     public Location nextLocation(Location current, int speed, int delta){
         if(currentRoute.isEmpty())
             throw new IllegalStateException("No more movement happening.");
