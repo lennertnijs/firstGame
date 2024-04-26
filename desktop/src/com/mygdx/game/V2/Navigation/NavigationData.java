@@ -40,9 +40,7 @@ public final class NavigationData {
     }
 
     /**
-     * Calculates and internally stores a {@link Route} from the start to the end {@link Location}.
-     * @param start The start {@link Location}. Cannot be null. Must be in the graph.
-     * @param goal The goal {@link Location}. Cannot be null. Must be in the graph.
+     * {@inheritDoc}
      */
     public void calculateAndStoreRoute(Location start, Location goal){
         Objects.requireNonNull(start, "Start location is null.");
@@ -51,18 +49,14 @@ public final class NavigationData {
     }
 
     /**
-     * @return True if the current {@link Route} is not empty, meaning they're moving.
+     * {@inheritDoc}
      */
     public boolean isMoving(){
         return currentRoute.isEmpty();
     }
 
     /**
-     * Calculates and returns the next {@link Location} after applying movement.
-     * @param current The current {@link Location}. Cannot be null.
-     * @param speed The movement speed. Cannot be negative or 0.
-     *
-     * @return The next {@link Location}.
+     * {@inheritDoc}
      */
     public Location nextLocation(Location current, int speed){
         if(currentRoute.isEmpty())
