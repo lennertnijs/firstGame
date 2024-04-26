@@ -10,15 +10,8 @@ public final class Route {
 
     private final List<Location> locations;
 
-    private Route(List<Location> locations){
+    public Route(List<Location> locations){
         this.locations = locations;
-    }
-
-    public static Route create(List<Location> locations){
-        Objects.requireNonNull(locations, "Cannot create a Route from null.");
-        if(locations.contains(null))
-            throw new NullPointerException("Cannot create a Route with a null Position.");
-        return new Route(locations);
     }
 
     public List<Location> getLocations(){

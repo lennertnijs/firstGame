@@ -10,15 +10,10 @@ public final class NavigationData {
     private final PathFinderStrategy<Location> strategy;
     private Route currentRoute;
 
-    private NavigationData(IGraph<Location> graph, PathFinderStrategy<Location> strategy){
+    public NavigationData(IGraph<Location> graph, PathFinderStrategy<Location> strategy){
         this.graph = graph;
         this.strategy = strategy;
-    }
-
-    public static NavigationData create(IGraph<Location> graph, PathFinderStrategy<Location> strategy){
-        Objects.requireNonNull(graph, "Cannot create a NavigationGraph with a null Navigation.");
-        Objects.requireNonNull(strategy, "Cannot create a NavigationGraph with a null strategy.");
-        return new NavigationData(graph, strategy);
+        this.currentRoute = new Route(new ArrayList<>());
     }
 
     public IGraph<Location> getGraph(){

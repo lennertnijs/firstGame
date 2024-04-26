@@ -27,10 +27,10 @@ public class RouteTest {
         pos1 = new Location("Map1", new Point(75, 75));
         pos2 = new Location("Map1", new Point(200, 200));
         pos3 = new Location("Map1", new Point(0, 0));
-        route1 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
-        route2 = Route.create(new ArrayList<>(Arrays.asList(pos3, pos2)));
-        route3 = Route.create(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
-        emptyRoute = Route.create(new ArrayList<>());
+        route1 = new Route(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
+        route2 = new Route(new ArrayList<>(Arrays.asList(pos3, pos2)));
+        route3 = new Route(new ArrayList<>(Arrays.asList(pos1, pos2, pos3)));
+        emptyRoute = new Route(new ArrayList<>());
     }
 
     @Test
@@ -40,8 +40,8 @@ public class RouteTest {
 
     @Test
     public void testConstructorInvalid(){
-        assertThrows(NullPointerException.class, () -> Route.create(null));
-        assertThrows(NullPointerException.class, () -> Route.create(new ArrayList<>(Arrays.asList(pos1, null))));
+        assertThrows(NullPointerException.class, () -> new Route(null));
+        assertThrows(NullPointerException.class, () -> new Route(new ArrayList<>(Arrays.asList(pos1, null))));
     }
 
     @Test
