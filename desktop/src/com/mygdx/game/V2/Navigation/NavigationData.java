@@ -6,64 +6,107 @@ import com.mygdx.game.V2.Util.Point;
 
 import java.util.*;
 
+/**
+ * Represents all the data surrounding movement & navigation.
+ */
 public final class NavigationData {
 
-    private final PathFinderStrategy<Location> strategy;
+    /**
+     * The current route (if they're moving).
+     */
     private Route currentRoute;
+    /**
+     * The path finding strategy. Includes the graph.
+     */
+    private final PathFinderStrategy<Location> strategy;
 
+    /**
+     * Creates a new {@link NavigationData}.
+     * @param strategy The {@link PathFinderStrategy}. Cannot be null.
+     */
     public NavigationData(PathFinderStrategy<Location> strategy){
         this.strategy = strategy;
         this.currentRoute = new Route(new ArrayList<>());
     }
 
+    /**
+     * Creates a new {@link NavigationData}.
+     * @param strategy The {@link PathFinderStrategy}. Cannot be null.
+     * @param route The current {@link Route}. Cannot be null.
+     */
     public NavigationData(PathFinderStrategy<Location> strategy, Route route){
         this.strategy = strategy;
         this.currentRoute = new Route(route.getLocations());
     }
 
-    public void calculateRoute(Location start, Location end){
-        this.currentRoute = new Route(strategy.findPath(start, end));
+    /**
+     * Calculates and internally stores a {@link Route} from the start to the end {@link Location}.
+     * @param start The start {@link Location}. Cannot be null. Must be in the graph.
+     * @param goal The goal {@link Location}. Cannot be null. Must be in the graph.
+     */
+    public void calculateAndStoreRoute(Location start, Location goal){
+        Objects.requireNonNull(start, "Start location is null.");
+        Objects.requireNonNull(goal, "Goal location is null.");
+        this.currentRoute = new Route(strategy.findPath(start, goal));
     }
 
+    /**
+     * @return True if the current {@link Route} is not empty, meaning they're moving.
+     */
     public boolean isMoving(){
         return currentRoute.isEmpty();
     }
 
-    public Location nextLocation(Location start, int speed){
+    /**
+     * Calculates and returns the next {@link Location} after applying movement.
+     * @param current The current {@link Location}. Cannot be null.
+     * @param speed The movement speed. Cannot be negative or 0.
+     *
+     * @return The next {@link Location}.
+     */
+    public Location nextLocation(Location current, int speed){
         if(currentRoute.isEmpty())
-            return start;
+            throw new IllegalStateException("No more movement happening.");
+        if(speed <= 0)
+            throw new IllegalArgumentException("Speed is negative or 0.");
         Location next = currentRoute.getNext();
         int movement = (int) (speed * Gdx.graphics.getDeltaTime());
-        int newX = calculateNewX(start.position().x(), next.position().x(), movement);
-        int newY = calculateNewY(start.position().x(), next.position().x(), movement);
-        Point newPosition = new Point(newX, newY);
-        String newMap = newPosition.equals(next.position()) ? next.mapName() : start.mapName();
-        return new Location(newMap, newPosition);
+        int nextX = calculateNextX(current.position().x(), next.position().x(), movement);
+        int nextY = calculateNextY(current.position().x(), next.position().x(), movement);
+        Point nextPosition = new Point(nextX, nextY);
+        String newMap = nextPosition.equals(next.position()) ? next.mapName() : current.mapName();
+        return new Location(newMap, nextPosition);
     }
 
-    private int calculateNewX(int oldX, int goalX, int movement){
+    /**
+     * Calculates the next X value.
+     * @param oldX The old X.
+     * @param goalX The goal X.
+     * @param movement The movement.
+     *
+     * @return The next X value.
+     */
+    private int calculateNextX(int oldX, int goalX, int movement){
         return oldX < goalX ? Math.min(oldX + movement, goalX) : Math.max(oldX - movement, goalX);
     }
 
-    private int calculateNewY(int oldY, int goalY, int movement){
+    /**
+     * Calculates the next Y value.
+     * @param oldY The old Y.
+     * @param goalY The goal Y.
+     * @param movement The movement.
+     *
+     * @return The next Y value.
+     */
+    private int calculateNextY(int oldY, int goalY, int movement){
         return oldY < goalY ? Math.min(oldY + movement, goalY) : Math.max(oldY - movement, goalY);
     }
 
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof NavigationData))
-            return false;
-        NavigationData network = (NavigationData) other;
-        return true;
-    }
-
-    @Override
-    public int hashCode(){
-        return 1;
-    }
-
+    /**
+     * @return The string representation of this {@link NavigationData}.
+     */
     @Override
     public String toString(){
-        return String.format("MovementNetwork[Navigation=%s]", currentRoute);
+        return String.format("NavigationData[currentRoute=%s, strategy=%s]", currentRoute, strategy);
     }
 }
