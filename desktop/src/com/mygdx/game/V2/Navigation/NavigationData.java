@@ -1,6 +1,5 @@
 package com.mygdx.game.V2.Navigation;
 
-import com.badlogic.gdx.Gdx;
 import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 
@@ -9,7 +8,7 @@ import java.util.*;
 /**
  * Represents all the data surrounding movement & navigation.
  */
-public final class NavigationData {
+public final class NavigationData implements INavigationData{
 
     /**
      * The current route (if they're moving).
@@ -58,18 +57,23 @@ public final class NavigationData {
     /**
      * {@inheritDoc}
      */
-    public Location nextLocation(Location current, int speed){
+    public Location nextLocation(Location current, int speed, int delta){
         if(currentRoute.isEmpty())
             throw new IllegalStateException("No more movement happening.");
-        if(speed <= 0)
-            throw new IllegalArgumentException("Speed is negative or 0.");
+        if(speed <= 0 || delta <= 0)
+            throw new IllegalArgumentException("Speed/delta is negative or 0.");
         Location next = currentRoute.getNext();
-        int movement = (int) (speed * Gdx.graphics.getDeltaTime());
+        int movement = speed * delta;
         int nextX = calculateNextX(current.position().x(), next.position().x(), movement);
         int nextY = calculateNextY(current.position().x(), next.position().x(), movement);
         Point nextPosition = new Point(nextX, nextY);
-        String newMap = nextPosition.equals(next.position()) ? next.mapName() : current.mapName();
-        return new Location(newMap, nextPosition);
+        boolean arrivedAtNextInRoute = nextPosition.equals(next.position());
+        String nextMap = current.mapName();
+        if(arrivedAtNextInRoute){
+            nextMap = next.mapName();
+            currentRoute.removeNext();
+        }
+        return new Location(nextMap, nextPosition);
     }
 
     /**

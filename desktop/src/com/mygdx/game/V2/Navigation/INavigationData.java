@@ -28,10 +28,11 @@ public interface INavigationData {
      * Calculates and returns the next {@link Location} after applying movement.
      * @param current The current {@link Location}. Cannot be null.
      * @param speed The movement speed. Cannot be negative or 0.
+     * @param delta The game's delta. Cannot be negative or 0.
      *
      * @return The next {@link Location}.
-     * @throws IllegalArgumentException If the speed is negative or 0.
+     * @throws IllegalArgumentException If the speed or delta is negative or 0.
      * @throws NullPointerException If the current {@link Location} is null.
      */
-    Location nextLocation(Location current, int speed);
+    Location nextLocation(Location current, int speed, int delta);
 }

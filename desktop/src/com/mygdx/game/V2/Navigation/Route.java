@@ -34,10 +34,8 @@ public final class Route {
     }
 
 
-    public Location getAndRemoveNext(){
-        if(route.isEmpty())
-            throw new NoSuchElementException("No more Positions are left in the Route.");
-        return route.poll();
+    public void removeNext(){
+        route.poll();
     }
 
     @Override
