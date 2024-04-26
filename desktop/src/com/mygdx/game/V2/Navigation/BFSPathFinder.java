@@ -4,33 +4,40 @@ import java.util.*;
 
 public class BFSPathFinder<T> implements PathFinderStrategy<T> {
 
+    private final IGraph<T> graph;
 
-    public BFSPathFinder(){
+    public BFSPathFinder(IGraph<T> graph){
+        Objects.requireNonNull(graph, "Graph is null.");
+        this.graph = graph.copy();
     }
 
     @Override
-    public List<T> findPath(T start, T goal, IGraph<T> graph) {
-        Objects.requireNonNull(start, "Cannot find a path using BFS starting in null.");
-        Objects.requireNonNull(goal, "Cannot find a path using BFS ending in null.");
-        Objects.requireNonNull(graph, "Cannot find a path using BFS over a null network.");
+    public List<T> findPath(T start, T goal) {
+        Objects.requireNonNull(start, "Start is null.");
+        Objects.requireNonNull(goal, "Goal is null.");
         if(!graph.hasVertex(start) || !graph.hasVertex(goal))
-            throw new NoSuchElementException("Start or goal are not part of the Graph.");
-        LinkedList<List<T>> queue = new LinkedList<>();
-        queue.add(Collections.singletonList(start));
+            throw new NoSuchElementException("Start or goal is not part of the Graph.");
+        return BFS(start, goal);
+    }
+
+    private List<T> BFS(T start, T goal){
+        Queue<List<T>> queue = new LinkedList<>();
+        queue.add(new LinkedList<>(Collections.singletonList(start)));
+
         while(!queue.isEmpty()){
-            List<T> currentPath = queue.pop();
-            T currentMapPosition = currentPath.get(currentPath.size() - 1);
-            for(T t : graph.getNeighbors(currentMapPosition)){
-                List<T> clonedPath = new ArrayList<>(currentPath);
-                if(!clonedPath.contains(t)){
-                    clonedPath.add(t);
-                    if(t.equals(goal))
-                        return clonedPath;
-                    else
-                        queue.addLast(clonedPath);
-                }
+            List<T> currentPath = queue.poll();
+            T current = currentPath.get(currentPath.size() - 1);
+
+            if(current.equals(goal)) return currentPath;
+
+            for(T neighbor : graph.getNeighbors(current)){
+                if(currentPath.contains(neighbor)) continue;
+
+                List<T> path = new LinkedList<>(currentPath);
+                path.add(neighbor);
+                queue.add(path);
             }
         }
-        throw new NoSuchElementException("No path was found to the goal.");
+        throw new NoSuchElementException("BFS could not find a path.");
     }
 }

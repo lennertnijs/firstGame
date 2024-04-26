@@ -226,4 +226,9 @@ public interface IGraph<T> {
      * Clears the entire graph.
      */
     void clear();
+
+    /**
+     * Copies the graph. The objects in the vertices will remain the same. (Thus, they have to be immutable).
+     */
+    IGraph<T> copy();
 }

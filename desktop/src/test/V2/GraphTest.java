@@ -428,8 +428,8 @@ public class GraphTest {
         Graph<String> graph1 = new Graph<>();
         graph1.addVertices(Arrays.asList(str1, str2, str3));
         graph1.connectAll(str1, Arrays.asList(str2, str3));
-        Graph<String> graph2 = new Graph<>(graph1);
-        Graph<String> graph3 = new Graph<>(graph1);
+        Graph<String> graph2 = graph1.copy();
+        Graph<String> graph3 = graph1.copy();
         Graph<String> differentGraph = new Graph<>();
         differentGraph.addVertices(Arrays.asList(str1, str2, str3));
         differentGraph.connectAll(str1, Arrays.asList(str2, str3), Arrays.asList(1, 2));
@@ -453,8 +453,8 @@ public class GraphTest {
         Graph<String> graph1 = new Graph<>();
         graph1.addVertices(Arrays.asList(str1, str2, str3));
         graph1.connectAll(str1, Arrays.asList(str2, str3));
-        Graph<String> graph2 = new Graph<>(graph1);
-        Graph<String> graph3 = new Graph<>(graph1);
+        Graph<String> graph2 = graph1.copy();
+        Graph<String> graph3 = graph1.copy();
         Graph<String> differentGraph = new Graph<>();
         differentGraph.addVertices(Arrays.asList(str1, str2, str3));
         // reflexive

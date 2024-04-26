@@ -12,18 +12,6 @@ public final class Graph<T> implements IGraph<T>{
     }
 
     /**
-     * Creates a copy of the given {@link Graph}.
-     * The copy will be fully separate of the original, as long as the objects the vertices hold are immutable.
-     * @param graph The graph. Cannot be null.
-     */
-    public Graph(Graph<T> graph){
-        Objects.requireNonNull(graph, "Navigation is null.");
-        this.adjacencyMap = new HashMap<>();
-        for(Vertex<T> vertex : graph.adjacencyMap.keySet())
-            this.adjacencyMap.put(vertex, new HashSet<>(graph.adjacencyMap.get(vertex)));
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -331,5 +319,16 @@ public final class Graph<T> implements IGraph<T>{
             builder.delete(builder.length() - 2, builder.length());
         builder.append("]");
         return builder.toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Graph<T> copy(){
+        Graph<T> copy = new Graph<>();
+        for(Vertex<T> vertex : this.adjacencyMap.keySet())
+            copy.adjacencyMap.put(vertex, new HashSet<>(this.adjacencyMap.get(vertex)));
+        return copy;
     }
 }

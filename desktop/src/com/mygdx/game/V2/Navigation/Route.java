@@ -2,61 +2,59 @@ package com.mygdx.game.V2.Navigation;
 
 import com.mygdx.game.V2.Util.Location;
 
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
 
 public final class Route {
 
-    private final List<Location> locations;
+    private final Queue<Location> route;
 
     public Route(List<Location> locations){
-        this.locations = locations;
+        Objects.requireNonNull(locations, "List is null.");
+        if(locations.contains(null))
+            throw new NullPointerException("List contains null Location.");
+        this.route = new LinkedList<>(locations);
     }
 
     public List<Location> getLocations(){
-        return locations;
+        return new ArrayList<>(route);
     }
 
     public int getLength(){
-        return locations.size();
+        return route.size();
     }
 
     public boolean isEmpty(){
-        return locations.isEmpty();
+        return route.isEmpty();
     }
 
     public Location getNext(){
-        if(locations.isEmpty())
+        if(route.isEmpty())
             throw new NoSuchElementException("No more Positions are left in the Route.");
-        return locations.get(0);
+        return route.peek();
     }
 
 
     public Location getAndRemoveNext(){
-        if(locations.isEmpty())
+        if(route.isEmpty())
             throw new NoSuchElementException("No more Positions are left in the Route.");
-        Location nextLocation = locations.get(0);
-        locations.remove(0);
-        return nextLocation;
+        return route.poll();
     }
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Route)){
+        if(!(other instanceof Route))
             return false;
-        }
         Route route = (Route) other;
-        return locations.equals(route.locations);
+        return this.route.equals(route.route);
     }
 
     @Override
     public int hashCode(){
-        return locations.hashCode();
+        return route.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("Route[positions=%s]", locations.toString());
+        return String.format("Route[positions=%s]", route);
     }
 }
