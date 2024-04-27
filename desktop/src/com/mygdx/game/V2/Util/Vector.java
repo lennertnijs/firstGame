@@ -39,7 +39,19 @@ public final class Vector {
     }
 
     /**
+     * Calculates and returns the size of this {@link Vector}.
+     * Rounds down/up to the nearest integer.
+     *
+     * @return The size of this {@link Vector}.
+     */
+    public int size(){
+        return (int)Math.round(Math.sqrt(x * x + y * y));
+    }
+
+
+    /**
      * Scales this {@link Vector}'s components with the given factor and returns the new scaled {@link Vector}.
+     * Scaling rounds down/up to the nearest integer.
      * @param factor The factor.
      *
      * @return The new & scaled immutable {@link Vector}.
@@ -57,15 +69,7 @@ public final class Vector {
      * @return The new & resized immutable {@link Vector}.
      */
     public Vector scaleToSize(int length){
-        int factor = length / this.size();
-        return scale(factor);
-    }
-
-    /**
-     * @return The size of this {@link Vector}.
-     */
-    public int size(){
-        return (int)Math.round(Math.sqrt(x * x + y * y));
+        return scale((float)length / (float)this.size());
     }
 
     /**
