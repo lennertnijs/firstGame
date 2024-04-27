@@ -20,19 +20,18 @@ public interface INavigationData {
     void calculateAndStoreRoute(Location start, Location goal);
 
     /**
-     * @return True if the current {@link Route} is not empty, meaning they're moving. False otherwise.
+     * @return True if the current route is not empty, meaning they're moving. False otherwise.
      */
     boolean isMoving();
 
     /**
      * Calculates and returns the next {@link Location} after applying movement.
      * @param current The current {@link Location}. Cannot be null.
-     * @param speed The movement speed. Cannot be negative or 0.
-     * @param delta The game's delta. Cannot be negative or 0.
+     * @param movement The movement speed. Cannot be negative or 0.
      *
      * @return The next {@link Location}.
      * @throws IllegalArgumentException If the speed or delta is negative or 0.
      * @throws NullPointerException If the current {@link Location} is null.
      */
-    Location nextLocation(Location current, int speed, int delta);
+    Location nextLocation(Location current, int movement);
 }

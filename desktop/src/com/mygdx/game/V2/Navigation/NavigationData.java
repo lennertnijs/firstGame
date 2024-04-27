@@ -2,6 +2,7 @@ package com.mygdx.game.V2.Navigation;
 
 import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
+import com.mygdx.game.V2.Util.Vector;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ public final class NavigationData implements INavigationData{
     /**
      * The current route (if they're moving).
      */
-    private Route currentRoute;
+    private List<Location> currentRoute;
     /**
      * The path finding strategy. Includes the graph.
      */
@@ -25,17 +26,17 @@ public final class NavigationData implements INavigationData{
      */
     public NavigationData(PathFinderStrategy<Location> strategy){
         this.strategy = strategy;
-        this.currentRoute = new Route(new ArrayList<>());
+        this.currentRoute = new LinkedList<>();
     }
 
     /**
      * Creates a new {@link NavigationData}.
      * @param strategy The {@link PathFinderStrategy}. Cannot be null.
-     * @param route The current {@link Route}. Cannot be null.
+     * @param route The current list of locations. Cannot be null. Cannot contain null.
      */
-    public NavigationData(PathFinderStrategy<Location> strategy, Route route){
+    public NavigationData(PathFinderStrategy<Location> strategy, List<Location> route){
         this.strategy = strategy;
-        this.currentRoute = new Route(route.getLocations());
+        this.currentRoute = new LinkedList<>(route);
     }
 
     /**
@@ -44,62 +45,42 @@ public final class NavigationData implements INavigationData{
     public void calculateAndStoreRoute(Location start, Location goal){
         Objects.requireNonNull(start, "Start location is null.");
         Objects.requireNonNull(goal, "Goal location is null.");
-        this.currentRoute = new Route(strategy.findPath(start, goal));
+        List<Location> route = strategy.findPath(start, goal);
+        route.remove(0);
+        this.currentRoute = route;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isMoving(){
-        return currentRoute.isEmpty();
+        return !currentRoute.isEmpty();
     }
 
     /**
      * {@inheritDoc}
      */
-    // does not work -> stuck on first
-    public Location nextLocation(Location current, int speed, int delta){
+    public Location nextLocation(Location current, int movement){
+        Objects.requireNonNull(current, "Current location is null.");
         if(currentRoute.isEmpty())
             throw new IllegalStateException("No more movement happening.");
-        if(speed <= 0 || delta <= 0)
-            throw new IllegalArgumentException("Speed/delta is negative or 0.");
-        Location next = currentRoute.getNext();
-        int movement = speed * delta;
-        int nextX = calculateNextX(current.position().x(), next.position().x(), movement);
-        int nextY = calculateNextY(current.position().x(), next.position().x(), movement);
-        Point nextPosition = new Point(nextX, nextY);
-        boolean arrivedAtNextInRoute = nextPosition.equals(next.position());
-        String nextMap = current.mapName();
-        if(arrivedAtNextInRoute){
-            nextMap = next.mapName();
-            currentRoute.removeNext();
+        if(movement <= 0)
+            throw new IllegalArgumentException("Movement is negative or 0.");
+
+        Location next = currentRoute.get(0);
+        Vector vectorToNext = new Vector(next.x() - current.x(),next.y() - current.y());
+        if(vectorToNext.size() <= movement){
+            currentRoute.remove(0);
+            if(currentRoute.isEmpty())
+                return next;
+            int remainingMovement = (int)(movement - vectorToNext.size());
+            return nextLocation(next, remainingMovement);
         }
-        return new Location(nextMap, nextPosition);
+        Vector scaled = vectorToNext.scaleToSize(movement);
+        Point nextPosition = new Point(current.x() + scaled.x(), current.y() + scaled.y());
+        return new Location(current.mapName(), nextPosition);
     }
 
-    /**
-     * Calculates the next X value.
-     * @param oldX The old X.
-     * @param goalX The goal X.
-     * @param movement The movement.
-     *
-     * @return The next X value.
-     */
-    private int calculateNextX(int oldX, int goalX, int movement){
-        return oldX < goalX ? Math.min(oldX + movement, goalX) : Math.max(oldX - movement, goalX);
-    }
-
-    /**
-     * Calculates the next Y value.
-     * @param oldY The old Y.
-     * @param goalY The goal Y.
-     * @param movement The movement.
-     *
-     * @return The next Y value.
-     */
-    private int calculateNextY(int oldY, int goalY, int movement){
-        return oldY < goalY ? Math.min(oldY + movement, goalY) : Math.max(oldY - movement, goalY);
-    }
 
     /**
      * @return The string representation of this {@link NavigationData}.

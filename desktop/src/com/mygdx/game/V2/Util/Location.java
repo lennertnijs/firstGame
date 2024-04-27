@@ -44,6 +44,14 @@ public final class Location {
         return position;
     }
 
+    public int x(){
+        return position.x();
+    }
+
+    public int y(){
+        return position.y();
+    }
+
     /**
      * Compares this {@link Location} to the given object and returns true if they're equal. Returns false otherwise.
      * Two {@link Location}s are equal if they have the same map name & position.

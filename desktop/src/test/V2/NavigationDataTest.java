@@ -42,27 +42,24 @@ public class NavigationDataTest {
         assertTrue(navigationData.isMoving());
     }
 
-//    @Test
-//    public void testCalculateAndStoreRoute(){
-//        navigationData.calculateAndStoreRoute(l1, l3);
-//
-//        Location location1 = new Location("map1", new Point(1, 0));
-//        assertEquals(location1, navigationData.nextLocation(l1, 1, 1));
-//
-//        Location location2 = new Location("map1", new Point(4, 0));
-//        assertEquals(location2, navigationData.nextLocation(location1, 3, 1));
-//
-//        Location location3 = new Location("map1", new Point(10, 0));
-//        assertEquals(location3, navigationData.nextLocation(location2, 13, 1));
-//
-//        Location location4 = new Location("map1", new Point(10, 1));
-//        assertEquals(location4, navigationData.nextLocation(location3, 1, 1));
-//
-//        Location location5 = new Location("map1", new Point(10, 1));
-//        assertEquals(location5, navigationData.nextLocation(location4, 1, 1));
-//
-//        Location location6 = new Location("map1", new Point(10, 10));
-//        assertEquals(location6, navigationData.nextLocation(location4, 15, 1));
-//    }
+    @Test
+    public void testCalculateAndStoreRoute(){
+        navigationData.calculateAndStoreRoute(l1, l3);
+
+        Location location1 = new Location("map1", new Point(1, 0));
+        assertEquals(location1, navigationData.nextLocation(l1, 1));
+
+        Location location2 = new Location("map1", new Point(4, 0));
+        assertEquals(location2, navigationData.nextLocation(location1, 3));
+
+        Location location3 = new Location("map1", new Point(10, 7));
+        assertEquals(location3, navigationData.nextLocation(location2, 13));
+
+        Location location4 = new Location("map1", new Point(10, 8));
+        assertEquals(location4, navigationData.nextLocation(location3, 1));
+
+        Location location5 = new Location("map1", new Point(10, 10));
+        assertEquals(location5, navigationData.nextLocation(location4, 5));
+    }
 
 }
