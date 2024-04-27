@@ -46,8 +46,7 @@ public final class NavigationData implements INavigationData{
         Objects.requireNonNull(start, "Start location is null.");
         Objects.requireNonNull(goal, "Goal location is null.");
         List<Location> route = strategy.findPath(start, goal);
-        route.remove(0);
-        this.currentRoute = route;
+        this.currentRoute = new LinkedList<>(route);
     }
 
     /**
@@ -60,12 +59,12 @@ public final class NavigationData implements INavigationData{
     /**
      * {@inheritDoc}
      */
-    public Location nextLocation(Location current, int movement){
+    public Location calculateNextLocation(Location current, int movement){
         Objects.requireNonNull(current, "Current location is null.");
         if(currentRoute.isEmpty())
             throw new IllegalStateException("No more movement happening.");
         if(movement <= 0)
-            throw new IllegalArgumentException("Movement is negative or 0.");
+            throw new IllegalArgumentException("Movement <= 0.");
 
         Location next = currentRoute.get(0);
         Vector vectorToNext = new Vector(next.x() - current.x(),next.y() - current.y());
@@ -74,7 +73,7 @@ public final class NavigationData implements INavigationData{
             if(currentRoute.isEmpty())
                 return next;
             int remainingMovement = (int)(movement - vectorToNext.size());
-            return nextLocation(next, remainingMovement);
+            return calculateNextLocation(next, remainingMovement);
         }
         Vector scaled = vectorToNext.scaleToSize(movement);
         Point nextPosition = new Point(current.x() + scaled.x(), current.y() + scaled.y());

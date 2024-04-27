@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 public interface INavigationData {
 
     /**
-     * Calculates and internally stores a {@link Route} from the start to the end {@link Location}.
+     * Calculates and internally stores a route from the start to the end {@link Location}.
      * @param start The start {@link Location}. Cannot be null. Must be in the graph.
      * @param goal The goal {@link Location}. Cannot be null. Must be in the graph.
      *
@@ -33,5 +33,5 @@ public interface INavigationData {
      * @throws IllegalArgumentException If the speed or delta is negative or 0.
      * @throws NullPointerException If the current {@link Location} is null.
      */
-    Location nextLocation(Location current, int movement);
+    Location calculateNextLocation(Location current, int movement);
 }
