@@ -72,7 +72,7 @@ public final class NavigationData implements INavigationData{
             currentRoute.remove(0);
             if(currentRoute.isEmpty())
                 return next;
-            int remainingMovement = (int)(movement - vectorToNext.size());
+            int remainingMovement = movement - vectorToNext.size();
             return calculateNextLocation(next, remainingMovement);
         }
         Vector scaled = vectorToNext.scaleToSize(movement);
