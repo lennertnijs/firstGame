@@ -14,7 +14,7 @@ public final class NavigationData implements INavigationData{
     /**
      * The current route (if they're moving).
      */
-    private List<Location> currentRoute;
+    private final Route route;
     /**
      * The path finding strategy. Includes the graph.
      */
@@ -26,7 +26,7 @@ public final class NavigationData implements INavigationData{
      */
     public NavigationData(PathFinderStrategy<Location> strategy){
         this.strategy = strategy;
-        this.currentRoute = new LinkedList<>();
+        this.route = new Route();
     }
 
     /**
@@ -36,7 +36,7 @@ public final class NavigationData implements INavigationData{
      */
     public NavigationData(PathFinderStrategy<Location> strategy, List<Location> route){
         this.strategy = strategy;
-        this.currentRoute = new LinkedList<>(route);
+        this.route = new Route(route);
     }
 
     /**
@@ -46,14 +46,14 @@ public final class NavigationData implements INavigationData{
         Objects.requireNonNull(start, "Start location is null.");
         Objects.requireNonNull(goal, "Goal location is null.");
         List<Location> route = strategy.findPath(start, goal);
-        this.currentRoute = new LinkedList<>(route);
+        this.route.add(route);
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isMoving(){
-        return !currentRoute.isEmpty();
+        return !route.isEmpty();
     }
 
     /**
@@ -61,16 +61,16 @@ public final class NavigationData implements INavigationData{
      */
     public Location calculateNextLocation(Location current, int movement){
         Objects.requireNonNull(current, "Current location is null.");
-        if(currentRoute.isEmpty())
+        if(route.isEmpty())
             throw new IllegalStateException("No more movement happening.");
         if(movement <= 0)
             throw new IllegalArgumentException("Movement <= 0.");
 
-        Location next = currentRoute.get(0);
+        Location next = route.peek();
         Vector vectorToNext = new Vector(next.x() - current.x(),next.y() - current.y());
         if(vectorToNext.size() <= movement){
-            currentRoute.remove(0);
-            if(currentRoute.isEmpty())
+            route.poll();
+            if(route.isEmpty())
                 return next;
             int remainingMovement = movement - vectorToNext.size();
             return calculateNextLocation(next, remainingMovement);
@@ -86,6 +86,6 @@ public final class NavigationData implements INavigationData{
      */
     @Override
     public String toString(){
-        return String.format("NavigationData[currentRoute=%s, strategy=%s]", currentRoute, strategy);
+        return String.format("NavigationData[currentRoute=%s, strategy=%s]", route, strategy);
     }
 }
