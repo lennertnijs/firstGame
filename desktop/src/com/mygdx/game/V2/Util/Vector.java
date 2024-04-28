@@ -69,7 +69,10 @@ public final class Vector {
      * @return The new & resized immutable {@link Vector}.
      */
     public Vector scaleToSize(int length){
-        return scale((float)length / (float)this.size());
+        if(this.size() == 0)
+            return scale(0);
+        float factor = (float)length / (float)this.size();
+        return scale(factor);
     }
 
     /**
