@@ -119,8 +119,6 @@ public final class Route {
      */
     @Override
     public String toString(){
-        return String.format("Route[locations=%s]", locations);
+        return String.format("Route{locations=%s}", locations);
     }
-
-
 }
