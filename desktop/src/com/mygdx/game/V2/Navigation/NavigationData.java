@@ -61,8 +61,6 @@ public final class NavigationData implements INavigationData{
      */
     public Location calculateNextLocation(Location current, int movement){
         Objects.requireNonNull(current, "Current location is null.");
-        if(route.isEmpty())
-            throw new IllegalStateException("No more movement happening.");
         if(movement <= 0)
             throw new IllegalArgumentException("Movement <= 0.");
 
