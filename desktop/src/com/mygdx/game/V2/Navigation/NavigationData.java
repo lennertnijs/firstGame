@@ -25,6 +25,7 @@ public final class NavigationData implements INavigationData{
      * @param strategy The {@link PathFinderStrategy}. Cannot be null.
      */
     public NavigationData(PathFinderStrategy<Location> strategy){
+        Objects.requireNonNull(strategy, "Path finding strategy is null.");
         this.strategy = strategy;
         this.route = new Route();
     }
@@ -35,6 +36,10 @@ public final class NavigationData implements INavigationData{
      * @param route The current list of locations. Cannot be null. Cannot contain null.
      */
     public NavigationData(PathFinderStrategy<Location> strategy, List<Location> route){
+        Objects.requireNonNull(strategy, "Path finding strategy is null.");
+        Objects.requireNonNull(route, "List is null.");
+        if(route.contains(null))
+            throw new NullPointerException("List contains null.");
         this.strategy = strategy;
         this.route = new Route(route);
     }
@@ -84,6 +89,6 @@ public final class NavigationData implements INavigationData{
      */
     @Override
     public String toString(){
-        return String.format("NavigationData[currentRoute=%s, strategy=%s]", route, strategy);
+        return String.format("NavigationData[currentRoute=%s, strategy=%s]", route, strategy.getClass());
     }
 }

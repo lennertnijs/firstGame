@@ -36,6 +36,28 @@ public class NavigationDataTest {
     }
 
     @Test
+    public void testConstructorWithNullStrategy(){
+        assertThrows(NullPointerException.class, () -> new NavigationData(null));
+        assertThrows(NullPointerException.class, () -> new NavigationData(null, Arrays.asList(l1, l2)));
+    }
+
+    @Test
+    public void testConstructorWithNullRoute(){
+        assertThrows(NullPointerException.class, () -> new NavigationData(pathFinder, null));
+    }
+
+    @Test
+    public void testConstructorWithNullInRoute(){
+        assertThrows(NullPointerException.class, () -> new NavigationData(pathFinder, Arrays.asList(l1, null)));
+    }
+
+    @Test
+    public void testConstructorWithRoute(){
+        NavigationData data = new NavigationData(pathFinder, Arrays.asList(l1, l2));
+    }
+
+
+    @Test
     public void testIsMoving(){
         assertFalse(navigationData.isMoving());
         navigationData.calculateAndStoreRoute(l1, l3);
@@ -60,6 +82,23 @@ public class NavigationDataTest {
 
         Location location5 = new Location("map1", new Point(10, 10));
         assertEquals(location5, navigationData.calculateNextLocation(location4, 5));
+    }
+
+    @Test
+    public void testCalculateNextLocationWithNull(){
+        assertThrows(NullPointerException.class, () -> navigationData.calculateNextLocation(null, 10));
+    }
+
+    @Test
+    public void testCalculateNextLocationWithNegativeMovement(){
+        assertThrows(IllegalArgumentException.class, () -> navigationData.calculateNextLocation(l1, -1));
+    }
+
+    @Test
+    public void testToString(){
+        String expected = "NavigationData[currentRoute=Route{locations=[]}, " +
+                "strategy=class com.mygdx.game.V2.Navigation.DFSPathFinder]";
+        assertEquals(expected, navigationData.toString());
     }
 
 }
