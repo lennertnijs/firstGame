@@ -16,7 +16,7 @@ public class DialogueDataTest {
     private String input1;
     private String input2;
     private List<String> activeInputs;
-    private IDialogueRepository dialogueRepository;
+    private DialogueRepository dialogueRepository;
     private DialogueData dialogueData;
     @BeforeEach
     public void initialise(){
@@ -25,11 +25,11 @@ public class DialogueDataTest {
 
         MockAction mockAction = new MockAction();
         List<Action> actions = new ArrayList<>(Collections.singletonList(mockAction));
-        IResponseData responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList(input2)), actions);
-        IResponseData responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList(input2)), actions);
+        ResponseData responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList(input2)), actions);
+        ResponseData responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList(input2)), actions);
 
         activeInputs = new ArrayList<>(Collections.singletonList(input1));
-        Map<String, IResponseData> mapping = new HashMap<>();
+        Map<String, ResponseData> mapping = new HashMap<>();
         mapping.put(input1, responseData1);
         mapping.put(input2, responseData2);
         dialogueRepository = new DialogueRepository(mapping);

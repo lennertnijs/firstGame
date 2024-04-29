@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class ResponseData implements IResponseData {
+/**
+ * Represents a container holding all the data for a response.
+ */
+public final class ResponseData{
 
     private final String response;
     private final List<String> newInputs;
@@ -32,21 +35,21 @@ public final class ResponseData implements IResponseData {
     }
 
     /**
-     * {@inheritDoc}
+     * @return The response.
      */
     public String getResponse(){
         return response;
     }
 
     /**
-     * {@inheritDoc}
+     * @return A copy of the new inputs to become available after this response.
      */
     public List<String> getNewInputs(){
         return new ArrayList<>(newInputs);
     }
 
     /**
-     * {@inheritDoc}
+     * @return A copy of the actions to be performed with this response.
      */
     public List<Action> getActions(){
         return new ArrayList<>(actions);
@@ -57,9 +60,7 @@ public final class ResponseData implements IResponseData {
         if(!(other instanceof ResponseData))
             return false;
         ResponseData data = (ResponseData) other;
-        return response.equals(data.response) &&
-                actions.equals(data.actions) &&
-                newInputs.equals(data.newInputs);
+        return response.equals(data.response) && actions.equals(data.actions) && newInputs.equals(data.newInputs);
     }
 
     @Override
@@ -72,7 +73,6 @@ public final class ResponseData implements IResponseData {
 
     @Override
     public String toString(){
-        return String.format("ResponseData[Response=%s, NewInputs=%s, Actions=%s]",
-                response, actions, newInputs);
+        return String.format("ResponseData[Response=%s, NewInputs=%s, Actions=%s]", response, actions, newInputs);
     }
 }

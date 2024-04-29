@@ -10,17 +10,17 @@ import java.util.Objects;
 public final class DialogueData implements IDialogueData{
 
     private final List<String> activeInputs;
-    private final IDialogueRepository repository;
+    private final DialogueRepository repository;
 
     /**
      * Creates a new {@link DialogueData}.
      * Cannot be modified, but it modifies itself.
      * @param activeInputs The active inputs. Cannot be null. Cannot contain null.
-     * @param repository The {@link IDialogueRepository}. Cannot be null.
+     * @param repository The {@link DialogueRepository}. Cannot be null.
      *
      * @throws NoSuchElementException If an active input does not have a mapping in the {@link DialogueRepository}.
      */
-    public DialogueData(List<String> activeInputs, IDialogueRepository repository){
+    public DialogueData(List<String> activeInputs, DialogueRepository repository){
         Objects.requireNonNull(activeInputs, "Active inputs is null.");
         if(activeInputs.contains(null))
             throw new NullPointerException("List contains a null input.");
@@ -49,7 +49,7 @@ public final class DialogueData implements IDialogueData{
         if(!activeInputs.contains(input))
             return;
         activeInputs.remove(input);
-        IResponseData responseData = repository.getResponseData(input);
+        ResponseData responseData = repository.getResponseData(input);
         String response = responseData.getResponse();
         for(Action action : responseData.getActions())
             action.execute();

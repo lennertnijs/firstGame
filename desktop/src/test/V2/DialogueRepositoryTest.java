@@ -1,7 +1,6 @@
 package V2;
 
 import com.mygdx.game.V2.Dialogue.DialogueRepository;
-import com.mygdx.game.V2.Dialogue.IResponseData;
 import com.mygdx.game.V2.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +14,8 @@ public class DialogueRepositoryTest {
 
     private String input1;
     private String input2;
-    private IResponseData responseData1;
-    private IResponseData responseData2;
+    private ResponseData responseData1;
+    private ResponseData responseData2;
     private DialogueRepository repository;
     @BeforeEach
     public void initialise(){
@@ -26,7 +25,7 @@ public class DialogueRepositoryTest {
         responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList("1")), new ArrayList<>());
         responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList("2")), new ArrayList<>());
 
-        Map<String, IResponseData> mapping = new HashMap<>();
+        Map<String, ResponseData> mapping = new HashMap<>();
         mapping.put(input1, responseData1);
         mapping.put(input2, responseData2);
         repository = new DialogueRepository(mapping);
@@ -39,14 +38,14 @@ public class DialogueRepositoryTest {
 
     @Test
     public void testConstructorWithNullKey(){
-        Map<String, IResponseData> mapping = new HashMap<>();
+        Map<String, ResponseData> mapping = new HashMap<>();
         mapping.put(null, responseData1);
         assertThrows(NullPointerException.class, () -> new DialogueRepository(mapping));
     }
 
     @Test
     public void testConstructorWithNullValue(){
-        Map<String, IResponseData> mapping = new HashMap<>();
+        Map<String, ResponseData> mapping = new HashMap<>();
         mapping.put(input1, null);
         assertThrows(NullPointerException.class, () -> new DialogueRepository(mapping));
     }
