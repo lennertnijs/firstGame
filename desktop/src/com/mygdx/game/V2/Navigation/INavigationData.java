@@ -9,6 +9,12 @@ import java.util.NoSuchElementException;
  */
 public interface INavigationData {
 
+
+    /**
+     * @return True if the current route is not empty, meaning they're moving. False otherwise.
+     */
+    boolean isMoving();
+
     /**
      * Calculates and internally stores a route from the start to the end {@link Location}.
      * @param start The start {@link Location}. Cannot be null. Must be in the graph.
@@ -18,11 +24,6 @@ public interface INavigationData {
      * @throws NullPointerException If the start or goal object is null.
      */
     void calculateAndStoreRoute(Location start, Location goal);
-
-    /**
-     * @return True if the current route is not empty, meaning they're moving. False otherwise.
-     */
-    boolean isMoving();
 
     /**
      * Calculates and returns the next {@link Location} after applying movement.

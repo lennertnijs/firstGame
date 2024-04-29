@@ -83,10 +83,6 @@ public final class NavigationData implements INavigationData{
         return new Location(current.mapName(), nextPosition);
     }
 
-
-    /**
-     * @return The string representation of this {@link NavigationData}.
-     */
     @Override
     public String toString(){
         return String.format("NavigationData[currentRoute=%s, strategy=%s]", route, strategy.getClass());
