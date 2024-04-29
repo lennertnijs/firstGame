@@ -45,6 +45,8 @@ public class VectorTest {
     public void testScaleToSize(){
         Vector v1 = vector.scaleToSize(6);
         assertEquals(v1, new Vector(-3, 5));
+        Vector zero = vector.scaleToSize(0);
+        assertEquals(zero, new Vector(0, 0));
     }
 
     @Test
