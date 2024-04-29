@@ -6,12 +6,22 @@ import com.mygdx.game.V2.Util.Point;
 
 import java.util.Objects;
 
+/**
+ * Represents a Sprite for drawing.
+ * Sprites have a texture, a global position & dimensions.
+ */
 public final class Sprite {
 
     private TextureRegion texture;
     private Point position;
     private Dimensions dimensions;
 
+    /**
+     * Creates a new MUTABLE {@link Sprite}.
+     * @param texture The texture. Cannot be null.
+     * @param position The position. Cannot be null.
+     * @param dimensions The dimensions. Cannot be null.
+     */
     public Sprite(TextureRegion texture, Point position, Dimensions dimensions){
         Objects.requireNonNull(texture, "Texture is null.");
         Objects.requireNonNull(position, "Position is null.");
@@ -25,24 +35,36 @@ public final class Sprite {
         return texture;
     }
 
-    public void setTexture(TextureRegion texture){
-        Objects.requireNonNull(texture, "Texture is null.");
-        this.texture = texture;
-    }
-
     public Point getPosition(){
         return position;
-    }
-
-    public void setPosition(Point position){
-        Objects.requireNonNull(position, "Position is null.");
-        this.position = position;
     }
 
     public Dimensions getDimensions(){
         return dimensions;
     }
 
+    /**
+     * Sets the texture of this sprite to the given {@link TextureRegion}.
+     * @param texture The texture. Cannot be null.
+     */
+    public void setTexture(TextureRegion texture){
+        Objects.requireNonNull(texture, "Texture is null.");
+        this.texture = texture;
+    }
+
+    /**
+     * Sets the position of this sprite to the given {@link Point}.
+     * @param position The position. Cannot be null.
+     */
+    public void setPosition(Point position){
+        Objects.requireNonNull(position, "Position is null.");
+        this.position = position;
+    }
+
+    /**
+     * Sets the dimensions of this sprite to the given {@link Dimensions}.
+     * @param dimensions The dimensions. Cannot be null.
+     */
     public void setDimensions(Dimensions dimensions){
         Objects.requireNonNull(dimensions, "Dimensions is null.");
         this.dimensions = dimensions;
