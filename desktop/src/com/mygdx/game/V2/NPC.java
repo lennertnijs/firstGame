@@ -2,7 +2,6 @@ package com.mygdx.game.V2;
 
 import com.mygdx.game.V2.Dialogue.IDialogueData;
 import com.mygdx.game.V2.General.GameObject;
-import com.mygdx.game.V2.General.Movable;
 import com.mygdx.game.V2.General.Sprite;
 import com.mygdx.game.V2.Navigation.INavigationData;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
@@ -12,7 +11,7 @@ import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.Activity;
 import com.mygdx.game.V2.WeekSchedule.IWeekSchedule;
 
-public final class NPC extends GameObject implements Movable {
+public final class NPC extends GameObject {
 
     private final String name;
     private final ITextureSelector selector;
@@ -21,6 +20,7 @@ public final class NPC extends GameObject implements Movable {
     private final IDialogueData dialogueData;
     private final NPCStats stats;
 
+    //todo add a damn builder
     private NPC(Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
                 INavigationData navigationData, IDialogueData dialogueData, NPCStats stats){
         super(sprite);
