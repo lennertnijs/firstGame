@@ -62,15 +62,11 @@ public class DialogueDataTest {
     public void testProcessInput(){
         dialogueData.processInput(input1);
         assertEquals(new ArrayList<>(Collections.singletonList(input2)), dialogueData.getActiveInputs());
-
-        dialogueData.processInput(input1);
-        assertEquals(new ArrayList<>(Collections.singletonList(input2)), dialogueData.getActiveInputs());
     }
 
     @Test
     public void testProcessWithInputNotInActive(){
-        dialogueData.processInput(input2);
-        assertEquals(activeInputs, dialogueData.getActiveInputs());
+        assertThrows(IllegalStateException.class, () -> dialogueData.processInput(input2));
     }
 
     @Test
