@@ -21,7 +21,7 @@ public final class NPC extends GameObject {
     private final IDialogueData dialogueData;
     private final NPCStats stats;
 
-    private NPC(String map, Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
+    private NPC(Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
                 INavigationData graph, IDialogueData dialogueData, NPCStats stats){
         super(sprite);
         this.name = name;
