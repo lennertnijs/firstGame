@@ -92,12 +92,6 @@ public final class Route {
         }
     }
 
-    /**
-     * Compares this {@link Route} to the given object and returns true if they're equal. Returns false otherwise.
-     * Two {@link Route}s are equal if they hold the same {@link Location}s in the same order.
-     *
-     * @return True if equal. False otherwise.
-     */
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Route))
@@ -106,17 +100,11 @@ public final class Route {
         return locations.equals(route.locations);
     }
 
-    /**
-     * @return The hash code of this {@link Route}.
-     */
     @Override
     public int hashCode(){
         return locations.hashCode();
     }
 
-    /**
-     * @return The string representation of this {@link Route}.
-     */
     @Override
     public String toString(){
         return String.format("Route{locations=%s}", locations);
