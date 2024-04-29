@@ -1,8 +1,9 @@
-package Graphics;
+package General;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.V2.Graphics.Sprite;
+import com.mygdx.game.V2.General.Sprite;
 import com.mygdx.game.V2.Util.Dimensions;
+import com.mygdx.game.V2.Util.Location;
 import com.mygdx.game.V2.Util.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,32 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SpriteTest {
 
     private TextureRegion texture;
-    private Point position;
+    private Location location;
     private Dimensions dimensions;
     private Sprite sprite;
 
     @BeforeEach
     public void initialise(){
         texture = Mockito.mock(TextureRegion.class);
-        position = new Point(5, 15);
+        location = new Location("map" ,new Point(5, 15));
         dimensions = new Dimensions(10, 20);
 
-        sprite = new Sprite(texture, position, dimensions);
+        sprite = new Sprite(texture, location, dimensions);
     }
 
     @Test
     public void testConstructorWithNullTexture(){
-        assertThrows(NullPointerException.class, () -> new Sprite(null, position, dimensions));
+        assertThrows(NullPointerException.class, () -> new Sprite(null, location, dimensions));
     }
 
     @Test
-    public void testConstructorWithNullPosition(){
+    public void testConstructorWithNullLocation(){
         assertThrows(NullPointerException.class, () -> new Sprite(texture, null, dimensions));
     }
 
     @Test
     public void testConstructorWithNullDimensions(){
-        assertThrows(NullPointerException.class, () -> new Sprite(texture, position, null));
+        assertThrows(NullPointerException.class, () -> new Sprite(texture, location, null));
     }
 
     @Test
@@ -47,8 +48,8 @@ public class SpriteTest {
     }
 
     @Test
-    public void testGetPosition(){
-        assertEquals(position, sprite.getPosition());
+    public void testGetLocation(){
+        assertEquals(location, sprite.getLocation());
     }
 
     @Test
@@ -69,15 +70,15 @@ public class SpriteTest {
     }
 
     @Test
-    public void testSetPosition(){
-        Point position2 = new Point(0, 15);
-        sprite.setPosition(position2);
-        assertEquals(position2, sprite.getPosition());
+    public void testSetLocation(){
+        Location location2 =  new Location("new" ,new Point(5, 15));
+        sprite.setLocation(location2);
+        assertEquals(location2, sprite.getLocation());
     }
 
     @Test
-    public void testSetPositionToNull(){
-        assertThrows(NullPointerException.class, () -> sprite.setPosition(null));
+    public void testSetLocationToNull(){
+        assertThrows(NullPointerException.class, () -> sprite.setLocation(null));
     }
 
     @Test
@@ -94,10 +95,10 @@ public class SpriteTest {
 
     @Test
     public void testEquals(){
-        Sprite sprite1 = new Sprite(texture, position, dimensions);
-        Sprite sprite2 = new Sprite(texture, position, dimensions);
-        Sprite sprite3 = new Sprite(texture, position, dimensions);
-        Sprite diffSprite = new Sprite(texture, new Point(1, 1), dimensions);
+        Sprite sprite1 = new Sprite(texture, location, dimensions);
+        Sprite sprite2 = new Sprite(texture, location, dimensions);
+        Sprite sprite3 = new Sprite(texture, location, dimensions);
+        Sprite diffSprite = new Sprite(texture, location, new Dimensions(5, 60));
         // reflexive
         assertEquals(sprite1, sprite1);
         // symmetrical
@@ -115,10 +116,10 @@ public class SpriteTest {
 
     @Test
     public void testHashCode(){
-        Sprite sprite1 = new Sprite(texture, position, dimensions);
-        Sprite sprite2 = new Sprite(texture, position, dimensions);
-        Sprite sprite3 = new Sprite(texture, position, dimensions);
-        Sprite diffSprite = new Sprite(texture, new Point(1, 1), dimensions);
+        Sprite sprite1 = new Sprite(texture, location, dimensions);
+        Sprite sprite2 = new Sprite(texture, location, dimensions);
+        Sprite sprite3 = new Sprite(texture, location, dimensions);
+        Sprite diffSprite = new Sprite(texture, location, new Dimensions(5, 60));
         // reflexive
         assertEquals(sprite1.hashCode(), sprite1.hashCode());
         // symmetrical

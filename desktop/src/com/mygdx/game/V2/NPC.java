@@ -2,6 +2,8 @@ package com.mygdx.game.V2;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.V2.Dialogue.IDialogueData;
+import com.mygdx.game.V2.General.GameObject;
+import com.mygdx.game.V2.General.Sprite;
 import com.mygdx.game.V2.Navigation.INavigationData;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
 import com.mygdx.game.V2.Util.Day;
@@ -10,7 +12,7 @@ import com.mygdx.game.V2.Util.Time;
 import com.mygdx.game.V2.WeekSchedule.Activity;
 import com.mygdx.game.V2.WeekSchedule.IWeekSchedule;
 
-public final class NPC{
+public final class NPC extends GameObject {
 
     private final String name;
     private final ITextureSelector selector;
@@ -19,8 +21,9 @@ public final class NPC{
     private final IDialogueData dialogueData;
     private final NPCStats stats;
 
-    private NPC(String name, ITextureSelector selector, IWeekSchedule weekSchedule,
+    private NPC(String map, Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
                 INavigationData graph, IDialogueData dialogueData, NPCStats stats){
+        super(sprite);
         this.name = name;
         this.selector = selector;
         this.weekSchedule = weekSchedule;
@@ -32,16 +35,16 @@ public final class NPC{
     public void update(Day day, Time time, int delta){
         if(weekSchedule.hasActivity(day, time)){
             Activity activity = weekSchedule.getActivity(day, time);
-            graph.calculateAndStoreRoute(null, activity.location()); // should hold THIS.location
+            graph.calculateAndStoreRoute(getCurrentLocation(), activity.location());
         }
         if(graph.isMoving()){
-            Location next = graph.calculateNextLocation(null, delta * stats.getSpeed());
-            // set this location to the next one
+            Location next = graph.calculateNextLocation(getCurrentLocation(), delta * stats.getSpeed());
+            setLocation(next);
         }
     }
 
     public void updateTexture(){
         TextureRegion t = selector.getTexture();
-        // set this sprite's texture to the given.
+        setTexture(t);
     }
 }
