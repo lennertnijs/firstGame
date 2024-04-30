@@ -37,10 +37,8 @@ public final class NPC extends GameObject {
     }
 
     public void update(Day day, Time time){
-        if(!weekSchedule.hasActivity(day, time))
-            return;
-        Activity activity = weekSchedule.getActivity(day, time);
-        navigationData.calculateAndStoreRoute(getCurrentLocation(), activity.location());
+        updateSchedule(day, time);
+        updateTexture();
     }
 
     public void move(int deltaInMillis){
@@ -49,6 +47,13 @@ public final class NPC extends GameObject {
         int movement = deltaInMillis * stats.getSpeed();
         Location next = navigationData.calculateNextLocation(getCurrentLocation(), movement);
         setLocation(next);
+    }
+
+    public void updateSchedule(Day day, Time time){
+        if(!weekSchedule.hasActivity(day, time))
+            return;
+        Activity activity = weekSchedule.getActivity(day, time);
+        navigationData.calculateAndStoreRoute(getCurrentLocation(), activity.location());
     }
 
     public void updateTexture(){
