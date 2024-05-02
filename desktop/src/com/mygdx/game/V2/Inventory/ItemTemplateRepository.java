@@ -48,10 +48,17 @@ public final class ItemTemplateRepository {
     }
 
     /**
-     * @return A copy of the internal map.
+     * Fetches and returns the item template with the given name.
+     * @param name The name. Cannot be null.
+     *
+     * @return The item template.
+     * @throws NoSuchElementException If no such element exists.
      */
-    public Map<String, ItemTemplate> getMap(){
-        return new HashMap<>(map);
+    public ItemTemplate getFromName(String name){
+        Objects.requireNonNull(name, "Name is null.");
+        if(!map.containsKey(name))
+            throw new NoSuchElementException("No item template found.");
+        return map.get(name);
     }
 
     /**
