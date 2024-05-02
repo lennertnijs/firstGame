@@ -19,15 +19,17 @@ public final class Inventory {
     }
 
 
-    public int addItem(String name, int amount){
+    public int addItem(Item item){
+        Objects.requireNonNull(item, "Item is null.");
+        String name = item.getTemplate().name();
+        int amount = item.getAmount();
         int index;
 
         while((index = findIndexOfSlotNotFullyFilled(name)) != -1 && amount > 0)
             amount = items[index].increaseAmount(amount);
 
         while((index = findIndexOfEmptySlot()) != -1 && amount > 0)
-            // create item and store it, as a replacent of the null.
-            items[index] = new Item(amount, new ItemTemplate("temp", "temp", null, 64));
+            items[index] = new Item(amount, item.getTemplate());
 
         return amount;
     }
@@ -50,7 +52,7 @@ public final class Inventory {
     private int findIndexOfSlotNotFullyFilled(String name){
         for (int i = 0; i < items.length; i++)
             if (items[i].getTemplate().name().equals(name))
-                if (items[i].getAmount() < items[i].getTemplate().maxStackSize())
+                if (items[i].getAmount() < items[i].getTemplate().stackSize())
                     return i;
         return -1;
     }

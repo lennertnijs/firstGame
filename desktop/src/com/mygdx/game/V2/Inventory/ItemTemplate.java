@@ -1,26 +1,38 @@
 package com.mygdx.game.V2.Inventory;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Objects;
 
+/**
+ * Represents a template for an item in the game.
+ */
 public final class ItemTemplate {
 
     private final String name;
     private final String description;
-    private final TextureRegion texture;
-    private final int maxStackSize;
+    private final Texture texture;
+    private final int stackSize;
 
-    public ItemTemplate(String name, String description, TextureRegion texture, int maxStackSize){
+    /**
+     * Creates a new immutable {@link ItemTemplate}.
+     * @param name The name. Cannot be null.
+     * @param description The description. Cannot be null.
+     * @param texture The texture. Cannot be null.
+     * @param stackSize The stack size. Cannot be negative or 0.
+     *
+     * @throws IllegalArgumentException If the stack size is negative or 0.
+     */
+    public ItemTemplate(String name, String description, Texture texture, int stackSize){
         Objects.requireNonNull(name, "Name is null.");
         Objects.requireNonNull(description, "Description is null.");
         Objects.requireNonNull(texture, "Texture is null.");
-        if(maxStackSize <= 0)
-            throw new IllegalArgumentException("Max stack size is negative or zero.");
+        if(stackSize <= 0)
+            throw new IllegalArgumentException("Stack size is negative or zero.");
         this.name = name;
         this.description = description;
         this.texture = texture;
-        this.maxStackSize = maxStackSize;
+        this.stackSize = stackSize;
     }
 
     public String name(){
@@ -31,12 +43,12 @@ public final class ItemTemplate {
         return description;
     }
 
-    public TextureRegion texture(){
+    public Texture texture(){
         return texture;
     }
 
-    public int maxStackSize(){
-        return maxStackSize;
+    public int stackSize(){
+        return stackSize;
     }
 
     @Override
@@ -45,7 +57,7 @@ public final class ItemTemplate {
             return false;
         ItemTemplate template = (ItemTemplate) other;
         return name.equals(template.name) && description.equals(template.description) &&
-                texture.equals(template.texture) && maxStackSize == template.maxStackSize;
+                texture.equals(template.texture) && stackSize == template.stackSize;
     }
 
     @Override
@@ -53,13 +65,13 @@ public final class ItemTemplate {
         int result = name.hashCode();
         result = result * 31 + description.hashCode();
         result = result * 31 + texture.hashCode();
-        result = result * 31 + maxStackSize;
+        result = result * 31 + stackSize;
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("ItemTemplate[name=%s, description=%s, texture=%s, maxStackSize=%d]",
-                name, description, texture, maxStackSize);
+        return String.format("ItemTemplate[name=%s, description=%s, texture=%s, stackSize=%d]",
+                name, description, texture, stackSize);
     }
 }

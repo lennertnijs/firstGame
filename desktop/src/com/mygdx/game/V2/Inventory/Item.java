@@ -23,22 +23,10 @@ public class Item {
         return template;
     }
 
-    public boolean canIncreaseBy(int increase){
-        if(increase <= 0)
-            throw new IllegalArgumentException("Increase is negative or 0.");
-        return amount + increase <= template.maxStackSize();
-    }
-
-    public boolean canDecreaseBy(int decrease){
-        if(decrease <= 0)
-            throw new IllegalArgumentException("Decrease is negative or 0.");
-        return amount - decrease >= 0;
-    }
-
     public int increaseAmount(int increase){
         if(increase <= 0)
             throw new IllegalArgumentException("Increase is negative or 0.");
-        int actualIncrease = Math.min(increase, template.maxStackSize() - amount);
+        int actualIncrease = Math.min(increase, template.stackSize() - amount);
         this.amount += actualIncrease;
         return increase - actualIncrease;
     }
