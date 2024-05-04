@@ -17,6 +17,10 @@ public final class Pickaxe extends Tool{
         super(template, efficiency, durability);
     }
 
+    /**
+     * Use this pickaxe on the given game object. To be added.
+     * @param object The game object that it should be used on.
+     */
     @Override
     public void use(GameObject object) {
         // if game object is a stone -> go brr
