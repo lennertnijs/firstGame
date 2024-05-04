@@ -50,10 +50,10 @@ public class SwordTest {
 
     @Test
     public void testHashCode(){
-        Pickaxe sword1 = new Pickaxe(template, efficiency, durability);
-        Pickaxe sword2 = new Pickaxe(template, efficiency, durability);
-        Pickaxe sword3 = new Pickaxe(template, efficiency, durability);
-        Pickaxe diffSword = new Pickaxe(template, efficiency, 5);
+        Sword sword1 = new Sword(template, efficiency, durability);
+        Sword sword2 = new Sword(template, efficiency, durability);
+        Sword sword3 = new Sword(template, efficiency, durability);
+        Sword diffSword = new Sword(template, efficiency, 5);
         // reflexive
         assertEquals(sword1.hashCode(), sword1.hashCode());
         // symmetrical
