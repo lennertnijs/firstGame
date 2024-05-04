@@ -4,7 +4,7 @@ import com.mygdx.game.V2.General.GameObject;
 
 public final class Axe extends Tool{
     public Axe(ItemTemplate template, int efficiency, int durability) {
-        super(1, template, efficiency, durability);
+        super(template, efficiency, durability);
     }
 
     @Override

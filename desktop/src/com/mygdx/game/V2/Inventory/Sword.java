@@ -5,7 +5,7 @@ import com.mygdx.game.V2.General.GameObject;
 public class Sword extends Tool{
 
     public Sword(ItemTemplate template, int damage, int durability){
-        super(1, template, damage, durability);
+        super(template, damage, durability);
     }
 
     @Override

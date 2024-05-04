@@ -2,11 +2,19 @@ package com.mygdx.game.V2.Inventory;
 
 import com.mygdx.game.V2.General.GameObject;
 
+/**
+ * Represents a pickaxe.
+ */
 public final class Pickaxe extends Tool{
 
-
+    /**
+     * Creates a new {@link Pickaxe}.
+     * @param template The item template. Cannot be null.
+     * @param efficiency The efficiency. Cannot be negative.
+     * @param durability The durability. Cannot be negative.
+     */
     public Pickaxe(ItemTemplate template, int efficiency, int durability) {
-        super(1, template, efficiency, durability);
+        super(template, efficiency, durability);
     }
 
     @Override
@@ -28,6 +36,7 @@ public final class Pickaxe extends Tool{
 
     @Override
     public String toString(){
-        return String.format("Pickaxe[%s]", super.toString());
+        return String.format("Pickaxe[amount=%d, efficiency=%d, durability=%d]",
+                getAmount(), getEfficiency(), getDurability());
     }
 }
