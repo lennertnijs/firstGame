@@ -76,7 +76,7 @@ public class Item {
     public int decreaseAmount(int decrease){
         if(decrease <= 0)
             throw new IllegalArgumentException("Decrease is negative or 0.");
-        int actualDecrease = Math.min(decrease, -amount);
+        int actualDecrease = Math.min(decrease, amount);
         this.amount -= actualDecrease;
         return decrease - actualDecrease;
     }
