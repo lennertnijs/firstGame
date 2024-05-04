@@ -28,42 +28,42 @@ public class AxeTest {
 
     @Test
     public void testEquals(){
-        Axe Axe1 = new Axe(template, efficiency, durability);
-        Axe Axe2 = new Axe(template, efficiency, durability);
-        Axe Axe3 = new Axe(template, efficiency, durability);
+        Axe axe1 = new Axe(template, efficiency, durability);
+        Axe axe2 = new Axe(template, efficiency, durability);
+        Axe axe3 = new Axe(template, efficiency, durability);
         Axe diffAxe = new Axe(template, efficiency, 5);
         // reflexive
-        assertEquals(Axe1, Axe1);
+        assertEquals(axe1, axe1);
         // symmetrical
-        assertEquals(Axe1, Axe2);
-        assertEquals(Axe2, Axe1);
+        assertEquals(axe1, axe2);
+        assertEquals(axe2, axe1);
         // transitive
-        assertEquals(Axe1, Axe2);
-        assertEquals(Axe2, Axe3);
-        assertEquals(Axe1, Axe3);
+        assertEquals(axe1, axe2);
+        assertEquals(axe2, axe3);
+        assertEquals(axe1, axe3);
         // not equals
-        assertNotEquals(Axe1, diffAxe);
-        assertNotEquals(Axe1, new Object());
-        assertNotEquals(Axe1, null);
+        assertNotEquals(axe1, diffAxe);
+        assertNotEquals(axe1, new Object());
+        assertNotEquals(axe1, null);
     }
 
     @Test
     public void testHashCode(){
-        Axe Axe1 = new Axe(template, efficiency, durability);
-        Axe Axe2 = new Axe(template, efficiency, durability);
-        Axe Axe3 = new Axe(template, efficiency, durability);
+        Axe axe1 = new Axe(template, efficiency, durability);
+        Axe axe2 = new Axe(template, efficiency, durability);
+        Axe axe3 = new Axe(template, efficiency, durability);
         Axe diffAxe = new Axe(template, efficiency, 5);
         // reflexive
-        assertEquals(Axe1.hashCode(), Axe1.hashCode());
+        assertEquals(axe1.hashCode(), axe1.hashCode());
         // symmetrical
-        assertEquals(Axe1.hashCode(), Axe2.hashCode());
-        assertEquals(Axe2.hashCode(), Axe1.hashCode());
+        assertEquals(axe1.hashCode(), axe2.hashCode());
+        assertEquals(axe2.hashCode(), axe1.hashCode());
         // transitive
-        assertEquals(Axe1.hashCode(), Axe2.hashCode());
-        assertEquals(Axe2.hashCode(), Axe3.hashCode());
-        assertEquals(Axe1.hashCode(), Axe3.hashCode());
+        assertEquals(axe1.hashCode(), axe2.hashCode());
+        assertEquals(axe2.hashCode(), axe3.hashCode());
+        assertEquals(axe1.hashCode(), axe3.hashCode());
         // not equals
-        assertNotEquals(Axe1.hashCode(), diffAxe.hashCode());
+        assertNotEquals(axe1.hashCode(), diffAxe.hashCode());
     }
 
     @Test

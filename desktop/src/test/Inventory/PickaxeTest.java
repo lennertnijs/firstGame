@@ -70,6 +70,4 @@ public class PickaxeTest {
         String expected = "Pickaxe[amount=1, efficiency=15, durability=2000]";
         assertEquals(expected, pickaxe.toString());
     }
-
-
 }
