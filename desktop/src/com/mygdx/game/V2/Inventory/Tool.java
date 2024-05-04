@@ -69,8 +69,6 @@ public abstract class Tool extends Item{
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Tool))
-            return false;
         if(!super.equals(other))
             return false;
         Tool tool = (Tool) other;
