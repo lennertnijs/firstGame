@@ -1,5 +1,6 @@
 package com.mygdx.game.V2.Inventory;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class Inventory {
@@ -14,6 +15,11 @@ public final class Inventory {
 
     public Inventory(Item[] items){
         Objects.requireNonNull(items, "List is null.");
+        if(Arrays.stream(items).anyMatch(Objects::isNull))
+            throw new NullPointerException("List contains null.");
+
+        if(items.length == 0)
+            throw new IllegalArgumentException("Length of the array is 0.");
         this.items = new Item[items.length];
         System.arraycopy(items, 0, this.items, 0, items.length);
     }
@@ -34,13 +40,6 @@ public final class Inventory {
         return amount;
     }
 
-    private int findNextIndexToFill(String name){
-        int slotToFillIndex = findIndexOfSlotNotFullyFilled(name);
-        if(slotToFillIndex != -1)
-            return slotToFillIndex;
-        return findIndexOfEmptySlot();
-    }
-
     private int findIndexOfEmptySlot(){
         for(int i = 0; i < items.length; i++){
             if(items[i] == null)
@@ -51,8 +50,9 @@ public final class Inventory {
 
     private int findIndexOfSlotNotFullyFilled(String name){
         for (int i = 0; i < items.length; i++)
-            if (items[i].getName().equals(name) && items[i].getAmount() < items[i].getStackSize())
-                return i;
+            if(items[i] != null)
+                if (items[i].getName().equals(name) && items[i].getAmount() < items[i].getStackSize())
+                    return i;
         return -1;
     }
 }
