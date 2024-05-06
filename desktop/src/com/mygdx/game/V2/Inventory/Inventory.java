@@ -24,6 +24,10 @@ public final class Inventory {
         System.arraycopy(items, 0, this.items, 0, items.length);
     }
 
+    public Item[] getItems(){
+        return Arrays.copyOf(items, items.length);
+    }
+
 
     public int addItem(Item item){
         Objects.requireNonNull(item, "Item is null.");
@@ -34,25 +38,50 @@ public final class Inventory {
         while((index = findIndexOfSlotNotFullyFilled(name)) != -1 && amount > 0)
             amount = items[index].increaseAmount(amount);
 
-        while((index = findIndexOfEmptySlot()) != -1 && amount > 0)
-            items[index] = new Item(item.getTemplate(), amount);
+        while((index = findIndexOfEmptySlot()) != -1 && amount > 0) {
+            int itemAmount = Math.min(amount, item.getStackSize());
+            items[index] = new Item(item.getTemplate(), itemAmount);
+            amount -= itemAmount;
+        }
 
         return amount;
     }
 
     private int findIndexOfEmptySlot(){
         for(int i = 0; i < items.length; i++){
-            if(items[i] == null)
+            if(items[i] == null) {
                 return i;
+            }
         }
         return -1;
     }
 
     private int findIndexOfSlotNotFullyFilled(String name){
-        for (int i = 0; i < items.length; i++)
-            if(items[i] != null)
-                if (items[i].getName().equals(name) && items[i].getAmount() < items[i].getStackSize())
-                    return i;
+        for (int i = 0; i < items.length; i++) {
+            if(items[i] == null)
+                continue;
+            if (items[i].getName().equals(name) && items[i].getAmount() < items[i].getStackSize()) {
+                return i;
+            }
+        }
         return -1;
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Inventory))
+            return false;
+        Inventory inventory = (Inventory) other;
+        return Arrays.equals(items, inventory.items);
+    }
+
+    @Override
+    public int hashCode(){
+        return Arrays.hashCode(items);
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Inventory[Items=%s]", Arrays.toString(items));
     }
 }

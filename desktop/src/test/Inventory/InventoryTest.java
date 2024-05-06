@@ -9,8 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
 
@@ -23,7 +22,7 @@ public class InventoryTest {
 
     @BeforeEach
     public void initialise(){
-        emptyInventory = new Inventory(9);
+        emptyInventory = new Inventory(4);
 
         stoneTemplate = new ItemTemplate("Stone", "A Stone.", Mockito.mock(Texture.class), 64);
         woodTemplate = new ItemTemplate("Wood", "A wood.", Mockito.mock(Texture.class), 64);
@@ -64,9 +63,19 @@ public class InventoryTest {
     }
 
     @Test
-    public void testAdd(){
-        Item moreStone = new Item(stoneTemplate, 64);
-        emptyInventory.addItem(moreStone);
+    public void testGetItems(){
+        assertArrayEquals(new Item[]{wood, stone, wood}, inventory.getItems());
+    }
+
+    @Test
+    public void testAddFullStacks(){
+        Item stone = new Item(stoneTemplate, 64);
+        emptyInventory.addItem(stone);
+        assertArrayEquals(new Item[]{stone, null, null, null}, emptyInventory.getItems());
+
+        Item wood = new Item(woodTemplate, 64);
+        emptyInventory.addItem(wood);
+        assertArrayEquals(new Item[]{stone, wood, null, null}, emptyInventory.getItems());
     }
 
 }
