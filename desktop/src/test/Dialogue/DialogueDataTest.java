@@ -39,6 +39,7 @@ public class DialogueDataTest {
         dialogueData = new DialogueData(activeInputs, dialogueRepository);
     }
 
+
     @Test
     public void testConstructorWithNullActiveInputs(){
         assertThrows(NullPointerException.class, () -> new DialogueData(null, dialogueRepository));
