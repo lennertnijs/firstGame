@@ -1,14 +1,18 @@
 package com.mygdx.game.V2.Inventory;
 
-import com.mygdx.game.V2.General.GameObject;
+import com.mygdx.game.V2.Breakables.Breakable;
+import com.mygdx.game.V2.Breakables.BreakableType;
 
-public abstract class Tool extends Item{
+import java.util.Objects;
+
+public final class Tool extends Item{
 
 
     private final int efficiency;
     private int durability;
+    private final ToolType type;
 
-    public Tool(String name, int efficiency, int durability){
+    public Tool(String name, int efficiency, int durability, ToolType type){
         super(name, 1, 1);
         if(efficiency < 0) {
             throw new IllegalArgumentException("Efficiency is negative.");
@@ -16,8 +20,10 @@ public abstract class Tool extends Item{
         if(durability < 0) {
             throw new IllegalArgumentException("Durability is negative.");
         }
+        Objects.requireNonNull(type, "Type is null.");
         this.efficiency = efficiency;
         this.durability = durability;
+        this.type = type;
     }
 
     public int getEfficiency(){
@@ -26,6 +32,10 @@ public abstract class Tool extends Item{
 
     public int getDurability(){
         return durability;
+    }
+
+    public ToolType getType(){
+        return type;
     }
 
     public boolean hasDurabilityLeft(){
@@ -43,7 +53,18 @@ public abstract class Tool extends Item{
         setDurability(durability - 1);
     }
 
-    public abstract void use(GameObject object);
+    public void use(Breakable b){
+        if(checkToolAndBreakableMatch(b)){
+            b.damage(efficiency);
+        }
+        // handle monsters with sword.
+    }
+
+    private boolean checkToolAndBreakableMatch(Breakable b){
+        return b.getType() == BreakableType.TREE && type == ToolType.AXE ||
+                b.getType() == BreakableType.ROCK && type == ToolType.PICKAXE ||
+                b.getType() == BreakableType.SAND && type == ToolType.SHOVEL;
+    }
 
 
     @Override
@@ -62,5 +83,7 @@ public abstract class Tool extends Item{
         return result;
     }
 
-    public abstract Tool copy();
+    public Tool copy(){
+        return new Tool(getName(), efficiency, durability, type);
+    };
 }

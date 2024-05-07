@@ -1,5 +1,6 @@
 package com.mygdx.game.V2.Inventory;
 
+import com.mygdx.game.V2.Breakables.Breakable;
 import com.mygdx.game.V2.General.GameObject;
 
 import java.util.Arrays;
@@ -129,9 +130,10 @@ public final class Inventory {
             throw new IndexOutOfBoundsException("Index is out of inventory bounds.");
         }
         Item item = items[index];
-        if(item instanceof Tool){
+        if(item instanceof Tool && object instanceof Breakable){
             Tool tool = (Tool) item;
-            tool.use(object);
+            Breakable breakable = (Breakable) object;
+            tool.use(breakable);
         }
     }
 

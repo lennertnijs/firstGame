@@ -1,6 +1,7 @@
 package Inventory;
 
-import com.mygdx.game.V2.Inventory.Pickaxe;
+import com.mygdx.game.V2.Inventory.Tool;
+import com.mygdx.game.V2.Inventory.ToolType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,90 +12,102 @@ public class ToolTest {
     private final String name = "Stone";
     private final int efficiency = 15;
     private final int durability = 2000;
-    private Pickaxe pickaxe;
+    private final ToolType type = ToolType.PICKAXE;
+    private Tool tool;
 
     @BeforeEach
     public void initialise(){
-        pickaxe = new Pickaxe(name, efficiency, durability);
+        tool = new Tool(name, efficiency, durability, type);
     }
 
     @Test
     public void testConstructorWithNullName(){
         assertThrows(NullPointerException.class,
-                () -> new Pickaxe(null, efficiency, durability));
+                () -> new Tool(null, efficiency, durability, type));
     }
 
     @Test
     public void testConstructorWithNegativeEfficiency(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Pickaxe(name, -1, durability));
+                () -> new Tool(name, -1, durability, type));
     }
 
     @Test
     public void testConstructorWithZeroEfficiency(){
-        new Pickaxe(name, 0, durability); // allowed
+        new Tool(name, 0, durability, type); // allowed
     }
 
     @Test
     public void testConstructorWithNegativeDurability(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Pickaxe(name, efficiency, -1));
+                () -> new Tool(name, efficiency, -1, type));
     }
 
     @Test
     public void testConstructorWithZeroDurability(){
-        new Pickaxe(name, efficiency, 0); // allowed
+        new Tool(name, efficiency, 0, type); // allowed
+    }
+
+    @Test
+    public void testConstructorWithNullType(){
+        assertThrows(NullPointerException.class,
+                () -> new Tool(name, efficiency, durability, null));
     }
 
     @Test
     public void testGetEfficiency(){
-        assertEquals(15, pickaxe.getEfficiency());
+        assertEquals(15, tool.getEfficiency());
     }
 
     @Test
     public void testGetDurability(){
-        assertEquals(2000, pickaxe.getDurability());
+        assertEquals(2000, tool.getDurability());
+    }
+
+    @Test
+    public void testGetToolType(){
+        assertEquals(type, tool.getType());
     }
 
     @Test
     public void testSetDurability(){
-        pickaxe.setDurability(1000);
-        assertEquals(1000, pickaxe.getDurability());
-        pickaxe.setDurability(2000);
-        assertEquals(2000, pickaxe.getDurability());
+        tool.setDurability(1000);
+        assertEquals(1000, tool.getDurability());
+        tool.setDurability(2000);
+        assertEquals(2000, tool.getDurability());
     }
 
     @Test
     public void testSetDurabilityToNegative(){
         assertThrows(IllegalArgumentException.class,
-                () -> pickaxe.setDurability(-1));
+                () -> tool.setDurability(-1));
     }
 
     @Test
     public void testSetDurabilityToZero(){
-        pickaxe.setDurability(0);
-        assertEquals(0, pickaxe.getDurability());
+        tool.setDurability(0);
+        assertEquals(0, tool.getDurability());
     }
 
     @Test
     public void testDecrementDurability(){
-        pickaxe.decrementDurability();
-        assertEquals(1999, pickaxe.getDurability());
+        tool.decrementDurability();
+        assertEquals(1999, tool.getDurability());
     }
 
     @Test
     public void testDecrementDurabilityWhenAtZero(){
-        pickaxe.setDurability(0);
+        tool.setDurability(0);
         assertThrows(IllegalArgumentException.class,
-                () -> pickaxe.decrementDurability());
+                () -> tool.decrementDurability());
     }
 
     @Test
     public void testHasDurabilityLeft(){
-        assertTrue(pickaxe.hasDurabilityLeft());
-        pickaxe.setDurability(0);
-        assertFalse(pickaxe.hasDurabilityLeft());
-        pickaxe.setDurability(1);
-        assertTrue(pickaxe.hasDurabilityLeft());
+        assertTrue(tool.hasDurabilityLeft());
+        tool.setDurability(0);
+        assertFalse(tool.hasDurabilityLeft());
+        tool.setDurability(1);
+        assertTrue(tool.hasDurabilityLeft());
     }
 }
