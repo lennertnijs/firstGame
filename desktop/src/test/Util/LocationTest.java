@@ -9,25 +9,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class LocationTest {
 
-    private String mapName;
-    private Point position;
+    private final String mapName = "Main";
+    private final Point position = new Point(0, 0);
     private Location location;
 
     @BeforeEach
     public void initialise(){
-        mapName = "main";
-        position = new Point(0, 0);
         location = new Location(mapName, position);
     }
 
     @Test
     public void testConstructorWithNullMapName(){
-        assertThrows(NullPointerException.class, () -> new Location(null, position));
+        assertThrows(NullPointerException.class,
+                () -> new Location(null, position));
     }
 
     @Test
     public void testConstructorWithNullPosition(){
-        assertThrows(NullPointerException.class, () -> new Location(mapName, null));
+        assertThrows(NullPointerException.class,
+                () -> new Location(mapName, null));
     }
 
     @Test
@@ -45,7 +45,8 @@ public class LocationTest {
         Location location1 = new Location(mapName, position);
         Location location2 = new Location(mapName, position);
         Location location3 = new Location(mapName, position);
-        Location diffLocation = new Location("name", position);
+        Location diffName = new Location("diff", position);
+        Location diffPosition = new Location(mapName, new Point(15, 15));
         // reflexive
         assertEquals(location1, location1);
         // symmetrical
@@ -56,7 +57,8 @@ public class LocationTest {
         assertEquals(location2, location3);
         assertEquals(location1, location3);
         // not equals
-        assertNotEquals(location1, diffLocation);
+        assertNotEquals(location1, diffName);
+        assertNotEquals(location1, diffPosition);
         assertNotEquals(location1, new Object());
         assertNotEquals(location1, null);
     }
@@ -66,7 +68,8 @@ public class LocationTest {
         Location location1 = new Location(mapName, position);
         Location location2 = new Location(mapName, position);
         Location location3 = new Location(mapName, position);
-        Location diffLocation = new Location("name", position);
+        Location diffName = new Location("diff", position);
+        Location diffPosition = new Location(mapName, new Point(15, 15));
         // reflexive
         assertEquals(location1.hashCode(), location1.hashCode());
         // symmetrical
@@ -77,12 +80,13 @@ public class LocationTest {
         assertEquals(location2.hashCode(), location3.hashCode());
         assertEquals(location1.hashCode(), location3.hashCode());
         // not equals
-        assertNotEquals(location1.hashCode(), diffLocation.hashCode());
+        assertNotEquals(location1.hashCode(), diffName.hashCode());
+        assertNotEquals(location1.hashCode(), diffPosition.hashCode());
     }
 
     @Test
     public void testToString(){
-        String expected = "Location[mapName=main, position=Point[x=0, y=0]]";
+        String expected = "Location[mapName=Main, position=Point[x=0, y=0]]";
         assertEquals(expected, location.toString());
     }
 }

@@ -9,7 +9,7 @@ public final class Location {
 
     public Location(String mapName, Point position){
         Objects.requireNonNull(mapName, "Map name is null.");
-        Objects.requireNonNull(position, "Point is null.");
+        Objects.requireNonNull(position, "Position is null.");
         this.mapName = mapName;
         this.position = position;
     }
@@ -40,9 +40,7 @@ public final class Location {
 
     @Override
     public int hashCode(){
-        int result = mapName.hashCode();
-        result = result * 31 + position.hashCode();
-        return result;
+        return mapName.hashCode() * 31 + position.hashCode();
     }
 
     @Override
