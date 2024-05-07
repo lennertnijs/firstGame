@@ -3,6 +3,7 @@ package com.mygdx.game.V2;
 import com.mygdx.game.V2.Dialogue.IDialogueData;
 import com.mygdx.game.V2.General.GameObject;
 import com.mygdx.game.V2.General.Sprite;
+import com.mygdx.game.V2.Inventory.IInventoryManager;
 import com.mygdx.game.V2.Navigation.INavigationData;
 import com.mygdx.game.V2.TextureSelector.ITextureSelector;
 import com.mygdx.game.V2.Util.Day;
@@ -18,11 +19,12 @@ public final class NPC extends GameObject {
     private final INavigationData navigationData;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
+    private final IInventoryManager inventoryManager;
     private final NPCStats stats;
 
     //todo add a damn builder
     private NPC(Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
-                INavigationData navigationData, IDialogueData dialogueData, NPCStats stats){
+                INavigationData navigationData, IDialogueData dialogueData, NPCStats stats, IInventoryManager manager){
         super(sprite);
         this.name = name;
         this.selector = selector;
@@ -30,6 +32,7 @@ public final class NPC extends GameObject {
         this.navigationData = navigationData;
         this.dialogueData = dialogueData;
         this.stats = stats;
+        this.inventoryManager = manager;
     }
 
     public String getName(){
