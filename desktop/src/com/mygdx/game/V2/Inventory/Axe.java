@@ -14,6 +14,11 @@ public final class Axe extends Tool{
     }
 
     @Override
+    public Axe copy(){
+        return new Axe(getName(), getEfficiency(), getDurability());
+    }
+
+    @Override
     public boolean equals(Object other){
         if(!(other instanceof Axe)) {
             return false;

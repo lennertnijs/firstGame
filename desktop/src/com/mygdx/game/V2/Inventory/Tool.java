@@ -61,4 +61,6 @@ public abstract class Tool extends Item{
         result = result * 31 + durability;
         return result;
     }
+
+    public abstract Tool copy();
 }

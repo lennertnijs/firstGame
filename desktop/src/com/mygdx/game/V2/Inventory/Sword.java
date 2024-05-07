@@ -14,6 +14,12 @@ public class Sword extends Tool{
     }
 
     @Override
+    public Sword copy(){
+        return new Sword(getName(), getEfficiency(), getDurability());
+    }
+
+
+    @Override
     public boolean equals(Object other){
         if(!(other instanceof Sword)) {
             return false;

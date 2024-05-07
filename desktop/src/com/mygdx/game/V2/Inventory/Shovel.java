@@ -14,6 +14,11 @@ public final class Shovel extends Tool{
     }
 
     @Override
+    public Shovel copy(){
+        return new Shovel(getName(), getEfficiency(), getDurability());
+    }
+
+    @Override
     public boolean equals(Object other){
         if(!(other instanceof Shovel)) {
             return false;

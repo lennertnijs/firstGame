@@ -14,6 +14,11 @@ public final class Pickaxe extends Tool{
     }
 
     @Override
+    public Pickaxe copy(){
+        return new Pickaxe(getName(), getEfficiency(), getDurability());
+    }
+
+    @Override
     public boolean equals(Object other){
         if(!(other instanceof Pickaxe)) {
             return false;
