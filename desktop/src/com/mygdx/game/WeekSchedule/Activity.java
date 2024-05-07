@@ -6,23 +6,10 @@ import com.mygdx.game.Util.Time;
 
 import java.util.Objects;
 
-/**
- * Represents a concrete activity.
- * IMMUTABLE
- */
 public final class Activity{
 
-    /**
-     * The location.
-     */
     private final Location location;
-    /**
-     * The time.
-     */
     private final Time time;
-    /**
-     * The activity type.
-     */
     private final ActivityType type;
 
     /**
