@@ -6,10 +6,6 @@ import com.mygdx.game.Util.Time;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-/**
- * Represents a week schedule.
- * IMMUTABLE
- */
 public interface IWeekSchedule {
 
     /**
@@ -24,6 +20,7 @@ public interface IWeekSchedule {
      *
      * @return The {@link Schedule}.
      * @throws NoSuchElementException If no mapping for the given {@link Day} exists.
+     * @throws NullPointerException If the {@link Day} is null.
      */
     Schedule getDaySchedule(Day day);
 
@@ -35,6 +32,7 @@ public interface IWeekSchedule {
      *
      * @return True if an {@link Activity} exists. False otherwise.
      * @throws NoSuchElementException If no mapping for the given {@link Day} exists.
+     * @throws NullPointerException If the {@link Day} or {@link Time} is null.
      */
     boolean hasActivity(Day day, Time time);
 
@@ -47,6 +45,7 @@ public interface IWeekSchedule {
      * @throws NoSuchElementException If no mapping for the given {@link Day} exists.
      * @throws NoSuchElementException If no {@link Activity} was found at the given {@link Time} in the
      *         {@link Day}'s {@link Schedule}.
+     * @throws NullPointerException If the {@link Day} or {@link Time} is null.
      */
     Activity getActivity(Day day, Time time);
 }

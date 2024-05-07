@@ -14,34 +14,22 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class WeekScheduleTest {
 
-    private Time time1;
-    private Time time2;
-    private Time time3;
-    private Activity activity1;
-    private Activity activity2;
-    private Activity activity3;
-    private Day day1;
-    private Day day2;
-    private Schedule schedule1;
-    private Schedule schedule2;
-    private Map<Day, Schedule> map;
+    private final Time time1 = new Time(0, 15);
+    private final Time time2 = new Time(1, 15);
+    private final Time time3 = new Time(2, 15);
+    private final Location location = new Location("Map", new Point(0, 10));
+    private final Activity activity1 = new Activity(location, time1, ActivityType.RUNNING);
+    private final Activity activity2 = new Activity(location, time2, ActivityType.RUNNING);
+    private final Activity activity3 = new Activity(location, time3, ActivityType.RUNNING);
+    private final Day day1 = Day.MONDAY;
+    private final Day day2 = Day.TUESDAY;
+    private final Schedule schedule1  = new Schedule(Arrays.asList(activity1, activity2));
+    private final Schedule schedule2  = new Schedule(Arrays.asList(activity2, activity3));
+    private final Map<Day, Schedule> map = new HashMap<>();
     private IWeekSchedule weekSchedule;
 
     @BeforeEach
     public void initialise(){
-        time1 = new Time(0, 15);
-        time2 = new Time(1, 15);
-        time3 = new Time(2, 15);
-        Location location = new Location("Map", new Point(0, 10));
-        activity1 = new Activity(location, time1, ActivityType.RUNNING);
-        activity2 = new Activity(location, time2, ActivityType.RUNNING);
-        activity3 = new Activity(location, time3, ActivityType.RUNNING);
-        day1 = Day.MONDAY;
-        day2 = Day.TUESDAY;
-        schedule1 = new Schedule(Arrays.asList(activity1, activity2));
-        schedule2 = new Schedule(Arrays.asList(activity2, activity3));
-
-        map = new HashMap<>();
         map.put(day1, schedule1);
         map.put(day2, schedule2);
         weekSchedule = new WeekSchedule(map);
@@ -49,19 +37,22 @@ public class WeekScheduleTest {
 
     @Test
     public void testConstructorWithNullMap(){
-        assertThrows(NullPointerException.class, () -> new WeekSchedule(null));
+        assertThrows(NullPointerException.class,
+                () -> new WeekSchedule(null));
     }
 
     @Test
     public void testConstructorWithNullKey(){
         map.put(null, schedule2);
-        assertThrows(NullPointerException.class, () -> new WeekSchedule(map));
+        assertThrows(NullPointerException.class,
+                () -> new WeekSchedule(map));
     }
 
     @Test
     public void testConstructorWithNullValue(){
         map.put(Day.WEDNESDAY, null);
-        assertThrows(NullPointerException.class, () -> new WeekSchedule(map));
+        assertThrows(NullPointerException.class,
+                () -> new WeekSchedule(map));
     }
 
     @Test
@@ -77,12 +68,14 @@ public class WeekScheduleTest {
 
     @Test
     public void testGetDayScheduleWithNull(){
-        assertThrows(NullPointerException.class, () -> weekSchedule.getDaySchedule(null));
+        assertThrows(NullPointerException.class,
+                () -> weekSchedule.getDaySchedule(null));
     }
 
     @Test
     public void testGetDayScheduleUnmappedDay(){
-        assertThrows(NoSuchElementException.class, () -> weekSchedule.getDaySchedule(Day.WEDNESDAY));
+        assertThrows(NoSuchElementException.class,
+                () -> weekSchedule.getDaySchedule(Day.WEDNESDAY));
     }
 
     @Test
@@ -90,6 +83,7 @@ public class WeekScheduleTest {
         assertTrue(weekSchedule.hasActivity(day1, time1));
         assertTrue(weekSchedule.hasActivity(day1, time2));
         assertFalse(weekSchedule.hasActivity(day1, time3));
+
         assertFalse(weekSchedule.hasActivity(day2, time1));
         assertTrue(weekSchedule.hasActivity(day2, time2));
         assertTrue(weekSchedule.hasActivity(day2, time3));
@@ -97,17 +91,20 @@ public class WeekScheduleTest {
 
     @Test
     public void testHasActivityWithNullDay(){
-        assertThrows(NullPointerException.class, () -> weekSchedule.hasActivity(null, time1));
+        assertThrows(NullPointerException.class,
+                () -> weekSchedule.hasActivity(null, time1));
     }
 
     @Test
     public void testHasActivityWithNullTime(){
-        assertThrows(NullPointerException.class, () -> weekSchedule.hasActivity(day1, null));
+        assertThrows(NullPointerException.class,
+                () -> weekSchedule.hasActivity(day1, null));
     }
 
     @Test
     public void testHasActivityUnmappedDay(){
-        assertThrows(NoSuchElementException.class, () -> weekSchedule.hasActivity(Day.WEDNESDAY, time1));
+        assertThrows(NoSuchElementException.class,
+                () -> weekSchedule.hasActivity(Day.WEDNESDAY, time1));
     }
 
     @Test
@@ -120,22 +117,26 @@ public class WeekScheduleTest {
 
     @Test
     public void testGetActivityNoneFound(){
-        assertThrows(NoSuchElementException.class, () -> weekSchedule.getActivity(day1, time3));
+        assertThrows(NoSuchElementException.class,
+                () -> weekSchedule.getActivity(day1, time3));
     }
 
     @Test
     public void testGetActivityWithNullDay(){
-        assertThrows(NullPointerException.class, () -> weekSchedule.getActivity(null, time1));
+        assertThrows(NullPointerException.class,
+                () -> weekSchedule.getActivity(null, time1));
     }
 
     @Test
     public void testGetActivityWithNullTime(){
-        assertThrows(NullPointerException.class, () -> weekSchedule.getActivity(day1, null));
+        assertThrows(NullPointerException.class,
+                () -> weekSchedule.getActivity(day1, null));
     }
 
     @Test
     public void testGetActivityUnmappedDay(){
-        assertThrows(NoSuchElementException.class, () -> weekSchedule.getActivity(Day.WEDNESDAY, time1));
+        assertThrows(NoSuchElementException.class,
+                () -> weekSchedule.getActivity(Day.WEDNESDAY, time1));
     }
 
     @Test
@@ -184,5 +185,4 @@ public class WeekScheduleTest {
     public void testToString(){
         assertNotNull(weekSchedule.toString());
     }
-
 }
