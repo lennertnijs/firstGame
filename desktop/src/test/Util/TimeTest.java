@@ -9,27 +9,41 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeTest {
 
+    private final int hours = 5;
+    private final int minutes = 10;
     private Time time;
 
     @BeforeEach
     public void initialise(){
-        time = new Time(5, 10);
+        time = new Time(hours, minutes);
     }
 
     @Test
-    public void testConstructorInvalidHours(){
-        assertThrows(IllegalArgumentException.class, () -> new Time(-1, 0));
-        assertThrows(IllegalArgumentException.class, () -> new Time(Time.HOURS_PER_DAY, 0));
+    public void testConstructorWithNegativeHours(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(-1, minutes));
     }
 
     @Test
-    public void testConstructorInvalidMinutes(){
-        assertThrows(IllegalArgumentException.class, () -> new Time(0, -1));
-        assertThrows(IllegalArgumentException.class, () -> new Time(0, Time.MINUTES_PER_HOUR));
+    public void testConstructorWithHoursTooBig(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(Time.HOURS_PER_DAY, minutes));
     }
 
     @Test
-    public void testGetHours(){
+    public void testConstructorWithNegativeMinutes(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(hours, -1));
+    }
+
+    @Test
+    public void testConstructorWithMinutesTooBig(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(hours, Time.MINUTES_PER_HOUR));
+    }
+
+    @Test
+    public void testHours(){
         assertEquals(5, time.hours());
     }
 
@@ -39,39 +53,27 @@ public class TimeTest {
     }
 
     @Test
-    public void testBefore(){
+    public void testCompareTo(){
         Time time1 = new Time(5, 9);
-        Time time2 = new Time(5, 11);
-        assertTrue(time1.before(time));
-        assertFalse(time.before(time));
-        assertFalse(time2.before(time));
+        Time time2 = new Time(5, 10);
+        assertEquals(-1, time1.compareTo(time2));
+        assertEquals(0, time1.compareTo(time1));
+        assertEquals(1, time2.compareTo(time1));
     }
 
     @Test
-    public void testBeforeNull(){
-        assertThrows(NullPointerException.class, () -> time.before(null));
-    }
-
-    @Test
-    public void testAfter(){
-        Time time1 = new Time(5, 9);
-        Time time2 = new Time(5, 11);
-        assertTrue(time2.after(time));
-        assertFalse(time.after(time));
-        assertFalse(time1.after(time));
-    }
-
-    @Test
-    public void testAfterNull(){
-        assertThrows(NullPointerException.class, () -> time.after(null));
+    public void testCompareToWithNull(){
+        assertThrows(NullPointerException.class,
+                () -> time.compareTo(null));
     }
 
     @Test
     public void testEquals(){
-        Time time1 = new Time(5, 10);
-        Time time2 = new Time(5, 10);
-        Time time3 = new Time(5, 10);
-        Time diffTime = new Time(10, 10);
+        Time time1 = new Time(hours, minutes);
+        Time time2 = new Time(hours, minutes);
+        Time time3 = new Time(hours, minutes);
+        Time diffHours = new Time(10, minutes);
+        Time diffMinutes = new Time(hours, 20);
         // reflexive
         assertEquals(time1, time1);
         // symmetrical
@@ -82,17 +84,19 @@ public class TimeTest {
         assertEquals(time2, time3);
         assertEquals(time1, time3);
         // not equals
-        assertNotEquals(time1, diffTime);
+        assertNotEquals(time1, diffHours);
+        assertNotEquals(time1, diffMinutes);
         assertNotEquals(time1, new Object());
         assertNotEquals(time1, null);
     }
 
     @Test
     public void testHashCode(){
-        Time time1 = new Time(5, 10);
-        Time time2 = new Time(5, 10);
-        Time time3 = new Time(5, 10);
-        Time diffTime = new Time(10, 10);
+        Time time1 = new Time(hours, minutes);
+        Time time2 = new Time(hours, minutes);
+        Time time3 = new Time(hours, minutes);
+        Time diffHours = new Time(10, minutes);
+        Time diffMinutes = new Time(hours, 20);
         // reflexive
         assertEquals(time1.hashCode(), time1.hashCode());
         // symmetrical
@@ -103,26 +107,13 @@ public class TimeTest {
         assertEquals(time2.hashCode(), time3.hashCode());
         assertEquals(time1.hashCode(), time3.hashCode());
         // not equals
-        assertNotEquals(time1.hashCode(), diffTime.hours());
+        assertNotEquals(time1.hashCode(), diffHours.hashCode());
+        assertNotEquals(time1.hashCode(), diffMinutes.hashCode());
     }
 
     @Test
     public void testToString(){
         String expected = "Time[hours=5, minutes=10]";
         assertEquals(expected, time.toString());
-    }
-
-    @Test
-    public void testCompareTo(){
-        Time time1 = new Time(5, 9);
-        Time time2 = new Time(5, 10);
-        assertEquals(-1, time1.compareTo(time2));
-        assertEquals(0, time2.compareTo(time2));
-        assertEquals(1, time2.compareTo(time1));
-    }
-
-    @Test
-    public void testCompareToWithNull(){
-        assertThrows(NullPointerException.class, () -> time.compareTo(null));
     }
 }
