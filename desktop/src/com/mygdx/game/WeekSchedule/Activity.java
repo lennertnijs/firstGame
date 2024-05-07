@@ -11,59 +11,35 @@ public final class Activity{
     private final Time time;
     private final ActivityType type;
 
-    /**
-     * Creates a new immutable {@link Activity}.
-     * @param location The {@link Location}. Cannot be null.
-     * @param time The {@link Time}. Cannot be null.
-     * @param activityType The {@link ActivityType}. Cannot be null.
-     */
-    public Activity(Location location, Time time, ActivityType activityType){
+    public Activity(Location location, Time time, ActivityType type){
         Objects.requireNonNull(location, "Location is null.");
         Objects.requireNonNull(time, "Time is null.");
-        Objects.requireNonNull(activityType, "Activity type is null.");
+        Objects.requireNonNull(type, "Activity type is null.");
         this.location = location;
         this.time = time;
-        this.type = activityType;
+        this.type = type;
     }
 
-    /**
-     * @return The {@link Location}.
-     */
     public Location location(){
         return location;
     }
 
-    /**
-     * @return The {@link Time}.
-     */
     public Time time(){
         return time;
     }
 
-    /**
-     * @return The {@link ActivityType}.
-     */
     public ActivityType type(){
         return type;
     }
 
-    /**
-     * Compares this {@link Activity} to the given object and returns true if they're equal. Returns false otherwise.
-     * Two {@link Activity} objects are equal if they have the same location, time & type.
-     *
-     * @return True if equal. False otherwise.
-     */
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Activity))
             return false;
         Activity activity = (Activity) other;
-        return location.equals(activity.location) && time.equals(activity.time) && type.equals(activity.type);
+        return location.equals(activity.location) && time.equals(activity.time) && type == activity.type;
     }
 
-    /**
-     * @return The hash code of this {@link Activity}.
-     */
     @Override
     public int hashCode(){
         int result = location.hashCode();
@@ -72,9 +48,6 @@ public final class Activity{
         return result;
     }
 
-    /**
-     * @return The string representation of this {@link Activity}.
-     */
     @Override
     public String toString(){
         return String.format("Activity[%s, %s, Type=%s]", location, time, type);

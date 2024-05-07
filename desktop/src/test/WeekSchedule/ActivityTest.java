@@ -12,33 +12,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {
 
-    private Location location;
-    private Time time;
-    private ActivityType activityType;
+    private final Location location = new Location("Map", new Point(5, 10));
+    private final Time time = new Time(5, 10);
+    private final ActivityType activityType = ActivityType.RUNNING;
     private Activity activity;
 
     @BeforeEach
     public void initialise(){
-        location = new Location("Map", new Point(5, 10));
-        time = new Time(10, 15);
-        activityType = ActivityType.RUNNING;
-
         activity = new Activity(location, time, activityType);
     }
 
     @Test
     public void testConstructorWithNullLocation(){
-        assertThrows(NullPointerException.class, () -> new Activity(null, time, activityType));
+        assertThrows(NullPointerException.class,
+                () -> new Activity(null, time, activityType));
     }
 
     @Test
     public void testConstructorWithNullTime(){
-        assertThrows(NullPointerException.class, () -> new Activity(location, null, activityType));
+        assertThrows(NullPointerException.class,
+                () -> new Activity(location, null, activityType));
     }
 
     @Test
     public void testConstructorWithNullActivityType(){
-        assertThrows(NullPointerException.class, () -> new Activity(location, time, null));
+        assertThrows(NullPointerException.class,
+                () -> new Activity(location, time, null));
     }
 
     @Test
@@ -61,7 +60,9 @@ public class ActivityTest {
         Activity activity1 = new Activity(location, time, activityType);
         Activity activity2 = new Activity(location, time, activityType);
         Activity activity3 = new Activity(location, time, activityType);
-        Activity diffActivity = new Activity(location, new Time(0, 15), activityType);
+        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, activityType);
+        Activity diffTime = new Activity(location, new Time(0, 15), activityType);
+        Activity diffType = new Activity(location, time, ActivityType.MINING);
         // reflexive
         assertEquals(activity1, activity1);
         // symmetrical
@@ -72,7 +73,9 @@ public class ActivityTest {
         assertEquals(activity2, activity3);
         assertEquals(activity1, activity3);
         // not equals
-        assertNotEquals(activity1, diffActivity);
+        assertNotEquals(activity1, diffLocation);
+        assertNotEquals(activity1, diffTime);
+        assertNotEquals(activity1, diffType);
         assertNotEquals(activity1, new Object());
         assertNotEquals(activity1, null);
     }
@@ -82,7 +85,9 @@ public class ActivityTest {
         Activity activity1 = new Activity(location, time, activityType);
         Activity activity2 = new Activity(location, time, activityType);
         Activity activity3 = new Activity(location, time, activityType);
-        Activity diffActivity = new Activity(location, new Time(0, 15), activityType);
+        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, activityType);
+        Activity diffTime = new Activity(location, new Time(0, 15), activityType);
+        Activity diffType = new Activity(location, time, ActivityType.MINING);
         // reflexive
         assertEquals(activity1.hashCode(), activity1.hashCode());
         // symmetrical
@@ -93,12 +98,18 @@ public class ActivityTest {
         assertEquals(activity2.hashCode(), activity3.hashCode());
         assertEquals(activity1.hashCode(), activity3.hashCode());
         // not equals
-        assertNotEquals(activity1.hashCode(), diffActivity.hashCode());
+        assertNotEquals(activity1.hashCode(), diffLocation.hashCode());
+        assertNotEquals(activity1.hashCode(), diffTime.hashCode());
+        assertNotEquals(activity1.hashCode(), diffType.hashCode());
     }
 
     @Test
     public void testToString(){
-        String expected = "Activity[Location[mapName=Map, position=Point[x=5, y=10]], Time[hours=10, minutes=15], Type=RUNNING]";
+        String expected = "Activity[" +
+                "Location[mapName=Map, position=Point[x=5, y=10]], " +
+                "Time[hours=5, minutes=10], " +
+                "Type=RUNNING" +
+                "]";
         assertEquals(expected, activity.toString());
     }
 }
