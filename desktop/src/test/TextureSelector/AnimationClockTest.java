@@ -1,6 +1,6 @@
 package TextureSelector;
 
-import com.mygdx.game.V2.TextureSelector.AnimationClock;
+import com.mygdx.game.TextureSelector.AnimationClock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

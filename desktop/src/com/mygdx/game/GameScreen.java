@@ -1,56 +1,27 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.Clock.ClockService;
-import com.mygdx.game.Drawer.DrawerGod;
-import com.mygdx.game.Input.GamePlayInputProcessor;
-import com.mygdx.game.Input.PlayerInteractHandler;
-import com.mygdx.game.Input.PlayerMovementHandler;
-import com.mygdx.game.Player.PlayerController;
-import com.mygdx.game.Player.PlayerService;
-import com.mygdx.game.Controller.StoneController;
-import com.mygdx.game.Clock.ClockController;
-import com.mygdx.game.Controller.NPCController;
 
 
 public class GameScreen implements Screen {
     final MyGame game;
-    Music rainMusic;
-    OrthographicCamera camera;
+    final OrthographicCamera camera;
 
-    ClockController clockController;
-    NPCController npcController;
-    PlayerController playerController;
-    StoneController stoneController;
-    DrawerGod drawerGod;
-    ClockService clockService;
-    GamePlayInputProcessor gamePlayInputProcessor;
-    PlayerMovementHandler playerMovementHandler;
-    PlayerInteractHandler playerInteractHandler;
+    public GameScreen(MyGame game) {
+        // Texture bar = new Texture(Gdx.files.internal("inventoryBar.png")) to create a Texture
 
-    public GameScreen(final MyGame game) {
+        // game.batch.draw(map, 0, 0, 4800 ,4800 ); To draw
 
+        // Implements InputProcessor to make an input handler.
+        // Gdx.input.setInputProcessor(gamePlayInputProcessor); to then set it.
+
+        // to play music
+        // rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
+        // rainMusic.setLooping(true);
         this.game = game;
 
-        PlayerService playerService = new PlayerService();
-        clockService = new ClockService();
-        clockController = new ClockController(clockService);
-        npcController = new NPCController(clockController, clockService);
-        playerController  = new PlayerController(playerService);
-        stoneController = new StoneController();
-        drawerGod = new DrawerGod(game, npcController, playerController, stoneController, clockController);
-        playerInteractHandler = new PlayerInteractHandler(playerService);
-        playerMovementHandler = new PlayerMovementHandler(playerService);
-        gamePlayInputProcessor = new GamePlayInputProcessor(playerMovementHandler, playerInteractHandler);
-        Gdx.input.setInputProcessor(gamePlayInputProcessor);
-
-        // load the drop sound effect and the rain background "music"
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
-        rainMusic.setLooping(true);
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -58,7 +29,9 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
     }
 
-
+    /**
+     * This method is executed with every frame.
+     */
     @Override
     public void render(float delta) {
         // clear the screen with a dark blue color.
@@ -67,17 +40,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        playerMovementHandler.movePlayer();
-
-        // System.out.println(playerController.getPlayer().getActivity());
-
-        npcController.updateNPCs();
-        clockService.updateClock();
-
-        camera.position.set(playerController.getPlayer().getPosition().getX(), playerController.getPlayer().getPosition().getY(), 0);
-        drawerGod.drawAll();
-
-
+        // camera.position.set(0, 0, 0);
         game.batch.end();
     }
 
@@ -108,6 +71,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        rainMusic.dispose();
+        // dispose of game things, like music, etc.
     }
+
+    //        JsonReader reader = new JsonReader();
+    //        JsonValue file = reader.parse(Gdx.files.internal("resources/clock.json"))
+    // to read json files
 }

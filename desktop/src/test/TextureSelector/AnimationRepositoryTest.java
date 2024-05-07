@@ -1,11 +1,11 @@
 package TextureSelector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.V2.TextureSelector.Animation;
-import com.mygdx.game.V2.TextureSelector.AnimationRepository;
-import com.mygdx.game.V2.TextureSelector.Key;
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Direction;
+import com.mygdx.game.TextureSelector.Animation;
+import com.mygdx.game.TextureSelector.AnimationRepository;
+import com.mygdx.game.TextureSelector.Key;
+import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

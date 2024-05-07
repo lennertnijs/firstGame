@@ -1,9 +1,8 @@
 package Navigation;
 
-import com.mygdx.game.V2.Navigation.BFSPathFinder;
-import com.mygdx.game.V2.Navigation.DFSPathFinder;
-import com.mygdx.game.V2.Navigation.Graph;
-import com.mygdx.game.V2.Navigation.IGraph;
+import com.mygdx.game.Navigation.DFSPathFinder;
+import com.mygdx.game.Navigation.Graph;
+import com.mygdx.game.Navigation.IGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package Util;
 
-import com.mygdx.game.V2.Util.Point;
+import com.mygdx.game.Util.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

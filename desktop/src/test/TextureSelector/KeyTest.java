@@ -1,8 +1,8 @@
 package TextureSelector;
 
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Direction;
-import com.mygdx.game.V2.TextureSelector.Key;
+import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.TextureSelector.Key;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

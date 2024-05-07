@@ -1,6 +1,6 @@
 package Inventory;
 
-import com.mygdx.game.V2.Inventory.Item;
+import com.mygdx.game.Inventory.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

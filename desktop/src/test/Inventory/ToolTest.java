@@ -1,7 +1,7 @@
 package Inventory;
 
-import com.mygdx.game.V2.Inventory.Tool;
-import com.mygdx.game.V2.Inventory.ToolType;
+import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.Inventory.ToolType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

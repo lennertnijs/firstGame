@@ -1,6 +1,6 @@
 package Util;
 
-import com.mygdx.game.V2.Util.Dimensions;
+import com.mygdx.game.Util.Dimensions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

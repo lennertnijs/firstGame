@@ -1,8 +1,10 @@
 package Dialogue;
 
-import com.mygdx.game.V2.Action.Action;
-import com.mygdx.game.V2.Action.MockAction;
-import com.mygdx.game.V2.Dialogue.*;
+import com.mygdx.game.Action.Action;
+import com.mygdx.game.Action.MockAction;
+import com.mygdx.game.Dialogue.DialogueData;
+import com.mygdx.game.Dialogue.DialogueRepository;
+import com.mygdx.game.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.*;

@@ -1,7 +1,7 @@
 package Dialogue;
 
-import com.mygdx.game.V2.Dialogue.DialogueRepository;
-import com.mygdx.game.V2.Dialogue.ResponseData;
+import com.mygdx.game.Dialogue.DialogueRepository;
+import com.mygdx.game.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

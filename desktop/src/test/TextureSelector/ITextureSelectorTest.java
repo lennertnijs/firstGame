@@ -1,9 +1,9 @@
 package TextureSelector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.V2.TextureSelector.*;
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Direction;
+import com.mygdx.game.TextureSelector.*;
+import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

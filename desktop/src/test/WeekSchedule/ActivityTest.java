@@ -1,10 +1,10 @@
 package WeekSchedule;
 
-import com.mygdx.game.V2.Util.ActivityType;
-import com.mygdx.game.V2.Util.Location;
-import com.mygdx.game.V2.Util.Point;
-import com.mygdx.game.V2.Util.Time;
-import com.mygdx.game.V2.WeekSchedule.*;
+import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.Util.Location;
+import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Time;
+import com.mygdx.game.WeekSchedule.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

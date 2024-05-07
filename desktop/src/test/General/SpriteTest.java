@@ -1,10 +1,10 @@
 package General;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.V2.General.Sprite;
-import com.mygdx.game.V2.Util.Dimensions;
-import com.mygdx.game.V2.Util.Location;
-import com.mygdx.game.V2.Util.Point;
+import com.mygdx.game.General.Sprite;
+import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Location;
+import com.mygdx.game.Util.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
