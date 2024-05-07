@@ -12,7 +12,9 @@ public class VectorTest {
 
     @BeforeEach
     public void initialise(){
-        vector = new Vector(-5, 10);
+        int x = -5;
+        int y = 10;
+        vector = new Vector(x, y);
     }
 
     @Test
@@ -60,7 +62,8 @@ public class VectorTest {
         Vector v1 = new Vector(5, 10);
         Vector v2 = new Vector(5, 10);
         Vector v3 = new Vector(5, 10);
-        Vector diffVector = new Vector(15, 10);
+        Vector diffX = new Vector(15, 10);
+        Vector diffY = new Vector(5, 20);
         // reflexive
         assertEquals(v1, v1);
         // symmetrical
@@ -71,7 +74,8 @@ public class VectorTest {
         assertEquals(v2, v3);
         assertEquals(v1, v3);
         // not equals
-        assertNotEquals(v1, diffVector);
+        assertNotEquals(v1, diffX);
+        assertNotEquals(v1, diffY);
         assertNotEquals(v1, new Object());
         assertNotEquals(v1, null);
     }
@@ -81,7 +85,8 @@ public class VectorTest {
         Vector v1 = new Vector(5, 10);
         Vector v2 = new Vector(5, 10);
         Vector v3 = new Vector(5, 10);
-        Vector diffVector = new Vector(15, 10);
+        Vector diffX = new Vector(15, 10);
+        Vector diffY = new Vector(5, 20);
         // reflexive
         assertEquals(v1.hashCode(), v1.hashCode());
         // symmetrical
@@ -92,7 +97,8 @@ public class VectorTest {
         assertEquals(v2.hashCode(), v3.hashCode());
         assertEquals(v1.hashCode(), v3.hashCode());
         // not equals
-        assertNotEquals(v1.hashCode(), diffVector.hashCode());
+        assertNotEquals(v1.hashCode(), diffX.hashCode());
+        assertNotEquals(v1.hashCode(), diffY.hashCode());
     }
 
     @Test

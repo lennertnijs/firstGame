@@ -28,8 +28,6 @@ public final class Vector {
 
     /**
      * Rounds down/up to the nearest integer.
-     *
-     * @return A new & scaled {@link Vector}.
      */
     public Vector scale(double factor){
         int scaledX = (int)Math.round(x * factor);
@@ -37,12 +35,9 @@ public final class Vector {
         return new Vector(scaledX, scaledY);
     }
 
-    /**
-     * @return The new & resized immutable {@link Vector}.
-     */
     public Vector scaleToSize(int length){
         if(this.size() == 0)
-            throw new IllegalStateException("Vector size is 0.");
+            throw new IllegalStateException("Vector size is 0. Scaling a 0 vector is nonsense.");
         float factor = (float)length / (float)this.size();
         return scale(factor);
     }
@@ -57,9 +52,7 @@ public final class Vector {
 
     @Override
     public int hashCode(){
-        int result = x;
-        result = result * 31 + y;
-        return result;
+        return x * 31 + y;
     }
 
     @Override
