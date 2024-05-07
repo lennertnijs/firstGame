@@ -32,7 +32,7 @@ public class PointTest {
 
     @Test
     public void testConstructorWithZeroY(){
-        new Point(5, 0);
+        new Point(5, 0); // allowed
     }
 
     @Test
