@@ -4,8 +4,7 @@ import com.mygdx.game.Util.Vector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class VectorTest {
 
@@ -47,6 +46,13 @@ public class VectorTest {
         assertEquals(v1, new Vector(-3, 5));
         Vector zero = vector.scaleToSize(0);
         assertEquals(zero, new Vector(0, 0));
+    }
+
+    @Test
+    public void testScaleToSizeWithSizeZero(){
+        Vector zero = new Vector(0, 0);
+        assertThrows(IllegalStateException.class,
+                () -> zero.scaleToSize(10));
     }
 
     @Test
