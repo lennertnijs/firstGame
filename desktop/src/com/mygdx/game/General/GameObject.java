@@ -5,7 +5,7 @@ import com.mygdx.game.Util.Location;
 
 public class GameObject {
 
-    private Sprite sprite;
+    private final Sprite sprite;
 
     public GameObject(Sprite sprite){
         this.sprite = sprite;
