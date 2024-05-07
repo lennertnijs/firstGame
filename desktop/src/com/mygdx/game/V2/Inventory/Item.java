@@ -82,4 +82,8 @@ public class Item {
     public String toString(){
         return String.format("Item[name=%s, stackSize=%d, amount=%d]", name, stackSize, amount);
     }
+
+    public Item copy(){
+        return new Item(name, stackSize, amount);
+    }
 }

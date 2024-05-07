@@ -170,4 +170,13 @@ public class ItemTest {
     public void testToString(){
         assertNotNull(item.toString());
     }
+
+    @Test
+    public void testCopy(){
+        Item copy = item.copy();
+        assertEquals(item, copy);
+        copy.increaseAmount(1);
+        assertNotEquals(item, copy);
+
+    }
 }
