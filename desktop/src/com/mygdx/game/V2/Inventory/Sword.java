@@ -2,7 +2,7 @@ package com.mygdx.game.V2.Inventory;
 
 import com.mygdx.game.V2.General.GameObject;
 
-public class Sword extends Tool{
+public final class Sword extends Tool{
 
     public Sword(String name, int efficiency, int durability){
         super(name, efficiency, durability);

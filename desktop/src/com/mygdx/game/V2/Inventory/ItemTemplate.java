@@ -4,25 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.util.Objects;
 
-/**
- * Represents a template for an item in the game.
- */
-public final class ItemTemplate {
+
+public class ItemTemplate {
 
     private final String name;
     private final String description;
     private final Texture texture;
     private final int stackSize;
 
-    /**
-     * Creates a new immutable {@link ItemTemplate}.
-     * @param name The name. Cannot be null.
-     * @param description The description. Cannot be null.
-     * @param texture The texture. Cannot be null.
-     * @param stackSize The stack size. Cannot be negative or 0.
-     *
-     * @throws IllegalArgumentException If the stack size is negative or 0.
-     */
     public ItemTemplate(String name, String description, Texture texture, int stackSize){
         Objects.requireNonNull(name, "Name is null.");
         Objects.requireNonNull(description, "Description is null.");
