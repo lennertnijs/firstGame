@@ -17,34 +17,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScheduleTest {
 
-    private Time time1;
-    private Time time2;
-    private Activity activity1;
-    private Activity activity2;
+    private final Time time1 = new Time(0, 10);
+    private final Time time2 = new Time(0, 15);
+    private final Location location = new Location("Map", new Point(5, 15));
+    private final Activity activity1 = new Activity(location, time1, ActivityType.RUNNING);
+    private final Activity activity2 = new Activity(location, time2, ActivityType.RUNNING);
     private Schedule schedule;
+
     @BeforeEach
     public void initialise(){
-        time1 = new Time(0, 10);
-        time2 = new Time(0, 15);
-        Location location = new Location("Map", new Point(5, 15));
-        activity1 = new Activity(location, time1, ActivityType.RUNNING);
-        activity2 = new Activity(location, time2, ActivityType.RUNNING);
         schedule = new Schedule(Arrays.asList(activity2, activity1));
     }
 
     @Test
     public void testConstructorWithNullList(){
-        assertThrows(NullPointerException.class, () -> new Schedule(null));
+        assertThrows(NullPointerException.class,
+                () -> new Schedule(null));
     }
 
     @Test
     public void testConstructorWithListContainingNull(){
-        assertThrows(NullPointerException.class, () -> new Schedule(Arrays.asList(activity1, null)));
+        assertThrows(NullPointerException.class,
+                () -> new Schedule(Arrays.asList(activity1, null)));
     }
 
     @Test
     public void testConstructorWithTwoActivitiesAtSameTime(){
-        assertThrows(IllegalArgumentException.class, () -> new Schedule(Arrays.asList(activity1, activity1)));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Schedule(Arrays.asList(activity1, activity2, activity1)));
     }
 
     @Test
@@ -63,7 +63,8 @@ public class ScheduleTest {
 
     @Test
     public void testHasActivityAtWithNull(){
-        assertThrows(NullPointerException.class, () -> schedule.hasActivityAt(null));
+        assertThrows(NullPointerException.class,
+                () -> schedule.hasActivityAt(null));
     }
 
     @Test
@@ -73,13 +74,15 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testGetActivityAtNullTime(){
-        assertThrows(NullPointerException.class, () -> schedule.getActivityAt(null));
+    public void testGetActivityAtWithNull(){
+        assertThrows(NullPointerException.class,
+                () -> schedule.getActivityAt(null));
     }
 
     @Test
     public void testGetActivityAtNotExists(){
-        assertThrows(NoSuchElementException.class, () -> schedule.getActivityAt(new Time(0, 9)));
+        assertThrows(NoSuchElementException.class,
+                () -> schedule.getActivityAt(new Time(0, 9)));
     }
 
     @Test
@@ -130,5 +133,4 @@ public class ScheduleTest {
                 "]";
         assertEquals(expected, schedule.toString());
     }
-
 }
