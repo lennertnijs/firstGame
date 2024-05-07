@@ -12,18 +12,32 @@ public class PointTest {
 
     @BeforeEach
     public void initialise(){
-        point = new Point(0,10);
+        point = new Point(5,10);
     }
 
     @Test
-    public void testConstructorWithNegativeCoordinate(){
+    public void testConstructorWithNegativeX(){
         assertThrows(IllegalArgumentException.class, () -> new Point(-1, 10));
+    }
+
+    @Test
+    public void testConstructorWithZeroX(){
+        new Point(0, 10); // allowed
+    }
+
+    @Test
+    public void testConstructorWithNegativeCoordinateY(){
         assertThrows(IllegalArgumentException.class, () -> new Point(10, -1));
     }
 
     @Test
+    public void testConstructorWithZeroY(){
+        new Point(5, 0);
+    }
+
+    @Test
     public void testX(){
-        assertEquals(0, point.x());
+        assertEquals(5, point.x());
     }
 
     @Test
@@ -33,10 +47,11 @@ public class PointTest {
 
     @Test
     public void testEquals(){
-        Point point1 = new Point(0, 10);
-        Point point2 = new Point(0, 10);
-        Point point3 = new Point(0, 10);
-        Point diffPoint = new Point(0, 20);
+        Point point1 = new Point(5, 10);
+        Point point2 = new Point(5, 10);
+        Point point3 = new Point(5, 10);
+        Point diffX = new Point(5, 20);
+        Point diffY = new Point(10, 10);
         // reflexive
         assertEquals(point1, point1);
         // symmetrical
@@ -47,17 +62,19 @@ public class PointTest {
         assertEquals(point2, point3);
         assertEquals(point1, point3);
         // not equals
-        assertNotEquals(point1, diffPoint);
+        assertNotEquals(point1, diffX);
+        assertNotEquals(point1, diffY);
         assertNotEquals(point1, new Object());
         assertNotEquals(point1, null);
     }
 
     @Test
     public void testHashCode(){
-        Point point1 = new Point(0, 10);
-        Point point2 = new Point(0, 10);
-        Point point3 = new Point(0, 10);
-        Point diffPoint = new Point(0, 20);
+        Point point1 = new Point(5, 10);
+        Point point2 = new Point(5, 10);
+        Point point3 = new Point(5, 10);
+        Point diffX = new Point(5, 20);
+        Point diffY = new Point(10, 10);
         // reflexive
         assertEquals(point1.hashCode(), point1.hashCode());
         // symmetrical
@@ -68,12 +85,13 @@ public class PointTest {
         assertEquals(point2.hashCode(), point3.hashCode());
         assertEquals(point1.hashCode(), point3.hashCode());
         // not equals
-        assertNotEquals(point1.hashCode(), diffPoint.hashCode());
+        assertNotEquals(point1.hashCode(), diffX.hashCode());
+        assertNotEquals(point1.hashCode(), diffY.hashCode());
     }
 
     @Test
     public void testToString(){
-        String expected = "Point[x=0, y=10]";
+        String expected = "Point[x=5, y=10]";
         assertEquals(expected, point.toString());
     }
 }
