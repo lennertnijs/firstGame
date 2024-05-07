@@ -1,23 +1,14 @@
 package com.mygdx.game.Util;
 
-/**
- * Represents dimensions in a 2D space.
- */
 public final class Dimensions {
 
     private final int width;
     private final int height;
 
-    /**
-     * Creates a new immutable {@link Dimensions}.
-     * @param width The width. Cannot be negative.
-     * @param height The height. Cannot be negative.
-     */
     public Dimensions(int width, int height){
-        if(width < 0)
-            throw new IllegalArgumentException("Width is negative.");
-        if(height < 0)
-            throw new IllegalArgumentException("Height is negative.");
+        if(width < 0 || height < 0) {
+            throw new IllegalArgumentException("Dimension is negative.");
+        }
         this.width = width;
         this.height = height;
     }
@@ -40,9 +31,7 @@ public final class Dimensions {
 
     @Override
     public int hashCode(){
-        int result = width;
-        result = result * 31 + height;
-        return result;
+        return width * 31 + height;
     }
 
     @Override

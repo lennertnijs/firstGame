@@ -17,12 +17,24 @@ public class DimensionsTest {
 
     @Test
     public void testConstructorWithNegativeWidth(){
-        assertThrows(IllegalArgumentException.class, () -> new Dimensions(-1, 15));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Dimensions(-1, 15));
+    }
+
+    @Test
+    public void testConstructorWithZeroWidth(){
+        new Dimensions(0, 15); // allowed
     }
 
     @Test
     public void testConstructorWithNegativeHeight(){
-        assertThrows(IllegalArgumentException.class, () -> new Dimensions(5, -1));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Dimensions(5, -1));
+    }
+
+    @Test
+    public void testConstructorWithZeroHeight(){
+        new Dimensions(5, 0); // allowed
     }
 
     @Test
@@ -40,7 +52,8 @@ public class DimensionsTest {
         Dimensions dim1 = new Dimensions(5, 15);
         Dimensions dim2 = new Dimensions(5, 15);
         Dimensions dim3 = new Dimensions(5, 15);
-        Dimensions diffDim = new Dimensions(2, 15);
+        Dimensions diffWidth = new Dimensions(2, 15);
+        Dimensions diffHeight = new Dimensions(5, 2);
         // reflexive
         assertEquals(dim1, dim1);
         // symmetrical
@@ -51,7 +64,8 @@ public class DimensionsTest {
         assertEquals(dim2, dim3);
         assertEquals(dim1, dim3);
         // not equals
-        assertNotEquals(dim1, diffDim);
+        assertNotEquals(dim1, diffWidth);
+        assertNotEquals(dim1, diffHeight);
         assertNotEquals(dim1, new Object());
         assertNotEquals(dim1, null);
     }
@@ -61,7 +75,8 @@ public class DimensionsTest {
         Dimensions dim1 = new Dimensions(5, 15);
         Dimensions dim2 = new Dimensions(5, 15);
         Dimensions dim3 = new Dimensions(5, 15);
-        Dimensions diffDim = new Dimensions(2, 15);
+        Dimensions diffWidth = new Dimensions(2, 15);
+        Dimensions diffHeight = new Dimensions(5, 2);
         // reflexive
         assertEquals(dim1.hashCode(), dim1.hashCode());
         // symmetrical
@@ -72,7 +87,8 @@ public class DimensionsTest {
         assertEquals(dim2.hashCode(), dim3.hashCode());
         assertEquals(dim1.hashCode(), dim3.hashCode());
         // not equals
-        assertNotEquals(dim1.hashCode(), diffDim.hashCode());
+        assertNotEquals(dim1.hashCode(), diffWidth.hashCode());
+        assertNotEquals(dim1.hashCode(), diffHeight.hashCode());
     }
 
     @Test

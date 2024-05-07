@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.TextureSelector.Animation;
 import com.mygdx.game.TextureSelector.AnimationRepository;
 import com.mygdx.game.TextureSelector.Key;
-import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package TextureSelector;
 
-import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.TextureSelector.Key;
 import org.junit.jupiter.api.BeforeEach;

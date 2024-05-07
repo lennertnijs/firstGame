@@ -17,7 +17,8 @@ public class PointTest {
 
     @Test
     public void testConstructorWithNegativeX(){
-        assertThrows(IllegalArgumentException.class, () -> new Point(-1, 10));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Point(-1, 10));
     }
 
     @Test
@@ -27,7 +28,8 @@ public class PointTest {
 
     @Test
     public void testConstructorWithNegativeCoordinateY(){
-        assertThrows(IllegalArgumentException.class, () -> new Point(10, -1));
+        assertThrows(IllegalArgumentException.class,
+                () -> new Point(10, -1));
     }
 
     @Test

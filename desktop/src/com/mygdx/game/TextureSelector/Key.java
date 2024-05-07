@@ -1,6 +1,6 @@
 package com.mygdx.game.TextureSelector;
 
-import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;

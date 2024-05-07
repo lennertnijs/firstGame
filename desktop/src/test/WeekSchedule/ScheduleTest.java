@@ -1,6 +1,6 @@
 package WeekSchedule;
 
-import com.mygdx.game.Util.ActivityType;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Time;
