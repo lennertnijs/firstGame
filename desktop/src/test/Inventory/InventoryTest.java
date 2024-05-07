@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
 
-    private ItemTemplate stoneTemplate;
-    private ItemTemplate woodTemplate;
     private Item stone;
     private Item wood;
     private Inventory emptyInventory;
@@ -23,11 +21,8 @@ public class InventoryTest {
     @BeforeEach
     public void initialise(){
         emptyInventory = new Inventory(4);
-
-        stoneTemplate = new ItemTemplate("Stone", "A Stone.", Mockito.mock(Texture.class), 64);
-        woodTemplate = new ItemTemplate("Wood", "A wood.", Mockito.mock(Texture.class), 64);
-        stone = new Item(stoneTemplate, 48);
-        wood = new Item(woodTemplate, 16);
+        stone = new Item("Stone", 64, 48);
+        wood = new Item("Wood", 64, 16);
 
         inventory = new Inventory(new Item[]{wood, stone, wood});
     }
@@ -69,11 +64,11 @@ public class InventoryTest {
 
     @Test
     public void testAddFullStacks(){
-        Item stone = new Item(stoneTemplate, 64);
+        Item stone = new Item("Stone", 64, 32);
         emptyInventory.addItem(stone);
         assertArrayEquals(new Item[]{stone, null, null, null}, emptyInventory.getItems());
 
-        Item wood = new Item(woodTemplate, 64);
+        Item wood = new Item("Wood", 64, 32);
         emptyInventory.addItem(wood);
         assertArrayEquals(new Item[]{stone, wood, null, null}, emptyInventory.getItems());
     }

@@ -1,79 +1,62 @@
 package Inventory;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.V2.Inventory.Item;
-import com.mygdx.game.V2.Inventory.ItemTemplate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemTest {
 
-    private String name;
-    private String description;
-    private Texture texture;
-    private int stackSize;
-    private ItemTemplate template;
-    private int amount;
+    private final String name = "Stone";
+    private final int stackSize = 64;
+    private final int amount = 32;
     private Item item;
 
     @BeforeEach
     public void initialise(){
-        name = "Stone";
-        description = "A stone.";
-        texture = Mockito.mock(Texture.class);
-        stackSize = 64;
-
-        template = new ItemTemplate(name, description, texture, stackSize);
-        amount = 32;
-
-        item = new Item(template, amount);
+        item = new Item(name, stackSize, amount);
     }
 
     @Test
-    public void testConstructorWithNullItemTemplate(){
+    public void testConstructorWithNullName(){
         assertThrows(NullPointerException.class,
-                () -> new Item(null, amount));
+                () -> new Item(null, stackSize, amount));
+    }
+
+    @Test
+    public void testConstructorWithNegativeStackSize(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Item(name, -1, amount));
+    }
+
+    @Test
+    public void testConstructorWithZeroStackSize(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Item(name, 0, amount));
     }
 
     @Test
     public void testConstructorWithNegativeAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(template, -1));
+                () -> new Item(name, stackSize, -1));
     }
 
     @Test
     public void testConstructorWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(template, 0));
+                () -> new Item(name, stackSize, 0));
     }
 
     @Test
     public void testConstructorWithAmountTooBig(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(template, 64 + 1));
-    }
-
-    @Test
-    public void testGetTemplate(){
-        assertEquals(template, item.getTemplate());
+                () -> new Item(name, stackSize, 64 + 1));
     }
 
     @Test
     public void testGetName(){
         assertEquals(name, item.getName());
-    }
-
-    @Test
-    public void testGetDescription(){
-        assertEquals(description, item.getDescription());
-    }
-
-    @Test
-    public void testGetTexture(){
-        assertEquals(texture, item.getTexture());
     }
 
     @Test
@@ -145,10 +128,10 @@ public class ItemTest {
 
     @Test
     public void testEquals(){
-        Item item1 = new Item(template, 32);
-        Item item2 = new Item(template, 32);
-        Item item3 = new Item(template, 32);
-        Item diffItem = new Item(template, 64);
+        Item item1 = new Item(name, stackSize, amount);
+        Item item2 = new Item(name, stackSize, amount);
+        Item item3 = new Item(name, stackSize, amount);
+        Item diffItem = new Item(name, stackSize, amount/2);
         // reflexive
         assertEquals(item1, item1);
         // symmetrical
@@ -166,10 +149,10 @@ public class ItemTest {
 
     @Test
     public void testHashCode(){
-        Item item1 = new Item(template, 32);
-        Item item2 = new Item(template, 32);
-        Item item3 = new Item(template, 32);
-        Item diffItem = new Item(template, 64);
+        Item item1 = new Item(name, stackSize, amount);
+        Item item2 = new Item(name, stackSize, amount);
+        Item item3 = new Item(name, stackSize, amount);
+        Item diffItem = new Item(name, stackSize, amount/2);
         // reflexive
         assertEquals(item1.hashCode(), item1.hashCode());
         // symmetrical

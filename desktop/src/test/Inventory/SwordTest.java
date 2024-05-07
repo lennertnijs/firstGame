@@ -1,38 +1,30 @@
 package Inventory;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.Inventory.ItemTemplate;
-import com.mygdx.game.V2.Inventory.Pickaxe;
 import com.mygdx.game.V2.Inventory.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class SwordTest {
 
-    private ItemTemplate template;
-    private int efficiency;
-    private int durability;
+    private final String name = "Stone Sword";
+    private final int efficiency = 15;
+    private final int durability = 2000;
     private Sword sword;
 
     @BeforeEach
     public void initialise(){
-        template = new ItemTemplate("Stone", "A Stone.", Mockito.mock(Texture.class), 64);
-        efficiency = 15;
-        durability = 2000;
-
-        sword = new Sword(template, efficiency, durability);
+        sword = new Sword(name, efficiency, durability);
     }
 
     @Test
     public void testEquals(){
-        Sword sword1 = new Sword(template, efficiency, durability);
-        Sword sword2 = new Sword(template, efficiency, durability);
-        Sword sword3 = new Sword(template, efficiency, durability);
-        Sword diffSword = new Sword(template, efficiency, 5);
+        Sword sword1 = new Sword(name, efficiency, durability);
+        Sword sword2 = new Sword(name, efficiency, durability);
+        Sword sword3 = new Sword(name, efficiency, durability);
+        Sword diffSword = new Sword(name, efficiency, 5);
         // reflexive
         assertEquals(sword1, sword1);
         // symmetrical
@@ -50,10 +42,10 @@ public class SwordTest {
 
     @Test
     public void testHashCode(){
-        Sword sword1 = new Sword(template, efficiency, durability);
-        Sword sword2 = new Sword(template, efficiency, durability);
-        Sword sword3 = new Sword(template, efficiency, durability);
-        Sword diffSword = new Sword(template, efficiency, 5);
+        Sword sword1 = new Sword(name, efficiency, durability);
+        Sword sword2 = new Sword(name, efficiency, durability);
+        Sword sword3 = new Sword(name, efficiency, durability);
+        Sword diffSword = new Sword(name, efficiency, 5);
         // reflexive
         assertEquals(sword1.hashCode(), sword1.hashCode());
         // symmetrical

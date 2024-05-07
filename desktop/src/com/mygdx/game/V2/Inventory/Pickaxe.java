@@ -2,25 +2,12 @@ package com.mygdx.game.V2.Inventory;
 
 import com.mygdx.game.V2.General.GameObject;
 
-/**
- * Represents a pickaxe.
- */
 public final class Pickaxe extends Tool{
 
-    /**
-     * Creates a new {@link Pickaxe}.
-     * @param template The item template. Cannot be null.
-     * @param efficiency The efficiency. Cannot be negative.
-     * @param durability The durability. Cannot be negative.
-     */
-    public Pickaxe(ItemTemplate template, int efficiency, int durability) {
-        super(template, efficiency, durability);
+    public Pickaxe(String name, int efficiency, int durability) {
+        super(name, efficiency, durability);
     }
 
-    /**
-     * Use this pickaxe on the given game object. To be added.
-     * @param object The game object that it should be used on.
-     */
     @Override
     public void use(GameObject object) {
         // if game object is a stone -> go brr
@@ -28,8 +15,9 @@ public final class Pickaxe extends Tool{
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Pickaxe))
+        if(!(other instanceof Pickaxe)) {
             return false;
+        }
         return super.equals(other);
     }
 

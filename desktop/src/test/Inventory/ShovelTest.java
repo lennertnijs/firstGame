@@ -1,37 +1,30 @@
 package Inventory;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.Inventory.ItemTemplate;
 import com.mygdx.game.V2.Inventory.Shovel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ShovelTest {
 
-    private ItemTemplate template;
-    private int efficiency;
-    private int durability;
+    private final String name = "Stone Shovel";
+    private final int efficiency = 15;
+    private final int durability = 2000;
     private Shovel shovel;
 
     @BeforeEach
     public void initialise(){
-        template = new ItemTemplate("Stone", "A Stone.", Mockito.mock(Texture.class), 64);
-        efficiency = 15;
-        durability = 2000;
-
-        shovel = new Shovel(template, efficiency, durability);
+        shovel = new Shovel(name, efficiency, durability);
     }
 
     @Test
     public void testEquals(){
-        Shovel shovel1 = new Shovel(template, efficiency, durability);
-        Shovel shovel2 = new Shovel(template, efficiency, durability);
-        Shovel shovel3 = new Shovel(template, efficiency, durability);
-        Shovel diffShovel = new Shovel(template, efficiency, 5);
+        Shovel shovel1 = new Shovel(name, efficiency, durability);
+        Shovel shovel2 = new Shovel(name, efficiency, durability);
+        Shovel shovel3 = new Shovel(name, efficiency, durability);
+        Shovel diffShovel = new Shovel(name, efficiency, 5);
         // reflexive
         assertEquals(shovel1, shovel1);
         // symmetrical
@@ -49,10 +42,10 @@ public class ShovelTest {
 
     @Test
     public void testHashCode(){
-        Shovel shovel1 = new Shovel(template, efficiency, durability);
-        Shovel shovel2 = new Shovel(template, efficiency, durability);
-        Shovel shovel3 = new Shovel(template, efficiency, durability);
-        Shovel diffShovel = new Shovel(template, efficiency, 5);
+        Shovel shovel1 = new Shovel(name, efficiency, durability);
+        Shovel shovel2 = new Shovel(name, efficiency, durability);
+        Shovel shovel3 = new Shovel(name, efficiency, durability);
+        Shovel diffShovel = new Shovel(name, efficiency, 5);
         // reflexive
         assertEquals(shovel1.hashCode(), shovel1.hashCode());
         // symmetrical

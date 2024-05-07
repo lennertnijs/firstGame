@@ -40,7 +40,7 @@ public final class Inventory {
 
         while((index = findIndexOfEmptySlot()) != -1 && amount > 0) {
             int itemAmount = Math.min(amount, item.getStackSize());
-            items[index] = new Item(item.getTemplate(), itemAmount);
+            items[index] = new Item("name", 64, itemAmount); // FIXME
             amount -= itemAmount;
         }
 

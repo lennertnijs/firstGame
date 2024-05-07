@@ -2,19 +2,10 @@ package com.mygdx.game.V2.Inventory;
 
 import com.mygdx.game.V2.General.GameObject;
 
-/**
- * Represents a sword.
- */
 public class Sword extends Tool{
 
-    /**
-     * Creates a new {@link Shovel}.
-     * @param template The item template. Cannot be null.
-     * @param efficiency The efficiency. Cannot be negative.
-     * @param durability The durability. Cannot be negative.
-     */
-    public Sword(ItemTemplate template, int efficiency, int durability){
-        super(template, efficiency, durability);
+    public Sword(String name, int efficiency, int durability){
+        super(name, efficiency, durability);
     }
 
     @Override
@@ -24,8 +15,9 @@ public class Sword extends Tool{
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Sword))
+        if(!(other instanceof Sword)) {
             return false;
+        }
         return super.equals(other);
     }
 

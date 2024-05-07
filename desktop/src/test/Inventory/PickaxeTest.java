@@ -1,36 +1,29 @@
 package Inventory;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.V2.Inventory.ItemTemplate;
 import com.mygdx.game.V2.Inventory.Pickaxe;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PickaxeTest {
 
-    private ItemTemplate template;
-    private int efficiency;
-    private int durability;
+    private final String name = "Stone Pickaxe";
+    private final int efficiency = 15;
+    private final int durability = 2000;
     private Pickaxe pickaxe;
 
     @BeforeEach
     public void initialise(){
-        template = new ItemTemplate("Stone", "A Stone.", Mockito.mock(Texture.class), 64);
-        efficiency = 15;
-        durability = 2000;
-
-        pickaxe = new Pickaxe(template, efficiency, durability);
+        pickaxe = new Pickaxe(name, efficiency, durability);
     }
 
     @Test
     public void testEquals(){
-        Pickaxe pickaxe1 = new Pickaxe(template, efficiency, durability);
-        Pickaxe pickaxe2 = new Pickaxe(template, efficiency, durability);
-        Pickaxe pickaxe3 = new Pickaxe(template, efficiency, durability);
-        Pickaxe diffPickaxe = new Pickaxe(template, efficiency, 5);
+        Pickaxe pickaxe1 = new Pickaxe(name, efficiency, durability);
+        Pickaxe pickaxe2 = new Pickaxe(name, efficiency, durability);
+        Pickaxe pickaxe3 = new Pickaxe(name, efficiency, durability);
+        Pickaxe diffPickaxe = new Pickaxe(name, efficiency, 5);
         // reflexive
         assertEquals(pickaxe1, pickaxe1);
         // symmetrical
@@ -48,10 +41,10 @@ public class PickaxeTest {
 
     @Test
     public void testHashCode(){
-        Pickaxe pickaxe1 = new Pickaxe(template, efficiency, durability);
-        Pickaxe pickaxe2 = new Pickaxe(template, efficiency, durability);
-        Pickaxe pickaxe3 = new Pickaxe(template, efficiency, durability);
-        Pickaxe diffPickaxe = new Pickaxe(template, efficiency, 5);
+        Pickaxe pickaxe1 = new Pickaxe(name, efficiency, durability);
+        Pickaxe pickaxe2 = new Pickaxe(name, efficiency, durability);
+        Pickaxe pickaxe3 = new Pickaxe(name, efficiency, durability);
+        Pickaxe diffPickaxe = new Pickaxe(name, efficiency, 5);
         // reflexive
         assertEquals(pickaxe1.hashCode(), pickaxe1.hashCode());
         // symmetrical
