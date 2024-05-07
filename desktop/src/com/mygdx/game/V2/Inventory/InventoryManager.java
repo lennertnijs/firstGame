@@ -4,7 +4,7 @@ import com.mygdx.game.V2.General.GameObject;
 
 import java.util.Objects;
 
-public final class InventoryManager {
+public final class InventoryManager implements IInventoryManager{
 
     private final Inventory inventory;
     private int activeIndex;
@@ -30,9 +30,16 @@ public final class InventoryManager {
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or 0.");
         }
-        int stackSize = repository.getFromName(name).stackSize();
-        Item item = new Item(name, stackSize, amount);
-        return inventory.addItem(item);
+        return inventory.addItem(createItem(name, amount));
+    }
+
+    private Item createItem(String name, int amount){
+        ItemTemplate template = repository.getFromName(name);
+        if(template instanceof ToolTemplate){
+            ToolTemplate template1 = (ToolTemplate) repository.getFromName(name);
+            return new Tool(name, template1.efficiency(), template1.maxDurability(), ToolType.PICKAXE);
+        }
+        return new Item(name, template.stackSize(), amount);
     }
 
     public void removeItem(String name, int amount){

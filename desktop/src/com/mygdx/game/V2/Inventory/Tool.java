@@ -69,8 +69,12 @@ public final class Tool extends Item{
 
     @Override
     public boolean equals(Object other){
-        if(!super.equals(other))
+        if(!(other instanceof Tool)){
             return false;
+        }
+        if(!super.equals(other)) {
+            return false;
+        }
         Tool tool = (Tool) other;
         return efficiency == tool.efficiency && durability == tool.durability;
     }
