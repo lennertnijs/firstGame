@@ -1,5 +1,7 @@
 package com.mygdx.game.V2.Inventory;
 
+import com.mygdx.game.V2.General.GameObject;
+
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -120,6 +122,21 @@ public final class Inventory {
                 items[i] = null;
             }
         }
+    }
+
+    public void use(int index, GameObject object){
+        if(index < 0 || index >= items.length){
+            throw new IndexOutOfBoundsException("Index is out of inventory bounds.");
+        }
+        Item item = items[index];
+        if(item instanceof Tool){
+            Tool tool = (Tool) item;
+            tool.use(object);
+        }
+    }
+
+    public Inventory copy(){
+        return new Inventory(items);
     }
 
     @Override

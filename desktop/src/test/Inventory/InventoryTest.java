@@ -153,6 +153,14 @@ public class InventoryTest {
     }
 
     @Test
+    public void testCopy(){
+        Inventory copy = inventory.copy();
+        assertEquals(inventory, copy);
+        copy.remove("Stone", 10);
+        assertNotEquals(inventory, copy);
+    }
+
+    @Test
     public void testEquals(){
         Inventory inventory1 = new Inventory(new Item[]{wood, stone});
         Inventory inventory2 = new Inventory(new Item[]{wood, stone});
