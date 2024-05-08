@@ -12,42 +12,38 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DialogueRepositoryTest {
 
-    private String input1;
-    private String input2;
-    private ResponseData responseData1;
-    private ResponseData responseData2;
+    private final String input1 = "Input1";
+    private final String input2 = "Input2";
+    private final ResponseData responseData1 = new ResponseData("Hi", Arrays.asList("I1", "I2"), new ArrayList<>());
+    private final ResponseData responseData2 = new ResponseData("Hello", Arrays.asList("I3", "I4"), new ArrayList<>());
+    private final Map<String, ResponseData> map = new HashMap<>();
     private DialogueRepository repository;
+
     @BeforeEach
     public void initialise(){
-        input1 = "input1";
-        input2 = "input2";
-
-        responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList("1")), new ArrayList<>());
-        responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList("2")), new ArrayList<>());
-
-        Map<String, ResponseData> mapping = new HashMap<>();
-        mapping.put(input1, responseData1);
-        mapping.put(input2, responseData2);
-        repository = new DialogueRepository(mapping);
+        map.put(input1, responseData1);
+        map.put(input2, responseData2);
+        repository = new DialogueRepository(map);
     }
 
     @Test
     public void testConstructorWithNull(){
-        assertThrows(NullPointerException.class, () -> new DialogueRepository(null));
+        assertThrows(NullPointerException.class,
+                () -> new DialogueRepository(null));
     }
 
     @Test
     public void testConstructorWithNullKey(){
-        Map<String, ResponseData> mapping = new HashMap<>();
-        mapping.put(null, responseData1);
-        assertThrows(NullPointerException.class, () -> new DialogueRepository(mapping));
+        map.put(null, responseData2);
+        assertThrows(NullPointerException.class,
+                () -> new DialogueRepository(map));
     }
 
     @Test
     public void testConstructorWithNullValue(){
-        Map<String, ResponseData> mapping = new HashMap<>();
-        mapping.put(input1, null);
-        assertThrows(NullPointerException.class, () -> new DialogueRepository(mapping));
+        map.put("Input3", null);
+        assertThrows(NullPointerException.class,
+                () -> new DialogueRepository(map));
     }
 
     @Test
@@ -57,12 +53,14 @@ public class DialogueRepositoryTest {
     }
 
     @Test
-    public void testGetResponseDataNoMapping(){
-        assertThrows(NoSuchElementException.class, () -> repository.getResponseData("No map"));
+    public void testGetResponseDataWithNull(){
+        assertThrows(NullPointerException.class,
+                () -> repository.getResponseData(null));
     }
 
     @Test
-    public void testGetResponseDataWithNull(){
-        assertThrows(NullPointerException.class, () -> repository.getResponseData(null));
+    public void testGetResponseDataNoMapping(){
+        assertThrows(NoSuchElementException.class,
+                () -> repository.getResponseData("No map"));
     }
 }
