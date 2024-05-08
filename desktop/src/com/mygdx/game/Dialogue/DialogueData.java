@@ -17,8 +17,9 @@ public final class DialogueData implements IDialogueData{
             throw new NullPointerException("List contains null.");
         }
         Objects.requireNonNull(repository, "Dialogue repository is null.");
-        for(String input : activeInputs)
+        for(String input : activeInputs) {
             repository.getResponseData(input); // throws NoSuchElementException if not mapped
+        }
         this.activeInputs = new ArrayList<>(activeInputs);
         this.repository = repository;
     }
@@ -31,13 +32,15 @@ public final class DialogueData implements IDialogueData{
     @Override
     public String processInput(String input){
         Objects.requireNonNull(input, "Input is null.");
-        if(!activeInputs.contains(input))
+        if(!activeInputs.contains(input)) {
             throw new IllegalStateException("Not an active input.");
+        }
         ResponseData responseData = repository.getResponseData(input);
         activeInputs.remove(input);
         activeInputs.addAll(responseData.newInputs());
-        for(Action action : responseData.actions())
+        for(Action action : responseData.actions()){
             action.execute();
+        }
         return responseData.response();
     }
 }

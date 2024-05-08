@@ -13,6 +13,7 @@ public final class DialogueRepository{
         Objects.requireNonNull(map, "Map is null.");
         if(map.containsKey(null) || map.containsValue(null))
             throw new NullPointerException("Map contains a null key or value.");
+        // should each list of new inputs be mapped?
         this.map = new HashMap<>(map);
     }
 

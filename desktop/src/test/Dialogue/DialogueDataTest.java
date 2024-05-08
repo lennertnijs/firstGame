@@ -7,6 +7,7 @@ import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.*;
 import java.util.List;
 
@@ -15,45 +16,43 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DialogueDataTest {
 
-    private String input1;
-    private String input2;
-    private List<String> activeInputs;
-    private DialogueRepository dialogueRepository;
+    private final String input1 = "Good day";
+    private final String response1 = "Good day to you, too!";
+    private final String input2 = "How are you";
+    private final String response2 = "I'm good.";
+    private final List<String> activeInputs = Collections.singletonList(input1);
+    private final Map<String, ResponseData> map = new HashMap<>();
+    private DialogueRepository repository;
     private DialogueData dialogueData;
     @BeforeEach
     public void initialise(){
-        input1 = "input1";
-        input2 = "input2";
+        List<Action> actions = Arrays.asList(new MockAction(), new MockAction());
+        ResponseData responseData1 = new ResponseData(response1, Collections.singletonList(input2), actions);
+        ResponseData responseData2 = new ResponseData(response2, Collections.singletonList(input2), actions);
+        map.put(input1, responseData1);
+        map.put(input2, responseData2);
+        repository = new DialogueRepository(map);
 
-        MockAction mockAction = new MockAction();
-        List<Action> actions = new ArrayList<>(Collections.singletonList(mockAction));
-        ResponseData responseData1 = new ResponseData("Hi", new ArrayList<>(Collections.singletonList(input2)), actions);
-        ResponseData responseData2 = new ResponseData("Hello", new ArrayList<>(Collections.singletonList(input2)), actions);
-
-        activeInputs = new ArrayList<>(Collections.singletonList(input1));
-        Map<String, ResponseData> mapping = new HashMap<>();
-        mapping.put(input1, responseData1);
-        mapping.put(input2, responseData2);
-        dialogueRepository = new DialogueRepository(mapping);
-
-        dialogueData = new DialogueData(activeInputs, dialogueRepository);
+        dialogueData = new DialogueData(activeInputs, repository);
     }
 
 
     @Test
     public void testConstructorWithNullActiveInputs(){
-        assertThrows(NullPointerException.class, () -> new DialogueData(null, dialogueRepository));
+        assertThrows(NullPointerException.class,
+                () -> new DialogueData(null, repository));
     }
 
     @Test
     public void testConstructorWithNullInActiveInputs(){
-        List<String> active = new ArrayList<>(Arrays.asList(null, input1));
-        assertThrows(NullPointerException.class, () -> new DialogueData(active, dialogueRepository));
+        assertThrows(NullPointerException.class,
+                () -> new DialogueData(Arrays.asList(input1, null), repository));
     }
 
     @Test
     public void testConstructorWithNullDialogueRepository(){
-        assertThrows(NullPointerException.class, () -> new DialogueData(activeInputs, null));
+        assertThrows(NullPointerException.class,
+                () -> new DialogueData(activeInputs, null));
     }
 
     @Test
@@ -63,17 +62,24 @@ public class DialogueDataTest {
 
     @Test
     public void testProcessInput(){
-        dialogueData.processInput(input1);
-        assertEquals(new ArrayList<>(Collections.singletonList(input2)), dialogueData.getActiveInputs());
+        String r1 = dialogueData.processInput(input1);
+        assertEquals(Collections.singletonList(input2), dialogueData.getActiveInputs());
+        assertEquals(r1, response1);
+
+        String r2 = dialogueData.processInput(input2);
+        assertEquals(Collections.singletonList(input2), dialogueData.getActiveInputs());
+        assertEquals(r2, response2);
     }
 
     @Test
     public void testProcessWithInputNotInActive(){
-        assertThrows(IllegalStateException.class, () -> dialogueData.processInput(input2));
+        assertThrows(IllegalStateException.class,
+                () -> dialogueData.processInput(input2));
     }
 
     @Test
     public void testProcessInputWithNull(){
-        assertThrows(NullPointerException.class, () -> dialogueData.processInput(null));
+        assertThrows(NullPointerException.class,
+                () -> dialogueData.processInput(null));
     }
 }
