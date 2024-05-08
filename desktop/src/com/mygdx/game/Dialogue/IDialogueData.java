@@ -26,5 +26,5 @@ public interface IDialogueData {
      * @throws NoSuchElementException If no response was found to the given input line.
      * @throws NullPointerException If the input line is null.
      */
-    void processInput(String input);
+    String processInput(String input);
 }
