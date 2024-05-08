@@ -6,52 +6,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Represents a container holding all the data for a response.
- */
 public final class ResponseData{
 
     private final String response;
     private final List<String> newInputs;
     private final List<Action> actions;
 
-    /**
-     * Creates a new immutable {@link ResponseData}.
-     * @param response The response. Cannot be null.
-     * @param newInputs The new inputs. Cannot be null. Cannot contain null.
-     * @param actions The actions to be executed. Cannot be null. Cannot contain null.
-     */
     public ResponseData(String response, List<String> newInputs, List<Action> actions){
         Objects.requireNonNull(response, "Response is null.");
-        Objects.requireNonNull(actions, "Actions list is null.");
+        Objects.requireNonNull(actions, "Action list is null.");
         if(actions.contains(null))
-            throw new NullPointerException("List contains a null Action.");
+            throw new NullPointerException("Action list contains null.");
         Objects.requireNonNull(newInputs, "New input list is null.");
         if(newInputs.contains(null))
-            throw new NullPointerException("List contains a null input.");
+            throw new NullPointerException("New input list contains null.");
         this.response = response;
         this.newInputs = new ArrayList<>(newInputs);
         this.actions = new ArrayList<>(actions);
     }
 
-    /**
-     * @return The response.
-     */
-    public String getResponse(){
+    public String response(){
         return response;
     }
 
-    /**
-     * @return A copy of the new inputs to become available after this response.
-     */
-    public List<String> getNewInputs(){
+    public List<String> newInputs(){
         return new ArrayList<>(newInputs);
     }
 
-    /**
-     * @return A copy of the actions to be performed with this response.
-     */
-    public List<Action> getActions(){
+    public List<Action> actions(){
         return new ArrayList<>(actions);
     }
 

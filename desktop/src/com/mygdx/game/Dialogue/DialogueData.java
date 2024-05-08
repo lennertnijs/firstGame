@@ -49,9 +49,9 @@ public final class DialogueData implements IDialogueData{
             throw new IllegalStateException("Not an active input.");
         activeInputs.remove(input);
         ResponseData responseData = repository.getResponseData(input);
-        String response = responseData.getResponse();
-        activeInputs.addAll(responseData.getNewInputs());
-        for(Action action : responseData.getActions())
+        String response = responseData.response();
+        activeInputs.addAll(responseData.newInputs());
+        for(Action action : responseData.actions())
             action.execute();
     }
 }

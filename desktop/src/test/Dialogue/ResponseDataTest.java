@@ -1,6 +1,7 @@
 package Dialogue;
 
 import com.mygdx.game.Action.Action;
+import com.mygdx.game.Action.MockAction;
 import com.mygdx.game.Dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,101 +16,116 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ResponseDataTest {
 
-    private String response1;
-    private String response2;
-    private String response3;
-    private List<String> newInputs1;
-    private List<String> newInputs2;
-    private List<String> newInputs3;
-    private List<Action> actionList;
-    private ResponseData responseData1;
-    private ResponseData responseData2;
-    private ResponseData responseData3;
+    private final String response = "Response";
+    private final List<String> inputs = Arrays.asList("Input1", "Input2");
+    private final List<Action> actions = Collections.singletonList(new MockAction());
+    private ResponseData responseData;
+
     @BeforeEach
     public void initialise(){
-        response1 = "Response";
-        response2 = "Response2";
-        response3 = "Response";
-        String input1 = "Input1";
-        String input2 = "Input2";
-        newInputs1 = new ArrayList<>(Arrays.asList(input1, input2));
-        newInputs2 = new ArrayList<>(Collections.singletonList(input2));
-        newInputs3 = new ArrayList<>(Arrays.asList(input1, input2));
-        actionList = new ArrayList<>();
-        responseData1 = new ResponseData(response1 , newInputs1, actionList);
-        responseData2 = new ResponseData(response2 ,newInputs2, actionList);
-        responseData3 = new ResponseData(response3 ,newInputs3, actionList);
+        responseData = new ResponseData(response, inputs, actions);
     }
 
     @Test
     public void testConstructorWithNullResponse(){
         assertThrows(NullPointerException.class,
-                () -> new ResponseData(null, newInputs1, actionList));
+                () -> new ResponseData(null, inputs, actions));
     }
 
     @Test
     public void testConstructorWithNullNewInputsList(){
         assertThrows(NullPointerException.class,
-                () -> new ResponseData(response1, null, actionList));
+                () -> new ResponseData(response, null, actions));
     }
 
     @Test
     public void testConstructorWithNullInNewInputList(){
         assertThrows(NullPointerException.class,
-                () -> new ResponseData(response1, new ArrayList<>(Arrays.asList(response1, null)), actionList));
+                () -> new ResponseData(response, Arrays.asList(response, null), actions));
     }
 
     @Test
     public void testConstructorWithNullActionsList(){
         assertThrows(NullPointerException.class,
-                () -> new ResponseData(response1, newInputs1, null));
+                () -> new ResponseData(response, inputs, null));
     }
 
     @Test
     public void testConstructorWithNullInActionList(){
-        List<Action> actions = new ArrayList<>();
-        actions.add(null);
         assertThrows(NullPointerException.class,
-                () -> new ResponseData(response1, newInputs1, actions));
+                () -> new ResponseData(response, inputs, Arrays.asList(null, new MockAction())));
     }
 
     @Test
     public void testGetResponse(){
-        assertEquals(response1, responseData1.getResponse());
-        assertEquals(response2, responseData2.getResponse());
-        assertEquals(response3, responseData3.getResponse());
+        assertEquals(response, responseData.response());
     }
 
     @Test
     public void testGetNewInputs(){
-        assertEquals(newInputs1, responseData1.getNewInputs());
-        assertEquals(newInputs2, responseData2.getNewInputs());
-        assertEquals(newInputs3, responseData3.getNewInputs());
+        assertEquals(inputs, responseData.newInputs());
     }
 
     @Test
     public void testGetActions(){
-        assertEquals(actionList, responseData1.getActions());
-        assertEquals(actionList, responseData2.getActions());
-        assertEquals(actionList, responseData3.getActions());
+        assertEquals(actions, responseData.actions());
     }
 
     @Test
     public void testEquals(){
-        assertEquals(responseData1, responseData3);
-        assertNotEquals(responseData1, responseData2);
-        assertNotEquals(responseData1, new Object());
+        ResponseData data1 = new ResponseData(response, inputs, actions);
+        ResponseData data2 = new ResponseData(response, inputs, actions);
+        ResponseData data3 = new ResponseData(response, inputs, actions);
+        ResponseData diffResponse = new ResponseData("Diff", inputs, actions);
+        ResponseData diffInputs = new ResponseData(response, Arrays.asList("I1", "I2"), actions);
+        ResponseData diffActions = new ResponseData(response, inputs, new ArrayList<>());
+        // reflexive
+        assertEquals(data1, data1);
+        // symmetrical
+        assertEquals(data1, data2);
+        assertEquals(data2, data1);
+        // transitive
+        assertEquals(data1, data2);
+        assertEquals(data2, data3);
+        assertEquals(data1, data3);
+        // not equals
+        assertNotEquals(data1, diffResponse);
+        assertNotEquals(data1, diffInputs);
+        assertNotEquals(data1, diffActions);
+        assertNotEquals(data1, new Object());
+        assertNotEquals(data1, null);
     }
 
     @Test
     public void testHashCode(){
-        assertEquals(responseData1.hashCode(), responseData3.hashCode());
-        assertNotEquals(responseData1.hashCode(), responseData2.hashCode());
+        ResponseData data1 = new ResponseData(response, inputs, actions);
+        ResponseData data2 = new ResponseData(response, inputs, actions);
+        ResponseData data3 = new ResponseData(response, inputs, actions);
+        ResponseData diffResponse = new ResponseData("Diff", inputs, actions);
+        ResponseData diffInputs = new ResponseData(response, Arrays.asList("I1", "I2"), actions);
+        ResponseData diffActions = new ResponseData(response, inputs, new ArrayList<>());
+        // reflexive
+        assertEquals(data1.hashCode(), data1.hashCode());
+        // symmetrical
+        assertEquals(data1.hashCode(), data2.hashCode());
+        assertEquals(data2.hashCode(), data1.hashCode());
+        // transitive
+        assertEquals(data1.hashCode(), data2.hashCode());
+        assertEquals(data2.hashCode(), data3.hashCode());
+        assertEquals(data1.hashCode(), data3.hashCode());
+        // not equals
+        assertNotEquals(data1.hashCode(), diffResponse.hashCode());
+        assertNotEquals(data1.hashCode(), diffInputs.hashCode());
+        assertNotEquals(data1.hashCode(), diffActions.hashCode());
     }
 
     @Test
     public void testToString(){
-        String expected = "ResponseData[Response=Response, NewInputs=[], Actions=[Input1, Input2]]";
-        assertEquals(expected, responseData1.toString());
+        String expected = "ResponseData[" +
+                "Response=Response, " +
+                "NewInputs=[Mock action], " +
+                "Actions=[Input1, Input2]" +
+                "]";
+        assertEquals(expected, responseData.toString());
     }
 }
