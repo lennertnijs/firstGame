@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class GameScreen implements Screen {
     final MyGame game;
     final OrthographicCamera camera;
+    private NPC npc;
 
     public GameScreen(MyGame game) {
         // Texture bar = new Texture(Gdx.files.internal("inventoryBar.png")) to create a Texture
@@ -21,7 +22,7 @@ public class GameScreen implements Screen {
         // rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
         // rainMusic.setLooping(true);
         this.game = game;
-
+        npc = NPCCreator.create();
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();

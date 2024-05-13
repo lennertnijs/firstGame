@@ -31,9 +31,9 @@ public interface ITextureSelector {
     void setDirection(Direction direction);
 
     /**
-     * Fetches and returns the appropriate {@link TextureRegion}.
+     * Fetches and returns the appropriate {@link Frame}.
      *
-     * @return The {@link TextureRegion}.
+     * @return The {@link Frame}.
      * @throws NoSuchElementException If no {@link Animation} was found for the given {@link Key}.
      */
     Frame getFrame();

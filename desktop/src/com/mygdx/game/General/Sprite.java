@@ -8,7 +8,7 @@ import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 
-public final class Sprite implements ISprite{
+public final class Sprite{
 
     private TextureRegion texture;
     private Point anchor;
@@ -73,7 +73,6 @@ public final class Sprite implements ISprite{
         return new Point(anchor.x() + vector.x(), anchor.y() + vector.y()) ;
     }
 
-    @Override
     public void setPosition(Point p) {
         int vector_x = p.x() - anchor.x();
         int vector_y = p.y() - anchor.y();

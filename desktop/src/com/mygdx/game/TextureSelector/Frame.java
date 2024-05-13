@@ -20,6 +20,12 @@ public final class Frame{
         this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
     }
 
+    public Frame(TextureRegion textureRegion, Dimensions dimensions){
+        this.textureRegion = Objects.requireNonNull(textureRegion, "Texture region is null.");
+        this.translation = new Vector(0, 0);
+        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
+    }
+
     public TextureRegion textureRegion(){
         return textureRegion;
     }

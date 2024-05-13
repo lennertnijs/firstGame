@@ -24,7 +24,7 @@ public final class NPCStats {
      */
     public void setHealth(int health){
         if(health < 0)
-            throw new IllegalArgumentException("Cannot set an NPC's health to a negative value.");
+            throw new IllegalArgumentException("Cannot set an npc's health to a negative value.");
         this.health = health;
 
     }
@@ -35,7 +35,7 @@ public final class NPCStats {
 
     public void setOffense(int offense){
         if(offense < 0)
-            throw new IllegalArgumentException("Cannot set an NPC's offense to a negative value.");
+            throw new IllegalArgumentException("Cannot set an npc's offense to a negative value.");
         this.offense = offense;
     }
 
@@ -45,7 +45,7 @@ public final class NPCStats {
 
     public void setDefense(int defense){
         if(defense < 0)
-            throw new IllegalArgumentException("Cannot set an NPC's defense to a negative value.");
+            throw new IllegalArgumentException("Cannot set an npc's defense to a negative value.");
         this.defense = defense;
     }
 
@@ -55,7 +55,7 @@ public final class NPCStats {
 
     public void setSpeed(int speed){
         if(speed < MIN_SPEED)
-            throw new IllegalArgumentException("Cannot set an NPC's speed to a value lower than MIN_NPC_SPEED.");
+            throw new IllegalArgumentException("Cannot set an npc's speed to a value lower than MIN_NPC_SPEED.");
         this.speed = speed;
     }
 
@@ -122,13 +122,13 @@ public final class NPCStats {
 
         public NPCStats build(){
             if(health <= 0)
-                throw new IllegalArgumentException("The health of an NPC cannot be negative or 0.");
+                throw new IllegalArgumentException("The health of an npc cannot be negative or 0.");
             if(offense < 0)
-                throw new IllegalArgumentException("The offense of an NPC cannot be negative.");
+                throw new IllegalArgumentException("The offense of an npc cannot be negative.");
             if(defense < 0)
-                throw new IllegalArgumentException("The defense of an NPC cannot be negative");
+                throw new IllegalArgumentException("The defense of an npc cannot be negative");
             if(speed < MIN_SPEED){
-                throw new IllegalArgumentException("The speed of an NPC cannot be smaller than MIN_NPC_SPEED.");
+                throw new IllegalArgumentException("The speed of an npc cannot be smaller than MIN_NPC_SPEED.");
             }
             return new NPCStats(this);
         }
