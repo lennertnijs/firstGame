@@ -3,7 +3,10 @@ package TextureSelector;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.TextureSelector.Animation;
 import com.mygdx.game.TextureSelector.AnimationRepository;
+import com.mygdx.game.TextureSelector.Frame;
 import com.mygdx.game.TextureSelector.Key;
+import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Vector;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,8 +32,10 @@ public class AnimationRepositoryTest {
         key2 = new Key(ActivityType.IDLING, Direction.UP);
         TextureRegion t1 = Mockito.mock(TextureRegion.class);
         TextureRegion t2 = Mockito.mock(TextureRegion.class);
-        animation1 = new Animation(Collections.singletonList(t1),  .5f);
-        animation2 = new Animation(Collections.singletonList(t2),  .5f);
+        Frame frame1 = new Frame(t1, new Vector(5, 5), new Dimensions(15, 15));
+        Frame frame2 = new Frame(t2, new Vector(5, 5), new Dimensions(15, 15));
+        animation1 = new Animation(Arrays.asList(frame1, frame2),  .5f);
+        animation2 = new Animation(Arrays.asList(frame2, frame1),  1.5f);
 
         map = new HashMap<>();
         map.put(key1, animation1);
@@ -40,19 +45,22 @@ public class AnimationRepositoryTest {
 
     @Test
     public void testConstructorWithNullMap(){
-        assertThrows(NullPointerException.class, () -> new AnimationRepository(null));
+        assertThrows(NullPointerException.class,
+                () -> new AnimationRepository(null));
     }
 
     @Test
     public void testConstructorWithNullKey(){
         map.put(null, animation1);
-        assertThrows(NullPointerException.class, () -> new AnimationRepository(map));
+        assertThrows(NullPointerException.class,
+                () -> new AnimationRepository(map));
     }
 
     @Test
     public void testConstructorWithNullValue(){
         map.put(key1, null);
-        assertThrows(NullPointerException.class, () -> new AnimationRepository(map));
+        assertThrows(NullPointerException.class,
+                () -> new AnimationRepository(map));
     }
 
     @Test
@@ -68,13 +76,15 @@ public class AnimationRepositoryTest {
 
     @Test
     public void testGetWithNull(){
-        assertThrows(NullPointerException.class, () -> repo.get(null));
+        assertThrows(NullPointerException.class,
+                () -> repo.get(null));
     }
 
     @Test
     public void testGetNoMapping(){
         Key noMapKey = new Key(ActivityType.WALKING, Direction.RIGHT);
-        assertThrows(NoSuchElementException.class, () -> repo.get(noMapKey));
+        assertThrows(NoSuchElementException.class,
+                () -> repo.get(noMapKey));
     }
 
     @Test

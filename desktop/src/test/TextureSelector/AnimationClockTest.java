@@ -18,15 +18,15 @@ public class AnimationClockTest {
 
     @Test
     public void testDelta(){
-        assertEquals(0, clock.delta());
+        assertEquals(0, clock.getDeltaInMillis());
     }
 
     @Test
     public void testIncreaseDelta(){
         clock.increase(150);
-        assertEquals(150, clock.delta());
+        assertEquals(150, clock.getDeltaInMillis());
         clock.increase(250);
-        assertEquals( 400, clock.delta());
+        assertEquals( 400, clock.getDeltaInMillis());
     }
 
     @Test
@@ -37,14 +37,14 @@ public class AnimationClockTest {
     @Test
     public void testIncreaseWithZero(){
         clock.increase(0);
-        assertEquals(0, clock.delta());
+        assertEquals(0, clock.getDeltaInMillis());
     }
 
     @Test
     public void testReset(){
         clock.increase(150);
         clock.reset();
-        assertEquals(0, clock.delta());
+        assertEquals(0, clock.getDeltaInMillis());
     }
 
     @Test

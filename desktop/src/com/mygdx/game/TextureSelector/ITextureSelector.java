@@ -1,6 +1,7 @@
 package com.mygdx.game.TextureSelector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.Util.Point;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 
@@ -35,7 +36,7 @@ public interface ITextureSelector {
      * @return The {@link TextureRegion}.
      * @throws NoSuchElementException If no {@link Animation} was found for the given {@link Key}.
      */
-    TextureRegion getTexture();
+    Frame getFrame();
 
     /**
      * Increases the clock with the given number (in millis).

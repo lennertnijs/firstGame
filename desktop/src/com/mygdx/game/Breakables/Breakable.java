@@ -9,6 +9,7 @@ public class Breakable extends GameObject {
 
     private int health;
     private final int hardness;
+    // loot table
     private final BreakableType type;
 
     public Breakable(Sprite sprite, int health, int hardness, BreakableType type){

@@ -5,6 +5,7 @@ import com.mygdx.game.General.GameObject;
 import com.mygdx.game.General.Sprite;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Navigation.INavigationData;
+import com.mygdx.game.TextureSelector.Frame;
 import com.mygdx.game.TextureSelector.ITextureSelector;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Location;
@@ -23,7 +24,7 @@ public final class NPC extends GameObject {
     private final NPCStats stats;
 
     //todo add a damn builder
-    private NPC(Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
+    public NPC(Sprite sprite, String name, ITextureSelector selector, IWeekSchedule weekSchedule,
                 INavigationData navigationData, IDialogueData dialogueData, NPCStats stats, IInventoryManager manager){
         super(sprite);
         this.name = name;
@@ -48,19 +49,25 @@ public final class NPC extends GameObject {
         if(!navigationData.isMoving())
             return;
         int movement = deltaInMillis * stats.getSpeed();
-        Location next = navigationData.calculateNextLocation(getCurrentLocation(), movement);
-        setLocation(next);
+        Location next = navigationData.calculateNextLocation(sprite.getLocation(), movement);
+        sprite.setLocation(next);
     }
 
     public void updateSchedule(Day day, Time time){
         if(!weekSchedule.hasActivity(day, time))
             return;
         Activity activity = weekSchedule.getActivity(day, time);
-        navigationData.calculateAndStoreRoute(getCurrentLocation(), activity.location());
+        navigationData.calculateAndStoreRoute(sprite.getLocation(), activity.location());
     }
 
     public void updateTexture(){
-        setTexture(selector.getTexture());
+        Frame f = selector.getFrame();
+        // set to new texture
+        sprite.setTexture(f.textureRegion());
+        // set new dimensions
+        sprite.setDimensions(f.dimensions());
+        // set the new position
+        sprite.setPosition(sprite.getAnchor().add(f.translation()));
     }
 
     public void handleInputLine(String line){

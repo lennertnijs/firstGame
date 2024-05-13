@@ -2,6 +2,8 @@ package TextureSelector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.TextureSelector.*;
+import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Vector;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ITextureSelectorTest {
 
-    private TextureRegion t1;
-    private TextureRegion t2;
-    private TextureRegion t3;
+    private Frame frame1;
+    private Frame frame2;
+    private Frame frame3;
     private Key key1;
     private AnimationRepository repo;
     private AnimationClock clock;
@@ -26,14 +28,14 @@ public class ITextureSelectorTest {
 
     @BeforeEach
     public void initialise(){
-        t1 = Mockito.mock(TextureRegion.class);
-        t2 = Mockito.mock(TextureRegion.class);
-        t3 = Mockito.mock(TextureRegion.class);
         key1 = new Key(ActivityType.RUNNING, Direction.UP);
         Key key2 = new Key(ActivityType.RUNNING, Direction.RIGHT);
         Key key3 = new Key(ActivityType.WALKING, Direction.UP);
-        Animation animation1 = new Animation(Arrays.asList(t1, t2), 1000);
-        Animation animation2 = new Animation(Arrays.asList(t1, t2, t3), 3000);
+        frame1 = new Frame(Mockito.mock(TextureRegion.class), new Vector(5, 5), new Dimensions(15, 15));
+        frame2 = new Frame(Mockito.mock(TextureRegion.class), new Vector(5, 5), new Dimensions(15, 15));
+        frame3 = new Frame(Mockito.mock(TextureRegion.class), new Vector(5, 5), new Dimensions(15, 15));
+        Animation animation1 = new Animation(Arrays.asList(frame1, frame2), 1000);
+        Animation animation2 = new Animation(Arrays.asList(frame1, frame2, frame3), 3000);
         Map<Key, Animation> map = new HashMap<>();
         map.put(key1, animation1);
         map.put(key2, animation2);
@@ -60,12 +62,12 @@ public class ITextureSelectorTest {
     }
 
     @Test
-    public void testGetTexture(){
-        assertEquals(t1, selector.getTexture());
+    public void testGetFrame(){
+        assertEquals(frame1, selector.getFrame());
         selector.increaseClock(500);
-        assertEquals(t2, selector.getTexture());
+        assertEquals(frame2, selector.getFrame());
         selector.increaseClock(500);
-        assertEquals(t1, selector.getTexture());
+        assertEquals(frame1, selector.getFrame());
     }
 
     @Test
@@ -77,11 +79,11 @@ public class ITextureSelectorTest {
     public void testSetActivityType(){
         selector.increaseClock(5000);
         selector.setActivityType(ActivityType.WALKING);
-        assertEquals(t1, selector.getTexture());
+        assertEquals(frame1, selector.getFrame());
         selector.increaseClock(1000);
-        assertEquals(t2, selector.getTexture());
+        assertEquals(frame2, selector.getFrame());
         selector.increaseClock(1000);
-        assertEquals(t3, selector.getTexture());
+        assertEquals(frame3, selector.getFrame());
     }
 
     @Test
@@ -94,18 +96,18 @@ public class ITextureSelectorTest {
         selector.increaseClock(500);
         selector.setActivityType(ActivityType.RUNNING);
         // clock does not reset
-        assertEquals(t2, selector.getTexture());
+        assertEquals(frame2, selector.getFrame());
     }
 
     @Test
     public void testSetDirection(){
         selector.increaseClock(1500);
         selector.setDirection(Direction.RIGHT);
-        assertEquals(t1, selector.getTexture());
+        assertEquals(frame1, selector.getFrame());
         selector.increaseClock(1000);
-        assertEquals(t2, selector.getTexture());
+        assertEquals(frame2, selector.getFrame());
         selector.increaseClock(1000);
-        assertEquals(t3, selector.getTexture());
+        assertEquals(frame3, selector.getFrame());
     }
 
     @Test
@@ -118,7 +120,7 @@ public class ITextureSelectorTest {
         selector.increaseClock(500);
         selector.setDirection(Direction.UP);
         // clock does not reset
-        assertEquals(t2, selector.getTexture());
+        assertEquals(frame2, selector.getFrame());
     }
 
     @Test
