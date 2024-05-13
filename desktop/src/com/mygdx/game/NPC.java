@@ -8,6 +8,7 @@ import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.TextureSelector.Frame;
 import com.mygdx.game.TextureSelector.ITextureSelector;
 import com.mygdx.game.Util.Day;
+import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 import com.mygdx.game.WeekSchedule.Activity;
@@ -43,6 +44,7 @@ public final class NPC extends GameObject {
     public void update(Day day, Time time){
         updateSchedule(day, time);
         updateTexture();
+        selector.increaseClock(50);
     }
 
     public void move(int deltaInMillis){
@@ -54,10 +56,12 @@ public final class NPC extends GameObject {
     }
 
     public void updateSchedule(Day day, Time time){
-        if(!weekSchedule.hasActivity(day, time))
+        if(!weekSchedule.hasActivity(day, time) || navigationData.isMoving())
             return;
         Activity activity = weekSchedule.getActivity(day, time);
         navigationData.calculateAndStoreRoute(sprite.getLocation(), activity.location());
+        selector.setActivityType(activity.type());
+        selector.setDirection(Direction.DOWN);
     }
 
     public void updateTexture(){

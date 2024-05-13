@@ -77,5 +77,6 @@ public final class Sprite{
         int vector_x = p.x() - anchor.x();
         int vector_y = p.y() - anchor.y();
         this.vector = new Vector(vector_x, vector_y);
+        System.out.println(this.vector);
     }
 }

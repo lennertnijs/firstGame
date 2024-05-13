@@ -32,8 +32,8 @@ public class NPCCreator {
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("npc/mining.atlas"));
 
         TextureRegion idleDown = atlas.findRegion("idle_down");
-        Point start = new Point(200, 200);
-        Dimensions dimensions = new Dimensions(32, 64);
+        Point start = new Point(500, 500);
+        Dimensions dimensions = new Dimensions(128, 256);
         Sprite sprite = new Sprite(idleDown, start, dimensions, "Map");
 
         String name = "Gilbert";
@@ -52,7 +52,7 @@ public class NPCCreator {
 
         IDialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 
-        NPCStats stats = NPCStats.builder().health(500).defense(500).offense(500).speed(500).build();
+        NPCStats stats = NPCStats.builder().health(500).defense(500).offense(500).speed(10).build();
 
         IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
                 1, new ItemTemplateRepository());
@@ -70,7 +70,7 @@ public class NPCCreator {
     }
 
     private static Map<Key, Animation> loadAnimationMap(TextureAtlas atlas){
-        Dimensions dimensions = new Dimensions(32, 64);
+        Dimensions dimensions = new Dimensions(128, 256);
         Map<Key, Animation> map = new HashMap<>();
 
         Frame idleUpFrame = new Frame(atlas.findRegion("idle_up"), dimensions);
@@ -109,7 +109,7 @@ public class NPCCreator {
 
         Animation miningUpAnimation = new Animation(Arrays.asList(mineU1, mineU2, mineU3, mineU4), 2000f);
 
-        Frame mineD1 = new Frame(atlas.findRegion("mine_down", 1), dimensions);
+        Frame mineD1 = new Frame(atlas.findRegion("mine_down", 1),new Vector(250, 250), dimensions);
         Frame mineD2 = new Frame(atlas.findRegion("mine_down", 2), dimensions);
         Frame mineD3 = new Frame(atlas.findRegion("mine_down", 3), dimensions);
         Frame mineD4 = new Frame(atlas.findRegion("mine_down", 4), dimensions);
@@ -166,14 +166,14 @@ public class NPCCreator {
     }
 
     private static Schedule loadSchedule(){
-        Activity activity1 = new Activity(new Location("Map", new Point(500, 500)),
-                new Time(7, 50), IDLING);
+        Activity activity1 = new Activity(new Location("Map", new Point(0, 0)),
+                new Time(4, 50), MINING);
         Activity activity2 = new Activity(new Location("Map", new Point(1000, 500)),
-                new Time(9, 50), IDLING);
+                new Time(5, 50), WALKING);
         Activity activity3 = new Activity(new Location("Map", new Point(1000, 0)),
-                new Time(11, 50), IDLING);
+                new Time(6, 50), IDLING);
         Activity activity4 = new Activity(new Location("Map", new Point(0, 0)),
-                new Time(13, 50), IDLING);
+                new Time(7, 50), IDLING);
         return new Schedule(Arrays.asList(activity1, activity2, activity3, activity4));
     }
 

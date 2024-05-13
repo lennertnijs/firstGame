@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 public final class NPCStats {
 
-    public static int MIN_SPEED = 150;
+    public static int MIN_SPEED = 10;
     private int health;
     private int offense;
     private int defense;
