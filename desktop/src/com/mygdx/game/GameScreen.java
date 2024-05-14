@@ -43,13 +43,13 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        gameClock.update();
-        npc.update(gameClock.getDay(), gameClock.getTime());
+        npc.update(gameClock.getDay(), gameClock.getTime(), gameClock.update());
         npc.move(1);
         game.batch.begin();
         // camera.position.set(0, 0, 0);
         game.font.draw(game.batch, gameClock.getTime().toString(), 500, 500);
-        game.batch.draw(npc.sprite.getTexture(), npc.sprite.getPosition().x(), npc.sprite.getPosition().y(), 128, 256);
+        game.batch.draw(npc.sprite.getTexture(), npc.sprite.getPosition().x(), npc.sprite.getPosition().y(),
+                npc.sprite.getTexture().getRegionWidth()*5, npc.sprite.getTexture().getRegionHeight()*5);
         game.batch.end();
     }
 

@@ -41,10 +41,10 @@ public final class NPC extends GameObject {
         return name;
     }
 
-    public void update(Day day, Time time){
+    public void update(Day day, Time time, double delta){
         updateSchedule(day, time);
         updateTexture();
-        selector.increaseClock(50);
+        selector.increaseClock((long) delta);
     }
 
     public void move(int deltaInMillis){

@@ -5,43 +5,45 @@ import com.mygdx.game.Util.Point;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 
+import java.util.Deque;
 import java.util.Objects;
 
 public final class TextureSelector implements ITextureSelector{
 
-    private Key key;
+    private final Deque<ActivityType> activityTypeStack;
+    private Direction direction;
     private final AnimationRepository repo;
     private final AnimationClock clock;
 
-    public TextureSelector(Key key, AnimationRepository repo, AnimationClock clock){
-        Objects.requireNonNull(key, "Key is null.");
-        Objects.requireNonNull(repo, "Repository is null.");
-        Objects.requireNonNull(clock, "Clock is null.");
-        this.key = key;
-        this.repo = repo;
-        this.clock = clock.copy();
+    public TextureSelector(Deque<ActivityType> activityTypeStack, Direction direction, AnimationRepository repo, AnimationClock clock){
+        this.activityTypeStack = Objects.requireNonNull(activityTypeStack, "Activity type is null.");
+        if(activityTypeStack.contains(null)){
+            throw new NullPointerException("Stack contains null.");
+        }
+        this.direction = Objects.requireNonNull(direction, "Direction is null.");
+        this.repo = Objects.requireNonNull(repo, "Repository is null.");
+        this.clock = Objects.requireNonNull(clock, "Clock is null.").copy();
     }
 
     @Override
     public void setActivityType(ActivityType activityType){
-        updateKey(activityType, key.direction());
+        activityTypeStack.add(Objects.requireNonNull(activityType, "Activity type is null."));
+    }
+
+    public void popActivityType(){
+        if(activityTypeStack.isEmpty())
+            return;
+        activityTypeStack.removeLast();
     }
 
     @Override
     public void setDirection(Direction direction){
-        updateKey(key.activityType(), direction);
-    }
-
-    private void updateKey(ActivityType activityType, Direction direction){
-        if(activityType == key.activityType() && direction == key.direction())
-            return;
-        key = new Key(activityType, direction);
-        clock.reset();
+        this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
     @Override
     public Frame getFrame(){
-        return repo.get(key).getFrame(clock.getDeltaInMillis());
+        return repo.get(new Key(activityTypeStack.getLast(), direction)).getFrame(clock.getDeltaInMillis());
     }
 
     @Override
@@ -54,12 +56,12 @@ public final class TextureSelector implements ITextureSelector{
         if(!(other instanceof TextureSelector))
             return false;
         TextureSelector selector = (TextureSelector) other;
-        return key.equals(selector.key) && repo.equals(selector.repo) && clock.equals(selector.clock);
+        return activityTypeStack.getLast().equals(selector.activityTypeStack.getLast()) && repo.equals(selector.repo) && clock.equals(selector.clock);
     }
 
     @Override
     public int hashCode(){
-        int result = key.hashCode();
+        int result = activityTypeStack.getLast().hashCode();
         result = result * 31 + repo.hashCode();
         result = result * 31 + clock.hashCode();
         return result;
@@ -67,10 +69,10 @@ public final class TextureSelector implements ITextureSelector{
 
     @Override
     public String toString(){
-        return String.format("TextureSelector[key=%s, repository=%s, clock=%s]", key, repo, clock);
+        return String.format("TextureSelector[key=%s, repository=%s, clock=%s]", activityTypeStack.getLast(), repo, clock);
     }
 
     public TextureSelector copy(){
-        return new TextureSelector(key, repo, clock.copy());
+        return new TextureSelector(activityTypeStack, direction, repo, clock.copy());
     }
 }
