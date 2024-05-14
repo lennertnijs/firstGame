@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
@@ -105,8 +104,8 @@ public class NPCCreator {
         map.put(new Key(MINING, UP), miningUpAnimation);
 
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
-        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);;
-        Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);;
+        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);
+        Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
         Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
         map.put(new Key(WALKING, RIGHT), walkingRightAnimation);

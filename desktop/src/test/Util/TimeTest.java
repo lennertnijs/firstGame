@@ -43,6 +43,18 @@ public class TimeTest {
     }
 
     @Test
+    public void testConstructorWithOnlyMinutesNegative(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(-1));
+    }
+
+    @Test
+    public void testConstructorWithOnlyMinutesTooBig(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Time(Time.MINUTES_PER_DAY));
+    }
+
+    @Test
     public void testHours(){
         assertEquals(5, time.hours());
     }
@@ -50,6 +62,33 @@ public class TimeTest {
     @Test
     public void testMinutes(){
         assertEquals(10, time.minutes());
+    }
+
+    @Test
+    public void testAsMinutes(){
+        assertEquals(5 * Time.MINUTES_PER_HOUR + 10, time.asMinutes());
+    }
+
+    @Test
+    public void testIncrease(){
+        Time increase1 = time.increase(Time.MINUTES_PER_HOUR);
+        assertEquals(new Time(6, 10), increase1);
+        Time increase2 = time.increase(23 * Time.MINUTES_PER_HOUR);
+        assertEquals(new Time(4, 10), increase2);
+        Time increase3 = time.increase(Time.MINUTES_PER_DAY);
+        assertEquals(new Time(5, 10), increase3);
+    }
+
+    @Test
+    public void testIncreaseWithNegativeIncrease(){
+        assertThrows(IllegalArgumentException.class,
+                () -> time.increase(-1));
+    }
+
+    @Test
+    public void testIncreaseWithZero(){
+        assertThrows(IllegalArgumentException.class,
+                () -> time.increase(0));
     }
 
     @Test

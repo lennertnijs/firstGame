@@ -3,8 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mygdx.game.GameClock.GameClock;
-import com.mygdx.game.GameClock.TimeInput;
+import com.mygdx.game.Clock.CalendarClock;
+import com.mygdx.game.Clock.AppClock;
+import com.mygdx.game.Clock.SystemTimeProvider;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 
@@ -13,7 +14,7 @@ public class GameScreen implements Screen {
     final MyGame game;
     final OrthographicCamera camera;
     private final NPC npc;
-    private final GameClock gameClock;
+    private final AppClock gameAppClock;
 
     public GameScreen(MyGame game) {
         // Implements InputProcessor to make an input handler.
@@ -24,7 +25,8 @@ public class GameScreen implements Screen {
         // rainMusic.setLooping(true);
         this.game = game;
         npc = NPCCreator.create();
-        gameClock = new GameClock(new Time(4, 30), Day.MONDAY, new TimeInput());
+        CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
+        gameAppClock = new AppClock(calendarClock, new SystemTimeProvider());
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -41,12 +43,12 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        gameClock.update();
-        npc.update(gameClock.day, gameClock.time);
+        gameAppClock.update();
+        npc.update(gameAppClock.getDay(), gameAppClock.getTime());
         npc.move(1);
         game.batch.begin();
         // camera.position.set(0, 0, 0);
-        game.font.draw(game.batch, gameClock.time.toString(), 500, 500);
+        game.font.draw(game.batch, gameAppClock.getTime().toString(), 500, 500);
         game.batch.draw(npc.sprite.getTexture(), npc.sprite.getPosition().x(), npc.sprite.getPosition().y(), 128, 256);
         game.batch.end();
     }

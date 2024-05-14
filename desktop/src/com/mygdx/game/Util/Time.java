@@ -43,7 +43,7 @@ public final class Time implements Comparable<Time>{
             throw new IllegalArgumentException("Increase is negative or 0.");
         }
         int minutesWithinRange = (minutes + increase) % MINUTES_PER_DAY;
-        return new Time(minutesWithinRange / MINUTES_PER_HOUR, minutesWithinRange % MINUTES_PER_HOUR);
+        return new Time(minutesWithinRange);
     }
 
     @Override
