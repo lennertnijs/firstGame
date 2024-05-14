@@ -1,13 +1,22 @@
 package com.mygdx.game.GameClock;
 
-public class TimeInput {
+public class TimeInput implements TimeProvider{
 
-    float last;
+    private double last;
+
     public TimeInput(){
         last = System.currentTimeMillis();
     }
 
-    public float update(){
-        return 50f;
+    public double getDelta(){
+        return System.currentTimeMillis() - last;
+    }
+
+    public void update(){
+        last = System.currentTimeMillis();
+    }
+
+    public void reset(){
+        last = System.currentTimeMillis();
     }
 }

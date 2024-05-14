@@ -88,26 +88,9 @@ public class NPCCreator {
         map.put(new Key(IDLING, DOWN), idleDownAnimation);
         map.put(new Key(IDLING, LEFT), idleLeftAnimation);
 
-        Frame mineR1 = new Frame(atlas.findRegion("mine_right", 1), dimensions);
-        Frame mineR2 = new Frame(atlas.findRegion("mine_right", 2), dimensions);
-        Frame mineR3 = new Frame(atlas.findRegion("mine_right", 3), dimensions);
-        Frame mineR4 = new Frame(atlas.findRegion("mine_right", 4), dimensions);
-
-        Animation miningRightAnimation = new Animation(Arrays.asList(mineR1, mineR2, mineR3, mineR4), 2000f);
-
-        Frame mineL1 = new Frame(atlas.findRegion("mine_left", 1), dimensions);
-        Frame mineL2 = new Frame(atlas.findRegion("mine_left", 2), dimensions);
-        Frame mineL3 = new Frame(atlas.findRegion("mine_left", 3), dimensions);
-        Frame mineL4 = new Frame(atlas.findRegion("mine_left", 4), dimensions);
-
-        Animation miningLeftAnimation = new Animation(Arrays.asList(mineL1, mineL2, mineL3, mineL4), 2000f);
-
-        Frame mineU1 = new Frame(atlas.findRegion("mine_up", 1), dimensions);
-        Frame mineU2 = new Frame(atlas.findRegion("mine_up", 2), dimensions);
-        Frame mineU3 = new Frame(atlas.findRegion("mine_up", 3), dimensions);
-        Frame mineU4 = new Frame(atlas.findRegion("mine_up", 4), dimensions);
-
-        Animation miningUpAnimation = new Animation(Arrays.asList(mineU1, mineU2, mineU3, mineU4), 2000f);
+        Animation miningRightAnimation = loadAnimation(atlas, "mine_right", 4);
+        Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
+        Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
 
         Frame mineD1 = new Frame(atlas.findRegion("mine_down", 1),new Vector(250, 250), dimensions);
         Frame mineD2 = new Frame(atlas.findRegion("mine_down", 2), dimensions);
@@ -121,41 +104,10 @@ public class NPCCreator {
         map.put(new Key(MINING, LEFT), miningLeftAnimation);
         map.put(new Key(MINING, UP), miningUpAnimation);
 
-        Frame walkR1 = new Frame(atlas.findRegion("walking_right", 1), dimensions);
-        Frame walkR2 = new Frame(atlas.findRegion("walking_right", 2), dimensions);
-        Frame walkR3 = new Frame(atlas.findRegion("walking_right", 3), dimensions);
-        Frame walkR4 = new Frame(atlas.findRegion("walking_right", 4), dimensions);
-        Frame walkR5 = new Frame(atlas.findRegion("walking_right", 5), dimensions);
-        Frame walkR6 = new Frame(atlas.findRegion("walking_right",6), dimensions);
-
-        Animation walkingRightAnimation = new Animation(Arrays.asList(walkR1, walkR2, walkR3, walkR4, walkR5, walkR6), 2000f);
-
-        Frame walkL1 = new Frame(atlas.findRegion("walking_right",1), dimensions);
-        Frame walkL2 = new Frame(atlas.findRegion("walking_right",2), dimensions);
-        Frame walkL3 = new Frame(atlas.findRegion("walking_right",3), dimensions);
-        Frame walkL4 = new Frame(atlas.findRegion("walking_right",4), dimensions);
-        Frame walkL5 = new Frame(atlas.findRegion("walking_right",5), dimensions);
-        Frame walkL6 = new Frame(atlas.findRegion("walking_right",6), dimensions);
-
-        Animation walkingLeftAnimation = new Animation(Arrays.asList(walkL1, walkL2, walkL3, walkL4, walkL5, walkL6), 2000f);
-
-        Frame walkU1 = new Frame(atlas.findRegion("walking_up",1), dimensions);
-        Frame walkU2 = new Frame(atlas.findRegion("walking_up",2), dimensions);
-        Frame walkU3 = new Frame(atlas.findRegion("walking_up",3), dimensions);
-        Frame walkU4 = new Frame(atlas.findRegion("walking_up",4), dimensions);
-        Frame walkU5 = new Frame(atlas.findRegion("walking_up",5), dimensions);
-        Frame walkU6 = new Frame(atlas.findRegion("walking_up",6), dimensions);
-
-        Animation walkingUpAnimation = new Animation(Arrays.asList(walkU1, walkU2, walkU3, walkU4, walkU5, walkU6), 2000f);
-
-        Frame walkD1 = new Frame(atlas.findRegion("walking_down",1), dimensions);
-        Frame walkD2 = new Frame(atlas.findRegion("walking_down",2), dimensions);
-        Frame walkD3 = new Frame(atlas.findRegion("walking_down",3), dimensions);
-        Frame walkD4 = new Frame(atlas.findRegion("walking_down",4), dimensions);
-        Frame walkD5 = new Frame(atlas.findRegion("walking_down",5), dimensions);
-        Frame walkD6 = new Frame(atlas.findRegion("walking_down",6), dimensions);
-
-        Animation walkingDownAnimation = new Animation(Arrays.asList(walkD1, walkD2, walkD3, walkD4, walkD5, walkD6), 2000f);
+        Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
+        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);;
+        Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);;
+        Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
         map.put(new Key(WALKING, RIGHT), walkingRightAnimation);
         map.put(new Key(WALKING, DOWN), walkingDownAnimation);
@@ -163,6 +115,16 @@ public class NPCCreator {
         map.put(new Key(WALKING, UP), walkingUpAnimation);
 
         return map;
+    }
+
+    private static Animation loadAnimation(TextureAtlas atlas, String name, int amountOfFrames){
+        List<Frame> frames = new ArrayList<>();
+        Dimensions dimensions = new Dimensions(128, 256);
+        for(int i = 1; i <= amountOfFrames; i++){
+            Frame frame = new Frame(atlas.findRegion(name, i), dimensions);
+            frames.add(frame);
+        }
+        return new Animation(frames, 2000f);
     }
 
     private static Schedule loadSchedule(){

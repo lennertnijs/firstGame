@@ -7,7 +7,6 @@ public final class GameClock {
 
     public Time time;
     public Day day;
-
     private TimeInput timeInput;
     private float millisSinceUpdate;
 
@@ -19,11 +18,12 @@ public final class GameClock {
     }
 
     public void update(){
-        millisSinceUpdate += timeInput.update();
+        millisSinceUpdate += timeInput.getDelta();
         if(millisSinceUpdate > 1000){
             handleClockUpdate();
             millisSinceUpdate -= 1000;
         }
+        timeInput.update();
     }
 
     public void handleClockUpdate(){

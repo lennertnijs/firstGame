@@ -6,6 +6,7 @@ public final class Time implements Comparable<Time>{
 
     public static final int HOURS_PER_DAY = 24;
     public static final int MINUTES_PER_HOUR = 60;
+    public static final int MINUTES_PER_DAY = HOURS_PER_DAY * MINUTES_PER_HOUR;
     private final int minutes;
 
     public Time(int hours, int minutes){
@@ -18,12 +19,31 @@ public final class Time implements Comparable<Time>{
         this.minutes = hours * MINUTES_PER_HOUR + minutes;
     }
 
+    public Time(int minutes){
+        if(minutes < 0 || minutes >= MINUTES_PER_DAY){
+            throw new IllegalArgumentException("Minutes is negative or bigger than MINUTES_PER_DAY.");
+        }
+        this.minutes = minutes;
+    }
+
     public int hours(){
         return minutes / MINUTES_PER_HOUR;
     }
 
     public int minutes(){
         return minutes % MINUTES_PER_HOUR;
+    }
+
+    public int asMinutes(){
+        return minutes;
+    }
+
+    public Time increase(int increase){
+        if(increase <= 0){
+            throw new IllegalArgumentException("Increase is negative or 0.");
+        }
+        int minutesWithinRange = (minutes + increase) % MINUTES_PER_DAY;
+        return new Time(minutesWithinRange / MINUTES_PER_HOUR, minutesWithinRange % MINUTES_PER_HOUR);
     }
 
     @Override

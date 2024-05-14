@@ -16,10 +16,6 @@ public class GameScreen implements Screen {
     private final GameClock gameClock;
 
     public GameScreen(MyGame game) {
-        // Texture bar = new Texture(Gdx.files.internal("inventoryBar.png")) to create a Texture
-
-        // game.batch.draw(map, 0, 0, 4800 ,4800 ); To draw
-
         // Implements InputProcessor to make an input handler.
         // Gdx.input.setInputProcessor(gamePlayInputProcessor); to then set it.
 
