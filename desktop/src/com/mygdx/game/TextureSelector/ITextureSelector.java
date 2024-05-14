@@ -21,6 +21,7 @@ public interface ITextureSelector {
      * @throws NullPointerException If the given {@link ActivityType} is null.
      */
     void setActivityType(ActivityType activityType);
+    void popActivityType();
 
     /**
      * Sets the {@link Direction} to the given {@link Direction}.

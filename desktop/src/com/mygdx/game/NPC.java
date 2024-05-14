@@ -12,7 +12,11 @@ import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 import com.mygdx.game.WeekSchedule.Activity;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.WeekSchedule.IWeekSchedule;
+
+import java.util.Deque;
+import java.util.LinkedList;
 
 public final class NPC extends GameObject {
 
@@ -53,6 +57,9 @@ public final class NPC extends GameObject {
         int movement = deltaInMillis * stats.getSpeed();
         Location next = navigationData.calculateNextLocation(sprite.getLocation(), movement);
         sprite.setLocation(next);
+        if(!navigationData.isMoving()){ // means the route was finished
+            selector.popActivityType();
+        }
     }
 
     public void updateSchedule(Day day, Time time){
@@ -60,17 +67,14 @@ public final class NPC extends GameObject {
             return;
         Activity activity = weekSchedule.getActivity(day, time);
         navigationData.calculateAndStoreRoute(sprite.getLocation(), activity.location());
-        selector.setActivityType(activity.type());
-        selector.setDirection(Direction.DOWN);
+        selector.setActivityType(activity.type()); // pushes to the stack
+        selector.setActivityType(ActivityType.WALKING);
     }
 
     public void updateTexture(){
         Frame f = selector.getFrame();
-        // set to new texture
         sprite.setTexture(f.textureRegion());
-        // set new dimensions
         sprite.setDimensions(f.dimensions());
-        // set the new position
         sprite.setPosition(sprite.getAnchor().add(f.translation()));
     }
 

@@ -1,7 +1,5 @@
 package com.mygdx.game.TextureSelector;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Util.Point;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 
@@ -28,17 +26,20 @@ public final class TextureSelector implements ITextureSelector{
     @Override
     public void setActivityType(ActivityType activityType){
         activityTypeStack.add(Objects.requireNonNull(activityType, "Activity type is null."));
+        // reset the clock
     }
 
     public void popActivityType(){
         if(activityTypeStack.isEmpty())
             return;
         activityTypeStack.removeLast();
+        // reset the clock
     }
 
     @Override
     public void setDirection(Direction direction){
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
+        // reset the clock
     }
 
     @Override

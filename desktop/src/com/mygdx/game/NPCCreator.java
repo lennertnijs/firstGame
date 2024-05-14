@@ -39,7 +39,7 @@ public class NPCCreator {
 
         AnimationRepository animRepo = new AnimationRepository(loadAnimationMap(atlas));
         AnimationClock clock = new AnimationClock();
-        ITextureSelector selector = new TextureSelector(new Key(IDLING, UP), animRepo, clock);
+        ITextureSelector selector = new TextureSelector(new LinkedList<>(Arrays.asList(IDLING)), UP, animRepo, clock);
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
