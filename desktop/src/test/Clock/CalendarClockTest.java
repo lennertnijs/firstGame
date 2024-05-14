@@ -116,4 +116,13 @@ public class CalendarClockTest {
         String expected = "CalendarClock[day=MONDAY, time=Time[hours=5, minutes=10]]";
         assertEquals(expected, clock.toString());
     }
+
+
+    @Test
+    public void testCopy(){
+        CalendarClock copy = clock.copy();
+        assertEquals(clock, copy);
+        copy.increaseTime(12);
+        assertNotEquals(clock, copy);
+    }
 }

@@ -5,7 +5,11 @@ public final class MockTimeProvider implements TimeProvider{
     private int mockValue;
 
     public MockTimeProvider(){
-        mockValue = 0;
+        this.mockValue = 0;
+    }
+
+    private MockTimeProvider(int mockValue){
+        this.mockValue = mockValue;
     }
 
     public double update(){
@@ -15,5 +19,9 @@ public final class MockTimeProvider implements TimeProvider{
 
     public void reset(){
         mockValue = 0;
+    }
+
+    public MockTimeProvider copy(){
+        return new MockTimeProvider(mockValue);
     }
 }

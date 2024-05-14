@@ -8,4 +8,5 @@ public interface TimeProvider {
      */
     double update();
     void reset();
+    TimeProvider copy();
 }

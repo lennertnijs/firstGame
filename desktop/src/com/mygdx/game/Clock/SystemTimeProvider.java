@@ -5,7 +5,11 @@ public class SystemTimeProvider implements TimeProvider{
     private double last;
 
     public SystemTimeProvider(){
-        last = System.currentTimeMillis();
+        this.last = System.currentTimeMillis();
+    }
+
+    private SystemTimeProvider(double last){
+        this.last = last;
     }
 
     public double update(){
@@ -16,5 +20,9 @@ public class SystemTimeProvider implements TimeProvider{
 
     public void reset(){
         last = System.currentTimeMillis();
+    }
+
+    public SystemTimeProvider copy(){
+        return new SystemTimeProvider();
     }
 }

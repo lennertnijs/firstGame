@@ -35,6 +35,10 @@ public final class CalendarClock {
         this.time = new Time(totalMinutes);
     }
 
+    public CalendarClock copy(){
+        return new CalendarClock(day, time);
+    }
+
     @Override
     public boolean equals(Object other){
         if(!(other instanceof CalendarClock))
