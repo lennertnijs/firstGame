@@ -1,6 +1,6 @@
 package TextureSelector;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.WeekSchedule.Action;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.TextureSelector.Key;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class KeyTest {
 
-    private ActivityType activityType;
+    private Action action;
     private Direction direction;
     private Key key;
 
     @BeforeEach
     public void initialise(){
-        activityType = ActivityType.RUNNING;
+        action = Action.RUNNING;
         direction = Direction.UP;
-        key = new Key(activityType, direction);
+        key = new Key(action, direction);
     }
 
     @Test
@@ -28,12 +28,12 @@ public class KeyTest {
 
     @Test
     public void testConstructorWithNullDirection(){
-        assertThrows(NullPointerException.class, () -> new Key(ActivityType.RUNNING, null));
+        assertThrows(NullPointerException.class, () -> new Key(Action.RUNNING, null));
     }
 
     @Test
     public void testActivityType(){
-        assertEquals(activityType, key.activityType());
+        assertEquals(action, key.action());
     }
 
     @Test
@@ -43,10 +43,10 @@ public class KeyTest {
 
     @Test
     public void testEquals(){
-        Key key1 = new Key(activityType, direction);
-        Key key2 = new Key(activityType, direction);
-        Key key3 = new Key(activityType, direction);
-        Key diffKey = new Key(activityType, Direction.RIGHT);
+        Key key1 = new Key(action, direction);
+        Key key2 = new Key(action, direction);
+        Key key3 = new Key(action, direction);
+        Key diffKey = new Key(action, Direction.RIGHT);
         // reflexive
         assertEquals(key1, key1);
         // symmetrical
@@ -64,10 +64,10 @@ public class KeyTest {
 
     @Test
     public void testHashCode(){
-        Key key1 = new Key(activityType, direction);
-        Key key2 = new Key(activityType, direction);
-        Key key3 = new Key(activityType, direction);
-        Key diffKey = new Key(activityType, Direction.RIGHT);
+        Key key1 = new Key(action, direction);
+        Key key2 = new Key(action, direction);
+        Key key3 = new Key(action, direction);
+        Key diffKey = new Key(action, Direction.RIGHT);
         // reflexive
         assertEquals(key1.hashCode(), key1.hashCode());
         // symmetrical
@@ -83,7 +83,7 @@ public class KeyTest {
 
     @Test
     public void testToString(){
-        String expectedString = "AnimationKey[ActivityType=RUNNING, Direction=UP]";
+        String expectedString = "Key[Action=RUNNING, Direction=UP]";
         assertEquals(key.toString(), expectedString);
     }
 }

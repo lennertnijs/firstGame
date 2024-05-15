@@ -9,9 +9,9 @@ public final class Activity{
 
     private final Location location;
     private final Time time;
-    private final ActivityType type;
+    private final Action type;
 
-    public Activity(Location location, Time time, ActivityType type){
+    public Activity(Location location, Time time, Action type){
         Objects.requireNonNull(location, "Location is null.");
         Objects.requireNonNull(time, "Time is null.");
         Objects.requireNonNull(type, "Activity type is null.");
@@ -28,7 +28,7 @@ public final class Activity{
         return time;
     }
 
-    public ActivityType type(){
+    public Action type(){
         return type;
     }
 

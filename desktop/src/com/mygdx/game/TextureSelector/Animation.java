@@ -24,15 +24,10 @@ public final class Animation{
         this.durationInMillis = durationInMillis;
     }
 
-    public List<Frame> frames(){
-        return new ArrayList<>(frames);
-    }
-
-    public float duration(){
-        return durationInMillis;
-    }
-
-    public Frame getFrame(float deltaInMillis){
+    /**
+     * Loops around.
+     */
+    public Frame getFrame(double deltaInMillis){
         if(deltaInMillis < 0) {
             throw new IllegalArgumentException("Delta is negative.");
         }

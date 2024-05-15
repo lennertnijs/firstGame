@@ -1,6 +1,6 @@
 package com.mygdx.game.WeekSchedule;
 
-public enum ActivityType {
+public enum Action {
     WALKING,
     RUNNING,
     IDLING,
