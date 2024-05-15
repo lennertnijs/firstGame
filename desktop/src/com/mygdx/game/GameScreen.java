@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.CalendarClock;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.SystemTimeProvider;
+import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 

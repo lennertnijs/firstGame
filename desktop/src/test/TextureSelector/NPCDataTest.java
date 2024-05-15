@@ -1,6 +1,6 @@
 package TextureSelector;
 
-import com.mygdx.game.TextureSelector.FrameSelectionData;
+import com.mygdx.game.NPC.NPCData;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.WeekSchedule.Action;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,46 +13,46 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class FrameSelectionDataTest {
+public class NPCDataTest {
 
     private final List<Action> actionList = Arrays.asList(Action.IDLING, Action.WALKING);
     private final Direction direction = Direction.UP;
     private final double delta = 1000d;
-    private FrameSelectionData selectionData;
+    private NPCData selectionData;
 
     @BeforeEach
     public void initialise(){
-        selectionData = new FrameSelectionData(actionList, direction, delta);
+        selectionData = new NPCData(actionList, direction, delta);
     }
 
     @Test
     public void testConstructorWithNullActionList(){
         assertThrows(NullPointerException.class,
-                () -> new FrameSelectionData(null, direction, delta));
+                () -> new NPCData(null, direction, delta));
     }
 
     @Test
     public void testConstructorWithNullInActionList(){
         assertThrows(NullPointerException.class,
-                () -> new FrameSelectionData(Arrays.asList(Action.MINING, null), direction, delta));
+                () -> new NPCData(Arrays.asList(Action.MINING, null), direction, delta));
     }
 
     @Test
     public void testConstructorWithEmptyActionList(){
         assertThrows(IllegalArgumentException.class,
-                () -> new FrameSelectionData(new ArrayList<>(), direction, delta));
+                () -> new NPCData(new ArrayList<>(), direction, delta));
     }
 
     @Test
     public void testConstructorWithNullDirection(){
         assertThrows(NullPointerException.class,
-                () -> new FrameSelectionData(actionList, null, delta));
+                () -> new NPCData(actionList, null, delta));
     }
 
     @Test
     public void testConstructorWithNegativeDelta(){
         assertThrows(IllegalArgumentException.class,
-                () -> new FrameSelectionData(actionList, direction, -1));
+                () -> new NPCData(actionList, direction, -1));
     }
 
     @Test

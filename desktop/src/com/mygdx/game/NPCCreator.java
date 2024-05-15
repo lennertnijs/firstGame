@@ -11,6 +11,8 @@ import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.InventoryManager;
 import com.mygdx.game.Inventory.ItemTemplateRepository;
+import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.NPC.NPCStats;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.INavigationData;
@@ -37,7 +39,6 @@ public class NPCCreator {
         String name = "Gilbert";
 
         AnimationRepository animRepo = new AnimationRepository(loadAnimationMap(atlas));
-        IAnimationManager animationManager = new AnimationManager(Arrays.asList(IDLING), UP, 0, animRepo);
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -58,7 +59,7 @@ public class NPCCreator {
         return new NPC(
                 sprite,
                 name,
-                animationManager,
+                animRepo,
                 weekSchedule,
                 navigationData,
                 dialogueData,

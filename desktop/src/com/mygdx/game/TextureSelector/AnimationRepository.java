@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public final class AnimationRepository {
+public final class AnimationRepository{
 
     private final Map<Key, Animation> map;
 

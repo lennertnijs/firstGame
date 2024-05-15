@@ -1,17 +1,17 @@
-package com.mygdx.game.TextureSelector;
+package com.mygdx.game.NPC;
 
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.WeekSchedule.Action;
 
 import java.util.*;
 
-public final class FrameSelectionData {
+public final class NPCData {
 
     private final Deque<Action> actionStack;
     private Direction direction;
     private double deltaInMillis;
 
-    public FrameSelectionData(List<Action> actionList, Direction direction, double deltaInMillis){
+    public NPCData(List<Action> actionList, Direction direction, double deltaInMillis){
         Objects.requireNonNull(actionList, "List is null.");
         if(actionList.contains(null)){
             throw new NullPointerException("List contains null.");

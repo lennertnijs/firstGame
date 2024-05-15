@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.NPC;
 
 public final class NPCStats {
 
