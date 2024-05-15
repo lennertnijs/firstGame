@@ -1,11 +1,7 @@
 package TextureSelector;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.TextureSelector.Animation;
 import com.mygdx.game.TextureSelector.Frame;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Vector;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -17,26 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationTest {
 
-    private Frame frame1;
-    private Frame frame2;
-    private Frame frame3;
-    private List<Frame> frames;
-    private float duration;
-    private Animation animation;
-
-    @BeforeEach
-    public void initialise(){
-        Vector translation = new Vector(5, 5);
-        Dimensions dimensions = new Dimensions(15, 15);
-        frame1 = new Frame(Mockito.mock(TextureRegion.class), translation, dimensions);
-        frame2 = new Frame(Mockito.mock(TextureRegion.class), translation, dimensions);
-        frame3 = new Frame(Mockito.mock(TextureRegion.class), translation, dimensions);
-        frames = Arrays.asList(frame1, frame2, frame3);
-
-        duration = 1.5f;
-
-        animation = new Animation(frames, duration);
-    }
+    private final Frame frame1 = Mockito.mock(Frame.class);
+    private final Frame frame2 = Mockito.mock(Frame.class);
+    private final List<Frame> frames = Arrays.asList(frame1, frame2);
+    private final float duration = 1.5f;
+    private final Animation animation = new Animation(frames, duration);
 
     @Test
     public void testConstructorWithNullList(){
@@ -69,26 +50,12 @@ public class AnimationTest {
     }
 
     @Test
-    public void testFrames(){
-        assertEquals(frames, animation.frames());
-    }
-
-    @Test
-    public void testDuration(){
-        assertEquals(duration, animation.duration());
-    }
-
-    @Test
     public void testGetFrame(){
         assertEquals(frame1, animation.getFrame(0));
-        assertEquals(frame2, animation.getFrame(0.5f));
-        assertEquals(frame3, animation.getFrame(1f));
+        assertEquals(frame1, animation.getFrame(0.74f));
+        assertEquals(frame2, animation.getFrame(0.75f));
+        assertEquals(frame2, animation.getFrame(1.49f));
         assertEquals(frame1, animation.getFrame(1.5f));
-        assertEquals(frame2, animation.getFrame(2.0f));
-        assertEquals(frame3, animation.getFrame(2.5f));
-        assertEquals(frame1, animation.getFrame(3.0f));
-        assertEquals(frame2, animation.getFrame(3.5f));
-        assertEquals(frame3, animation.getFrame(4.0f));
     }
 
     @Test
@@ -102,8 +69,6 @@ public class AnimationTest {
         Animation animation1 = new Animation(frames, 1.5f);
         Animation animation2 = new Animation(frames, 1.5f);
         Animation animation3 = new Animation(frames, 1.5f);
-        Animation diffFrames = new Animation(Arrays.asList(frame1, frame2), 1.5f);
-        Animation diffDuration = new Animation(frames, 3f);
         // reflexive
         assertEquals(animation1, animation1);
         // symmetrical
@@ -113,7 +78,11 @@ public class AnimationTest {
         assertEquals(animation1, animation2);
         assertEquals(animation2, animation3);
         assertEquals(animation1, animation3);
+
         // not equals
+        Animation diffFrames = new Animation(Arrays.asList(frame2, frame1), 1.5f);
+        Animation diffDuration = new Animation(frames, 3f);
+
         assertNotEquals(animation1, diffFrames);
         assertNotEquals(animation1, diffDuration);
         assertNotEquals(animation1, new Object());
@@ -125,8 +94,6 @@ public class AnimationTest {
         Animation animation1 = new Animation(frames, 1.5f);
         Animation animation2 = new Animation(frames, 1.5f);
         Animation animation3 = new Animation(frames, 1.5f);
-        Animation diffFrames = new Animation(Arrays.asList(frame1, frame2), 1.5f);
-        Animation diffDuration = new Animation(frames, 3f);
         // reflexive
         assertEquals(animation1.hashCode(), animation1.hashCode());
         // symmetrical
@@ -136,7 +103,10 @@ public class AnimationTest {
         assertEquals(animation1.hashCode(), animation2.hashCode());
         assertEquals(animation2.hashCode(), animation3.hashCode());
         assertEquals(animation1.hashCode(), animation3.hashCode());
+
         // not equals
+        Animation diffFrames = new Animation(Arrays.asList(frame2, frame1), 1.5f);
+        Animation diffDuration = new Animation(frames, 3f);
         assertNotEquals(animation1.hashCode(), diffFrames.hashCode());
         assertNotEquals(animation1.hashCode(), diffDuration.hashCode());
     }

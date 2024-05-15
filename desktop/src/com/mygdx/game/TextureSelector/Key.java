@@ -1,24 +1,22 @@
 package com.mygdx.game.TextureSelector;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.WeekSchedule.Action;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
 
 public final class Key {
 
-    private final ActivityType activityType;
+    private final Action action;
     private final Direction direction;
 
-    public Key(ActivityType activityType, Direction direction){
-        Objects.requireNonNull(activityType, "Activity type is null.");
-        Objects.requireNonNull(direction, "Direction is null.");
-        this.activityType = activityType;
-        this.direction = direction;
+    public Key(Action action, Direction direction){
+        this.action = Objects.requireNonNull(action, "Action is null.");
+        this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
-    public ActivityType activityType(){
-        return activityType;
+    public Action action(){
+        return action;
     }
 
     public Direction direction(){
@@ -30,19 +28,17 @@ public final class Key {
         if(!(other instanceof Key))
             return false;
         Key key = (Key) other;
-        return activityType == key.activityType && direction == key.direction;
+        return action == key.action && direction == key.direction;
     }
 
     @Override
     public int hashCode(){
-        int result = activityType.hashCode();
-        result = result * 31 + direction.hashCode();
-        return result;
+        return action.hashCode() * 31 + direction.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("AnimationKey[ActivityType=%s, Direction=%s]", activityType, direction);
+        return String.format("Key[Action=%s, Direction=%s]", action, direction);
     }
 
 }

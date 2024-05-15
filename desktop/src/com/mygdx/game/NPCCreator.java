@@ -17,13 +17,12 @@ import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.TextureSelector.*;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.Util.Vector;
 import com.mygdx.game.WeekSchedule.*;
 
 import java.util.*;
 
 import static com.mygdx.game.Util.Direction.*;
-import static com.mygdx.game.WeekSchedule.ActivityType.*;
+import static com.mygdx.game.WeekSchedule.Action.*;
 
 public class NPCCreator {
 
@@ -38,8 +37,7 @@ public class NPCCreator {
         String name = "Gilbert";
 
         AnimationRepository animRepo = new AnimationRepository(loadAnimationMap(atlas));
-        AnimationClock clock = new AnimationClock();
-        ITextureSelector selector = new TextureSelector(new LinkedList<>(Arrays.asList(IDLING)), UP, animRepo, clock);
+        IAnimationManager animationManager = new AnimationManager(Arrays.asList(IDLING), UP, 0, animRepo);
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -60,7 +58,7 @@ public class NPCCreator {
         return new NPC(
                 sprite,
                 name,
-                selector,
+                animationManager,
                 weekSchedule,
                 navigationData,
                 dialogueData,
@@ -72,10 +70,10 @@ public class NPCCreator {
         Dimensions dimensions = new Dimensions(128, 256);
         Map<Key, Animation> map = new HashMap<>();
 
-        Frame idleUpFrame = new Frame(atlas.findRegion("idle_up"), dimensions);
-        Frame idleRightFrame = new Frame(atlas.findRegion("idle_right"), dimensions);
-        Frame idleDownFrame = new Frame(atlas.findRegion("idle_down"), dimensions);
-        Frame idleLeftFrame = new Frame(atlas.findRegion("idle_left"), dimensions);
+        Frame idleUpFrame = Frame.builder().textureRegion(atlas.findRegion("idle_up")).build();
+        Frame idleRightFrame = Frame.builder().textureRegion(atlas.findRegion("idle_right")).build();
+        Frame idleDownFrame = Frame.builder().textureRegion(atlas.findRegion("idle_down")).build();
+        Frame idleLeftFrame = Frame.builder().textureRegion(atlas.findRegion("idle_left")).build();
 
         Animation idleUpAnimation = new Animation(Collections.singletonList(idleUpFrame), 10000000000f);
         Animation idleRightAnimation = new Animation(Collections.singletonList(idleRightFrame), 10000000000f);
@@ -91,10 +89,10 @@ public class NPCCreator {
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
         Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
 
-        Frame mineD1 = new Frame(atlas.findRegion("mine_down", 1),new Vector(250, 250), dimensions);
-        Frame mineD2 = new Frame(atlas.findRegion("mine_down", 2), dimensions);
-        Frame mineD3 = new Frame(atlas.findRegion("mine_down", 3), dimensions);
-        Frame mineD4 = new Frame(atlas.findRegion("mine_down", 4), dimensions);
+        Frame mineD1 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 1)).build();
+        Frame mineD2 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 2)).build();
+        Frame mineD3 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 3)).build();
+        Frame mineD4 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 4)).build();
 
         Animation miningDownAnimation = new Animation(Arrays.asList(mineD1, mineD2, mineD3, mineD4), 2000f);
 
@@ -118,9 +116,8 @@ public class NPCCreator {
 
     private static Animation loadAnimation(TextureAtlas atlas, String name, int amountOfFrames){
         List<Frame> frames = new ArrayList<>();
-        Dimensions dimensions = new Dimensions(128, 256);
         for(int i = 1; i <= amountOfFrames; i++){
-            Frame frame = new Frame(atlas.findRegion(name, i), dimensions);
+            Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).build();
             frames.add(frame);
         }
         return new Animation(frames, 2000f);

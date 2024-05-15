@@ -9,21 +9,17 @@ import java.util.Objects;
 public final class Frame{
 
     private final TextureRegion textureRegion;
-
-    // The translation vector representing how far from the bottom-left side of the outer bounding box of the sprite.
+    /**
+     * The translation vector. Used for when a Frame is not in the bottom-left corner of the animation.
+     * The vector represents the translation from that bottom-left to the bottom-left of this frame's texture region.
+     */
     private final Vector translation;
     private final Dimensions dimensions;
 
-    public Frame(TextureRegion textureRegion, Vector translation, Dimensions dimensions){
-        this.textureRegion = Objects.requireNonNull(textureRegion, "Texture region is null.");
-        this.translation = Objects.requireNonNull(translation, "Translation Vector is null.");
-        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
-    }
-
-    public Frame(TextureRegion textureRegion, Dimensions dimensions){
-        this.textureRegion = Objects.requireNonNull(textureRegion, "Texture region is null.");
-        this.translation = new Vector(0, 0);
-        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
+    private Frame(Builder builder){
+        this.textureRegion = builder.textureRegion;
+        this.translation = builder.translation;
+        this.dimensions = builder.dimensions;
     }
 
     public TextureRegion textureRegion(){
@@ -60,5 +56,46 @@ public final class Frame{
     public String toString(){
         return String.format("Frame[textureRegion=%s, translation=%s, dimensions=%s]",
                 textureRegion, translation, dimensions);
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder{
+
+        private TextureRegion textureRegion = null;
+        private Vector translation = null;
+        private Dimensions dimensions = null;
+
+        private Builder(){
+        }
+
+        public Builder textureRegion(TextureRegion textureRegion){
+            this.textureRegion = textureRegion;
+            return this;
+        }
+
+        public Builder translation(Vector translation){
+            this.translation = translation;
+            return this;
+        }
+
+        public Builder dimensions(Dimensions dimensions){
+            this.dimensions = dimensions;
+            return this;
+        }
+
+        public Frame build(){
+            Objects.requireNonNull(textureRegion, "Texture region is null.");
+            if(translation == null){
+                this.translation = new Vector(0, 0);
+            }
+            if(dimensions == null){
+                this.dimensions = new Dimensions(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
+            }
+            return new Frame(this);
+
+        }
     }
 }
