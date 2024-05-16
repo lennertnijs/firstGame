@@ -1,19 +1,21 @@
 package com.mygdx.game;
 
-import com.mygdx.game.General.GameObject;
-import com.mygdx.game.General.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Inventory.IInventoryManager;
+import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vector;
 
-public final class Player extends GameObject{
+public final class Player extends Character{
+
+    private Direction direction;
 
 
-    private final String name;
-    private final IInventoryManager inventoryManager;
     // add player stats
-    public Player(String name, Sprite sprite, IInventoryManager inventoryManager){
-        super(sprite);
-        this.name = name;
-        this.inventoryManager = inventoryManager;
+    public Player(TextureRegion textureRegion, Point position, Dimensions dimensions, String map,
+                  String name, IInventoryManager inventoryManager){
+        super(textureRegion, position, dimensions, map,new Vector(5, 6), name ,inventoryManager);
     }
 
     public void move(double delta){

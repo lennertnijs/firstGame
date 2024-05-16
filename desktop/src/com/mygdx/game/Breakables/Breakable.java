@@ -1,7 +1,9 @@
 package com.mygdx.game.Breakables;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.General.GameObject;
-import com.mygdx.game.General.Sprite;
+import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Point;
 
 import java.util.Objects;
 
@@ -12,8 +14,8 @@ public class Breakable extends GameObject {
     // loot table
     private final BreakableType type;
 
-    public Breakable(Sprite sprite, int health, int hardness, BreakableType type){
-        super(sprite);
+    public Breakable(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, int health, int hardness, BreakableType type){
+        super(textureRegion, position, dimensions, map);
         if(health <= 0){
             throw new IllegalArgumentException("Health is negative or 0.");
         }

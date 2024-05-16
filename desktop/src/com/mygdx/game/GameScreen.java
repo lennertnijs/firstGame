@@ -10,12 +10,16 @@ import com.mygdx.game.NPC.NPC;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 
+import java.util.Arrays;
+
 
 public class GameScreen implements Screen {
     final MyGame game;
     final OrthographicCamera camera;
     private final NPC npc;
     private final Clock gameClock;
+    private final SpriteDrawer drawer;
+    private final GameObjectRepository repository;
 
     public GameScreen(MyGame game) {
         // Implements InputProcessor to make an input handler.
@@ -33,6 +37,9 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+
+        drawer = new SpriteDrawer(game);
+        repository = new GameObjectRepository(Arrays.asList(npc));
     }
 
     /**
@@ -49,8 +56,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
         // camera.position.set(0, 0, 0);
         game.font.draw(game.batch, gameClock.getTime().toString(), 500, 500);
-        game.batch.draw(npc.sprite.getTexture(), npc.sprite.getPosition().x(), npc.sprite.getPosition().y(),
-                npc.sprite.getTexture().getRegionWidth()*5, npc.sprite.getTexture().getRegionHeight()*5);
+        drawer.draw(npc);
         game.batch.end();
     }
 

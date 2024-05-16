@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.Dialogue.IDialogueData;
-import com.mygdx.game.General.Sprite;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.InventoryManager;
@@ -19,6 +18,7 @@ import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.AnimationRepository.*;
 import com.mygdx.game.Util.*;
+import com.mygdx.game.Util.Vector;
 import com.mygdx.game.WeekSchedule.*;
 
 import java.util.*;
@@ -32,8 +32,8 @@ public class NPCCreator {
     public static NPC create() {
         TextureRegion idleDown = atlas.findRegion("idle_down");
         Point position = new Point(500, 500);
+        Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
         String map = "Map";
-        Sprite sprite = Sprite.builder().textureRegion(idleDown).anchor(position).map(map).build();
 
         String name = "Gilbert";
 
@@ -56,8 +56,12 @@ public class NPCCreator {
 
 
         return new NPC(
-                sprite,
+                idleDown,
+                position,
+                dimensions,
+                map,
                 name,
+                new Vector(5, 5),
                 animRepo,
                 weekSchedule,
                 navigationData,
