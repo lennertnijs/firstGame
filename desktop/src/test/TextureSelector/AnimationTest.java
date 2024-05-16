@@ -1,7 +1,8 @@
 package TextureSelector;
 
-import com.mygdx.game.TextureSelector.Animation;
-import com.mygdx.game.TextureSelector.Frame;
+import com.mygdx.game.AnimationRepository.Animation;
+import com.mygdx.game.AnimationRepository.Frame;
+import com.mygdx.game.AnimationRepository.IFrame;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -15,7 +16,7 @@ public class AnimationTest {
 
     private final Frame frame1 = Mockito.mock(Frame.class);
     private final Frame frame2 = Mockito.mock(Frame.class);
-    private final List<Frame> frames = Arrays.asList(frame1, frame2);
+    private final List<IFrame> frames = Arrays.asList(frame1, frame2);
     private final float duration = 1.5f;
     private final Animation animation = new Animation(frames, duration);
 

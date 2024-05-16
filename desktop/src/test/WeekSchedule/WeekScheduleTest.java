@@ -18,9 +18,9 @@ public class WeekScheduleTest {
     private final Time time2 = new Time(1, 15);
     private final Time time3 = new Time(2, 15);
     private final Location location = new Location("Map", new Point(0, 10));
-    private final Activity activity1 = new Activity(location, time1, Action.RUNNING);
-    private final Activity activity2 = new Activity(location, time2, Action.RUNNING);
-    private final Activity activity3 = new Activity(location, time3, Action.RUNNING);
+    private final Activity activity1 = new Activity(location, time1, ActivityType.RUNNING);
+    private final Activity activity2 = new Activity(location, time2, ActivityType.RUNNING);
+    private final Activity activity3 = new Activity(location, time3, ActivityType.RUNNING);
     private final Day day1 = Day.MONDAY;
     private final Day day2 = Day.TUESDAY;
     private final Schedule schedule1  = new Schedule(Arrays.asList(activity1, activity2));
@@ -53,29 +53,6 @@ public class WeekScheduleTest {
         map.put(Day.WEDNESDAY, null);
         assertThrows(NullPointerException.class,
                 () -> new WeekSchedule(map));
-    }
-
-    @Test
-    public void testSchedules(){
-        assertEquals(map, weekSchedule.schedules());
-    }
-
-    @Test
-    public void testGetDaySchedule(){
-        assertEquals(schedule1, weekSchedule.getDaySchedule(day1));
-        assertEquals(schedule2, weekSchedule.getDaySchedule(day2));
-    }
-
-    @Test
-    public void testGetDayScheduleWithNull(){
-        assertThrows(NullPointerException.class,
-                () -> weekSchedule.getDaySchedule(null));
-    }
-
-    @Test
-    public void testGetDayScheduleUnmappedDay(){
-        assertThrows(NoSuchElementException.class,
-                () -> weekSchedule.getDaySchedule(Day.WEDNESDAY));
     }
 
     @Test

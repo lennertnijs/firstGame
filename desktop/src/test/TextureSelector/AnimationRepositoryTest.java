@@ -1,10 +1,10 @@
 package TextureSelector;
 
-import com.mygdx.game.TextureSelector.Animation;
-import com.mygdx.game.TextureSelector.AnimationRepository;
-import com.mygdx.game.TextureSelector.Frame;
-import com.mygdx.game.TextureSelector.Key;
-import com.mygdx.game.WeekSchedule.Action;
+import com.mygdx.game.AnimationRepository.Animation;
+import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.AnimationRepository.Frame;
+import com.mygdx.game.AnimationRepository.Key;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.Util.Direction;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import java.util.*;
 
 import static com.mygdx.game.Util.Direction.UP;
-import static com.mygdx.game.WeekSchedule.Action.RUNNING;
+import static com.mygdx.game.WeekSchedule.ActivityType.RUNNING;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationRepositoryTest {
@@ -57,7 +57,7 @@ public class AnimationRepositoryTest {
 
     @Test
     public void testGetNoMapping(){
-        Key noMapKey = new Key(Action.WALKING, Direction.RIGHT);
+        Key noMapKey = new Key(ActivityType.WALKING, Direction.RIGHT);
         assertThrows(NoSuchElementException.class,
                 () -> repository.get(noMapKey));
     }

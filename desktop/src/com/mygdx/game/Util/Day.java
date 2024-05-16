@@ -10,6 +10,7 @@ public enum Day {
 
     public Day next(){
         int index = this.ordinal();
-        return Day.values()[(index + 1)%Day.values().length];
+        int nextIndex = (index + 1) % Day.values().length;
+        return Day.values()[nextIndex];
     }
 }

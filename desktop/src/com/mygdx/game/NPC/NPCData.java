@@ -1,25 +1,25 @@
 package com.mygdx.game.NPC;
 
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.WeekSchedule.Action;
+import com.mygdx.game.WeekSchedule.ActivityType;
 
 import java.util.*;
 
 public final class NPCData {
 
-    private final Deque<Action> actionStack;
+    private final Deque<ActivityType> activityTypeStack;
     private Direction direction;
     private double deltaInMillis;
 
-    public NPCData(List<Action> actionList, Direction direction, double deltaInMillis){
-        Objects.requireNonNull(actionList, "List is null.");
-        if(actionList.contains(null)){
+    public NPCData(List<ActivityType> activityTypeList, Direction direction, double deltaInMillis){
+        Objects.requireNonNull(activityTypeList, "List is null.");
+        if(activityTypeList.contains(null)){
             throw new NullPointerException("List contains null.");
         }
-        if(actionList.size() == 0){
+        if(activityTypeList.size() == 0){
             throw new IllegalArgumentException("List contains no elements.");
         }
-        this.actionStack = new LinkedList<>(actionList);
+        this.activityTypeStack = new LinkedList<>(activityTypeList);
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
         if(deltaInMillis < 0){
             throw new IllegalArgumentException("Delta (in millis) is negative.");
@@ -27,24 +27,24 @@ public final class NPCData {
         this.deltaInMillis = deltaInMillis;
     }
 
-    public Action getActiveAction(){
-        return actionStack.peekLast();
+    public ActivityType getActiveAction(){
+        return activityTypeStack.peekLast();
     }
 
-    public void addAction(Action action){
-        Objects.requireNonNull(action, "Action is null.");
-        if(actionStack.contains(action)){
+    public void addAction(ActivityType activityType){
+        Objects.requireNonNull(activityType, "Action is null.");
+        if(activityTypeStack.contains(activityType)){
             throw new IllegalArgumentException("Action already in the action stack.");
         }
-        actionStack.addLast(action);
+        activityTypeStack.addLast(activityType);
         resetDelta();
     }
 
     public void removeAction(){
-        if(actionStack.size() == 1){
+        if(activityTypeStack.size() == 1){
             throw new IllegalStateException("Action stack only has 1 action.");
         }
-        actionStack.removeLast();
+        activityTypeStack.removeLast();
     }
 
     public Direction getDirection(){

@@ -3,26 +3,9 @@ package com.mygdx.game.WeekSchedule;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 public interface IWeekSchedule {
-
-    /**
-     * @return The map of {@link Day}s to {@link Schedule}s.
-     */
-    Map<Day, Schedule> schedules();
-
-    /**
-     * Fetches and returns the {@link Schedule} for the given {@link Day}, if it exists.
-     *
-     * @param day The {@link Day}. Cannot be null.
-     *
-     * @return The {@link Schedule}.
-     * @throws NoSuchElementException If no mapping for the given {@link Day} exists.
-     * @throws NullPointerException If the {@link Day} is null.
-     */
-    Schedule getDaySchedule(Day day);
 
     /**
      * Returns whether there is an {@link Activity} at the given {@link Time} in the {@link Schedule}

@@ -29,10 +29,6 @@ public final class Schedule {
         return activities.stream().map(Activity::time).distinct().count() < activities.size();
     }
 
-    public List<Activity> activities(){
-        return new ArrayList<>(activities);
-    }
-
     public boolean hasActivityAt(Time time){
         Objects.requireNonNull(time, "Time is null.");
         return activities.stream().anyMatch(activity -> activity.time().compareTo(time) == 0);

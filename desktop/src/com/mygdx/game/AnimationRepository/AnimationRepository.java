@@ -1,4 +1,4 @@
-package com.mygdx.game.TextureSelector;
+package com.mygdx.game.AnimationRepository;
 
 import java.util.HashMap;
 import java.util.Map;

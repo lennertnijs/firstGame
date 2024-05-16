@@ -20,31 +20,20 @@ public final class WeekSchedule implements IWeekSchedule{
         this.schedules = new HashMap<>(schedules);
     }
 
-    public Map<Day, Schedule> schedules(){
-        return new HashMap<>(schedules);
-    }
-
-    public Schedule getDaySchedule(Day day){
-        validateDay(day);
-        return schedules.get(day);
-    }
-
     public boolean hasActivity(Day day, Time time){
-        validateDay(day);
+        Objects.requireNonNull(day, "Day is null.");
+        if(!schedules.containsKey(day))
+            throw new NoSuchElementException("No Schedule found for this Day.");
         Objects.requireNonNull(time, "Time is null.");
         return schedules.get(day).hasActivityAt(time);
     }
 
     public Activity getActivity(Day day, Time time){
-        validateDay(day);
-        Objects.requireNonNull(time, "Time is null.");
-        return schedules.get(day).getActivityAt(time);
-    }
-
-    private void validateDay(Day day){
         Objects.requireNonNull(day, "Day is null.");
         if(!schedules.containsKey(day))
             throw new NoSuchElementException("No Schedule found for this Day.");
+        Objects.requireNonNull(time, "Time is null.");
+        return schedules.get(day).getActivityAt(time);
     }
 
     @Override

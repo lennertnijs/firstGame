@@ -1,4 +1,4 @@
-package com.mygdx.game.TextureSelector;
+package com.mygdx.game.AnimationRepository;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Util.Dimensions;
@@ -6,7 +6,7 @@ import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 
-public final class Frame{
+public final class Frame implements IFrame{
 
     private final TextureRegion textureRegion;
     /**

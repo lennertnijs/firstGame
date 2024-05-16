@@ -2,7 +2,7 @@ package TextureSelector;
 
 import com.mygdx.game.NPC.NPCData;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.WeekSchedule.Action;
+import com.mygdx.game.WeekSchedule.ActivityType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class NPCDataTest {
 
-    private final List<Action> actionList = Arrays.asList(Action.IDLING, Action.WALKING);
+    private final List<ActivityType> activityTypeList = Arrays.asList(ActivityType.IDLING, ActivityType.WALKING);
     private final Direction direction = Direction.UP;
     private final double delta = 1000d;
     private NPCData selectionData;
 
     @BeforeEach
     public void initialise(){
-        selectionData = new NPCData(actionList, direction, delta);
+        selectionData = new NPCData(activityTypeList, direction, delta);
     }
 
     @Test
@@ -34,7 +34,7 @@ public class NPCDataTest {
     @Test
     public void testConstructorWithNullInActionList(){
         assertThrows(NullPointerException.class,
-                () -> new NPCData(Arrays.asList(Action.MINING, null), direction, delta));
+                () -> new NPCData(Arrays.asList(ActivityType.MINING, null), direction, delta));
     }
 
     @Test
@@ -46,24 +46,24 @@ public class NPCDataTest {
     @Test
     public void testConstructorWithNullDirection(){
         assertThrows(NullPointerException.class,
-                () -> new NPCData(actionList, null, delta));
+                () -> new NPCData(activityTypeList, null, delta));
     }
 
     @Test
     public void testConstructorWithNegativeDelta(){
         assertThrows(IllegalArgumentException.class,
-                () -> new NPCData(actionList, direction, -1));
+                () -> new NPCData(activityTypeList, direction, -1));
     }
 
     @Test
     public void testGetActiveAction(){
-        assertEquals(Action.WALKING, selectionData.getActiveAction());
+        assertEquals(ActivityType.WALKING, selectionData.getActiveAction());
     }
 
     @Test
     public void testAddAction(){
-        selectionData.addAction(Action.RUNNING);
-        assertEquals(Action.RUNNING, selectionData.getActiveAction());
+        selectionData.addAction(ActivityType.RUNNING);
+        assertEquals(ActivityType.RUNNING, selectionData.getActiveAction());
     }
 
     @Test
@@ -75,13 +75,13 @@ public class NPCDataTest {
     @Test
     public void testAddActionDuplicate(){
         assertThrows(IllegalArgumentException.class,
-                () -> selectionData.addAction(Action.WALKING));
+                () -> selectionData.addAction(ActivityType.WALKING));
     }
 
     @Test
     public void testRemoveAction(){
         selectionData.removeAction();
-        assertEquals(Action.IDLING, selectionData.getActiveAction());
+        assertEquals(ActivityType.IDLING, selectionData.getActiveAction());
     }
 
     @Test

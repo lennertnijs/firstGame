@@ -1,7 +1,7 @@
 package TextureSelector;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.TextureSelector.Frame;
+import com.mygdx.game.AnimationRepository.Frame;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Vector;
 import org.junit.jupiter.api.Test;

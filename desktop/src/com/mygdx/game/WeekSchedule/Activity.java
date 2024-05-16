@@ -9,15 +9,12 @@ public final class Activity{
 
     private final Location location;
     private final Time time;
-    private final Action type;
+    private final ActivityType type;
 
-    public Activity(Location location, Time time, Action type){
-        Objects.requireNonNull(location, "Location is null.");
-        Objects.requireNonNull(time, "Time is null.");
-        Objects.requireNonNull(type, "Activity type is null.");
-        this.location = location;
-        this.time = time;
-        this.type = type;
+    public Activity(Location location, Time time, ActivityType type){
+        this.location = Objects.requireNonNull(location, "Location is null.");
+        this.time = Objects.requireNonNull(time, "Time is null.");
+        this.type = Objects.requireNonNull(type, "Activity type is null.");
     }
 
     public Location location(){
@@ -28,7 +25,7 @@ public final class Activity{
         return time;
     }
 
-    public Action type(){
+    public ActivityType type(){
         return type;
     }
 
