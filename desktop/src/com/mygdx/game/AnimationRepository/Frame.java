@@ -6,7 +6,7 @@ import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 
-public final class Frame implements IFrame{
+public final class Frame{
 
     private final TextureRegion textureRegion;
     /**

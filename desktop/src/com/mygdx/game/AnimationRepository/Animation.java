@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public final class Animation{
 
-    private final List<IFrame> frames;
+    private final List<Frame> frames;
     private final float durationInMillis;
 
-    public Animation(List<IFrame> frames, float durationInMillis){
+    public Animation(List<Frame> frames, float durationInMillis){
         Objects.requireNonNull(frames, "List is null.");
         if(frames.contains(null)) {
             throw new NullPointerException("List contains null.");
@@ -27,7 +27,7 @@ public final class Animation{
     /**
      * Loops around.
      */
-    public IFrame getFrame(double deltaInMillis){
+    public Frame getFrame(double deltaInMillis){
         if(deltaInMillis < 0) {
             throw new IllegalArgumentException("Delta is negative.");
         }

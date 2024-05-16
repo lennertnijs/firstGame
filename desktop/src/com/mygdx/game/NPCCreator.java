@@ -118,7 +118,7 @@ public class NPCCreator {
     }
 
     private static Animation loadAnimation(TextureAtlas atlas, String name, int amountOfFrames){
-        List<IFrame> frames = new ArrayList<>();
+        List<Frame> frames = new ArrayList<>();
         for(int i = 1; i <= amountOfFrames; i++){
             Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).build();
             frames.add(frame);
