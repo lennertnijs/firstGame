@@ -13,6 +13,7 @@ public abstract class Character extends AnimatedGameObject {
     private final String name;
     private final IInventoryManager inventoryManager;
 
+
     public Character(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, Vector translation
             , String name, IInventoryManager inventoryManager) {
         super(textureRegion, position, dimensions, map, translation);
