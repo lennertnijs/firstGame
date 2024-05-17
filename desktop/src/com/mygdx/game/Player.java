@@ -15,7 +15,7 @@ public final class Player extends Character{
     // add player stats
     public Player(TextureRegion textureRegion, Point position, Dimensions dimensions, String map,
                   String name, IInventoryManager inventoryManager){
-        super(textureRegion, position, dimensions, map,new Vector(5, 6), name ,inventoryManager);
+        super(textureRegion, position, dimensions, map,new Vector(5, 6), name ,null, inventoryManager);
     }
 
     public void move(double delta){
