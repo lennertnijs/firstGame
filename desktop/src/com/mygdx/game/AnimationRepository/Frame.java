@@ -11,7 +11,7 @@ public final class Frame{
     private final TextureRegion textureRegion;
     /**
      * The translation vector. Used for when a Frame is not in the bottom-left corner of the animation.
-     * The vector represents the translation from that bottom-left to the bottom-left of this frame's texture region.
+     * The vector represents the translation from that bottom-left to the bottom-left of this frame's texture region. 
      */
     private final Vector translation;
     private final Dimensions dimensions;
