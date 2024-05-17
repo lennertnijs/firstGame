@@ -1,5 +1,8 @@
 package com.mygdx.game.AnimationRepository;
 
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.WeekSchedule.ActivityType;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -17,7 +20,10 @@ public final class AnimationRepository{
         this.map = new HashMap<>(map);
     }
 
-    public Animation get(Key key){
+    public Animation get(ActivityType activityType, Direction direction){
+        Objects.requireNonNull(activityType, "ActivityType is null.");
+        Objects.requireNonNull(direction, "Direction is null.");
+        Key key = new Key(activityType, direction);
         Objects.requireNonNull(key, "Animation key is null.");
         if(!map.containsKey(key)) {
             throw new NoSuchElementException("No mapping found.");

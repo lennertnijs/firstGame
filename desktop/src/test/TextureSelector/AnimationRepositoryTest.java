@@ -13,6 +13,7 @@ import java.util.*;
 
 import static com.mygdx.game.Util.Direction.UP;
 import static com.mygdx.game.WeekSchedule.ActivityType.RUNNING;
+import static com.mygdx.game.WeekSchedule.ActivityType.WALKING;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationRepositoryTest {
@@ -46,20 +47,25 @@ public class AnimationRepositoryTest {
 
     @Test
     public void testGet(){
-        assertEquals(animation, repository.get(key));
+        assertEquals(animation, repository.get(RUNNING, UP));
     }
 
     @Test
-    public void testGetWithNull(){
+    public void testGetWithNullActivityType(){
         assertThrows(NullPointerException.class,
-                () -> repository.get(null));
+                () -> repository.get(null, UP));
+    }
+
+    @Test
+    public void testGetWithNullDirection(){
+        assertThrows(NullPointerException.class,
+                () -> repository.get(RUNNING, null));
     }
 
     @Test
     public void testGetNoMapping(){
-        Key noMapKey = new Key(ActivityType.WALKING, Direction.RIGHT);
         assertThrows(NoSuchElementException.class,
-                () -> repository.get(noMapKey));
+                () -> repository.get(WALKING, UP));
     }
 
     @Test
