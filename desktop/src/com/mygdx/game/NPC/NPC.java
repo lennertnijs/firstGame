@@ -1,13 +1,11 @@
 package com.mygdx.game.NPC;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.AnimationRepository.Frame;
 import com.mygdx.game.Character;
 import com.mygdx.game.Dialogue.IDialogueData;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
-import com.mygdx.game.AnimationRepository.Key;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Activity;
 import com.mygdx.game.WeekSchedule.ActivityType;
@@ -19,25 +17,24 @@ public final class NPC extends Character {
     private final INavigationData navigationData;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
-    private final AnimationRepository animationRepository;
     private final NPCStats stats;
     private NPCData metaData;
 
 
     //todo add a damn builder
-    public NPC(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, String name, Vector translation, AnimationRepository animationRepository, IWeekSchedule weekSchedule,
+    public NPC(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, String name,
+               Vector translation, AnimationRepository animationRepository, IWeekSchedule weekSchedule,
                INavigationData navigationData, IDialogueData dialogueData, NPCStats stats, IInventoryManager manager){
-        super(textureRegion, position, dimensions, map, translation, name, manager);
+        super(textureRegion, position, dimensions, map, translation, name, animationRepository, manager);
         this.weekSchedule = weekSchedule;
         this.navigationData = navigationData;
         this.dialogueData = dialogueData;
-        this.animationRepository = animationRepository;
         this.stats = stats;
     }
 
     public void update(Day day, Time time, double delta){
         updateSchedule(day, time);
-        updateTexture();
+        updateTexture(metaData.getActiveAction(), metaData.getDirection(), metaData.getDelta());
         metaData.increaseDelta(delta);
     }
 
@@ -67,14 +64,6 @@ public final class NPC extends Character {
         }
         metaData.addAction(activity.type());
         metaData.addAction(ActivityType.WALKING);
-    }
-
-    public void updateTexture(){
-        Key key = new Key(metaData.getActiveAction(), metaData.getDirection()); // do this in the data class?
-        Frame frame = animationRepository.get(key).getFrame(metaData.getDelta());
-        setTexture(frame.textureRegion());
-        setDimensions(frame.dimensions());
-        setPosition(getPosition());
     }
 
     public void handleInputLine(String line){
