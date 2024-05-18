@@ -11,6 +11,8 @@ import com.mygdx.game.WeekSchedule.Activity;
 import com.mygdx.game.WeekSchedule.ActivityType;
 import com.mygdx.game.WeekSchedule.IWeekSchedule;
 
+import java.util.Arrays;
+
 
 public final class NPC extends Character {
 
@@ -30,6 +32,7 @@ public final class NPC extends Character {
         this.navigationData = navigationData;
         this.dialogueData = dialogueData;
         this.stats = stats;
+        metaData = new NPCData(Arrays.asList(ActivityType.IDLING), Direction.RIGHT, 0);
     }
 
     public void update(Day day, Time time, double delta){

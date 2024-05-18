@@ -37,7 +37,7 @@ public final class InventoryManager implements IInventoryManager{
         ItemTemplate template = repository.getFromName(name);
         if(template instanceof ToolTemplate){
             ToolTemplate template1 = (ToolTemplate) repository.getFromName(name);
-            return new Tool(name, template1.efficiency(), template1.maxDurability(), ToolType.PICKAXE);
+            return new Tool(name, template1.efficiency(), template1.maxDurability(), template1.maxDurability(), ToolType.PICKAXE);
         }
         return new Item(name, template.stackSize(), amount);
     }

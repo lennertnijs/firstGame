@@ -70,6 +70,29 @@ public class NPCCreator {
                 inventoryManager);
     }
 
+    public static Player createPlayer(){
+        TextureRegion idleDown = atlas.findRegion("idle_down");
+        Point position = new Point(500, 500);
+        Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
+        String map = "Map";
+
+        String name = "Gilbert";
+
+        AnimationRepository animRepo = new AnimationRepository(loadAnimationMap());
+        IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
+                1, new ItemTemplateRepository());
+
+
+        return new Player(idleDown,
+                position,
+                dimensions,
+                map,
+                name,
+                animRepo,
+                inventoryManager
+                );
+    }
+
     private static Map<Key, Animation> loadAnimationMap(){
         Map<Key, Animation> map = new HashMap<>();
 

@@ -11,52 +11,53 @@ public class ToolTest {
 
     private final String name = "Stone";
     private final int efficiency = 15;
+    private final int maxDurability = 2500;
     private final int durability = 2000;
     private final ToolType type = ToolType.PICKAXE;
     private Tool tool;
 
     @BeforeEach
     public void initialise(){
-        tool = new Tool(name, efficiency, durability, type);
+        tool = new Tool(name, efficiency, maxDurability, durability, type);
     }
 
     @Test
     public void testConstructorWithNullName(){
         assertThrows(NullPointerException.class,
-                () -> new Tool(null, efficiency, durability, type));
+                () -> new Tool(null, efficiency, maxDurability, durability, type));
     }
 
     @Test
     public void testConstructorWithNegativeEfficiency(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Tool(name, -1, durability, type));
+                () -> new Tool(name, -1, maxDurability, durability, type));
     }
 
     @Test
     public void testConstructorWithZeroEfficiency(){
-        new Tool(name, 0, durability, type); // allowed
+        new Tool(name, 0, maxDurability, durability, type); // allowed
     }
 
     @Test
     public void testConstructorWithNegativeDurability(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Tool(name, efficiency, -1, type));
+                () -> new Tool(name, efficiency, maxDurability, -1, type));
     }
 
     @Test
     public void testConstructorWithZeroDurability(){
-        new Tool(name, efficiency, 0, type); // allowed
+        new Tool(name, efficiency, maxDurability,0, type); // allowed
     }
 
     @Test
     public void testConstructorWithNullType(){
         assertThrows(NullPointerException.class,
-                () -> new Tool(name, efficiency, durability, null));
+                () -> new Tool(name, efficiency, maxDurability, durability, null));
     }
 
     @Test
     public void testGetEfficiency(){
-        assertEquals(15, tool.getEfficiency());
+        assertEquals(15, tool.efficiency());
     }
 
     @Test
@@ -66,7 +67,7 @@ public class ToolTest {
 
     @Test
     public void testGetToolType(){
-        assertEquals(type, tool.getType());
+        assertEquals(type, tool.type());
     }
 
     @Test
@@ -87,27 +88,5 @@ public class ToolTest {
     public void testSetDurabilityToZero(){
         tool.setDurability(0);
         assertEquals(0, tool.getDurability());
-    }
-
-    @Test
-    public void testDecrementDurability(){
-        tool.decrementDurability();
-        assertEquals(1999, tool.getDurability());
-    }
-
-    @Test
-    public void testDecrementDurabilityWhenAtZero(){
-        tool.setDurability(0);
-        assertThrows(IllegalArgumentException.class,
-                () -> tool.decrementDurability());
-    }
-
-    @Test
-    public void testHasDurabilityLeft(){
-        assertTrue(tool.hasDurabilityLeft());
-        tool.setDurability(0);
-        assertFalse(tool.hasDurabilityLeft());
-        tool.setDurability(1);
-        assertTrue(tool.hasDurabilityLeft());
     }
 }

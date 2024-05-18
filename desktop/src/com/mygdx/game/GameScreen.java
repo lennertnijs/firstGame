@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -20,11 +21,9 @@ public class GameScreen implements Screen {
     private final Clock gameClock;
     private final SpriteDrawer drawer;
     private final GameObjectRepository repository;
+    private final GameController gameController;
 
     public GameScreen(MyGame game) {
-        // Implements InputProcessor to make an input handler.
-        // Gdx.input.setInputProcessor(gamePlayInputProcessor); to then set it.
-
         // to play music
         // rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
         // rainMusic.setLooping(true);
@@ -39,11 +38,14 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         drawer = new SpriteDrawer(game);
-        repository = new GameObjectRepository(Arrays.asList(npc));
+        repository = new GameObjectRepository(Arrays.asList(npc), NPCCreator.createPlayer());
+        gameController = new GameController(repository, gameClock, game);
+        Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
     }
 
     /**
      * This method is executed with every frame.
+     *         // camera.position.set(0, 0, 0);
      */
     @Override
     public void render(float delta) {
@@ -51,12 +53,10 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-        npc.update(gameClock.getDay(), gameClock.getTime(), gameClock.update());
-        npc.move(1);
         game.batch.begin();
-        // camera.position.set(0, 0, 0);
         game.font.draw(game.batch, gameClock.getTime().toString(), 500, 500);
         drawer.draw(npc);
+        gameController.update();
         game.batch.end();
     }
 

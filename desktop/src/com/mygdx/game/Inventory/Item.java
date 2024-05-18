@@ -21,22 +21,22 @@ public class Item {
         this.amount = amount;
     }
 
-    public String name(){
+    public final String name(){
         return name;
     }
 
-    public int maxStackSize(){
+    public final int maxStackSize(){
         return maxStackSize;
     }
 
-    public int getAmount(){
+    public final int getAmount(){
         return amount;
     }
 
     /**
      * @return The amount of increase left.
      */
-    public int increaseAmount(int increase){
+    public final int increaseAmount(int increase){
         if(increase <= 0) {
             throw new IllegalArgumentException("Increase is negative or 0.");
         }
@@ -48,7 +48,7 @@ public class Item {
     /**
      * @return The amount of decrease left.
      */
-    public int decreaseAmount(int decrease){
+    public final int decreaseAmount(int decrease){
         if(decrease <= 0) {
             throw new IllegalArgumentException("Decrease is negative or 0.");
         }
