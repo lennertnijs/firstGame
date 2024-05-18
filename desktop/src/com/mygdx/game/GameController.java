@@ -41,6 +41,7 @@ public class GameController {
             if(g.equals(gameObject)) continue;
             if(g.getHitBox().overlaps(gameObject.getHitBox()))
                 return true;
+            // if other item is the dropped item -> inventory.add(Item item);
         }
         return false;
     }
