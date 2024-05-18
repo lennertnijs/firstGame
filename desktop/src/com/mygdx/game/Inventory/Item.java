@@ -5,28 +5,28 @@ import java.util.Objects;
 public class Item {
 
     private final String name;
-    private final int stackSize;
+    private final int maxStackSize;
     private int amount;
 
-    public Item(String name, int stackSize, int amount){
+    public Item(String name, int maxStackSize, int amount){
         Objects.requireNonNull(name, "Name is null.");
-        if(stackSize <= 0) {
-            throw new IllegalArgumentException("Stack size is negative or 0.");
+        if(maxStackSize <= 0) {
+            throw new IllegalArgumentException("Max stack size is negative or 0.");
         }
-        if(amount <= 0 || amount > stackSize) {
-            throw new IllegalArgumentException("Amount is smaller or bigger than the stack size..");
+        if(amount <= 0 || amount > maxStackSize) {
+            throw new IllegalArgumentException("Amount is negative, zero or bigger than the max stack size..");
         }
         this.name = name;
-        this.stackSize = stackSize;
+        this.maxStackSize = maxStackSize;
         this.amount = amount;
     }
 
-    public String getName(){
+    public String name(){
         return name;
     }
 
-    public int getStackSize(){
-        return stackSize;
+    public int maxStackSize(){
+        return maxStackSize;
     }
 
     public int getAmount(){
@@ -40,7 +40,7 @@ public class Item {
         if(increase <= 0) {
             throw new IllegalArgumentException("Increase is negative or 0.");
         }
-        int actualIncrease = Math.min(increase, stackSize - amount);
+        int actualIncrease = Math.min(increase, maxStackSize - amount);
         this.amount += actualIncrease;
         return increase - actualIncrease;
     }
@@ -57,8 +57,8 @@ public class Item {
         return decrease - actualDecrease;
     }
 
-    public boolean amountIsZero(){
-        return amount == 0;
+    public Item copy(){
+        return new Item(name, maxStackSize, amount);
     }
 
     @Override
@@ -67,23 +67,19 @@ public class Item {
             return false;
         }
         Item item = (Item) other;
-        return name.equals(item.name) && stackSize == item.stackSize && amount == item.amount;
+        return name.equals(item.name) && maxStackSize == item.maxStackSize && amount == item.amount;
     }
 
     @Override
     public int hashCode(){
         int result = name.hashCode();
-        result = result * 31 + stackSize;
+        result = result * 31 + maxStackSize;
         result = result * 31 + amount;
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Item[name=%s, stackSize=%d, amount=%d]", name, stackSize, amount);
-    }
-
-    public Item copy(){
-        return new Item(name, stackSize, amount);
+        return String.format("Item[name=%s, maxStackSize=%d, amount=%d]", name, maxStackSize, amount);
     }
 }

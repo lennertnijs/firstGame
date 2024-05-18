@@ -45,7 +45,7 @@ public final class Inventory {
             if(count >= amount){
                 return true;
             }
-            if(item.getName().equals(name)){
+            if(item.name().equals(name)){
                 count += item.getAmount();
             }
         }
@@ -59,7 +59,7 @@ public final class Inventory {
      */
     public int addItem(Item item){
         Objects.requireNonNull(item, "Item is null.");
-        String name = item.getName();
+        String name = item.name();
         int amount = item.getAmount();
 
         int index = findIndexOfSlotNotFullyFilled(name);
@@ -70,8 +70,8 @@ public final class Inventory {
 
         int indexOfEmpty = findIndexOfEmptySlot();
         while(indexOfEmpty != -1 && amount > 0) {
-            int itemAmount = Math.min(amount, item.getStackSize());
-            items[indexOfEmpty] = new Item(name, item.getStackSize(), itemAmount);
+            int itemAmount = Math.min(amount, item.maxStackSize());
+            items[indexOfEmpty] = new Item(name, item.maxStackSize(), itemAmount);
             amount -= itemAmount;
         }
 
@@ -90,7 +90,7 @@ public final class Inventory {
             if(amount == 0){
                 return;
             }
-            if(item.getName().equals(name)){
+            if(item.name().equals(name)){
                 amount = item.decreaseAmount(amount);
             }
         }
@@ -110,7 +110,7 @@ public final class Inventory {
 
     private int findIndexOfSlotNotFullyFilled(String name){
         for (int i = 0; i < items.length; i++) {
-            if(items[i] != null && items[i].getName().equals(name) && items[i].getAmount() < items[i].getStackSize()) {
+            if(items[i] != null && items[i].name().equals(name) && items[i].getAmount() < items[i].maxStackSize()) {
                 return i;
             }
         }
@@ -119,7 +119,7 @@ public final class Inventory {
 
     private void replaceEmptyItemsWithNull(){
         for(int i = 0; i < items.length; i++){
-            if(items[i].amountIsZero()) {
+            if(items[i].getAmount() == 0) {
                 items[i] = null;
             }
         }

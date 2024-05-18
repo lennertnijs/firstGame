@@ -88,6 +88,6 @@ public final class Tool extends Item{
     }
 
     public Tool copy(){
-        return new Tool(getName(), efficiency, durability, type);
+        return new Tool(super.name(), efficiency, durability, type);
     };
 }

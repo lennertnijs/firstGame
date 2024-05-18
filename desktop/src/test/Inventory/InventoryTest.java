@@ -202,11 +202,7 @@ public class InventoryTest {
 
     @Test
     public void testToString(){
-        String expected = "Inventory{Items=[" +
-                "Item[name=Wood, stackSize=64, amount=16], " +
-                "Item[name=Stone, stackSize=64, amount=48], " +
-                "Item[name=Wood, stackSize=64, amount=16]" +
-                "]}";
+        String expected = "Inventory{Items=[Item[name=Wood, maxStackSize=64, amount=16], Item[name=Stone, maxStackSize=64, amount=48], Item[name=Wood, maxStackSize=64, amount=16]]}";
         assertEquals(expected, inventory.toString());
     }
 

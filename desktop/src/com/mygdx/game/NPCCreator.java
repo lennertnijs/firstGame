@@ -11,7 +11,7 @@ import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.InventoryManager;
 import com.mygdx.game.Inventory.ItemTemplateRepository;
 import com.mygdx.game.NPC.NPC;
-import com.mygdx.game.NPC.NPCStats;
+import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.INavigationData;
@@ -49,7 +49,7 @@ public class NPCCreator {
 
         IDialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 
-        NPCStats stats = NPCStats.builder().health(500).defense(500).offense(500).speed(10).build();
+        Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
 
         IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
                 1, new ItemTemplateRepository());

@@ -1,6 +1,6 @@
 package com.mygdx.game.NPC;
 
-public final class NPCStats {
+public final class Stats {
 
     public static int MIN_SPEED = 10;
     private int health;
@@ -8,7 +8,7 @@ public final class NPCStats {
     private int defense;
     private int speed;
 
-    private NPCStats(Builder builder){
+    private Stats(Builder builder){
         this.health = builder.health;
         this.offense = builder.offense;
         this.defense = builder.defense;
@@ -62,10 +62,10 @@ public final class NPCStats {
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof NPCStats)){
+        if(!(other instanceof Stats)){
             return false;
         }
-        NPCStats stats = (NPCStats) other;
+        Stats stats = (Stats) other;
         return health == stats.health &&
                 offense == stats.offense &&
                 defense == stats.defense &&
@@ -120,7 +120,7 @@ public final class NPCStats {
             return this;
         }
 
-        public NPCStats build(){
+        public Stats build(){
             if(health <= 0)
                 throw new IllegalArgumentException("The health of an npc cannot be negative or 0.");
             if(offense < 0)
@@ -130,7 +130,7 @@ public final class NPCStats {
             if(speed < MIN_SPEED){
                 throw new IllegalArgumentException("The speed of an npc cannot be smaller than MIN_NPC_SPEED.");
             }
-            return new NPCStats(this);
+            return new Stats(this);
         }
 
     }

@@ -56,12 +56,12 @@ public class ItemTest {
 
     @Test
     public void testGetName(){
-        assertEquals(name, item.getName());
+        assertEquals(name, item.name());
     }
 
     @Test
     public void testGetStackSize(){
-        assertEquals(stackSize, item.getStackSize());
+        assertEquals(stackSize, item.maxStackSize());
     }
 
     @Test
@@ -71,11 +71,14 @@ public class ItemTest {
 
     @Test
     public void testIncreaseAmount(){
-        item.increaseAmount(30);
-        assertEquals(62, item.getAmount());
         int increaseLeft = item.increaseAmount(30);
+        assertEquals(62, item.getAmount());
+        assertEquals(0, increaseLeft);
+
+        increaseLeft = item.increaseAmount(30);
         assertEquals(64, item.getAmount());
-        assertEquals(30 - 2, increaseLeft);
+        assertEquals(28, increaseLeft);
+
         increaseLeft = item.increaseAmount(30);
         assertEquals(64, item.getAmount());
         assertEquals(30, increaseLeft);
@@ -95,11 +98,14 @@ public class ItemTest {
 
     @Test
     public void testDecreaseAmount(){
-        item.decreaseAmount(30);
-        assertEquals(32 - 30, item.getAmount());
         int decreaseLeft = item.decreaseAmount(30);
+        assertEquals(2, item.getAmount());
+        assertEquals(0, decreaseLeft);
+
+        decreaseLeft = item.decreaseAmount(30);
         assertEquals(0, item.getAmount());
-        assertEquals(30 - 2, decreaseLeft);
+        assertEquals(28, decreaseLeft);
+
         decreaseLeft = item.decreaseAmount(30);
         assertEquals(0, item.getAmount());
         assertEquals(30, decreaseLeft);
@@ -118,12 +124,11 @@ public class ItemTest {
     }
 
     @Test
-    public void testAmountIsZero(){
-        assertFalse(item.amountIsZero());
-        item.decreaseAmount(32);
-        assertTrue(item.amountIsZero());
-        item.increaseAmount(1);
-        assertFalse(item.amountIsZero());
+    public void testCopy(){
+        Item copy = item.copy();
+        assertEquals(item, copy);
+        copy.increaseAmount(1);
+        assertNotEquals(item, copy);
     }
 
     @Test
@@ -131,7 +136,6 @@ public class ItemTest {
         Item item1 = new Item(name, stackSize, amount);
         Item item2 = new Item(name, stackSize, amount);
         Item item3 = new Item(name, stackSize, amount);
-        Item diffItem = new Item(name, stackSize, amount/2);
         // reflexive
         assertEquals(item1, item1);
         // symmetrical
@@ -141,8 +145,14 @@ public class ItemTest {
         assertEquals(item1, item2);
         assertEquals(item2, item3);
         assertEquals(item1, item3);
+
         // not equals
-        assertNotEquals(item1, diffItem);
+        Item diffName = new Item("new name", stackSize, amount);
+        Item diffStackSize = new Item(name, 2 * stackSize, amount);
+        Item diffAmount = new Item(name, stackSize, 2 * amount);
+        assertNotEquals(item1, diffName);
+        assertNotEquals(item1, diffStackSize);
+        assertNotEquals(item1, diffAmount);
         assertNotEquals(item1, new Object());
         assertNotEquals(item1, null);
     }
@@ -152,7 +162,6 @@ public class ItemTest {
         Item item1 = new Item(name, stackSize, amount);
         Item item2 = new Item(name, stackSize, amount);
         Item item3 = new Item(name, stackSize, amount);
-        Item diffItem = new Item(name, stackSize, amount/2);
         // reflexive
         assertEquals(item1.hashCode(), item1.hashCode());
         // symmetrical
@@ -163,20 +172,17 @@ public class ItemTest {
         assertEquals(item2.hashCode(), item3.hashCode());
         assertEquals(item1.hashCode(), item3.hashCode());
         // not equals
-        assertNotEquals(item1.hashCode(), diffItem.hashCode());
+        Item diffName = new Item("new name", stackSize, amount);
+        Item diffStackSize = new Item(name, 2 * stackSize, amount);
+        Item diffAmount = new Item(name, stackSize, 2 * amount);
+        assertNotEquals(item1.hashCode(), diffName.hashCode());
+        assertNotEquals(item1.hashCode(), diffStackSize.hashCode());
+        assertNotEquals(item1.hashCode(), diffAmount.hashCode());
     }
 
     @Test
     public void testToString(){
-        assertNotNull(item.toString());
-    }
-
-    @Test
-    public void testCopy(){
-        Item copy = item.copy();
-        assertEquals(item, copy);
-        copy.increaseAmount(1);
-        assertNotEquals(item, copy);
-
+        String expected = "Item[name=Stone, maxStackSize=64, amount=32]";
+        assertEquals(expected, item.toString());
     }
 }

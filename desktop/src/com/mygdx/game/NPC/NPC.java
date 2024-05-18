@@ -17,14 +17,14 @@ public final class NPC extends Character {
     private final INavigationData navigationData;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
-    private final NPCStats stats;
+    private final Stats stats;
     private NPCData metaData;
 
 
     //todo add a damn builder
     public NPC(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, String name,
                Vector translation, AnimationRepository animationRepository, IWeekSchedule weekSchedule,
-               INavigationData navigationData, IDialogueData dialogueData, NPCStats stats, IInventoryManager manager){
+               INavigationData navigationData, IDialogueData dialogueData, Stats stats, IInventoryManager manager){
         super(textureRegion, position, dimensions, map, translation, name, animationRepository, manager);
         this.weekSchedule = weekSchedule;
         this.navigationData = navigationData;
