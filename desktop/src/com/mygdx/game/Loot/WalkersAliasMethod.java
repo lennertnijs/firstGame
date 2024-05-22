@@ -3,28 +3,28 @@ package com.mygdx.game.Loot;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class WalkersAliasMethod {
+public final class WalkersAliasMethod<T> {
 
     public WalkersAliasMethod(){
     }
 
 
-    public List<Bucket> createBuckets(List<Loot> loots, List<Double> probabilities){
+    public List<Bucket<T>> createBuckets(List<T> loots, List<Double> probabilities){
         double average = 1d / probabilities.size();
-        List<Bucket> buckets = new ArrayList<>();
+        List<Bucket<T>> buckets = new ArrayList<>();
         for(int i = 0; i < loots.size(); i++){
-            buckets.add(new Bucket(loots.get(i), probabilities.get(i)));
+            buckets.add(new Bucket<>(loots.get(i), probabilities.get(i)));
         }
         return buckets;
     }
 
-    public List<Bucket> walkersAlias(List<Loot> loots, List<Double> probabilities){
-        List<Bucket> buckets = createBuckets(loots, probabilities);
-        List<Bucket> underFull = new ArrayList<>();
-        List<Bucket> overFull = new ArrayList<>();
-        List<Bucket> full = new ArrayList<>();
+    public List<Bucket<T>> walkersAlias(List<T> loots, List<Double> probabilities){
+        List<Bucket<T>> buckets = createBuckets(loots, probabilities);
+        List<Bucket<T>> underFull = new ArrayList<>();
+        List<Bucket<T>> overFull = new ArrayList<>();
+        List<Bucket<T>> full = new ArrayList<>();
         double average = 1d / probabilities.size();
-        for(Bucket bucket : buckets){
+        for(Bucket<T> bucket : buckets){
             double summed = bucket.getFirstProbability() + bucket.getSecondProbability();
             if(summed == average){
                 full.add(bucket);
@@ -37,8 +37,8 @@ public final class WalkersAliasMethod {
             }
         }
         while(!underFull.isEmpty()){
-            Bucket b1 = underFull.get(0);
-            Bucket b2 = overFull.get(0);
+            Bucket<T> b1 = underFull.get(0);
+            Bucket<T> b2 = overFull.get(0);
             double prob1 = b1.getFirstProbability();
             double prob2 = b2.getFirstProbability();
             double toAdd = average - prob1;
