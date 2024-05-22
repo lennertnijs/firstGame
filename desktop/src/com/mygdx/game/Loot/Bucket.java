@@ -1,46 +1,75 @@
 package com.mygdx.game.Loot;
 
-public final class Bucket {
+import java.util.Objects;
 
-    private Loot loot1;
-    private double probability1;
-    private Loot loot2;
-    private double probability2;
+public final class Bucket<T> {
 
-    public Bucket(Loot loot1, double prob1, Loot loot2, double prob2){
-        this.loot1 = loot1;
-        this.probability1 = prob1;
-        this.loot2 = loot2;
-        this.probability2 = prob2;
-    }
+    private T firstOption;
+    private double firstProbability;
+    private T secondOption;
+    private double secondProbability;
 
-    public double getProbability1(){
-        return probability1;
-    }
-
-    public Loot getLoot1(){
-        return loot1;
-    }
-
-    public void setLoot2(Loot loot){
-        this.loot2 = loot;
-    }
-
-    public void setProbability2(double d){
-        this.probability2 = d;
-    }
-
-    public double getSumOfProbabilities(){
-        return probability1 + probability2;
-    }
-
-    public Loot getRandom(){
-        int d = (int) Math.floor(Math.random() * (probability2 + probability1));
-        if(d <= probability1){
-            return loot1;
+    public Bucket(T firstOption, double firstProbability, T secondOption, double secondProbability){
+        this.firstOption = Objects.requireNonNull(firstOption, "First option is null.");
+        if(firstProbability < 0 || firstProbability > 1){
+            throw new IllegalArgumentException("First probability is negative or above 1.");
         }
-        return loot2;
-
+        this.firstProbability = firstProbability;
+        this.secondOption = Objects.requireNonNull(secondOption, "Second option is null.");
+        if(secondProbability < 0 || secondProbability > 1){
+            throw new IllegalArgumentException("Second probability is negative or above 1.");
+        }
+        this.secondProbability = secondProbability;
     }
 
+    public T getFirstOption(){
+        return firstOption;
+    }
+
+    public void setFirstOption(T option){
+        this.firstOption = Objects.requireNonNull(option, "Option is null.");
+    }
+
+    public double getFirstProbability(){
+        return firstProbability;
+    }
+
+    public void setFirstProbability(double probability){
+        if(probability < 0 || probability > 1){
+            throw new IllegalArgumentException("First probability is negative or above 1.");
+        }
+        this.firstProbability = probability;
+    }
+
+    public T getSecondOption(){
+        return secondOption;
+    }
+
+    public void setSecondOption(T option){
+        this.secondOption = Objects.requireNonNull(option, "Option is null.");
+    }
+
+    public double getSecondProbability(){
+        return secondProbability;
+    }
+
+    public void setSecondProbability(double probability){
+        if(probability < 0 || probability > 1){
+            throw new IllegalArgumentException("Second probability is negative or above 1.");
+        }
+        this.secondProbability = probability;
+    }
+
+    public double getSummedProbabilities(){
+        return firstProbability + secondProbability;
+    }
+
+
+    public T getRandomOption(){
+        double random = Math.random() * (firstProbability + secondProbability);
+        if(random <= firstProbability){
+            return firstOption;
+        }
+        return secondOption;
+    }
 }

@@ -14,7 +14,7 @@ public abstract class Character extends AnimatedGameObject {
 
     private final String name;
     private final AnimationRepository animationRepository;
-    private final IInventoryManager inventoryManager;
+    private final IInventoryManager inventoryManager; // todo probably wanna save item textures globally
     // stats
 
 

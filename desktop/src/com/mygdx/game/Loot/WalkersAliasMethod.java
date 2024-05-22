@@ -25,28 +25,28 @@ public final class WalkersAliasMethod {
         List<Bucket> full = new ArrayList<>();
         double average = 1d / probabilities.size();
         for(Bucket bucket : buckets){
-            if(bucket.getSumOfProbabilities() == average){
+            if(bucket.getSummedProbabilities() == average){
                 full.add(bucket);
             }
-            if(bucket.getSumOfProbabilities() > average){
+            if(bucket.getSummedProbabilities() > average){
                 overFull.add(bucket);
             }
-            if(bucket.getSumOfProbabilities() < average){
+            if(bucket.getSummedProbabilities() < average){
                 underFull.add(bucket);
             }
         }
         while(!underFull.isEmpty()){
             Bucket b1 = underFull.get(0);
             Bucket b2 = overFull.get(0);
-            double prob1 = b1.getProbability1();
-            double prob2 = b2.getProbability1();
+            double prob1 = b1.getFirstProbability();
+            double prob2 = b2.getFirstProbability();
             double toAdd = average - prob1;
-            b1.setProbability2(toAdd);
-            b1.setLoot2(b2.getLoot1());
-            b2.setProbability2(prob2 - toAdd);
+            b1.setSecondProbability(toAdd);
+            b1.setSecondOption(b2.getFirstOption());
+            b2.setSecondProbability(prob2 - toAdd);
             full.add(b1);
             underFull.remove(b1);
-            if(b2.getSumOfProbabilities() == average){
+            if(b2.getSummedProbabilities() == average){
                 overFull.remove(b2);
                 full.add(b2);
             }
