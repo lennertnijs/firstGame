@@ -13,7 +13,7 @@ public final class WalkersAliasMethod {
         double average = 1d / probabilities.size();
         List<Bucket> buckets = new ArrayList<>();
         for(int i = 0; i < loots.size(); i++){
-            buckets.add(new Bucket(loots.get(i), probabilities.get(i), null, 0));
+            buckets.add(new Bucket(loots.get(i), probabilities.get(i)));
         }
         return buckets;
     }
@@ -25,13 +25,14 @@ public final class WalkersAliasMethod {
         List<Bucket> full = new ArrayList<>();
         double average = 1d / probabilities.size();
         for(Bucket bucket : buckets){
-            if(bucket.getSummedProbabilities() == average){
+            double summed = bucket.getFirstProbability() + bucket.getSecondProbability();
+            if(summed == average){
                 full.add(bucket);
             }
-            if(bucket.getSummedProbabilities() > average){
+            if(summed > average){
                 overFull.add(bucket);
             }
-            if(bucket.getSummedProbabilities() < average){
+            if(summed < average){
                 underFull.add(bucket);
             }
         }
@@ -46,7 +47,7 @@ public final class WalkersAliasMethod {
             b2.setSecondProbability(prob2 - toAdd);
             full.add(b1);
             underFull.remove(b1);
-            if(b2.getSummedProbabilities() == average){
+            if(b2.getFirstProbability() + b2.getSecondProbability() == average){
                 overFull.remove(b2);
                 full.add(b2);
             }

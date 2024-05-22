@@ -14,6 +14,6 @@ public final class LootTable {
     public Loot getRandomLoot(){
         int d = (int) Math.floor(Math.random() * buckets.size());
         Bucket randomBucket = buckets.get(d);
-        return randomBucket.getLoot1();
+        return null;
     }
 }

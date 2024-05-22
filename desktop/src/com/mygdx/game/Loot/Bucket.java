@@ -9,18 +9,16 @@ public final class Bucket<T> {
     private T secondOption;
     private double secondProbability;
 
-    public Bucket(T firstOption, double firstProbability, T secondOption, double secondProbability){
+    public Bucket(T firstOption, double firstProbability){
         this.firstOption = Objects.requireNonNull(firstOption, "First option is null.");
-        if(firstProbability < 0 || firstProbability > 1){
-            throw new IllegalArgumentException("First probability is negative or above 1.");
+        if(firstProbability <= 0 || firstProbability > 1){
+            throw new IllegalArgumentException("p <= 0 || p > 1");
         }
         this.firstProbability = firstProbability;
-        this.secondOption = Objects.requireNonNull(secondOption, "Second option is null.");
-        if(secondProbability < 0 || secondProbability > 1){
-            throw new IllegalArgumentException("Second probability is negative or above 1.");
-        }
-        this.secondProbability = secondProbability;
+        this.secondOption = null;
+        this.secondProbability = 0;
     }
+
 
     public T getFirstOption(){
         return firstOption;
@@ -35,8 +33,8 @@ public final class Bucket<T> {
     }
 
     public void setFirstProbability(double probability){
-        if(probability < 0 || probability > 1){
-            throw new IllegalArgumentException("First probability is negative or above 1.");
+        if(probability <= 0 || probability > 1){
+            throw new IllegalArgumentException("p <= 0 || p > 1");
         }
         this.firstProbability = probability;
     }
@@ -54,20 +52,15 @@ public final class Bucket<T> {
     }
 
     public void setSecondProbability(double probability){
-        if(probability < 0 || probability > 1){
-            throw new IllegalArgumentException("Second probability is negative or above 1.");
+        if(probability <= 0 || probability > 1){
+            throw new IllegalArgumentException("p <= 0 || p > 1");
         }
         this.secondProbability = probability;
     }
 
-    public double getSummedProbabilities(){
-        return firstProbability + secondProbability;
-    }
-
-
     public T getRandomOption(){
         double random = Math.random() * (firstProbability + secondProbability);
-        if(random <= firstProbability){
+        if(random < firstProbability){
             return firstOption;
         }
         return secondOption;
