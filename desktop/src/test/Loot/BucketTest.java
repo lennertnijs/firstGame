@@ -111,8 +111,8 @@ public class BucketTest {
 
     @Test
     public void setSecondOption(){
-        bucket.setSecondOption("New option 2.");
-        assertEquals("New option 2.", bucket.getSecondOption());
+        bucket.setSecondOption(option2);
+        assertEquals(option2, bucket.getSecondOption());
     }
 
     @Test
@@ -123,8 +123,8 @@ public class BucketTest {
 
     @Test
     public void testSetSecondProbability(){
-        bucket.setSecondProbability(0.5d);
-        assertEquals(0.5d, bucket.getSecondProbability());
+        bucket.setSecondProbability(probability2);
+        assertEquals(probability2, bucket.getSecondProbability());
     }
 
     @Test
