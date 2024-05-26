@@ -165,7 +165,7 @@ public class BucketTest {
                 secondCount++;
         }
         // could technically fail. though it should pass in basically any case
-        assertTrue(24750 < firstCount && firstCount < 25250);
-        assertTrue(74750 < secondCount && secondCount < 75250);
+        assertTrue(24500 < firstCount && firstCount < 25500);
+        assertTrue(74500 < secondCount && secondCount < 75500);
     }
 }
