@@ -2,6 +2,7 @@ package General;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.General.GameObject;
+import com.mygdx.game.General.StaticGameObject;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Rectangle;
@@ -11,59 +12,46 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameObjectTest {
+public class StaticGameObjectTest {
 
     private final TextureRegion textureRegion = Mockito.mock(TextureRegion.class);
     private final Point position = new Point(0, 0);
     private final Dimensions dimensions = new Dimensions(15, 10);
     private final String map = "map";
-    private GameObject gameObject;
+    private StaticGameObject gameObject;
 
     @BeforeEach
     public void initialise(){
-        gameObject = new GameObject(textureRegion, position, dimensions, map);
+        gameObject = new StaticGameObject(position, dimensions, map, textureRegion);
     }
 
     @Test
     public void testConstructorWithNullTextureRegion(){
         assertThrows(NullPointerException.class,
-                () -> new GameObject(null, position, dimensions, map));
+                () -> new StaticGameObject(position, dimensions, map, null));
     }
 
     @Test
     public void testConstructorWithNullPosition(){
         assertThrows(NullPointerException.class,
-                () -> new GameObject(textureRegion, null, dimensions, map));
+                () -> new StaticGameObject(null, dimensions, map, textureRegion));
     }
 
     @Test
     public void testConstructorWithNullDimensions(){
         assertThrows(NullPointerException.class,
-                () -> new GameObject(textureRegion, position, null, map));
+                () -> new StaticGameObject(position, null, map, textureRegion));
     }
 
     @Test
     public void testConstructorWithNullMap(){
         assertThrows(NullPointerException.class,
-                () -> new GameObject(textureRegion, position, dimensions, null));
+                () -> new StaticGameObject(position, dimensions, null, textureRegion));
     }
 
     @Test
     public void testGetTexture(){
         assertEquals(textureRegion, gameObject.getTexture());
-    }
-
-    @Test
-    public void testSetTexture(){
-        TextureRegion newTexture = Mockito.mock(TextureRegion.class);
-        gameObject.setTexture(newTexture);
-        assertEquals(newTexture, gameObject.getTexture());
-    }
-
-    @Test
-    public void testSetTextureToNull(){
-        assertThrows(NullPointerException.class,
-                () -> gameObject.setTexture(null));
     }
 
     @Test
@@ -127,9 +115,9 @@ public class GameObjectTest {
 
     @Test
     public void testEquals(){
-        GameObject object1 = new GameObject(textureRegion, position, dimensions, map);
-        GameObject object2 = new GameObject(textureRegion, position, dimensions, map);
-        GameObject object3 = new GameObject(textureRegion, position, dimensions, map);
+        GameObject object1 = new StaticGameObject(position, dimensions, map, textureRegion);
+        GameObject object2 = new StaticGameObject(position, dimensions, map, textureRegion);
+        GameObject object3 = new StaticGameObject(position, dimensions, map, textureRegion);
         // reflexive
         assertEquals(object1, object1);
         // symmetrical
@@ -141,10 +129,10 @@ public class GameObjectTest {
         assertEquals(object1, object3);
 
         // not equals
-        GameObject diffTextureRegion = new GameObject(Mockito.mock(TextureRegion.class), position, dimensions, map);
-        GameObject diffPosition = new GameObject(textureRegion, new Point(1, 19), dimensions, map);
-        GameObject diffDimensions = new GameObject(textureRegion, position, new Dimensions(16, 17), map);
-        GameObject diffMap = new GameObject(textureRegion, position, dimensions, "new map");
+        GameObject diffTextureRegion = new StaticGameObject(position, dimensions, map, Mockito.mock(TextureRegion.class));
+        GameObject diffPosition = new StaticGameObject(new Point(1, 19), dimensions, map, textureRegion);
+        GameObject diffDimensions = new StaticGameObject(position, new Dimensions(16, 17), map, textureRegion);
+        GameObject diffMap = new StaticGameObject(position, dimensions, "new map", textureRegion);
         assertNotEquals(object1, diffTextureRegion);
         assertNotEquals(object1, diffPosition);
         assertNotEquals(object1, diffDimensions);
@@ -155,9 +143,9 @@ public class GameObjectTest {
 
     @Test
     public void testHashCode(){
-        GameObject object1 = new GameObject(textureRegion, position, dimensions, map);
-        GameObject object2 = new GameObject(textureRegion, position, dimensions, map);
-        GameObject object3 = new GameObject(textureRegion, position, dimensions, map);
+        GameObject object1 = new StaticGameObject(position, dimensions, map, textureRegion);
+        GameObject object2 = new StaticGameObject(position, dimensions, map, textureRegion);
+        GameObject object3 = new StaticGameObject(position, dimensions, map, textureRegion);
         // reflexive
         assertEquals(object1.hashCode(), object1.hashCode());
         // symmetrical
@@ -169,10 +157,10 @@ public class GameObjectTest {
         assertEquals(object1.hashCode(), object3.hashCode());
 
         // not equals
-        GameObject diffTextureRegion = new GameObject(Mockito.mock(TextureRegion.class), position, dimensions, map);
-        GameObject diffPosition = new GameObject(textureRegion, new Point(1, 19), dimensions, map);
-        GameObject diffDimensions = new GameObject(textureRegion, position, new Dimensions(16, 17), map);
-        GameObject diffMap = new GameObject(textureRegion, position, dimensions, "new map");
+        GameObject diffTextureRegion = new StaticGameObject(position, dimensions, map, Mockito.mock(TextureRegion.class));
+        GameObject diffPosition = new StaticGameObject(new Point(1, 19), dimensions, map, textureRegion);
+        GameObject diffDimensions = new StaticGameObject(position, new Dimensions(16, 17), map, textureRegion);
+        GameObject diffMap = new StaticGameObject(position, dimensions, "new map", textureRegion);
         assertNotEquals(object1.hashCode(), diffTextureRegion.hashCode());
         assertNotEquals(object1.hashCode(), diffPosition.hashCode());
         assertNotEquals(object1.hashCode(), diffDimensions.hashCode());
@@ -181,8 +169,7 @@ public class GameObjectTest {
 
     @Test
     public void testToString(){
-        String expected = "GameObject[" +
-                "textureRegion=" + textureRegion.toString() + ", " +
+        String expected = "StaticGameObject[texture=" + textureRegion.toString() +", " +
                 "position=Point[x=0, y=0], " +
                 "dimensions=Dimensions[width=15, height=10], " +
                 "map=map]";

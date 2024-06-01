@@ -15,7 +15,7 @@ public class Breakable extends GameObject {
     private final BreakableType type;
 
     public Breakable(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, int health, int hardness, BreakableType type){
-        super(textureRegion, position, dimensions, map);
+        super(position, dimensions, map);
         if(health <= 0){
             throw new IllegalArgumentException("Health is negative or 0.");
         }
@@ -49,6 +49,11 @@ public class Breakable extends GameObject {
             throw new IllegalArgumentException("Damage is negative.");
         }
         this.health = Math.max(health - damage, 0);
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null; //todo fix this
     }
 
     @Override

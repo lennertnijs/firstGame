@@ -56,18 +56,19 @@ public class NPCCreator {
 
 
         return new NPC(
-                idleDown,
                 position,
                 dimensions,
                 map,
-                name,
-                new Vector(5, 5),
                 animRepo,
+                RIGHT,
+                new LinkedList<>(Arrays.asList(IDLING)),
+                0,
+                name,
+                inventoryManager,
                 weekSchedule,
                 navigationData,
                 dialogueData,
-                stats,
-                inventoryManager);
+                stats);
     }
 
     public static Player createPlayer(){
@@ -83,7 +84,7 @@ public class NPCCreator {
                 1, new ItemTemplateRepository());
 
 
-        return new Player(idleDown,
+        return new Player(
                 position,
                 dimensions,
                 map,

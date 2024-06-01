@@ -11,9 +11,9 @@ public class DroppedItem extends GameObject{
     private final String name;
     private final int amount;
 
-    public DroppedItem(TextureRegion textureRegion, Point position, Dimensions dimensions, String map,
+    public DroppedItem(Point position, Dimensions dimensions, String map,
                        String name, int amount){
-        super(textureRegion, position, dimensions, map);
+        super(position, dimensions, map);
         this.name = Objects.requireNonNull(name, "Item name is null.");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or zero.");
@@ -27,6 +27,11 @@ public class DroppedItem extends GameObject{
 
     public int amount(){
         return amount;
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null;
     }
 
     @Override
@@ -49,8 +54,8 @@ public class DroppedItem extends GameObject{
 
     @Override
     public String toString(){
-        return String.format("DroppedItem[textureRegion=%s, position=%s, dimensions=%s, map=%s, name=%s, amount =%d]",
-                super.getTexture(), super.getPosition(), super.getDimensions(), super.getMap(), name, amount);
+        return String.format("DroppedItem[position=%s, dimensions=%s, map=%s, name=%s, amount =%d]",
+                super.getPosition(), super.getDimensions(), super.getMap(), name, amount);
     }
 
 
