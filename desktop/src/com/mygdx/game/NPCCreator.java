@@ -18,7 +18,6 @@ import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.AnimationRepository.*;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.Util.Vector;
 import com.mygdx.game.WeekSchedule.*;
 
 import java.util.*;
@@ -54,21 +53,21 @@ public class NPCCreator {
         IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
                 1, new ItemTemplateRepository());
 
-
-        return new NPC(
-                position,
-                dimensions,
-                map,
-                animRepo,
-                RIGHT,
-                new LinkedList<>(Arrays.asList(IDLING)),
-                0,
-                name,
-                inventoryManager,
-                weekSchedule,
-                navigationData,
-                dialogueData,
-                stats);
+        return NPC.builder()
+                .position(position)
+                .dimensions(dimensions)
+                .map(map)
+                .animationRepo(animRepo)
+                .direction(RIGHT)
+                .activityStack(new LinkedList<>(Collections.singletonList(IDLING)))
+                .delta(0)
+                .name(name)
+                .inventoryManager(inventoryManager)
+                .weekSchedule(weekSchedule)
+                .navigationData(navigationData)
+                .dialogueData(dialogueData)
+                .stats(stats)
+                .build();
     }
 
     public static Player createPlayer(){
@@ -94,8 +93,8 @@ public class NPCCreator {
                 );
     }
 
-    private static Map<Key, Animation> loadAnimationMap(){
-        Map<Key, Animation> map = new HashMap<>();
+    private static Map<AnimationKey, Animation> loadAnimationMap(){
+        Map<AnimationKey, Animation> map = new HashMap<>();
 
         Frame idleUpFrame = Frame.builder().textureRegion(atlas.findRegion("idle_up")).build();
         Frame idleRightFrame = Frame.builder().textureRegion(atlas.findRegion("idle_right")).build();
@@ -107,10 +106,10 @@ public class NPCCreator {
         Animation idleDownAnimation = new Animation(Collections.singletonList(idleDownFrame), 1);
         Animation idleLeftAnimation = new Animation(Collections.singletonList(idleLeftFrame), 1);
 
-        map.put(new Key(IDLING, UP), idleUpAnimation);
-        map.put(new Key(IDLING, RIGHT), idleRightAnimation);
-        map.put(new Key(IDLING, DOWN), idleDownAnimation);
-        map.put(new Key(IDLING, LEFT), idleLeftAnimation);
+        map.put(new EntityKey(IDLING, UP), idleUpAnimation);
+        map.put(new EntityKey(IDLING, RIGHT), idleRightAnimation);
+        map.put(new EntityKey(IDLING, DOWN), idleDownAnimation);
+        map.put(new EntityKey(IDLING, LEFT), idleLeftAnimation);
 
         Animation miningRightAnimation = loadAnimation(atlas, "mine_right", 4);
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
@@ -123,20 +122,20 @@ public class NPCCreator {
 
         Animation miningDownAnimation = new Animation(Arrays.asList(mineD1, mineD2, mineD3, mineD4), 2000f);
 
-        map.put(new Key(MINING, RIGHT), miningRightAnimation);
-        map.put(new Key(MINING, DOWN), miningDownAnimation);
-        map.put(new Key(MINING, LEFT), miningLeftAnimation);
-        map.put(new Key(MINING, UP), miningUpAnimation);
+        map.put(new EntityKey(MINING, RIGHT), miningRightAnimation);
+        map.put(new EntityKey(MINING, DOWN), miningDownAnimation);
+        map.put(new EntityKey(MINING, LEFT), miningLeftAnimation);
+        map.put(new EntityKey(MINING, UP), miningUpAnimation);
 
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
         Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);
         Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
         Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
-        map.put(new Key(WALKING, RIGHT), walkingRightAnimation);
-        map.put(new Key(WALKING, DOWN), walkingDownAnimation);
-        map.put(new Key(WALKING, LEFT), walkingLeftAnimation);
-        map.put(new Key(WALKING, UP), walkingUpAnimation);
+        map.put(new EntityKey(WALKING, RIGHT), walkingRightAnimation);
+        map.put(new EntityKey(WALKING, DOWN), walkingDownAnimation);
+        map.put(new EntityKey(WALKING, LEFT), walkingLeftAnimation);
+        map.put(new EntityKey(WALKING, UP), walkingUpAnimation);
 
         return map;
     }

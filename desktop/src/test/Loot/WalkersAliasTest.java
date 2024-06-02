@@ -124,7 +124,6 @@ public class WalkersAliasTest {
         List<String> objects = Arrays.asList("Option 1", "Option 2", "Option 3");
         List<Double> probabilities = Arrays.asList(0.1d, 0.5d, 0.4d);
         buckets = walkersAlias.generateBuckets(objects, probabilities);
-        printBuckets(buckets);
 
         int option1Count = 0;
         int option2Count = 0;
@@ -146,16 +145,5 @@ public class WalkersAliasTest {
         assertTrue(9500 < option1Count && option1Count < 10500);
         assertTrue(49500 < option2Count && option2Count < 50500);
         assertTrue(39500 < option3Count && option3Count < 40500);
-    }
-
-    private final void printBuckets(List<Bucket<String>> buckets){
-        for(Bucket bucket : buckets){
-            System.out.println(bucket.getFirstOption());
-            System.out.println(bucket.getFirstProbability());
-            System.out.println();
-            System.out.println(bucket.getSecondOption());
-            System.out.println(bucket.getSecondProbability());
-            System.out.println( "--------");
-        }
     }
 }

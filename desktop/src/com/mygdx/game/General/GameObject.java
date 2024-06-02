@@ -7,19 +7,34 @@ import com.mygdx.game.Util.Rectangle;
 
 import java.util.Objects;
 
-public abstract class GameObject {
+public class GameObject {
 
+    private final TextureRegion textureRegion;
     private Point position;
     private Dimensions dimensions;
     private String map;
 
-    public GameObject(Point position, Dimensions dimensions, String map){
+    public GameObject(TextureRegion textureRegion, Point position, Dimensions dimensions, String map){
+        this.textureRegion = Objects.requireNonNull(textureRegion);
         this.position = Objects.requireNonNull(position, "Position is null.");
         this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
         this.map = Objects.requireNonNull(map, "Map is null.");
     }
 
-    public abstract TextureRegion getTexture();
+    /**
+     * Constructor to create {@link GameObject} with, without it having a final {@link TextureRegion}.
+     * Used for subclasses that are animated.
+     */
+    protected GameObject(Point position, Dimensions dimensions, String map){
+        this.textureRegion = null;
+        this.position = Objects.requireNonNull(position, "Position is null.");
+        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
+        this.map = Objects.requireNonNull(map, "Map is null.");
+    }
+
+    public TextureRegion getTexture(){
+        return textureRegion;
+    }
 
     public Point getPosition(){
         return position;
@@ -54,12 +69,16 @@ public abstract class GameObject {
         if(!(other instanceof GameObject))
             return false;
         GameObject object = (GameObject) other;
-        return position.equals(object.position) && dimensions.equals(object.dimensions) && map.equals(object.map);
+        return  Objects.equals(textureRegion, object.textureRegion) &&
+                position.equals(object.position) &&
+                dimensions.equals(object.dimensions) &&
+                map.equals(object.map);
     }
 
     @Override
     public int hashCode(){
-        int result = position.hashCode();
+        int result = textureRegion == null ? 0 : textureRegion.hashCode();
+        result = result * 31 + position.hashCode();
         result = result * 31 + dimensions.hashCode();
         result = result * 31 + map.hashCode();
         return result;
@@ -67,6 +86,7 @@ public abstract class GameObject {
 
     @Override
     public String toString(){
-        return String.format("position=%s, dimensions=%s, map=%s", position, dimensions, map);
+        return String.format("GameObject[textureRegion=%s, position=%s, dimensions=%s, map=%s]",
+                textureRegion, position, dimensions, map);
     }
 }

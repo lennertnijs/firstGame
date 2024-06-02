@@ -5,12 +5,12 @@ import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
 
-public final class Key {
+public final class EntityKey implements AnimationKey{
 
     private final ActivityType activityType;
     private final Direction direction;
 
-    public Key(ActivityType activityType, Direction direction){
+    public EntityKey(ActivityType activityType, Direction direction){
         this.activityType = Objects.requireNonNull(activityType, "Action is null.");
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
@@ -25,10 +25,10 @@ public final class Key {
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Key))
+        if(!(other instanceof EntityKey))
             return false;
-        Key key = (Key) other;
-        return activityType == key.activityType && direction == key.direction;
+        EntityKey entityKey = (EntityKey) other;
+        return activityType == entityKey.activityType && direction == entityKey.direction;
     }
 
     @Override

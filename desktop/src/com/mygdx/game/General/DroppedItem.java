@@ -30,11 +30,6 @@ public class DroppedItem extends GameObject{
     }
 
     @Override
-    public TextureRegion getTexture() {
-        return null;
-    }
-
-    @Override
     public boolean equals(Object other){
         if(!(other instanceof DroppedItem))
             return false;

@@ -52,11 +52,6 @@ public class Breakable extends GameObject {
     }
 
     @Override
-    public TextureRegion getTexture() {
-        return null; //todo fix this
-    }
-
-    @Override
     public boolean equals(Object other){
         if(!(other instanceof Breakable)){
             return false;

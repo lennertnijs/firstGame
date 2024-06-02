@@ -1,4 +1,4 @@
-package TextureSelector;
+package AnimationRepository;
 
 import com.mygdx.game.NPC.NPCData;
 import com.mygdx.game.Util.Direction;

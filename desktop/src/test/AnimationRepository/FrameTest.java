@@ -1,4 +1,4 @@
-package TextureSelector;
+package AnimationRepository;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.AnimationRepository.Frame;

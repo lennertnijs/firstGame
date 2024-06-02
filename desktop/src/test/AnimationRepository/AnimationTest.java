@@ -1,4 +1,4 @@
-package TextureSelector;
+package AnimationRepository;
 
 import com.mygdx.game.AnimationRepository.Animation;
 import com.mygdx.game.AnimationRepository.Frame;
