@@ -1,8 +1,8 @@
 package Inventory;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.Inventory.ItemTemplate;
-import com.mygdx.game.Inventory.ItemTemplateRepository;
+import com.mygdx.game.ItemTemplate.ItemTemplate;
+import com.mygdx.game.ItemTemplate.ItemTemplateRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

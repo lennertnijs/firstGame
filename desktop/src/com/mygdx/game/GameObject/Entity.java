@@ -39,10 +39,13 @@ public abstract class Entity extends AnimatedGameObject{
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
+    // update direction using current and next position
+
     public ActivityType getCurrentActivityType(){
         return activityStack.getLast();
     }
 
+    // check this
     public void removeCurrentActivityType(){
         activityStack.removeLast();
     }
@@ -62,6 +65,6 @@ public abstract class Entity extends AnimatedGameObject{
         Point pos  = super.getPosition();
         EntityKey entityKey = new EntityKey(getCurrentActivityType(), direction);
         Vector translation = getFrame(entityKey).translation();
-        return new Point(pos.x() + translation.x(), pos.y() + translation.y());
+        return pos.add(translation);
     }
 }

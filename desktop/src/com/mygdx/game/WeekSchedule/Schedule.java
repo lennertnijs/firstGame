@@ -21,9 +21,7 @@ public final class Schedule {
         if(hasTwoActivitiesAtSameTime(activities)){
             throw new IllegalArgumentException("Two activities happen at the exact same Time.");
         }
-        this.activities = new ArrayList<>(activities).stream()
-                .sorted(Comparator.comparing(Activity::time))
-                .collect(Collectors.toList());
+        this.activities = activities.stream().sorted(Comparator.comparing(Activity::time)).collect(Collectors.toList());
     }
 
     private boolean hasTwoActivitiesAtSameTime(List<Activity> activities){

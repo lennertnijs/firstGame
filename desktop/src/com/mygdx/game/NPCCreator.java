@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.GameObject.Player;
-import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.InventoryManager;
-import com.mygdx.game.Inventory.ItemTemplateRepository;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.NPC.Stats;
@@ -52,8 +49,7 @@ public class NPCCreator {
 
         Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
 
-        IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
-                1, new ItemTemplateRepository());
+        Inventory inventory = new Inventory(6);
 
         return NPC.builder()
                 .position(position)
@@ -64,7 +60,7 @@ public class NPCCreator {
                 .activityStack(new LinkedList<>(Collections.singletonList(IDLING)))
                 .delta(0)
                 .name(name)
-                .inventoryManager(inventoryManager)
+                .inventory(inventory)
                 .weekSchedule(weekSchedule)
                 .navigationData(navigationData)
                 .dialogueData(dialogueData)
@@ -81,8 +77,7 @@ public class NPCCreator {
         String name = "Gilbert";
 
         AnimationRepository animRepo = new AnimationRepository(loadAnimationMap());
-        IInventoryManager inventoryManager = new InventoryManager(new Inventory(6),
-                1, new ItemTemplateRepository());
+        Inventory inventory = new Inventory(6);
 
 
         return new Player(
@@ -91,7 +86,7 @@ public class NPCCreator {
                 map,
                 name,
                 animRepo,
-                inventoryManager
+                inventory
                 );
     }
 

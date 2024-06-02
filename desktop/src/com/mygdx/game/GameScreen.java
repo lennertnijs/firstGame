@@ -11,7 +11,7 @@ import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 
 public class GameScreen implements Screen {
@@ -20,13 +20,11 @@ public class GameScreen implements Screen {
     private final NPC npc;
     private final Clock gameClock;
     private final SpriteDrawer drawer;
-    private final GameObjectRepository repository;
     private final GameController gameController;
 
     public GameScreen(MyGame game) {
         // to play music
-        // rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
-        // rainMusic.setLooping(true);
+        // rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));rainMusic.setLooping(true);
         this.game = game;
         npc = NPCCreator.create();
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
@@ -38,7 +36,7 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         drawer = new SpriteDrawer(game);
-        repository = new GameObjectRepository(Arrays.asList(npc), NPCCreator.createPlayer());
+        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(npc), NPCCreator.createPlayer());
         gameController = new GameController(repository, gameClock, game);
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
     }

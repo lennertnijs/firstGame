@@ -15,7 +15,7 @@ public abstract class AnimatedGameObject extends GameObject{
 
     public AnimatedGameObject(Point position, Dimensions dimensions, String map,
                               AnimationRepository animationRepository, double animationDelta){
-        super(null, position, dimensions, map);
+        super(position, dimensions, map);
         this.animationRepository = Objects.requireNonNull(animationRepository, "Animation repository is null.");
         if(animationDelta < 0){
             throw new IllegalArgumentException("Animation delta is negative.");

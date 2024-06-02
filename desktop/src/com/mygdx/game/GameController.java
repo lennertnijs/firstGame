@@ -18,7 +18,7 @@ public class GameController {
 
     public void update(){
         double delta = clock.update();
-        moveNPCS(delta);
+        updateNPCS(delta);
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
@@ -29,9 +29,8 @@ public class GameController {
         gameObjectRepository.getPlayer().move(delta);
     }
 
-    public void moveNPCS(double delta){
+    public void updateNPCS(double delta){
         for(NPC npc : gameObjectRepository.getNpcs()){
-            npc.move((int) delta);
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
     }

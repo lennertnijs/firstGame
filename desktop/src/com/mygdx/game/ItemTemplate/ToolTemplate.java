@@ -1,8 +1,8 @@
-package com.mygdx.game.Inventory;
+package com.mygdx.game.ItemTemplate;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public final class ToolTemplate extends ItemTemplate{
+public final class ToolTemplate extends ItemTemplate {
 
     private final int efficiency;
     private final int maxDurability;

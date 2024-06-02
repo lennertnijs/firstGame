@@ -10,12 +10,19 @@ import java.util.Objects;
 public class GameObject {
 
     private final TextureRegion textureRegion;
-    private Point position;
+    protected Point position;
     private Dimensions dimensions;
     private String map;
 
     public GameObject(TextureRegion textureRegion, Point position, Dimensions dimensions, String map){
         this.textureRegion = Objects.requireNonNull(textureRegion);
+        this.position = Objects.requireNonNull(position, "Position is null.");
+        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
+        this.map = Objects.requireNonNull(map, "Map is null.");
+    }
+
+    protected GameObject(Point position, Dimensions dimensions, String map){
+        this.textureRegion = null;
         this.position = Objects.requireNonNull(position, "Position is null.");
         this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
         this.map = Objects.requireNonNull(map, "Map is null.");

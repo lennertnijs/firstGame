@@ -1,7 +1,7 @@
 package com.mygdx.game.GameObject;
 
 import com.mygdx.game.Dialogue.DialogueData;
-import com.mygdx.game.Inventory.IInventoryManager;
+import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
@@ -25,7 +25,7 @@ public final class NPC extends Character {
     private NPC(Builder b){
         super(b.position, b.dimensions, b.map,
                 b.animationRepository, b.d, b.direction, b.NPCActivityTypes,
-                b.name, b.inventoryManager);
+                b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
@@ -54,7 +54,7 @@ public final class NPC extends Character {
         Activity activity = weekSchedule.getActivity(day, time);
         if(activity == null || super.getCurrentActivityType() == NPCActivityType.WALKING)
             return;
-        Location current = new Location(getMap(), getPosition());
+        Location current = new Location(getMap(), position);
         Location next = new Location("temp", activity.position());
         navigationData.calculateAndStoreRoute(current, next);
         while(super.getCurrentActivityType() != NPCActivityType.IDLING){
@@ -84,7 +84,7 @@ public final class NPC extends Character {
         private List<ActivityType> NPCActivityTypes;
         private double d = -1;
         private String name;
-        private IInventoryManager inventoryManager;
+        private Inventory inventory;
         private NavigationData navigationData;
         private WeekSchedule weekSchedule;
         private DialogueData dialogueData;
@@ -133,8 +133,8 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder inventoryManager(IInventoryManager inventoryManager){
-            this.inventoryManager = inventoryManager;
+        public Builder inventory(Inventory inventory){
+            this.inventory = inventory;
             return this;
         }
 
@@ -169,7 +169,7 @@ public final class NPC extends Character {
                 throw new IllegalArgumentException("Delta is negative.");
             }
             Objects.requireNonNull(name);
-            Objects.requireNonNull(inventoryManager);
+            Objects.requireNonNull(inventory);
             Objects.requireNonNull(navigationData);
             Objects.requireNonNull(weekSchedule);
             Objects.requireNonNull(dialogueData);

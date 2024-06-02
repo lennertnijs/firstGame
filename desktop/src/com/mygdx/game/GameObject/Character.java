@@ -1,8 +1,7 @@
 package com.mygdx.game.GameObject;
 
 import com.mygdx.game.AnimationRepository.AnimationRepository;
-import com.mygdx.game.GameObject.Entity;
-import com.mygdx.game.Inventory.IInventoryManager;
+import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Util.*;
 
@@ -12,8 +11,8 @@ import java.util.Objects;
 public abstract class Character extends Entity {
 
     private final String name;
-    private final IInventoryManager inventoryManager; // todo probably wanna save item textures globally
-
+    private final Inventory inventory; // todo probably wanna save item textures globally
+    private int activeIndex;
 
     public Character(Point position,
                      Dimensions dimensions,
@@ -23,10 +22,10 @@ public abstract class Character extends Entity {
                      Direction direction,
                      List<ActivityType> activityTypeList,
                      String name,
-                     IInventoryManager inventoryManager) {
+                     Inventory inventory) {
         super(position, dimensions, map, animationRepository, delta, direction, activityTypeList);
         this.name = Objects.requireNonNull(name, "Name is null.");
-        this.inventoryManager = inventoryManager;
+        this.inventory = inventory;
     }
 
     public String getName(){

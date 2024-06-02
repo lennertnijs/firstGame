@@ -1,13 +1,12 @@
 package com.mygdx.game.Breakables;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 
 import java.util.Objects;
 
-public class Breakable extends GameObject {
+public class Breakable extends GameObject{
 
     private int health;
     private final int hardness;
@@ -15,7 +14,7 @@ public class Breakable extends GameObject {
     private final BreakableType type;
 
     public Breakable(Point position, Dimensions dimensions, String map, int health, int hardness, BreakableType type){
-        super(null, position, dimensions, map);
+        super(position, dimensions, map);
         if(health <= 0){
             throw new IllegalArgumentException("Health is negative or 0.");
         }

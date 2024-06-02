@@ -1,5 +1,7 @@
 package com.mygdx.game.Util;
 
+import java.util.Objects;
+
 public final class Point {
 
     private final int x;
@@ -19,6 +21,11 @@ public final class Point {
 
     public int y(){
         return y;
+    }
+
+    public Point add(Vector vector){
+        Objects.requireNonNull(vector, "Vector is null.");
+        return new Point(x + vector.x(), y + vector.y());
     }
 
     @Override

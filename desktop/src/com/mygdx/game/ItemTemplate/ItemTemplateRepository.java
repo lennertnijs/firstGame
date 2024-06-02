@@ -1,4 +1,4 @@
-package com.mygdx.game.Inventory;
+package com.mygdx.game.ItemTemplate;
 
 import java.util.*;
 import java.util.stream.Collectors;
