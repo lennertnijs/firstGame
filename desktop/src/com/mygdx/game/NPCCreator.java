@@ -21,9 +21,11 @@ import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.*;
 
 import java.util.*;
+import java.util.Map;
 
 import static com.mygdx.game.Util.Direction.*;
 import static com.mygdx.game.Keys.NPCActivityType.*;
+import static com.mygdx.game.Util.GameMap.MAIN;
 
 public class NPCCreator {
 
@@ -150,14 +152,10 @@ public class NPCCreator {
     }
 
     private static Schedule loadSchedule(){
-        Activity activity1 = new Activity(new Location("Map", new Point(0, 0)),
-                new Time(4, 50), MINING);
-        Activity activity2 = new Activity(new Location("Map", new Point(1000, 500)),
-                new Time(5, 50), WALKING);
-        Activity activity3 = new Activity(new Location("Map", new Point(1000, 0)),
-                new Time(6, 50), IDLING);
-        Activity activity4 = new Activity(new Location("Map", new Point(0, 0)),
-                new Time(7, 50), IDLING);
+        Activity activity1 = new Activity(MINING, MAIN, new Point(0, 0), new Time(4, 50));
+        Activity activity2 = new Activity(WALKING, MAIN, new Point(1000, 500), new Time(5, 50));
+        Activity activity3 = new Activity(IDLING, MAIN, new Point(1000, 0), new Time(6, 50));
+        Activity activity4 = new Activity(IDLING, MAIN, new Point(0, 0), new Time(7, 50));
         return new Schedule(Arrays.asList(activity1, activity2, activity3, activity4));
     }
 

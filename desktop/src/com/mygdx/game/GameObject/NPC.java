@@ -7,7 +7,7 @@ import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.WeekSchedule.Activity;
+import com.mygdx.game.Util.Activity;
 import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
@@ -55,7 +55,8 @@ public final class NPC extends Character {
         if(activity == null || super.getCurrentActivityType() == NPCActivityType.WALKING)
             return;
         Location current = new Location(getMap(), getPosition());
-        navigationData.calculateAndStoreRoute(current, activity.location());
+        Location next = new Location("temp", activity.position());
+        navigationData.calculateAndStoreRoute(current, next);
         while(super.getCurrentActivityType() != NPCActivityType.IDLING){
             super.removeCurrentActivityType();
         }

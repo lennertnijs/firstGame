@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
+import static com.mygdx.game.Util.GameMap.MAIN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WeekScheduleTest {
@@ -18,10 +20,9 @@ public class WeekScheduleTest {
     private final Time time1 = new Time(0, 15);
     private final Time time2 = new Time(1, 15);
     private final Time time3 = new Time(2, 15);
-    private final Location location = new Location("Map", new Point(0, 10));
-    private final Activity activity1 = new Activity(location, time1, NPCActivityType.RUNNING);
-    private final Activity activity2 = new Activity(location, time2, NPCActivityType.RUNNING);
-    private final Activity activity3 = new Activity(location, time3, NPCActivityType.RUNNING);
+    private final Activity activity1 = new Activity(RUNNING , MAIN, new Point(0, 10), time1);
+    private final Activity activity2 = new Activity(RUNNING, MAIN, new Point(0, 10), time2);
+    private final Activity activity3 = new Activity(RUNNING, MAIN, new Point(0, 10), time3);
     private final Day day1 = Day.MONDAY;
     private final Day day2 = Day.TUESDAY;
     private final Schedule schedule1  = new Schedule(Arrays.asList(activity1, activity2));
