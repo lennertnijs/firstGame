@@ -58,13 +58,6 @@ public class NavigationDataTest {
 
 
     @Test
-    public void testIsMoving(){
-        assertFalse(navigationData.isMoving());
-        navigationData.calculateAndStoreRoute(l1, l3);
-        assertTrue(navigationData.isMoving());
-    }
-
-    @Test
     public void testCalculateAndStoreRoute(){
         navigationData.calculateAndStoreRoute(l1, l3);
 

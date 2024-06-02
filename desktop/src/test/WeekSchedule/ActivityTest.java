@@ -1,6 +1,6 @@
 package WeekSchedule;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Time;
@@ -8,30 +8,31 @@ import com.mygdx.game.WeekSchedule.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {
 
     private final Location location = new Location("Map", new Point(5, 10));
     private final Time time = new Time(5, 10);
-    private final ActivityType activityType = ActivityType.RUNNING;
+    private final NPCActivityType NPCActivityType = RUNNING;
     private Activity activity;
 
     @BeforeEach
     public void initialise(){
-        activity = new Activity(location, time, activityType);
+        activity = new Activity(location, time, NPCActivityType);
     }
 
     @Test
     public void testConstructorWithNullLocation(){
         assertThrows(NullPointerException.class,
-                () -> new Activity(null, time, activityType));
+                () -> new Activity(null, time, NPCActivityType));
     }
 
     @Test
     public void testConstructorWithNullTime(){
         assertThrows(NullPointerException.class,
-                () -> new Activity(location, null, activityType));
+                () -> new Activity(location, null, NPCActivityType));
     }
 
     @Test
@@ -52,17 +53,17 @@ public class ActivityTest {
 
     @Test
     public void testActivityType(){
-        assertEquals(activityType, activity.type());
+        assertEquals(NPCActivityType, activity.type());
     }
 
     @Test
     public void testEquals(){
-        Activity activity1 = new Activity(location, time, activityType);
-        Activity activity2 = new Activity(location, time, activityType);
-        Activity activity3 = new Activity(location, time, activityType);
-        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, activityType);
-        Activity diffTime = new Activity(location, new Time(0, 15), activityType);
-        Activity diffType = new Activity(location, time, ActivityType.MINING);
+        Activity activity1 = new Activity(location, time, NPCActivityType);
+        Activity activity2 = new Activity(location, time, NPCActivityType);
+        Activity activity3 = new Activity(location, time, NPCActivityType);
+        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, NPCActivityType);
+        Activity diffTime = new Activity(location, new Time(0, 15), NPCActivityType);
+        Activity diffType = new Activity(location, time, NPCActivityType.MINING);
         // reflexive
         assertEquals(activity1, activity1);
         // symmetrical
@@ -82,12 +83,12 @@ public class ActivityTest {
 
     @Test
     public void testHashCode(){
-        Activity activity1 = new Activity(location, time, activityType);
-        Activity activity2 = new Activity(location, time, activityType);
-        Activity activity3 = new Activity(location, time, activityType);
-        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, activityType);
-        Activity diffTime = new Activity(location, new Time(0, 15), activityType);
-        Activity diffType = new Activity(location, time, ActivityType.MINING);
+        Activity activity1 = new Activity(location, time, NPCActivityType);
+        Activity activity2 = new Activity(location, time, NPCActivityType);
+        Activity activity3 = new Activity(location, time, NPCActivityType);
+        Activity diffLocation = new Activity(new Location("Diff", new Point(5, 10)), time, NPCActivityType);
+        Activity diffTime = new Activity(location, new Time(0, 15), NPCActivityType);
+        Activity diffType = new Activity(location, time, NPCActivityType.MINING);
         // reflexive
         assertEquals(activity1.hashCode(), activity1.hashCode());
         // symmetrical

@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Represents all the data surrounding movement & navigation.
  */
-public final class NavigationData implements INavigationData{
+public final class NavigationData{
 
     /**
      * The current route (if they're moving).
@@ -52,13 +52,6 @@ public final class NavigationData implements INavigationData{
         Objects.requireNonNull(goal, "Goal location is null.");
         List<Location> route = strategy.findPath(start, goal);
         this.route.add(route);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isMoving(){
-        return !route.isEmpty();
     }
 
     /**

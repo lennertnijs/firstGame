@@ -1,6 +1,6 @@
 package com.mygdx.game.Inventory;
 
-import com.mygdx.game.General.GameObject;
+import com.mygdx.game.GameObject.GameObject;
 
 import java.util.Objects;
 

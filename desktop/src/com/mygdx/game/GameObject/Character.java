@@ -1,12 +1,12 @@
-package com.mygdx.game;
+package com.mygdx.game.GameObject;
 
 import com.mygdx.game.AnimationRepository.AnimationRepository;
-import com.mygdx.game.General.Entity;
+import com.mygdx.game.GameObject.Entity;
 import com.mygdx.game.Inventory.IInventoryManager;
+import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.WeekSchedule.ActivityType;
 
-import java.util.Deque;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Character extends Entity {
@@ -19,12 +19,12 @@ public abstract class Character extends Entity {
                      Dimensions dimensions,
                      String map,
                      AnimationRepository animationRepository,
-                     Direction direction,
-                     Deque<ActivityType> activityTypes,
                      double delta,
+                     Direction direction,
+                     List<ActivityType> activityTypeList,
                      String name,
                      IInventoryManager inventoryManager) {
-        super(position, dimensions, map, animationRepository, direction, activityTypes, delta);
+        super(position, dimensions, map, animationRepository, delta, direction, activityTypeList);
         this.name = Objects.requireNonNull(name, "Name is null.");
         this.inventoryManager = inventoryManager;
     }

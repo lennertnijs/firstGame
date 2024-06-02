@@ -1,7 +1,7 @@
 package com.mygdx.game.Inventory;
 
 import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.General.GameObject;
+import com.mygdx.game.GameObject.GameObject;
 
 import java.util.Arrays;
 import java.util.Objects;

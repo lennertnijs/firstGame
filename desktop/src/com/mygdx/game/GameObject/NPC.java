@@ -1,29 +1,30 @@
-package com.mygdx.game.NPC;
+package com.mygdx.game.GameObject;
 
-import com.mygdx.game.Character;
 import com.mygdx.game.Dialogue.IDialogueData;
 import com.mygdx.game.Inventory.IInventoryManager;
-import com.mygdx.game.Navigation.INavigationData;
+import com.mygdx.game.Keys.ActivityType;
+import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Activity;
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.WeekSchedule.IWeekSchedule;
 
-import java.util.Deque;
+import java.util.List;
 import java.util.Objects;
 
 
 public final class NPC extends Character {
 
-    private final INavigationData navigationData;
+    private final NavigationData navigationData;
     private final IWeekSchedule weekSchedule;
     private final IDialogueData dialogueData;
     private final Stats stats;
 
     private NPC(Builder b){
         super(b.position, b.dimensions, b.map,
-                b.animationRepository, b.direction, b.activityTypes, b.d,
+                b.animationRepository, b.d, b.direction, b.NPCActivityTypes,
                 b.name, b.inventoryManager);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
@@ -37,7 +38,7 @@ public final class NPC extends Character {
     }
 
     public void move(int deltaInMillis){
-        if(super.getActivityType() != ActivityType.WALKING){
+        if(super.getCurrentActivityType() != NPCActivityType.WALKING){
             return;
         }
         int movement = deltaInMillis * stats.getSpeed();
@@ -46,21 +47,22 @@ public final class NPC extends Character {
         setPosition(next.position());
         setMap(next.mapName());
         // set the direction appropriately
-        if(super.getActivityType() == ActivityType.WALKING){
-            // pop it off
+        if(super.getCurrentActivityType() == NPCActivityType.WALKING){
+            super.removeCurrentActivityType();
         }
     }
 
     public void updateSchedule(Day day, Time time){
-        if(!weekSchedule.hasActivity(day, time) || super.getActivityType() == ActivityType.WALKING)
+        if(!weekSchedule.hasActivity(day, time) || super.getCurrentActivityType() == NPCActivityType.WALKING)
             return;
         Activity activity = weekSchedule.getActivity(day, time);
         Location current = new Location(getMap(), getPosition());
         navigationData.calculateAndStoreRoute(current, activity.location());
-        while(super.getActivityType() != ActivityType.IDLING){
-            // remove the activity type (wipe the stack)
+        while(super.getCurrentActivityType() != NPCActivityType.IDLING){
+            super.removeCurrentActivityType();
         }
-        // add the activity at the end, then WALKING
+        super.storeActivityType(activity.type());
+        super.storeActivityType(NPCActivityType.WALKING);
     }
 
     public void handleInputLine(String line){
@@ -80,11 +82,11 @@ public final class NPC extends Character {
         private String map;
         private AnimationRepository animationRepository;
         private Direction direction;
-        private Deque<ActivityType> activityTypes;
+        private List<ActivityType> NPCActivityTypes;
         private double d = -1;
         private String name;
         private IInventoryManager inventoryManager;
-        private INavigationData navigationData;
+        private NavigationData navigationData;
         private IWeekSchedule weekSchedule;
         private IDialogueData dialogueData;
         private Stats stats;
@@ -117,8 +119,8 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder activityStack(Deque<ActivityType> activityTypes){
-            this.activityTypes = activityTypes;
+        public Builder activityStack(List<ActivityType> NPCActivityTypes){
+            this.NPCActivityTypes = NPCActivityTypes;
             return this;
         }
 
@@ -137,7 +139,7 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder navigationData(INavigationData navigationData){
+        public Builder navigationData(NavigationData navigationData){
             this.navigationData = navigationData;
             return this;
         }
@@ -163,7 +165,7 @@ public final class NPC extends Character {
             Objects.requireNonNull(map, "Map is null.");
             Objects.requireNonNull(animationRepository, "AnimationRepository is null.");
             Objects.requireNonNull(direction, "Direction is null.");
-            Objects.requireNonNull(activityTypes);
+            Objects.requireNonNull(NPCActivityTypes);
             if(d < 0){
                 throw new IllegalArgumentException("Delta is negative.");
             }

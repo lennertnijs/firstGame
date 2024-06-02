@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.General.GameObject;
+import com.mygdx.game.GameObject.GameObject;
 
 public class SpriteDrawer {
 

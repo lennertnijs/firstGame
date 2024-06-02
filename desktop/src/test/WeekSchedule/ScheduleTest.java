@@ -1,6 +1,6 @@
 package WeekSchedule;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Time;
@@ -20,8 +20,8 @@ public class ScheduleTest {
     private final Time time1 = new Time(0, 10);
     private final Time time2 = new Time(0, 15);
     private final Location location = new Location("Map", new Point(5, 15));
-    private final Activity activity1 = new Activity(location, time1, ActivityType.RUNNING);
-    private final Activity activity2 = new Activity(location, time2, ActivityType.RUNNING);
+    private final Activity activity1 = new Activity(location, time1, NPCActivityType.RUNNING);
+    private final Activity activity2 = new Activity(location, time2, NPCActivityType.RUNNING);
     private Schedule schedule;
 
     @BeforeEach

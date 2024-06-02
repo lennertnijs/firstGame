@@ -1,5 +1,6 @@
 package com.mygdx.game.WeekSchedule;
 
+import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 
@@ -9,9 +10,9 @@ public final class Activity{
 
     private final Location location;
     private final Time time;
-    private final ActivityType type;
+    private final NPCActivityType type;
 
-    public Activity(Location location, Time time, ActivityType type){
+    public Activity(Location location, Time time, NPCActivityType type){
         this.location = Objects.requireNonNull(location, "Location is null.");
         this.time = Objects.requireNonNull(time, "Time is null.");
         this.type = Objects.requireNonNull(type, "Activity type is null.");
@@ -25,7 +26,7 @@ public final class Activity{
         return time;
     }
 
-    public ActivityType type(){
+    public NPCActivityType type(){
         return type;
     }
 

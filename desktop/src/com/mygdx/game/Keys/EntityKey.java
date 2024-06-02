@@ -1,11 +1,11 @@
-package com.mygdx.game.AnimationRepository;
+package com.mygdx.game.Keys;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.AnimationRepository.AnimationKey;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
 
-public final class EntityKey implements AnimationKey{
+public final class EntityKey implements AnimationKey {
 
     private final ActivityType activityType;
     private final Direction direction;

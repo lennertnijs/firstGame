@@ -1,8 +1,8 @@
 package AnimationRepository;
 
-import com.mygdx.game.WeekSchedule.ActivityType;
+import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.AnimationRepository.EntityKey;
+import com.mygdx.game.Keys.EntityKey;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EntityKeyTest {
 
-    private ActivityType activityType;
+    private NPCActivityType NPCActivityType;
     private Direction direction;
     private EntityKey entityKey;
 
     @BeforeEach
     public void initialise(){
-        activityType = ActivityType.RUNNING;
+        NPCActivityType = NPCActivityType.RUNNING;
         direction = Direction.UP;
-        entityKey = new EntityKey(activityType, direction);
+        entityKey = new EntityKey(NPCActivityType, direction);
     }
 
     @Test
@@ -28,12 +28,12 @@ public class EntityKeyTest {
 
     @Test
     public void testConstructorWithNullDirection(){
-        assertThrows(NullPointerException.class, () -> new EntityKey(ActivityType.RUNNING, null));
+        assertThrows(NullPointerException.class, () -> new EntityKey(NPCActivityType.RUNNING, null));
     }
 
     @Test
     public void testActivityType(){
-        assertEquals(activityType, entityKey.action());
+        assertEquals(NPCActivityType, entityKey.action());
     }
 
     @Test
@@ -43,10 +43,10 @@ public class EntityKeyTest {
 
     @Test
     public void testEquals(){
-        EntityKey entityKey1 = new EntityKey(activityType, direction);
-        EntityKey entityKey2 = new EntityKey(activityType, direction);
-        EntityKey entityKey3 = new EntityKey(activityType, direction);
-        EntityKey diffEntityKey = new EntityKey(activityType, Direction.RIGHT);
+        EntityKey entityKey1 = new EntityKey(NPCActivityType, direction);
+        EntityKey entityKey2 = new EntityKey(NPCActivityType, direction);
+        EntityKey entityKey3 = new EntityKey(NPCActivityType, direction);
+        EntityKey diffEntityKey = new EntityKey(NPCActivityType, Direction.RIGHT);
         // reflexive
         assertEquals(entityKey1, entityKey1);
         // symmetrical
@@ -64,10 +64,10 @@ public class EntityKeyTest {
 
     @Test
     public void testHashCode(){
-        EntityKey entityKey1 = new EntityKey(activityType, direction);
-        EntityKey entityKey2 = new EntityKey(activityType, direction);
-        EntityKey entityKey3 = new EntityKey(activityType, direction);
-        EntityKey diffEntityKey = new EntityKey(activityType, Direction.RIGHT);
+        EntityKey entityKey1 = new EntityKey(NPCActivityType, direction);
+        EntityKey entityKey2 = new EntityKey(NPCActivityType, direction);
+        EntityKey entityKey3 = new EntityKey(NPCActivityType, direction);
+        EntityKey diffEntityKey = new EntityKey(NPCActivityType, Direction.RIGHT);
         // reflexive
         assertEquals(entityKey1.hashCode(), entityKey1.hashCode());
         // symmetrical

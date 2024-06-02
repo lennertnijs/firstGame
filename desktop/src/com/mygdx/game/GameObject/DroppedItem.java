@@ -1,6 +1,5 @@
-package com.mygdx.game.General;
+package com.mygdx.game.GameObject;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 
@@ -52,7 +51,4 @@ public class DroppedItem extends GameObject{
         return String.format("DroppedItem[position=%s, dimensions=%s, map=%s, name=%s, amount =%d]",
                 super.getPosition(), super.getDimensions(), super.getMap(), name, amount);
     }
-
-
-
 }

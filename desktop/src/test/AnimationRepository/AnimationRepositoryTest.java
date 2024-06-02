@@ -1,14 +1,15 @@
 package AnimationRepository;
 
 import com.mygdx.game.AnimationRepository.*;
+import com.mygdx.game.Keys.EntityKey;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.*;
 
 import static com.mygdx.game.Util.Direction.UP;
-import static com.mygdx.game.WeekSchedule.ActivityType.RUNNING;
-import static com.mygdx.game.WeekSchedule.ActivityType.WALKING;
+import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
+import static com.mygdx.game.Keys.NPCActivityType.WALKING;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimationRepositoryTest {

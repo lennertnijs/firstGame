@@ -6,15 +6,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.Dialogue.IDialogueData;
+import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.InventoryManager;
 import com.mygdx.game.Inventory.ItemTemplateRepository;
-import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.Keys.EntityKey;
+import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
-import com.mygdx.game.Navigation.INavigationData;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.AnimationRepository.*;
 import com.mygdx.game.Util.*;
@@ -23,7 +24,7 @@ import com.mygdx.game.WeekSchedule.*;
 import java.util.*;
 
 import static com.mygdx.game.Util.Direction.*;
-import static com.mygdx.game.WeekSchedule.ActivityType.*;
+import static com.mygdx.game.Keys.NPCActivityType.*;
 
 public class NPCCreator {
 
@@ -44,7 +45,7 @@ public class NPCCreator {
         scheduleMap.put(Day.WEDNESDAY, loadSchedule());
         IWeekSchedule weekSchedule = new WeekSchedule(scheduleMap);
 
-        INavigationData navigationData = new NavigationData(new BFSPathFinder<>(loadGraph()));
+        NavigationData navigationData = new NavigationData(new BFSPathFinder<>(loadGraph()));
 
         IDialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 

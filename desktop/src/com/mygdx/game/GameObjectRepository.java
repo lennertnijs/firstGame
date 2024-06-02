@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
-import com.mygdx.game.General.GameObject;
-import com.mygdx.game.NPC.NPC;
+import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.GameObject.NPC;
+import com.mygdx.game.GameObject.Player;
 
 import java.util.ArrayList;
 import java.util.List;

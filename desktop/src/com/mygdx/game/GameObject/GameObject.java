@@ -1,4 +1,4 @@
-package com.mygdx.game.General;
+package com.mygdx.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Util.Dimensions;
@@ -14,7 +14,12 @@ public class GameObject {
     private Dimensions dimensions;
     private String map;
 
-    public GameObject(TextureRegion textureRegion, Point position, Dimensions dimensions, String map){
+    public GameObject(
+            TextureRegion textureRegion,
+            Point position,
+            Dimensions dimensions,
+            String map
+    ){
         this.textureRegion = Objects.requireNonNull(textureRegion);
         this.position = Objects.requireNonNull(position, "Position is null.");
         this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");

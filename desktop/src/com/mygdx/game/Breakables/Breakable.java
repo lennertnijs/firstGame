@@ -1,7 +1,7 @@
 package com.mygdx.game.Breakables;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.General.GameObject;
+import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 
