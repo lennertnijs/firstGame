@@ -27,7 +27,7 @@ public class WeekScheduleTest {
     private final Schedule schedule1  = new Schedule(Arrays.asList(activity1, activity2));
     private final Schedule schedule2  = new Schedule(Arrays.asList(activity2, activity3));
     private final Map<Day, Schedule> map = new HashMap<>();
-    private IWeekSchedule weekSchedule;
+    private WeekSchedule weekSchedule;
 
     @BeforeEach
     public void initialise(){
@@ -57,35 +57,6 @@ public class WeekScheduleTest {
     }
 
     @Test
-    public void testHasActivity(){
-        assertTrue(weekSchedule.hasActivity(day1, time1));
-        assertTrue(weekSchedule.hasActivity(day1, time2));
-        assertFalse(weekSchedule.hasActivity(day1, time3));
-
-        assertFalse(weekSchedule.hasActivity(day2, time1));
-        assertTrue(weekSchedule.hasActivity(day2, time2));
-        assertTrue(weekSchedule.hasActivity(day2, time3));
-    }
-
-    @Test
-    public void testHasActivityWithNullDay(){
-        assertThrows(NullPointerException.class,
-                () -> weekSchedule.hasActivity(null, time1));
-    }
-
-    @Test
-    public void testHasActivityWithNullTime(){
-        assertThrows(NullPointerException.class,
-                () -> weekSchedule.hasActivity(day1, null));
-    }
-
-    @Test
-    public void testHasActivityUnmappedDay(){
-        assertThrows(NoSuchElementException.class,
-                () -> weekSchedule.hasActivity(Day.WEDNESDAY, time1));
-    }
-
-    @Test
     public void testGetActivity(){
         assertEquals(activity1, weekSchedule.getActivity(day1, time1));
         assertEquals(activity2, weekSchedule.getActivity(day1, time2));
@@ -95,8 +66,7 @@ public class WeekScheduleTest {
 
     @Test
     public void testGetActivityNoneFound(){
-        assertThrows(NoSuchElementException.class,
-                () -> weekSchedule.getActivity(day1, time3));
+        assertNull(weekSchedule.getActivity(day1, time3));
     }
 
     @Test

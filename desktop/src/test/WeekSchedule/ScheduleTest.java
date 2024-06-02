@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,21 +47,6 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testHasActivityAt(){
-        assertFalse(schedule.hasActivityAt(new Time(0, 9)));
-        assertTrue(schedule.hasActivityAt(time1));
-        assertFalse(schedule.hasActivityAt(new Time(0, 11)));
-        assertTrue(schedule.hasActivityAt(time2));
-        assertFalse(schedule.hasActivityAt(new Time(0, 16)));
-    }
-
-    @Test
-    public void testHasActivityAtWithNull(){
-        assertThrows(NullPointerException.class,
-                () -> schedule.hasActivityAt(null));
-    }
-
-    @Test
     public void testGetActivityAt(){
         assertEquals(activity1, schedule.getActivityAt(time1));
         assertEquals(activity2, schedule.getActivityAt(time2));
@@ -76,8 +60,7 @@ public class ScheduleTest {
 
     @Test
     public void testGetActivityAtNotExists(){
-        assertThrows(NoSuchElementException.class,
-                () -> schedule.getActivityAt(new Time(0, 9)));
+        assertNull(schedule.getActivityAt(new Time(0, 9)));
     }
 
     @Test

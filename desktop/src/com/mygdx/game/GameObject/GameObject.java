@@ -14,24 +14,8 @@ public class GameObject {
     private Dimensions dimensions;
     private String map;
 
-    public GameObject(
-            TextureRegion textureRegion,
-            Point position,
-            Dimensions dimensions,
-            String map
-    ){
+    public GameObject(TextureRegion textureRegion, Point position, Dimensions dimensions, String map){
         this.textureRegion = Objects.requireNonNull(textureRegion);
-        this.position = Objects.requireNonNull(position, "Position is null.");
-        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
-        this.map = Objects.requireNonNull(map, "Map is null.");
-    }
-
-    /**
-     * Constructor to create {@link GameObject} with, without it having a final {@link TextureRegion}.
-     * Used for subclasses that are animated.
-     */
-    protected GameObject(Point position, Dimensions dimensions, String map){
-        this.textureRegion = null;
         this.position = Objects.requireNonNull(position, "Position is null.");
         this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
         this.map = Objects.requireNonNull(map, "Map is null.");

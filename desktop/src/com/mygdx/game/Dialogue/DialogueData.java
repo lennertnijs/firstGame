@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class DialogueData implements IDialogueData{
+public final class DialogueData{
 
     private final List<String> activeInputs;
     private final DialogueRepository repository;
@@ -24,12 +24,10 @@ public final class DialogueData implements IDialogueData{
         this.repository = repository;
     }
 
-    @Override
     public List<String> getActiveInputs(){
         return new ArrayList<>(activeInputs);
     }
 
-    @Override
     public String processInput(String input){
         Objects.requireNonNull(input, "Input is null.");
         if(!activeInputs.contains(input)) {

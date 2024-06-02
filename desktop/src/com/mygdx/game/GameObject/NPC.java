@@ -1,6 +1,6 @@
 package com.mygdx.game.GameObject;
 
-import com.mygdx.game.Dialogue.IDialogueData;
+import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.NPC.Stats;
@@ -9,7 +9,7 @@ import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Activity;
 import com.mygdx.game.Keys.NPCActivityType;
-import com.mygdx.game.WeekSchedule.IWeekSchedule;
+import com.mygdx.game.WeekSchedule.WeekSchedule;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +18,8 @@ import java.util.Objects;
 public final class NPC extends Character {
 
     private final NavigationData navigationData;
-    private final IWeekSchedule weekSchedule;
-    private final IDialogueData dialogueData;
+    private final WeekSchedule weekSchedule;
+    private final DialogueData dialogueData;
     private final Stats stats;
 
     private NPC(Builder b){
@@ -33,29 +33,27 @@ public final class NPC extends Character {
     }
 
     public void update(Day day, Time time, double delta){
-        updateSchedule(day, time);
         super.increaseAnimationDelta(delta);
+        if(getCurrentActivityType() == NPCActivityType.WALKING){
+            move(delta);
+        }
+        updateSchedule(day, time);
     }
 
-    public void move(int deltaInMillis){
-        if(super.getCurrentActivityType() != NPCActivityType.WALKING){
-            return;
-        }
-        int movement = deltaInMillis * stats.getSpeed();
+    public void move(double deltaInMillis){
+        int movement = (int)deltaInMillis * stats.getSpeed();
         Location current = new Location(getMap(), getPosition());
         Location next = navigationData.calculateNextLocation(current, movement);
         setPosition(next.position());
         setMap(next.mapName());
         // set the direction appropriately
-        if(super.getCurrentActivityType() == NPCActivityType.WALKING){
-            super.removeCurrentActivityType();
-        }
+        // check if anything left. if not, pop the WALKING off
     }
 
     public void updateSchedule(Day day, Time time){
-        if(!weekSchedule.hasActivity(day, time) || super.getCurrentActivityType() == NPCActivityType.WALKING)
-            return;
         Activity activity = weekSchedule.getActivity(day, time);
+        if(activity == null || super.getCurrentActivityType() == NPCActivityType.WALKING)
+            return;
         Location current = new Location(getMap(), getPosition());
         navigationData.calculateAndStoreRoute(current, activity.location());
         while(super.getCurrentActivityType() != NPCActivityType.IDLING){
@@ -87,8 +85,8 @@ public final class NPC extends Character {
         private String name;
         private IInventoryManager inventoryManager;
         private NavigationData navigationData;
-        private IWeekSchedule weekSchedule;
-        private IDialogueData dialogueData;
+        private WeekSchedule weekSchedule;
+        private DialogueData dialogueData;
         private Stats stats;
 
         private Builder(){
@@ -144,12 +142,12 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder weekSchedule(IWeekSchedule weekSchedule){
+        public Builder weekSchedule(WeekSchedule weekSchedule){
             this.weekSchedule = weekSchedule;
             return this;
         }
 
-        public Builder dialogueData(IDialogueData dialogueData){
+        public Builder dialogueData(DialogueData dialogueData){
             this.dialogueData = dialogueData;
             return this;
         }

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public final class WeekSchedule implements IWeekSchedule{
+public final class WeekSchedule{
 
     private final Map<Day, Schedule> schedules;
 
@@ -18,14 +18,6 @@ public final class WeekSchedule implements IWeekSchedule{
             throw new NullPointerException("Map contains null key or value.");
         }
         this.schedules = new HashMap<>(schedules);
-    }
-
-    public boolean hasActivity(Day day, Time time){
-        Objects.requireNonNull(day, "Day is null.");
-        if(!schedules.containsKey(day))
-            throw new NoSuchElementException("No Schedule found for this Day.");
-        Objects.requireNonNull(time, "Time is null.");
-        return schedules.get(day).hasActivityAt(time);
     }
 
     public Activity getActivity(Day day, Time time){

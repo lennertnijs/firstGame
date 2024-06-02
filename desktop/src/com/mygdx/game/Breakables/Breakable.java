@@ -14,8 +14,8 @@ public class Breakable extends GameObject {
     // loot table
     private final BreakableType type;
 
-    public Breakable(TextureRegion textureRegion, Point position, Dimensions dimensions, String map, int health, int hardness, BreakableType type){
-        super(position, dimensions, map);
+    public Breakable(Point position, Dimensions dimensions, String map, int health, int hardness, BreakableType type){
+        super(null, position, dimensions, map);
         if(health <= 0){
             throw new IllegalArgumentException("Health is negative or 0.");
         }

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
-import com.mygdx.game.Dialogue.IDialogueData;
 import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.IInventoryManager;
 import com.mygdx.game.Inventory.Inventory;
@@ -43,11 +42,11 @@ public class NPCCreator {
         scheduleMap.put(Day.MONDAY, loadSchedule());
         scheduleMap.put(Day.TUESDAY, loadSchedule());
         scheduleMap.put(Day.WEDNESDAY, loadSchedule());
-        IWeekSchedule weekSchedule = new WeekSchedule(scheduleMap);
+        WeekSchedule weekSchedule = new WeekSchedule(scheduleMap);
 
         NavigationData navigationData = new NavigationData(new BFSPathFinder<>(loadGraph()));
 
-        IDialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
+        DialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 
         Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
 

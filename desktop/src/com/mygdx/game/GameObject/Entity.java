@@ -21,8 +21,7 @@ public abstract class Entity extends AnimatedGameObject{
 
     public Entity(Point position, Dimensions dimensions, String map,
                   AnimationRepository animationRepository, double delta,
-                  Direction direction, List<ActivityType> activityTypes)
-    {
+                  Direction direction, List<ActivityType> activityTypes){
         super(position, dimensions, map, animationRepository, delta);
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
         Objects.requireNonNull(activityTypes, "List is null.");

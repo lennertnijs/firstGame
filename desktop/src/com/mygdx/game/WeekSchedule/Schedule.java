@@ -29,17 +29,9 @@ public final class Schedule {
         return activities.stream().map(Activity::time).distinct().count() < activities.size();
     }
 
-    public boolean hasActivityAt(Time time){
-        Objects.requireNonNull(time, "Time is null.");
-        return activities.stream().anyMatch(activity -> activity.time().compareTo(time) == 0);
-    }
-
     public Activity getActivityAt(Time time){
         Objects.requireNonNull(time, "Time is null.");
-        return activities.stream()
-                .filter(activity -> activity.time().compareTo(time) == 0)
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("No Activity happens at this Time."));
+        return activities.stream().filter(a -> a.time().compareTo(time) == 0).findFirst().orElse(null);
     }
 
     @Override

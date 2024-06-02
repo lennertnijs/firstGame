@@ -12,7 +12,7 @@ public class DroppedItem extends GameObject{
 
     public DroppedItem(Point position, Dimensions dimensions, String map,
                        String name, int amount){
-        super(position, dimensions, map);
+        super(null, position, dimensions, map);
         this.name = Objects.requireNonNull(name, "Item name is null.");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or zero.");
