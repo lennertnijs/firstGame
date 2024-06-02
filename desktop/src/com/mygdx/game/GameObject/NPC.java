@@ -3,7 +3,7 @@ package com.mygdx.game.GameObject;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
-import com.mygdx.game.NPC.Stats;
+import com.mygdx.game.Stats;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;

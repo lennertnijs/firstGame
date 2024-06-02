@@ -9,7 +9,6 @@ import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.GameObject.NPC;
-import com.mygdx.game.NPC.Stats;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
