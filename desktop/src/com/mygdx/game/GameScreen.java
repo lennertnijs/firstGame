@@ -56,6 +56,7 @@ public class GameScreen implements Screen {
         drawer.draw(npc);
         gameController.update();
         game.batch.end();
+
     }
 
 
