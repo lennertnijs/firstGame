@@ -1,4 +1,4 @@
-package com.mygdx.game.Bat;
+package com.mygdx.game.Rat;
 
 import com.mygdx.game.AnimationRepository.AnimationRepository;
 import com.mygdx.game.GameObject.Monster;
@@ -11,26 +11,20 @@ import com.mygdx.game.Util.Point;
 
 import java.util.List;
 
-public final class Bat extends Monster{
+public final class Rat extends Monster {
 
     private final static int aggressionRange = 1200;
     private final static int attackRange = 600;
-    private BatState batState;
-    public Bat(Point position, Dimensions dimensions, String map,
+    private RatState ratState;
+
+    public Rat(Point position, Dimensions dimensions, String map,
                AnimationRepository animationRepository, double delta,
                Direction direction, List<ActivityType> activityTypes,
-               Stats stats, LootTable lootTable) {
+               LootTable lootTable, Stats stats) {
         super(position, dimensions, map, animationRepository, delta, direction, activityTypes, lootTable, stats);
-        batState = new BatRoamingState();
     }
 
-    public void update(double delta, Point playerPosition){
-        MonsterData monsterData = new MonsterData(playerPosition, getPosition(), getSpeed(),delta);
-        super.setPosition(batState.move(monsterData, this));
-        // update activity Type
-    }
-
-    public void setBatState(BatState batState){
-        this.batState = batState;
+    public void setRatState(RatState ratState){
+        this.ratState = ratState;
     }
 }

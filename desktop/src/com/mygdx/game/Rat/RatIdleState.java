@@ -1,21 +1,25 @@
-package com.mygdx.game.Bat;
+package com.mygdx.game.Rat;
 
+import com.mygdx.game.Bat.MonsterData;
 import com.mygdx.game.Util.MovementUtil;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.RandomNumberGenerator;
 
-public class BatRoamingState implements BatState{
+public final class RatIdleState implements RatState{
 
     private double delta = 0;
-    private final static double interval = 5000;
+    private final static int interval = 5000;
     private Point goal;
 
-    public BatRoamingState(){
+    public RatIdleState(){
+
     }
 
-    public Point move(MonsterData data, Bat bat){
-        delta += data.delta();
-        if(delta < interval){
+
+    @Override
+    public Point move(MonsterData data, Rat rat) {
+        this.delta = data.delta();
+        if(delta <= interval){
             return data.monsterPosition();
         }
         delta = 0;
@@ -23,11 +27,11 @@ public class BatRoamingState implements BatState{
         int movement = (int)(data.movementSpeed() * data.delta());
         int distance = 200;
         if(distance <= 1200){
-            bat.setBatState(new BatAttackState());
+            rat.setRatState(null);
             return data.monsterPosition();
         }
         if(distance <= 600){
-            bat.setBatState(new BatRepositionState());
+            rat.setRatState(null);
             return data.monsterPosition();
         }
         return MovementUtil.calculateNextPosition(data.monsterPosition(), goal, movement);
@@ -40,4 +44,5 @@ public class BatRoamingState implements BatState{
             this.goal = new Point(data.monsterPosition().x() + random_x, data.monsterPosition().y() + random_y);
         }
     }
+
 }
