@@ -10,6 +10,8 @@ import com.mygdx.game.Util.Point;
 import java.util.Collections;
 import java.util.Objects;
 
+import static com.mygdx.game.Keys.NPCActivityType.WALKING;
+
 public final class Player extends Character {
 
     // add player stats
@@ -21,11 +23,13 @@ public final class Player extends Character {
 
 
     public void move(double delta, Direction direction){
-        int m = (int)delta;
+        if(super.getCurrentActivityType() != WALKING){
+            super.storeActivityType(WALKING);
+        }
+        int m = (int) (delta * 0.4f);
         Point p = super.getPosition();
         switch(direction){
             case UP: super.setPosition(new Point(p.x(), p.y() + m)); break;
-            case NORTHEAST: super.setPosition(new Point(p.x() + m, p.y() + m)); break;
             case RIGHT: super.setPosition(new Point(p.x() + m, p.y())); break;
             case DOWN: super.setPosition(new Point(p.x(), p.y() - m)); break;
             case LEFT: super.setPosition(new Point(p.x() - m, p.y())); break;

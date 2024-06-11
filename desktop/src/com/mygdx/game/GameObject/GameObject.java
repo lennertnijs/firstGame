@@ -41,7 +41,7 @@ public class GameObject {
         this.position = Objects.requireNonNull(position, "Position is null.");
     }
 
-    public final Dimensions getDimensions(){
+    public Dimensions getDimensions(){
         return dimensions;
     }
 

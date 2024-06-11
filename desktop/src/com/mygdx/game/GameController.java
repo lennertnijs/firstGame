@@ -3,29 +3,30 @@ package com.mygdx.game;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.GameObject.NPC;
-import com.mygdx.game.GameObject.Player;
-import com.mygdx.game.Input.MovementFlags;
-import com.mygdx.game.Util.Direction;
-
-import static com.mygdx.game.Util.Direction.*;
+import com.mygdx.game.Input.MovementInputs;
+import com.mygdx.game.Keys.ActivityType;
 
 public class GameController {
 
     private final GameObjectRepository gameObjectRepository;
     private final Clock clock;
     private final SpriteDrawer drawer;
-    private final MovementFlags movementFlags = new MovementFlags();
+    private final MovementInputs movementFlags = new MovementInputs();
+    private final PlayerController playerController;
 
-    public GameController(GameObjectRepository gameObjectRepository, Clock clock, MyGame game){
+    public GameController(GameObjectRepository gameObjectRepository, Clock clock, MyGame game, PlayerController playerController){
         this.gameObjectRepository = gameObjectRepository;
         this.clock = clock;
         this.drawer = new SpriteDrawer(game);
+        this.playerController = playerController;
     }
 
     public void update(){
         double delta = clock.update();
-        updateNPCS(delta);
-        movePlayer();
+        for(NPC npc : gameObjectRepository.getNpcs()){
+            npc.update(clock.getDay(), clock.getTime(), delta);
+        }
+        playerController.update(delta, movementFlags.getCurrentDirection());
         drawer.draw(gameObjectRepository.getMaps().get(0));
         for(GameObject o : gameObjectRepository.getMiscObjects()){
             drawer.draw(o);
@@ -33,41 +34,18 @@ public class GameController {
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
-        drawer.draw(gameObjectRepository.getPlayer());
-
+        drawer.draw(playerController.getPlayer());
     }
 
-    public void movePlayer(){
-        Player player = gameObjectRepository.getPlayer();
-        Direction direction = movementFlags.getMovementDirection();
-        if(direction == null){
-            return;
-        }
-        player.move(clock.getLastDelta(), direction);
-        player.setDirection(translate(direction));
-    }
-
-    private Direction translate(Direction direction){
-        if(direction == UP || direction == RIGHT || direction == DOWN || direction == LEFT){
-            return direction;
-        }
-        if(direction == NORTHEAST || direction == NORTHWEST){
-            return UP;
-        }
-        return DOWN;
-    }
-
-    public void updateNPCS(double delta){
-        for(NPC npc : gameObjectRepository.getNpcs()){
-            npc.update(clock.getDay(), clock.getTime(), delta);
-        }
-    }
-
-    private boolean checkCollisions(GameObject g){
-        return false;
-    }
-
-    public MovementFlags getMovementFlags(){
+    public MovementInputs getMovementFlags(){
         return movementFlags;
+    }
+
+    public void setActivityType(ActivityType activityType){
+        playerController.setCurrentActivity(activityType);
+    }
+
+    public void removeActivityType(){
+        playerController.removeCurrentActivity();
     }
 }

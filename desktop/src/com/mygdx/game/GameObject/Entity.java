@@ -67,4 +67,9 @@ public abstract class Entity extends AnimatedGameObject{
         Vector translation = getFrame(entityKey).translation();
         return pos.add(translation);
     }
+
+    @Override
+    public Dimensions getDimensions(){
+        return new Dimensions(getTexture().getRegionWidth(), getTexture().getRegionHeight());
+    }
 }

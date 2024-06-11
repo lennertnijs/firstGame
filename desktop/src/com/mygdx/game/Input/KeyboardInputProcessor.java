@@ -2,6 +2,8 @@ package com.mygdx.game.Input;
 
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.GameController;
+import com.mygdx.game.Keys.NPCActivityType;
+import com.mygdx.game.Util.Direction;
 
 import static com.badlogic.gdx.Input.Keys.*;
 
@@ -16,16 +18,19 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch(keycode){
             case UP:
-                gameController.getMovementFlags().setFlagUp(true);
+                gameController.getMovementFlags().addDirection(Direction.UP);
                 break;
             case RIGHT:
-                gameController.getMovementFlags().setFlagRight(true);
+                gameController.getMovementFlags().addDirection(Direction.RIGHT);
                 break;
             case DOWN:
-                gameController.getMovementFlags().setFlagDown(true);
+                gameController.getMovementFlags().addDirection(Direction.DOWN);
                 break;
             case LEFT:
-                gameController.getMovementFlags().setFlagLeft(true);
+                gameController.getMovementFlags().addDirection(Direction.LEFT);
+                break;
+            case Q:
+                gameController.setActivityType(NPCActivityType.MINING);
                 break;
         }
         return false;
@@ -35,16 +40,19 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch(keycode){
             case UP:
-                gameController.getMovementFlags().setFlagUp(false);
+                gameController.getMovementFlags().removeDirection(Direction.UP);
                 break;
             case RIGHT:
-                gameController.getMovementFlags().setFlagRight(false);
+                gameController.getMovementFlags().removeDirection(Direction.RIGHT);
                 break;
             case DOWN:
-                gameController.getMovementFlags().setFlagDown(false);
+                gameController.getMovementFlags().removeDirection(Direction.DOWN);
                 break;
             case LEFT:
-                gameController.getMovementFlags().setFlagLeft(false);
+                gameController.getMovementFlags().removeDirection(Direction.LEFT);
+                break;
+            case Q:
+                gameController.removeActivityType();
                 break;
         }
         return false;

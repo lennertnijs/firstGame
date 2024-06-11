@@ -39,13 +39,7 @@ public class AnimationMapLoader {
         Animation miningRightAnimation = loadAnimation(atlas, "mine_right", 4);
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
         Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
-
-        Frame mineD1 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 1)).build();
-        Frame mineD2 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 2)).build();
-        Frame mineD3 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 3)).build();
-        Frame mineD4 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 4)).build();
-
-        Animation miningDownAnimation = new Animation(Arrays.asList(mineD1, mineD2, mineD3, mineD4), 2000f);
+        Animation miningDownAnimation = loadAnimation(atlas, "mine_down", 4);
 
         map.put(new EntityKey(MINING, RIGHT), miningRightAnimation);
         map.put(new EntityKey(MINING, DOWN), miningDownAnimation);
@@ -53,7 +47,7 @@ public class AnimationMapLoader {
         map.put(new EntityKey(MINING, UP), miningUpAnimation);
 
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
-        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);
+        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_left", 6);
         Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
         Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
@@ -71,6 +65,6 @@ public class AnimationMapLoader {
             Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).build();
             frames.add(frame);
         }
-        return new Animation(frames, 2000f);
+        return new Animation(frames, 1000f);
     }
 }

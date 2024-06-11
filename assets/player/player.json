@@ -8,7 +8,7 @@
     "height": 128
   },
   "map": "outside",
-  "texture_atlas": "npc/mining.atlas",
+  "texture_atlas": "player/Player.pack",
   "direction": "RIGHT",
   "activity_type": "IDLING",
   "name": "name",
