@@ -1,4 +1,4 @@
-package com.mygdx.game.Util;
+package com.mygdx.game.UtilMethods;
 
 import java.util.Random;
 

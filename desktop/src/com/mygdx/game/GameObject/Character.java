@@ -31,4 +31,8 @@ public abstract class Character extends Entity {
     public String getName(){
         return name;
     }
+
+    public void useActiveItem(GameObject object){
+        inventory.use(activeIndex, object);
+    }
 }

@@ -1,8 +1,10 @@
 package com.mygdx.game.Util;
 
+import com.mygdx.game.HitBox.HitBox;
+
 import java.util.Objects;
 
-public final class Rectangle {
+public final class Rectangle implements HitBox {
 
     private final int x;
     private final int y;

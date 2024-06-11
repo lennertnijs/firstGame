@@ -3,6 +3,8 @@ package com.mygdx.game;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.GameObject.NPC;
+import com.mygdx.game.GameObject.Player;
+import com.mygdx.game.Util.Direction;
 
 public class GameController {
 
@@ -22,11 +24,14 @@ public class GameController {
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
+        drawer.draw(gameObjectRepository.getPlayer());
 
     }
 
-    public void movePlayer(double delta){
-        gameObjectRepository.getPlayer().move(delta);
+    public void movePlayer(Direction direction){
+        Player player = gameObjectRepository.getPlayer();
+        player.setDirection(direction);
+        player.move(clock.getLastDelta());
     }
 
     public void updateNPCS(double delta){
@@ -36,12 +41,6 @@ public class GameController {
     }
 
     private boolean checkCollisions(GameObject g){
-        for(GameObject gameObject : gameObjectRepository.getMiscObjects()){
-            if(g.equals(gameObject)) continue;
-            if(g.getHitBox().overlaps(gameObject.getHitBox()))
-                return true;
-            // if other item is the dropped item -> inventory.add(Item item);
-        }
         return false;
     }
 }

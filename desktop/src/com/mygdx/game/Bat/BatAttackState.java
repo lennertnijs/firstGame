@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.MovementUtil;
+import com.mygdx.game.UtilMethods.MovementUtil;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
 

@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         drawer = new SpriteDrawer(game);
-        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(npc), NPCCreator.createPlayer());
+        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(npc), DefaultPlayerLoader.load());
         gameController = new GameController(repository, gameClock, game);
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
     }
@@ -66,7 +66,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        // use for textures etc.
         // start the playback of the background music
         // when the screen is shown
         //rainMusic.play();
@@ -88,8 +87,4 @@ public class GameScreen implements Screen {
     public void dispose() {
         // dispose of game things, like music, etc.
     }
-
-    //        JsonReader reader = new JsonReader();
-    //        JsonValue file = reader.parse(Gdx.files.internal("resources/clock.json"))
-    // to read json files
 }

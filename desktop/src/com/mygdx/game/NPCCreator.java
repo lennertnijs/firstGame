@@ -5,9 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
-import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
@@ -34,7 +32,7 @@ public class NPCCreator {
 
         String name = "Gilbert";
 
-        AnimationRepository animRepo = new AnimationRepository(loadAnimationMap());
+        AnimationRepository animRepo = new AnimationRepository(AnimationMapLoader.load("npc/mining.atlas"));
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -65,84 +63,6 @@ public class NPCCreator {
                 .dialogueData(dialogueData)
                 .stats(stats)
                 .build();
-    }
-
-    public static Player createPlayer(){
-        TextureRegion idleDown = atlas.findRegion("idle_down");
-        Point position = new Point(500, 500);
-        Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
-        String map = "Map";
-
-        String name = "Gilbert";
-
-        AnimationRepository animRepo = new AnimationRepository(loadAnimationMap());
-        Inventory inventory = new Inventory(6);
-
-
-        return new Player(
-                position,
-                dimensions,
-                map,
-                name,
-                animRepo,
-                inventory
-                );
-    }
-
-    private static Map<AnimationKey, Animation> loadAnimationMap(){
-        Map<AnimationKey, Animation> map = new HashMap<>();
-
-        Frame idleUpFrame = Frame.builder().textureRegion(atlas.findRegion("idle_up")).build();
-        Frame idleRightFrame = Frame.builder().textureRegion(atlas.findRegion("idle_right")).build();
-        Frame idleDownFrame = Frame.builder().textureRegion(atlas.findRegion("idle_down")).build();
-        Frame idleLeftFrame = Frame.builder().textureRegion(atlas.findRegion("idle_left")).build();
-
-        Animation idleUpAnimation = new Animation(Collections.singletonList(idleUpFrame), 1);
-        Animation idleRightAnimation = new Animation(Collections.singletonList(idleRightFrame), 1);
-        Animation idleDownAnimation = new Animation(Collections.singletonList(idleDownFrame), 1);
-        Animation idleLeftAnimation = new Animation(Collections.singletonList(idleLeftFrame), 1);
-
-        map.put(new EntityKey(IDLING, UP), idleUpAnimation);
-        map.put(new EntityKey(IDLING, RIGHT), idleRightAnimation);
-        map.put(new EntityKey(IDLING, DOWN), idleDownAnimation);
-        map.put(new EntityKey(IDLING, LEFT), idleLeftAnimation);
-
-        Animation miningRightAnimation = loadAnimation(atlas, "mine_right", 4);
-        Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
-        Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
-
-        Frame mineD1 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 1)).build();
-        Frame mineD2 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 2)).build();
-        Frame mineD3 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 3)).build();
-        Frame mineD4 = Frame.builder().textureRegion(atlas.findRegion("mine_down", 4)).build();
-
-        Animation miningDownAnimation = new Animation(Arrays.asList(mineD1, mineD2, mineD3, mineD4), 2000f);
-
-        map.put(new EntityKey(MINING, RIGHT), miningRightAnimation);
-        map.put(new EntityKey(MINING, DOWN), miningDownAnimation);
-        map.put(new EntityKey(MINING, LEFT), miningLeftAnimation);
-        map.put(new EntityKey(MINING, UP), miningUpAnimation);
-
-        Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
-        Animation walkingLeftAnimation = loadAnimation(atlas, "walking_right", 6);
-        Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
-        Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
-
-        map.put(new EntityKey(WALKING, RIGHT), walkingRightAnimation);
-        map.put(new EntityKey(WALKING, DOWN), walkingDownAnimation);
-        map.put(new EntityKey(WALKING, LEFT), walkingLeftAnimation);
-        map.put(new EntityKey(WALKING, UP), walkingUpAnimation);
-
-        return map;
-    }
-
-    private static Animation loadAnimation(TextureAtlas atlas, String name, int amountOfFrames){
-        List<Frame> frames = new ArrayList<>();
-        for(int i = 1; i <= amountOfFrames; i++){
-            Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).build();
-            frames.add(frame);
-        }
-        return new Animation(frames, 2000f);
     }
 
     private static Schedule loadSchedule(){

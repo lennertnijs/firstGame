@@ -1,0 +1,18 @@
+{
+  "position": {
+    "x": 200,
+    "y": 200
+  },
+  "dimensions": {
+    "width": 64,
+    "height": 128
+  },
+  "map": "outside",
+  "texture_atlas": "npc/mining.atlas",
+  "direction": "RIGHT",
+  "activity_type": "IDLING",
+  "name": "name",
+  "inventory": {
+    "size": 9
+  }
+}

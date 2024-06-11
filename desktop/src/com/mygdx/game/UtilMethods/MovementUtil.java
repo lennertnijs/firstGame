@@ -1,4 +1,7 @@
-package com.mygdx.game.Util;
+package com.mygdx.game.UtilMethods;
+
+import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 

@@ -1,6 +1,7 @@
 package com.mygdx.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Rectangle;
@@ -56,7 +57,7 @@ public class GameObject {
         this.map = Objects.requireNonNull(map, "Map is null.");
     }
 
-    public Rectangle getHitBox(){
+    public HitBox getHitBox(){
         return new Rectangle(position, dimensions);
     }
 

@@ -13,6 +13,7 @@ public final class Clock implements IClock{
     private final TimeProvider timeProvider;
     private float millisSinceUpdate;
     private boolean active;
+    private double lastDelta;
 
     public Clock(CalendarClock calendarClock, TimeProvider timeProvider){
         this.calendarClock = Objects.requireNonNull(calendarClock, "Calendar clock is null.").copy();
@@ -45,13 +46,17 @@ public final class Clock implements IClock{
     public double update(){
         if(!active) return 0;
 
-        double delta = timeProvider.update();
-        millisSinceUpdate += delta;
+        this.lastDelta = timeProvider.update();
+        millisSinceUpdate += lastDelta;
         if(millisSinceUpdate >= MILLIS_PER_UPDATE){
             calendarClock.increaseTime(MINUTES_PER_UPDATE);
             millisSinceUpdate -= MILLIS_PER_UPDATE;
         }
-        return delta;
+        return lastDelta;
+    }
+
+    public double getLastDelta(){
+        return lastDelta;
     }
 
     public void reset(){

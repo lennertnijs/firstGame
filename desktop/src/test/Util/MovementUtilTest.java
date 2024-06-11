@@ -1,6 +1,6 @@
 package Util;
 
-import com.mygdx.game.Util.MovementUtil;
+import com.mygdx.game.UtilMethods.MovementUtil;
 import com.mygdx.game.Util.Point;
 import org.junit.jupiter.api.Test;
 

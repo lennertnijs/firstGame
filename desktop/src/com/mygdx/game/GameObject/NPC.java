@@ -9,6 +9,7 @@ import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.Util.Activity;
 import com.mygdx.game.Keys.NPCActivityType;
+import com.mygdx.game.UtilMethods.DirectionCalculator;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public final class NPC extends Character {
         Location next = navigationData.calculateNextLocation(current, movement);
         setPosition(next.position());
         setMap(next.mapName());
-        // set the direction appropriately
+        super.setDirection(DirectionCalculator.calculate(current.position(), next.position()));
         // check if anything left. if not, pop the WALKING off
     }
 
@@ -54,8 +55,10 @@ public final class NPC extends Character {
         Activity activity = weekSchedule.getActivity(day, time);
         if(activity == null || super.getCurrentActivityType() == NPCActivityType.WALKING)
             return;
-        Location current = new Location(getMap(), position);
+        Location current = new Location(getMap(), position); // take the end of the route, if any still active
         Location next = new Location("temp", activity.position());
+        System.out.println(current);
+        System.out.println(next);
         navigationData.calculateAndStoreRoute(current, next);
         while(super.getCurrentActivityType() != NPCActivityType.IDLING){
             super.removeCurrentActivityType();
