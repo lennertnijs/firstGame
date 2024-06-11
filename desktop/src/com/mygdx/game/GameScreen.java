@@ -8,6 +8,8 @@ import com.mygdx.game.Clock.CalendarClock;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.SystemTimeProvider;
 import com.mygdx.game.DAO.DefaultPlayerLoader;
+import com.mygdx.game.DAO.HouseLoader;
+import com.mygdx.game.DAO.MapLoader;
 import com.mygdx.game.DAO.NPCCreator;
 import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.Util.Day;
@@ -38,7 +40,7 @@ public class GameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         drawer = new SpriteDrawer(game);
-        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(npc), DefaultPlayerLoader.load());
+        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(npc), DefaultPlayerLoader.load(), MapLoader.loadAll(), HouseLoader.load());
         gameController = new GameController(repository, gameClock, game);
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
     }

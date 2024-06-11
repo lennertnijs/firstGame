@@ -1,6 +1,7 @@
 package com.mygdx.game.Util;
 
 import com.mygdx.game.Keys.ActivityType;
+import com.mygdx.game.Map.GameMap;
 
 import java.util.Objects;
 

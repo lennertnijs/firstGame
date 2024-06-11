@@ -21,6 +21,10 @@ public class GameController {
     public void update(){
         double delta = clock.update();
         updateNPCS(delta);
+        drawer.draw(gameObjectRepository.getMaps().get(0));
+        for(GameObject o : gameObjectRepository.getMiscObjects()){
+            drawer.draw(o);
+        }
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }

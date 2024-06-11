@@ -1,6 +1,5 @@
 package WeekSchedule;
 
-import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
-import static com.mygdx.game.Util.GameMap.MAIN;
+import static com.mygdx.game.Map.GameMap.MAIN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WeekScheduleTest {

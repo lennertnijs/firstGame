@@ -1,13 +1,14 @@
 package Util;
 
 import com.mygdx.game.Keys.ActivityType;
+import com.mygdx.game.Map.GameMap;
 import com.mygdx.game.Util.*;
 import org.junit.jupiter.api.Test;
 
 import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
 import static com.mygdx.game.Keys.NPCActivityType.WALKING;
-import static com.mygdx.game.Util.GameMap.MAIN;
-import static com.mygdx.game.Util.GameMap.MINE;
+import static com.mygdx.game.Map.GameMap.MAIN;
+import static com.mygdx.game.Map.GameMap.MINE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {

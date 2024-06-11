@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Util.GameMap.MAIN;
+import static com.mygdx.game.Map.GameMap.MAIN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScheduleTest {
