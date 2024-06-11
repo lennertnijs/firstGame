@@ -41,6 +41,7 @@ public final class NPC extends Character {
         updateSchedule(day, time);
     }
 
+    // hierarchical a*
     public void move(double deltaInMillis){
         int movement = (int)deltaInMillis * stats.getSpeed();
         Location current = new Location(getMap(), getPosition());
@@ -57,8 +58,6 @@ public final class NPC extends Character {
             return;
         Location current = new Location(getMap(), position); // take the end of the route, if any still active
         Location next = new Location("temp", activity.position());
-        System.out.println(current);
-        System.out.println(next);
         navigationData.calculateAndStoreRoute(current, next);
         while(super.getCurrentActivityType() != NPCActivityType.IDLING){
             super.removeCurrentActivityType();

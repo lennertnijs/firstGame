@@ -1,13 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.Input;
 
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.game.Util.Direction;
+import com.mygdx.game.GameController;
 
 import static com.badlogic.gdx.Input.Keys.*;
 
 public class KeyboardInputProcessor implements InputProcessor {
 
     private final GameController gameController;
+
     public KeyboardInputProcessor(GameController gameController){
         this.gameController = gameController;
     }
@@ -15,16 +16,16 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch(keycode){
             case UP:
-                gameController.movePlayer(Direction.UP);
+                gameController.getMovementFlags().setFlagUp(true);
                 break;
             case RIGHT:
-                gameController.movePlayer(Direction.RIGHT);
+                gameController.getMovementFlags().setFlagRight(true);
                 break;
             case DOWN:
-                gameController.movePlayer(Direction.DOWN);
+                gameController.getMovementFlags().setFlagDown(true);
                 break;
             case LEFT:
-                gameController.movePlayer(Direction.LEFT);
+                gameController.getMovementFlags().setFlagLeft(true);
                 break;
         }
         return false;
@@ -32,6 +33,20 @@ public class KeyboardInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
+        switch(keycode){
+            case UP:
+                gameController.getMovementFlags().setFlagUp(false);
+                break;
+            case RIGHT:
+                gameController.getMovementFlags().setFlagRight(false);
+                break;
+            case DOWN:
+                gameController.getMovementFlags().setFlagDown(false);
+                break;
+            case LEFT:
+                gameController.getMovementFlags().setFlagLeft(false);
+                break;
+        }
         return false;
     }
 

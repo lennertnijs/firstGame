@@ -20,11 +20,12 @@ public final class Player extends Character {
     }
 
 
-    public void move(double delta){
-        int m = (int)delta * 2;
+    public void move(double delta, Direction direction){
+        int m = (int)delta;
         Point p = super.getPosition();
-        switch(super.getDirection()){
+        switch(direction){
             case UP: super.setPosition(new Point(p.x(), p.y() + m)); break;
+            case NORTHEAST: super.setPosition(new Point(p.x() + m, p.y() + m)); break;
             case RIGHT: super.setPosition(new Point(p.x() + m, p.y())); break;
             case DOWN: super.setPosition(new Point(p.x(), p.y() - m)); break;
             case LEFT: super.setPosition(new Point(p.x() - m, p.y())); break;
