@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -11,6 +11,7 @@ import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.AnimationRepository.*;
+import com.mygdx.game.Stats;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.*;
 
@@ -19,7 +20,7 @@ import java.util.Map;
 
 import static com.mygdx.game.Util.Direction.*;
 import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Util.GameMap.MAIN;
+import static com.mygdx.game.Map.GameMap.MAIN;
 
 public class NPCCreator {
 
@@ -32,7 +33,7 @@ public class NPCCreator {
 
         String name = "Gilbert";
 
-        AnimationRepository animRepo = new AnimationRepository(AnimationMapLoader.load("npc/mining.atlas"));
+        AnimationRepository animRepo = new AnimationRepository(AnimationMapLoader.load("player/Player.pack"));
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -86,6 +87,5 @@ public class NPCCreator {
         g.connect(l3, l4);
         g.connect(l4, l5);
         return g;
-
     }
 }
