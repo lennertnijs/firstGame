@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.CalendarClock;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.SystemTimeProvider;
+import com.mygdx.game.DAO.DefaultPlayerLoader;
+import com.mygdx.game.DAO.NPCCreator;
 import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;

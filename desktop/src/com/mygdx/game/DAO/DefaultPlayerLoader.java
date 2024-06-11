@@ -1,9 +1,10 @@
-package com.mygdx.game;
+package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.DAO.AnimationMapLoader;
 import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
