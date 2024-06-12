@@ -28,6 +28,10 @@ public abstract class AnimatedGameObject extends GameObject{
         return animationRepository.get(key).getFrame(animationDelta);
     }
 
+    public double getAnimationDelta(){
+        return animationDelta;
+    }
+
     public void increaseAnimationDelta(double increase){
         animationDelta += increase;
     }

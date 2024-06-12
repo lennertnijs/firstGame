@@ -15,7 +15,7 @@ public class ItemTemplate {
     public ItemTemplate(String name, String description, Texture texture, int stackSize){
         Objects.requireNonNull(name, "Name is null.");
         Objects.requireNonNull(description, "Description is null.");
-        Objects.requireNonNull(texture, "Texture is null.");
+        //Objects.requireNonNull(texture, "Texture is null.");
         if(stackSize <= 0)
             throw new IllegalArgumentException("Stack size is negative or zero.");
         this.name = name;

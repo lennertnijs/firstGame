@@ -35,6 +35,10 @@ public final class Inventory {
         return Arrays.copyOf(items, items.length);
     }
 
+    public Item getActiveItem(int index){
+        return items[index];
+    }
+
     public boolean contains(String name, int amount){
         Objects.requireNonNull(name, "Name is null.");
         if(amount <= 0){

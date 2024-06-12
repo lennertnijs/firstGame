@@ -1,3 +1,4 @@
-First attempt at solving game-related problems. 
-TIME TO PUT SOME WORK ON MONSTERS, SO THE OFFENSIVE ITEM USAGE & GENERAL GAME OBJECT HIERARCHY CAN BE TESTED
+1) make animations that only play once (mine, axe)
+2) fix the npc scheduling bug -> new map/old map decision
+3) fix the npc hit box bug / next player position bug
 

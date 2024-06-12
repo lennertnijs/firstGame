@@ -48,6 +48,7 @@ public abstract class Entity extends AnimatedGameObject{
     // check this
     public void removeCurrentActivityType(){
         activityStack.removeLast();
+        super.resetAnimationDelta();
     }
 
     public void storeActivityType(ActivityType activityType){

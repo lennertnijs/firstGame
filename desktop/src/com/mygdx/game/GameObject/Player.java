@@ -1,6 +1,7 @@
 package com.mygdx.game.GameObject;
 
 import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Util.Dimensions;
@@ -12,7 +13,7 @@ import java.util.Objects;
 
 import static com.mygdx.game.Keys.NPCActivityType.WALKING;
 
-public final class Player extends Character {
+public final class Player extends Character{
 
     // add player stats
     private Player(Builder b){
@@ -22,17 +23,22 @@ public final class Player extends Character {
     }
 
 
-    public void move(double delta, Direction direction){
+    public void move(double delta, Direction direction, HitBoxSnapShot snapShot){
         if(super.getCurrentActivityType() != WALKING){
             super.storeActivityType(WALKING);
         }
         int m = (int) (delta * 0.4f);
         Point p = super.getPosition();
+        Point next = null;
         switch(direction){
-            case UP: super.setPosition(new Point(p.x(), p.y() + m)); break;
-            case RIGHT: super.setPosition(new Point(p.x() + m, p.y())); break;
-            case DOWN: super.setPosition(new Point(p.x(), p.y() - m)); break;
-            case LEFT: super.setPosition(new Point(p.x() - m, p.y())); break;
+            case UP: next = new Point(p.x(), p.y() + m); break;
+            case RIGHT: next = new Point(p.x() + m, p.y()); break;
+            case DOWN: next = new Point(p.x(), p.y() - m); break;
+            case LEFT: next = new Point(p.x() - m, p.y()); break;
+        }
+        // todo next not working on npc
+        if(snapShot.isFree(next)){
+            super.setPosition(next);
         }
     }
 

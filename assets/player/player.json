@@ -11,7 +11,7 @@
   "texture_atlas": "player/Player.pack",
   "direction": "RIGHT",
   "activity_type": "IDLING",
-  "name": "name",
+  "name": "player",
   "inventory": {
     "size": 9
   }

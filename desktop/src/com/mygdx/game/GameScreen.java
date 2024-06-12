@@ -34,8 +34,8 @@ public class GameScreen implements Screen {
 
         GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), HouseLoader.load());
         PlayerController playerController = new PlayerController(DefaultPlayerLoader.load());
-        gameController = new GameController(repository, gameClock, game, playerController);
-        Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
+        gameController = new GameController(repository, gameClock, new SpriteDrawer(game), playerController);
+        Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController));
     }
 
     /**
