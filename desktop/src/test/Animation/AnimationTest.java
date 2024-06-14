@@ -1,7 +1,7 @@
-package AnimationRepository;
+package Animation;
 
-import com.mygdx.game.AnimationRepository.Animation;
-import com.mygdx.game.AnimationRepository.Frame;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.Frame;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

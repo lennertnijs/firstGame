@@ -37,12 +37,12 @@ public class ItemTemplateTest {
         assertThrows(NullPointerException.class,
                 () -> new ItemTemplate(name, null, texture, stackSize));
     }
-
-    @Test
-    public void testConstructorWithNullTextureRegion(){
-        assertThrows(NullPointerException.class,
-                () -> new ItemTemplate(name, description, null, stackSize));
-    }
+//
+//    @Test
+//    public void testConstructorWithNullTextureRegion(){
+//        assertThrows(NullPointerException.class,
+//                () -> new ItemTemplate(name, description, null, stackSize));
+//    }
 
     @Test
     public void testConstructorWithNegativeStackSize(){

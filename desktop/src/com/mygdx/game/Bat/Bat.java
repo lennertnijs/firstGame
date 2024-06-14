@@ -1,6 +1,7 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.GameObject.Monster;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Loot.LootTable;
@@ -10,6 +11,7 @@ import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
 import java.util.List;
+import java.util.Map;
 
 public final class Bat extends Monster{
 
@@ -17,10 +19,10 @@ public final class Bat extends Monster{
     private final static int attackRange = 600;
     private BatState batState;
     public Bat(Point position, Dimensions dimensions, String map,
-               AnimationRepository animationRepository, double delta,
+               Map<AnimationKey, Animation> animations, double delta,
                Direction direction, List<ActivityType> activityTypes,
                Stats stats, LootTable lootTable) {
-        super(position, dimensions, map, animationRepository, delta, direction, activityTypes, lootTable, stats);
+        super(position, dimensions, map, animations, delta, direction, activityTypes, lootTable, stats);
         batState = new BatRoamingState();
     }
 

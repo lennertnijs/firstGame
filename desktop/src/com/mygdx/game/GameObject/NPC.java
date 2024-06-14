@@ -1,10 +1,11 @@
 package com.mygdx.game.GameObject;
 
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Stats;
-import com.mygdx.game.AnimationRepository.AnimationRepository;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.Util.Activity;
@@ -13,6 +14,7 @@ import com.mygdx.game.UtilMethods.DirectionCalculator;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 
@@ -25,7 +27,7 @@ public final class NPC extends Character {
 
     private NPC(Builder b){
         super(b.position, b.dimensions, b.map,
-                b.animationRepository, b.d, b.direction, b.NPCActivityTypes,
+                b.animationMap, b.d, b.direction, b.NPCActivityTypes,
                 b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
@@ -81,7 +83,7 @@ public final class NPC extends Character {
         private Point position;
         private Dimensions dimensions;
         private String map;
-        private AnimationRepository animationRepository;
+        private Map<AnimationKey, Animation> animationMap;
         private Direction direction;
         private List<ActivityType> NPCActivityTypes;
         private double d = -1;
@@ -110,8 +112,8 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder animationRepo(AnimationRepository animationRepository){
-            this.animationRepository = animationRepository;
+        public Builder animationMap(Map<AnimationKey, Animation> animationMap){
+            this.animationMap = animationMap;
             return this;
         }
 
@@ -164,7 +166,7 @@ public final class NPC extends Character {
             Objects.requireNonNull(position, "Position is null.");
             Objects.requireNonNull(dimensions, "Dimensions is null.");
             Objects.requireNonNull(map, "Map is null.");
-            Objects.requireNonNull(animationRepository, "AnimationRepository is null.");
+            Objects.requireNonNull(animationMap, "Animation is null.");
             Objects.requireNonNull(direction, "Direction is null.");
             Objects.requireNonNull(NPCActivityTypes);
             if(d < 0){

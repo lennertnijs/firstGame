@@ -1,7 +1,8 @@
 package com.mygdx.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
@@ -9,10 +10,7 @@ import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public abstract class Entity extends AnimatedGameObject{
 
@@ -20,9 +18,9 @@ public abstract class Entity extends AnimatedGameObject{
     private final Deque<ActivityType> activityStack;
 
     public Entity(Point position, Dimensions dimensions, String map,
-                  AnimationRepository animationRepository, double delta,
+                  Map<AnimationKey, Animation> animationMap, double delta,
                   Direction direction, List<ActivityType> activityTypes){
-        super(position, dimensions, map, animationRepository, delta);
+        super(position, dimensions, map, animationMap, delta);
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
         Objects.requireNonNull(activityTypes, "List is null.");
         if(activityTypes.contains(null)){
@@ -58,7 +56,7 @@ public abstract class Entity extends AnimatedGameObject{
     @Override
     public TextureRegion getTexture(){
         EntityKey key = new EntityKey(getCurrentActivityType(), direction);
-        return super.getFrame(key).textureRegion();
+        return getFrame(key).textureRegion();
     }
 
     @Override

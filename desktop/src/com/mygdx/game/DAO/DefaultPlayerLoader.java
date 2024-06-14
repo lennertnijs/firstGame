@@ -4,10 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.AnimationRepository.Animation;
-import com.mygdx.game.AnimationRepository.AnimationKey;
-import com.mygdx.game.AnimationRepository.AnimationRepository;
-import com.mygdx.game.AnimationRepository.Frame;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Animation.Frame;
 import com.mygdx.game.GameObject.Player;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
@@ -50,7 +49,7 @@ public final class DefaultPlayerLoader {
         String map = file.getString("map");
 
         String textureAtlas = file.getString("texture_atlas");
-        AnimationRepository animationRepository = new AnimationRepository(load(textureAtlas));
+        Map<AnimationKey, Animation> animationMap = load(textureAtlas);
 
         Direction direction = Direction.valueOf(file.getString("direction"));
 
@@ -65,7 +64,7 @@ public final class DefaultPlayerLoader {
                 .position(position)
                 .dimensions(dimensions)
                 .map(map)
-                .animationRepository(animationRepository)
+                .animationMap(animationMap)
                 .direction(direction)
                 .activityType(activityType)
                 .name(name)

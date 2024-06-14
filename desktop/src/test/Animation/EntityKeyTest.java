@@ -1,4 +1,4 @@
-package AnimationRepository;
+package Animation;
 
 import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Direction;

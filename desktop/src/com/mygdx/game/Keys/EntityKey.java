@@ -1,6 +1,6 @@
 package com.mygdx.game.Keys;
 
-import com.mygdx.game.AnimationRepository.AnimationKey;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;

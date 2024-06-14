@@ -1,6 +1,7 @@
 package com.mygdx.game.GameObject;
 
-import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Inventory.ToolType;
@@ -8,6 +9,7 @@ import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Util.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.mygdx.game.Keys.NPCActivityType.IDLING;
@@ -22,13 +24,13 @@ public abstract class Character extends Entity {
     public Character(Point position,
                      Dimensions dimensions,
                      String map,
-                     AnimationRepository animationRepository,
+                     Map<AnimationKey, Animation> animationMap,
                      double delta,
                      Direction direction,
                      List<ActivityType> activityTypeList,
                      String name,
                      Inventory inventory) {
-        super(position, dimensions, map, animationRepository, delta, direction, activityTypeList);
+        super(position, dimensions, map, animationMap, delta, direction, activityTypeList);
         this.name = Objects.requireNonNull(name, "Name is null.");
         this.inventory = inventory;
     }

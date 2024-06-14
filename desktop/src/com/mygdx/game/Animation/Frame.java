@@ -1,4 +1,4 @@
-package com.mygdx.game.AnimationRepository;
+package com.mygdx.game.Animation;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Util.Dimensions;

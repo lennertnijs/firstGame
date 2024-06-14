@@ -1,6 +1,7 @@
 package com.mygdx.game.GameObject;
 
-import com.mygdx.game.AnimationRepository.AnimationRepository;
+import com.mygdx.game.Animation.Animation;
+import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.ActivityType;
@@ -9,6 +10,7 @@ import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.mygdx.game.Keys.NPCActivityType.WALKING;
@@ -18,7 +20,7 @@ public final class Player extends Character{
     // add player stats
     private Player(Builder b){
         super(b.position, b.dimensions, b.map,
-                b.animationRepository, 0,
+                b.animationMap, 0,
                 b.direction, Collections.singletonList(b.activityType), b.name, b.inventory);
     }
 
@@ -51,7 +53,7 @@ public final class Player extends Character{
         private Point position;
         private Dimensions dimensions;
         private String map;
-        private AnimationRepository animationRepository;
+        private Map<AnimationKey, Animation> animationMap;
         private Direction direction;
         private ActivityType activityType;
         private String name;
@@ -76,8 +78,8 @@ public final class Player extends Character{
             return this;
         }
 
-        public Builder animationRepository(AnimationRepository animationRepository){
-            this.animationRepository = animationRepository;
+        public Builder animationMap(Map<AnimationKey, Animation> animationMap){
+            this.animationMap = animationMap;
             return this;
         }
 

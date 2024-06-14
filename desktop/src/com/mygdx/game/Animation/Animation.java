@@ -1,15 +1,23 @@
-package com.mygdx.game.AnimationRepository;
+package com.mygdx.game.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class Animation{
+public final class Animation {
 
     private final List<Frame> frames;
     private final float durationInMillis;
 
     public Animation(List<Frame> frames, float durationInMillis){
+        this.frames = validateAndCopyFrames(frames);
+        if(durationInMillis <= 0) {
+            throw new IllegalArgumentException("Duration is negative or zero.");
+        }
+        this.durationInMillis = durationInMillis;
+    }
+
+    private List<Frame> validateAndCopyFrames(List<Frame> frames){
         Objects.requireNonNull(frames, "List is null.");
         if(frames.contains(null)) {
             throw new NullPointerException("List contains null.");
@@ -17,11 +25,7 @@ public final class Animation{
         if(frames.size() == 0) {
             throw new IllegalArgumentException("List contains no elements.");
         }
-        this.frames = new ArrayList<>(frames);
-        if(durationInMillis <= 0) {
-            throw new IllegalArgumentException("Duration is negative or zero.");
-        }
-        this.durationInMillis = durationInMillis;
+        return new ArrayList<>(frames);
     }
 
     /**
@@ -40,8 +44,8 @@ public final class Animation{
     public boolean equals(Object other){
         if(!(other instanceof Animation))
             return false;
-        Animation animation = (Animation) other;
-        return frames.equals(animation.frames) && durationInMillis == animation.durationInMillis;
+        Animation temp = (Animation) other;
+        return frames.equals(temp.frames) && durationInMillis == temp.durationInMillis;
     }
 
     @Override

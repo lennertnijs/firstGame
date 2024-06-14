@@ -10,7 +10,7 @@ import com.mygdx.game.GameObject.NPC;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.AnimationRepository.*;
+import com.mygdx.game.Animation.*;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.*;
@@ -33,7 +33,7 @@ public class NPCCreator {
 
         String name = "Gilbert";
 
-        AnimationRepository animRepo = new AnimationRepository(AnimationMapLoader.load("player/Player.pack"));
+        Map<AnimationKey, Animation> animationMap = AnimationMapLoader.load("player/Player.pack");
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -53,7 +53,7 @@ public class NPCCreator {
                 .position(position)
                 .dimensions(dimensions)
                 .map(map)
-                .animationRepo(animRepo)
+                .animationMap(animationMap)
                 .direction(RIGHT)
                 .activityStack(new LinkedList<>(Collections.singletonList(IDLING)))
                 .delta(0)
