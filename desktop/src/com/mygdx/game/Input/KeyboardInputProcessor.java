@@ -1,6 +1,8 @@
 package com.mygdx.game.Input;
 
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.Player.IdlePlayerState;
+import com.mygdx.game.Player.PlayerWalkState;
 import com.mygdx.game.PlayerController;
 import com.mygdx.game.Util.Direction;
 
@@ -20,15 +22,27 @@ public class KeyboardInputProcessor implements InputProcessor {
                 playerController.useActiveItem();
                 break;
             case UP:
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
+                }
                 playerController.getMovementFlags().addDirection(Direction.UP);
                 break;
             case RIGHT:
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
+                }
                 playerController.getMovementFlags().addDirection(Direction.RIGHT);
                 break;
             case DOWN:
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
+                }
                 playerController.getMovementFlags().addDirection(Direction.DOWN);
                 break;
             case LEFT:
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
+                }
                 playerController.getMovementFlags().addDirection(Direction.LEFT);
                 break;
         }
@@ -40,18 +54,27 @@ public class KeyboardInputProcessor implements InputProcessor {
         switch(keycode){
             case UP:
                 playerController.getMovementFlags().removeDirection(Direction.UP);
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
+                }
                 break;
             case RIGHT:
                 playerController.getMovementFlags().removeDirection(Direction.RIGHT);
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
+                }
                 break;
             case DOWN:
                 playerController.getMovementFlags().removeDirection(Direction.DOWN);
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
+                }
                 break;
             case LEFT:
                 playerController.getMovementFlags().removeDirection(Direction.LEFT);
-                break;
-            case Q:
-                playerController.removeCurrentActivity();
+                if(playerController.getMovementFlags().getCurrentDirection() == null){
+                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
+                }
                 break;
         }
         return false;

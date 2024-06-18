@@ -61,7 +61,9 @@ public final class NavigationData{
         Objects.requireNonNull(current, "Current location is null.");
         if(movement <= 0)
             throw new IllegalArgumentException("Movement <= 0.");
-
+        if(route.isEmpty()){
+            return current;
+        }
         Location next = route.peek();
         Vector vectorToNext = new Vector(next.x() - current.x(),next.y() - current.y());
         if(vectorToNext.size() <= movement){

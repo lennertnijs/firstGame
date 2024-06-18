@@ -1,47 +1,49 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.Player;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Keys.ActivityType;
+import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.mygdx.game.Keys.NPCActivityType.WALKING;
+public final class Player extends Character {
 
-public final class Player extends Character{
+    private PlayerState playerState = new IdlePlayerState(this);
 
-    // add player stats
+
     private Player(Builder b){
         super(b.position, b.dimensions, b.map,
                 b.animationMap, 0,
-                b.direction, Collections.singletonList(b.activityType), b.name, b.inventory);
+                b.direction,
+                b.name, b.inventory);
     }
 
+    @Override
+    public TextureRegion getTexture(){
+        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
+        return super.getTexture(key);
+    }
 
-    public void move(double delta, Direction direction, HitBoxSnapShot snapShot){
-        if(super.getCurrentActivityType() != WALKING){
-            super.storeActivityType(WALKING);
-        }
-        int m = (int) (delta * 0.4f);
-        Point p = super.getPosition();
-        Point next = null;
-        switch(direction){
-            case UP: next = new Point(p.x(), p.y() + m); break;
-            case RIGHT: next = new Point(p.x() + m, p.y()); break;
-            case DOWN: next = new Point(p.x(), p.y() - m); break;
-            case LEFT: next = new Point(p.x() - m, p.y()); break;
-        }
-        // todo next not working on npc
-        if(snapShot.isFree(next)){
-            super.setPosition(next);
-        }
+    @Override
+    public Point getPosition() {
+        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
+        return super.getPosition(key);
+    }
+
+    public void changeState(PlayerState playerState){
+        this.playerState = playerState;
+    }
+
+    public void update(double delta, Direction direction, HitBoxSnapShot snapShot){
+        playerState.progress(delta, direction, snapShot);
     }
 
     public static Builder builder(){
@@ -55,7 +57,6 @@ public final class Player extends Character{
         private String map;
         private Map<AnimationKey, Animation> animationMap;
         private Direction direction;
-        private ActivityType activityType;
         private String name;
         private Inventory inventory;
 
@@ -85,11 +86,6 @@ public final class Player extends Character{
 
         public Builder direction(Direction direction){
             this.direction = direction;
-            return this;
-        }
-
-        public Builder activityType(ActivityType activityType){
-            this.activityType = activityType;
             return this;
         }
 

@@ -8,10 +8,6 @@ public class SystemTimeProvider implements TimeProvider{
         this.last = System.currentTimeMillis();
     }
 
-    private SystemTimeProvider(double last){
-        this.last = last;
-    }
-
     public double update(){
         double delta = System.currentTimeMillis() - last;
         last = System.currentTimeMillis();

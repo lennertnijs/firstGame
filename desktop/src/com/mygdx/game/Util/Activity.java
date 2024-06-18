@@ -1,29 +1,26 @@
 package com.mygdx.game.Util;
 
-import com.mygdx.game.Keys.ActivityType;
-import com.mygdx.game.Map.GameMap;
-
 import java.util.Objects;
 
 public final class Activity{
 
-    private final ActivityType type;
-    private final GameMap map;
+    private final String type;
+    private final String map;
     private final Point position;
     private final Time time;
 
-    public Activity(ActivityType activityType, GameMap map, Point position, Time time){
+    public Activity(String activityType, String map, Point position, Time time){
         this.type = Objects.requireNonNull(activityType, "Activity type is null.");
         this.map = Objects.requireNonNull(map, "Game map is null.");
         this.position = Objects.requireNonNull(position, "Position is null.");
         this.time = Objects.requireNonNull(time, "Time is null.");
     }
 
-    public ActivityType type(){
+    public String type(){
         return type;
     }
 
-    public GameMap map(){
+    public String map(){
         return map;
     }
 
@@ -40,8 +37,8 @@ public final class Activity{
         if(!(other instanceof Activity))
             return false;
         Activity activity = (Activity) other;
-        return type == activity.type &&
-                map == activity.map &&
+        return type.equals(activity.type) &&
+                map.equals(activity.map) &&
                 position.equals(activity.position) &&
                 time.equals(activity.time);
     }

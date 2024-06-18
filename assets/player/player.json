@@ -10,7 +10,6 @@
   "map": "outside",
   "texture_atlas": "player/Player.pack",
   "direction": "RIGHT",
-  "activity_type": "IDLING",
   "name": "player",
   "inventory": {
     "size": 9

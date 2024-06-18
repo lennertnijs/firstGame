@@ -3,7 +3,6 @@ package com.mygdx.game.GameObject;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
-import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
@@ -15,18 +14,12 @@ import java.util.*;
 public abstract class Entity extends AnimatedGameObject{
 
     private Direction direction;
-    private final Deque<ActivityType> activityStack;
 
     public Entity(Point position, Dimensions dimensions, String map,
                   Map<AnimationKey, Animation> animationMap, double delta,
-                  Direction direction, List<ActivityType> activityTypes){
+                  Direction direction){
         super(position, dimensions, map, animationMap, delta);
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
-        Objects.requireNonNull(activityTypes, "List is null.");
-        if(activityTypes.contains(null)){
-            throw new NullPointerException("List contains null.");
-        }
-        this.activityStack = new LinkedList<>(activityTypes);
     }
 
     public Direction getDirection(){
@@ -37,33 +30,19 @@ public abstract class Entity extends AnimatedGameObject{
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
-    // update direction using current and next position
-
-    public ActivityType getCurrentActivityType(){
-        return activityStack.getLast();
-    }
-
-    // check this
-    public void removeCurrentActivityType(){
-        activityStack.removeLast();
-        super.resetAnimationDelta();
-    }
-
-    public void storeActivityType(ActivityType activityType){
-        activityStack.addLast(activityType);
-    }
-
-    @Override
-    public TextureRegion getTexture(){
-        EntityKey key = new EntityKey(getCurrentActivityType(), direction);
+    public TextureRegion getTexture(EntityKey key){
         return getFrame(key).textureRegion();
     }
 
     @Override
-    public Point getPosition(){
+    public abstract TextureRegion getTexture();
+
+    @Override
+    public abstract Point getPosition();
+
+    public Point getPosition(EntityKey key){
         Point pos  = super.getPosition();
-        EntityKey entityKey = new EntityKey(getCurrentActivityType(), direction);
-        Vector translation = getFrame(entityKey).translation();
+        Vector translation = getFrame(key).translation();
         return pos.add(translation);
     }
 

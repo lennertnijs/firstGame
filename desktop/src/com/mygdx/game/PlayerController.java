@@ -1,10 +1,9 @@
 package com.mygdx.game;
 
-import com.mygdx.game.GameObject.Player;
+import com.mygdx.game.Player.Player;
 import com.mygdx.game.Input.MovementInputs;
+import com.mygdx.game.Player.PlayerState;
 import com.mygdx.game.Util.Direction;
-
-import static com.mygdx.game.Keys.NPCActivityType.WALKING;
 
 public final class PlayerController{
 
@@ -19,6 +18,10 @@ public final class PlayerController{
         return player;
     }
 
+    public void changePlayerState(PlayerState state){
+        player.changeState(state);
+    }
+
     public MovementInputs getMovementFlags() {
         return movementFlags;
     }
@@ -27,25 +30,13 @@ public final class PlayerController{
         player.increaseAnimationDelta(delta);
         Direction direction = movementFlags.getCurrentDirection();
         if(direction == null){
-            if(player.getCurrentActivityType() == WALKING){
-                player.removeCurrentActivityType();
-            }
             return;
         }
-        movePlayer(delta, direction, snapShot);
-    }
-
-    public void movePlayer(double delta, Direction direction, HitBoxSnapShot hitBoxSnapShot){
-        player.move(delta, direction, hitBoxSnapShot);
-        player.setDirection(direction);
-    }
-
-
-    public void removeCurrentActivity(){
-        player.removeCurrentActivityType();
+        player.update(delta, direction, snapShot);
     }
 
     public void useActiveItem(){
+        // set the correct state
         player.useActiveItem(null);
     }
 

@@ -9,8 +9,6 @@ import com.mygdx.game.Keys.EntityKey;
 
 import java.util.*;
 
-import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Keys.NPCActivityType.WALKING;
 import static com.mygdx.game.Util.Direction.*;
 import static com.mygdx.game.Util.Direction.UP;
 
@@ -31,30 +29,30 @@ public class AnimationMapLoader {
         Animation idleDownAnimation = new Animation(Collections.singletonList(idleDownFrame), 1);
         Animation idleLeftAnimation = new Animation(Collections.singletonList(idleLeftFrame), 1);
 
-        map.put(new EntityKey(IDLING, UP), idleUpAnimation);
-        map.put(new EntityKey(IDLING, RIGHT), idleRightAnimation);
-        map.put(new EntityKey(IDLING, DOWN), idleDownAnimation);
-        map.put(new EntityKey(IDLING, LEFT), idleLeftAnimation);
+        map.put(new EntityKey("idle", UP), idleUpAnimation);
+        map.put(new EntityKey("idle", RIGHT), idleRightAnimation);
+        map.put(new EntityKey("idle", DOWN), idleDownAnimation);
+        map.put(new EntityKey("idle", LEFT), idleLeftAnimation);
 
         Animation miningRightAnimation = loadAnimation(atlas, "mine_right", 4);
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
         Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
         Animation miningDownAnimation = loadAnimation(atlas, "mine_down", 4);
 
-        map.put(new EntityKey(MINING, RIGHT), miningRightAnimation);
-        map.put(new EntityKey(MINING, DOWN), miningDownAnimation);
-        map.put(new EntityKey(MINING, LEFT), miningLeftAnimation);
-        map.put(new EntityKey(MINING, UP), miningUpAnimation);
+        map.put(new EntityKey("mine", RIGHT), miningRightAnimation);
+        map.put(new EntityKey("mine", DOWN), miningDownAnimation);
+        map.put(new EntityKey("mine", LEFT), miningLeftAnimation);
+        map.put(new EntityKey("mine", UP), miningUpAnimation);
 
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
         Animation walkingLeftAnimation = loadAnimation(atlas, "walking_left", 6);
         Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
         Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
-        map.put(new EntityKey(WALKING, RIGHT), walkingRightAnimation);
-        map.put(new EntityKey(WALKING, DOWN), walkingDownAnimation);
-        map.put(new EntityKey(WALKING, LEFT), walkingLeftAnimation);
-        map.put(new EntityKey(WALKING, UP), walkingUpAnimation);
+        map.put(new EntityKey("walk", RIGHT), walkingRightAnimation);
+        map.put(new EntityKey("walk", DOWN), walkingDownAnimation);
+        map.put(new EntityKey("walk", LEFT), walkingLeftAnimation);
+        map.put(new EntityKey("walk", UP), walkingUpAnimation);
 
         return map;
     }

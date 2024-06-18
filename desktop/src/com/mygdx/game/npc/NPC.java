@@ -1,19 +1,18 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.npc;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Dialogue.DialogueData;
+import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Keys.ActivityType;
+import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.Util.Activity;
-import com.mygdx.game.Keys.NPCActivityType;
-import com.mygdx.game.UtilMethods.DirectionCalculator;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,10 +23,12 @@ public final class NPC extends Character {
     private final WeekSchedule weekSchedule;
     private final DialogueData dialogueData;
     private final Stats stats;
+    private NPCState state = new IdleState(this);
+    private Activity nextActivity;
 
     private NPC(Builder b){
         super(b.position, b.dimensions, b.map,
-                b.animationMap, b.d, b.direction, b.NPCActivityTypes,
+                b.animationMap, b.d, b.direction,
                 b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
@@ -35,37 +36,41 @@ public final class NPC extends Character {
         this.stats = b.stats;
     }
 
+    @Override
+    public TextureRegion getTexture(){
+        EntityKey key = new EntityKey(state.getState(), super.getDirection());
+        return super.getTexture(key);
+    }
+
+    @Override
+    public Point getPosition() {
+        EntityKey key = new EntityKey(state.getState(), super.getDirection());
+        return super.getPosition(key);
+    }
+
     public void update(Day day, Time time, double delta){
         super.increaseAnimationDelta(delta);
-        if(getCurrentActivityType() == NPCActivityType.WALKING){
-            move(delta);
-        }
-        updateSchedule(day, time);
+        state.progress(day, time, delta);
     }
 
-    // hierarchical a*
-    public void move(double deltaInMillis){
-        int movement = (int)deltaInMillis * stats.getSpeed();
-        Location current = new Location(getMap(), getPosition());
-        Location next = navigationData.calculateNextLocation(current, movement);
-        setPosition(next.position());
-        setMap(next.mapName());
-        super.setDirection(DirectionCalculator.calculate(current.position(), next.position()));
-        // check if anything left. if not, pop the WALKING off
+    public WeekSchedule getWeekSchedule(){
+        return weekSchedule;
     }
 
-    public void updateSchedule(Day day, Time time){
-        Activity activity = weekSchedule.getActivity(day, time);
-        if(activity == null || super.getCurrentActivityType() == NPCActivityType.WALKING)
-            return;
-        Location current = new Location(getMap(), position); // take the end of the route, if any still active
-        Location next = new Location("temp", activity.position());
-        navigationData.calculateAndStoreRoute(current, next);
-        while(super.getCurrentActivityType() != NPCActivityType.IDLING){
-            super.removeCurrentActivityType();
-        }
-        super.storeActivityType(activity.type());
-        super.storeActivityType(NPCActivityType.WALKING);
+    public Activity getNextActivity(){
+        return nextActivity;
+    }
+
+    public void setNextActivity(Activity activity){
+        this.nextActivity = activity;
+    }
+
+    public NavigationData getNavigationData(){
+        return navigationData;
+    }
+
+    public void changeState(NPCState state){
+        this.state = state;
     }
 
     public void handleInputLine(String line){
@@ -85,7 +90,6 @@ public final class NPC extends Character {
         private String map;
         private Map<AnimationKey, Animation> animationMap;
         private Direction direction;
-        private List<ActivityType> NPCActivityTypes;
         private double d = -1;
         private String name;
         private Inventory inventory;
@@ -119,11 +123,6 @@ public final class NPC extends Character {
 
         public Builder direction(Direction direction){
             this.direction = direction;
-            return this;
-        }
-
-        public Builder activityStack(List<ActivityType> NPCActivityTypes){
-            this.NPCActivityTypes = NPCActivityTypes;
             return this;
         }
 
@@ -168,7 +167,6 @@ public final class NPC extends Character {
             Objects.requireNonNull(map, "Map is null.");
             Objects.requireNonNull(animationMap, "Animation is null.");
             Objects.requireNonNull(direction, "Direction is null.");
-            Objects.requireNonNull(NPCActivityTypes);
             if(d < 0){
                 throw new IllegalArgumentException("Delta is negative.");
             }

@@ -1,20 +1,14 @@
 package Util;
 
-import com.mygdx.game.Keys.ActivityType;
-import com.mygdx.game.Map.GameMap;
 import com.mygdx.game.Util.*;
 import org.junit.jupiter.api.Test;
 
-import static com.mygdx.game.Keys.NPCActivityType.RUNNING;
-import static com.mygdx.game.Keys.NPCActivityType.WALKING;
-import static com.mygdx.game.Map.GameMap.MAIN;
-import static com.mygdx.game.Map.GameMap.MINE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ActivityTest {
 
-    private final ActivityType activityType = RUNNING;
-    private final GameMap map = MAIN;
+    private final String activityType = "run";
+    private final String map = "main";
     private final Point position = new Point(5, 10);
     private final Time time = new Time(5, 10);
     private final Activity activity = new Activity(activityType, map, position, time);
@@ -81,8 +75,8 @@ public class ActivityTest {
 
 
         // not equals
-        Activity diffActivityType = new Activity(WALKING, map, position, time);
-        Activity diffGameMap = new Activity(activityType, MINE, position, time);
+        Activity diffActivityType = new Activity("other string", map, position, time);
+        Activity diffGameMap = new Activity(activityType, "mine", position, time);
         Activity diffPosition = new Activity(activityType, map, new Point(6, 7), time);
         Activity diffTime = new Activity(activityType, map, position, new Time(6, 57));
         assertNotEquals(activity1, diffActivityType);
@@ -109,8 +103,8 @@ public class ActivityTest {
         assertEquals(activity1.hashCode(), activity3.hashCode());
 
         // not equals
-        Activity diffActivityType = new Activity(WALKING, map, position, time);
-        Activity diffGameMap = new Activity(activityType, MINE, position, time);
+        Activity diffActivityType = new Activity("other string", map, position, time);
+        Activity diffGameMap = new Activity(activityType, "mine", position, time);
         Activity diffPosition = new Activity(activityType, map, new Point(6, 7), time);
         Activity diffTime = new Activity(activityType, map, position, new Time(6, 57));
         assertNotEquals(activity1.hashCode(), diffActivityType.hashCode());
@@ -121,7 +115,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expected = "Activity[type=RUNNING, map=MAIN, position=Point[x=5, y=10], Time[hours=5, minutes=10]]";
+        String expected = "Activity[type=run, map=main, position=Point[x=5, y=10], Time[hours=5, minutes=10]]";
         assertEquals(expected, activity.toString());
     }
 }

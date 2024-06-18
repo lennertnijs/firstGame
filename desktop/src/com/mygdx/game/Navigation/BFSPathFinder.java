@@ -31,6 +31,8 @@ public class BFSPathFinder<T> implements PathFinderStrategy<T> {
     public List<T> findPath(T start, T goal) {
         Objects.requireNonNull(start, "Start is null.");
         Objects.requireNonNull(goal, "Goal is null.");
+        System.out.println(start);
+        System.out.println(goal);
         if(!graph.hasVertex(start) || !graph.hasVertex(goal))
             throw new NoSuchElementException("Start or goal is not part of the Graph.");
         return BFS(start, goal);

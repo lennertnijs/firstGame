@@ -1,6 +1,5 @@
 package Animation;
 
-import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Keys.EntityKey;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EntityKeyTest {
 
-    private NPCActivityType NPCActivityType;
+    private String activity;
     private Direction direction;
     private EntityKey entityKey;
 
     @BeforeEach
     public void initialise(){
-        NPCActivityType = NPCActivityType.RUNNING;
+        activity = "run";
         direction = Direction.UP;
-        entityKey = new EntityKey(NPCActivityType, direction);
+        entityKey = new EntityKey(activity, direction);
     }
 
     @Test
@@ -28,12 +27,12 @@ public class EntityKeyTest {
 
     @Test
     public void testConstructorWithNullDirection(){
-        assertThrows(NullPointerException.class, () -> new EntityKey(NPCActivityType.RUNNING, null));
+        assertThrows(NullPointerException.class, () -> new EntityKey(activity, null));
     }
 
     @Test
     public void testActivityType(){
-        assertEquals(NPCActivityType, entityKey.action());
+        assertEquals(activity, entityKey.action());
     }
 
     @Test
@@ -43,10 +42,10 @@ public class EntityKeyTest {
 
     @Test
     public void testEquals(){
-        EntityKey entityKey1 = new EntityKey(NPCActivityType, direction);
-        EntityKey entityKey2 = new EntityKey(NPCActivityType, direction);
-        EntityKey entityKey3 = new EntityKey(NPCActivityType, direction);
-        EntityKey diffEntityKey = new EntityKey(NPCActivityType, Direction.RIGHT);
+        EntityKey entityKey1 = new EntityKey(activity, direction);
+        EntityKey entityKey2 = new EntityKey(activity, direction);
+        EntityKey entityKey3 = new EntityKey(activity, direction);
+        EntityKey diffEntityKey = new EntityKey(activity, Direction.RIGHT);
         // reflexive
         assertEquals(entityKey1, entityKey1);
         // symmetrical
@@ -64,10 +63,10 @@ public class EntityKeyTest {
 
     @Test
     public void testHashCode(){
-        EntityKey entityKey1 = new EntityKey(NPCActivityType, direction);
-        EntityKey entityKey2 = new EntityKey(NPCActivityType, direction);
-        EntityKey entityKey3 = new EntityKey(NPCActivityType, direction);
-        EntityKey diffEntityKey = new EntityKey(NPCActivityType, Direction.RIGHT);
+        EntityKey entityKey1 = new EntityKey(activity, direction);
+        EntityKey entityKey2 = new EntityKey(activity, direction);
+        EntityKey entityKey3 = new EntityKey(activity, direction);
+        EntityKey diffEntityKey = new EntityKey(activity, Direction.RIGHT);
         // reflexive
         assertEquals(entityKey1.hashCode(), entityKey1.hashCode());
         // symmetrical
@@ -83,7 +82,7 @@ public class EntityKeyTest {
 
     @Test
     public void testToString(){
-        String expectedString = "Key[Action=RUNNING, Direction=UP]";
+        String expectedString = "Key[Action=run, Direction=UP]";
         assertEquals(entityKey.toString(), expectedString);
     }
 }

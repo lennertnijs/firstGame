@@ -7,16 +7,14 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Map.GameMap.MAIN;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScheduleTest {
 
     private final Time time1 = new Time(0, 10);
     private final Time time2 = new Time(0, 15);
-    private final Activity activity1 = new Activity(WALKING, MAIN, new Point(5, 15), time1);
-    private final Activity activity2 = new Activity(WALKING, MAIN, new Point(15, 25), time2);
+    private final Activity activity1 = new Activity("walk", "main", new Point(5, 15), time1);
+    private final Activity activity2 = new Activity("walk", "main", new Point(15, 25), time2);
     private final Schedule schedule = new Schedule(Arrays.asList(activity2, activity1));
 
     @Test
@@ -96,8 +94,8 @@ public class ScheduleTest {
     @Test
     public void testToString(){
         String expected = "Schedule[Activities=[" +
-                "Activity[type=WALKING, map=MAIN, position=Point[x=5, y=15], Time[hours=0, minutes=10]], " +
-                "Activity[type=WALKING, map=MAIN, position=Point[x=15, y=25], Time[hours=0, minutes=15]]" +
+                "Activity[type=walk, map=main, position=Point[x=5, y=15], Time[hours=0, minutes=10]], " +
+                "Activity[type=walk, map=main, position=Point[x=15, y=25], Time[hours=0, minutes=15]]" +
                 "]]";
         assertEquals(expected, schedule.toString());
     }

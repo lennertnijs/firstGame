@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.GameObject.NPC;
+import com.mygdx.game.npc.NPC;
 import com.mygdx.game.HitBox.HitBox;
 
 import java.util.ArrayList;
@@ -38,6 +38,7 @@ public class GameController {
         drawer.draw(playerController.getPlayer());
     }
 
+    // todo static objects dont need new snapshots, dynamic snapshots need updating
     private HitBoxSnapShot getSnapShot(){
         List<HitBox> hitBoxes = new ArrayList<>();
         for(GameObject o : gameObjectRepository.getMiscObjects()){

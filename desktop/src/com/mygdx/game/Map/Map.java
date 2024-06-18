@@ -6,14 +6,14 @@ public class Map {
 
     private final TextureRegion textureRegion;
 
-    private final GameMap map;
+    private final String map;
 
-    public Map(TextureRegion textureRegion, GameMap map){
+    public Map(TextureRegion textureRegion, String map){
         this.textureRegion = textureRegion;
         this.map = map;
     }
 
-    public GameMap getMap() {
+    public String getMap() {
         return map;
     }
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.GameObject.NPC;
+import com.mygdx.game.npc.NPC;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
@@ -19,8 +19,6 @@ import java.util.*;
 import java.util.Map;
 
 import static com.mygdx.game.Util.Direction.*;
-import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Map.GameMap.MAIN;
 
 public class NPCCreator {
 
@@ -29,7 +27,7 @@ public class NPCCreator {
         TextureRegion idleDown = atlas.findRegion("idle_down");
         Point position = new Point(500, 500);
         Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
-        String map = "Map";
+        String map = "main";
 
         String name = "Gilbert";
 
@@ -55,7 +53,6 @@ public class NPCCreator {
                 .map(map)
                 .animationMap(animationMap)
                 .direction(RIGHT)
-                .activityStack(new LinkedList<>(Collections.singletonList(IDLING)))
                 .delta(0)
                 .name(name)
                 .inventory(inventory)
@@ -67,19 +64,19 @@ public class NPCCreator {
     }
 
     private static Schedule loadSchedule(){
-        Activity activity1 = new Activity(MINING, MAIN, new Point(0, 0), new Time(4, 50));
-        Activity activity2 = new Activity(WALKING, MAIN, new Point(1000, 500), new Time(5, 50));
-        Activity activity3 = new Activity(IDLING, MAIN, new Point(1000, 0), new Time(6, 50));
-        Activity activity4 = new Activity(IDLING, MAIN, new Point(0, 0), new Time(7, 50));
+        Activity activity1 = new Activity("mine", "main", new Point(0, 0), new Time(4, 50));
+        Activity activity2 = new Activity("walk", "main", new Point(1000, 500), new Time(5, 50));
+        Activity activity3 = new Activity("idle", "main", new Point(1000, 0), new Time(6, 50));
+        Activity activity4 = new Activity("idle", "main", new Point(0, 0), new Time(7, 50));
         return new Schedule(Arrays.asList(activity1, activity2, activity3, activity4));
     }
 
     private static Graph<Location> loadGraph(){
-        Location l1 = new Location("Map", new Point(0, 0));
-        Location l2 = new Location("Map", new Point(500, 500));
-        Location l3 = new Location("Map", new Point(1000, 500));
-        Location l4 = new Location("Map", new Point(1000, 0));
-        Location l5 = new Location("Map", new Point(1000, 1500));
+        Location l1 = new Location("main", new Point(0, 0));
+        Location l2 = new Location("main", new Point(500, 500));
+        Location l3 = new Location("main", new Point(1000, 500));
+        Location l4 = new Location("main", new Point(1000, 0));
+        Location l5 = new Location("main", new Point(1000, 1500));
         Graph<Location> g = new Graph<>();
         g.addVertices(Arrays.asList(l1, l2, l3, l4, l5));
         g.connect(l1, l2);

@@ -7,14 +7,12 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Animation.Frame;
-import com.mygdx.game.GameObject.Player;
+import com.mygdx.game.Player.Player;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Inventory.ToolType;
-import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Keys.EntityKey;
-import com.mygdx.game.Keys.NPCActivityType;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
@@ -22,8 +20,6 @@ import com.mygdx.game.Util.Vector;
 
 import java.util.*;
 
-import static com.mygdx.game.Keys.NPCActivityType.*;
-import static com.mygdx.game.Keys.NPCActivityType.WALKING;
 import static com.mygdx.game.Util.Direction.*;
 import static com.mygdx.game.Util.Direction.UP;
 
@@ -53,8 +49,6 @@ public final class DefaultPlayerLoader {
 
         Direction direction = Direction.valueOf(file.getString("direction"));
 
-        ActivityType activityType = NPCActivityType.valueOf(file.getString("activity_type"));
-
         String name = file.getString("name");
 
         Tool pickaxe = new Tool("Pickaxe", 2000, 20000, 2500, ToolType.PICKAXE);
@@ -66,7 +60,6 @@ public final class DefaultPlayerLoader {
                 .map(map)
                 .animationMap(animationMap)
                 .direction(direction)
-                .activityType(activityType)
                 .name(name)
                 .inventory(inventory)
                 .build();
@@ -86,10 +79,10 @@ public final class DefaultPlayerLoader {
         Animation idleDownAnimation = new Animation(Collections.singletonList(idleDownFrame), 1);
         Animation idleLeftAnimation = new Animation(Collections.singletonList(idleLeftFrame), 1);
 
-        map.put(new EntityKey(IDLING, UP), idleUpAnimation);
-        map.put(new EntityKey(IDLING, RIGHT), idleRightAnimation);
-        map.put(new EntityKey(IDLING, DOWN), idleDownAnimation);
-        map.put(new EntityKey(IDLING, LEFT), idleLeftAnimation);
+        map.put(new EntityKey("idle", UP), idleUpAnimation);
+        map.put(new EntityKey("idle", RIGHT), idleRightAnimation);
+        map.put(new EntityKey("idle", DOWN), idleDownAnimation);
+        map.put(new EntityKey("idle", LEFT), idleLeftAnimation);
 
         Frame mineRight1 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 1)).translation(new Vector(-12, 0)).build();
         Frame mineRight2 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 2)).translation(new Vector(5, 0)).build();
@@ -101,20 +94,20 @@ public final class DefaultPlayerLoader {
         Animation miningUpAnimation = loadAnimation(atlas, "mine_up", 4);
         Animation miningDownAnimation = loadAnimation(atlas, "mine_down", 4);
 
-        map.put(new EntityKey(MINING, RIGHT), miningRightAnimation);
-        map.put(new EntityKey(MINING, DOWN), miningDownAnimation);
-        map.put(new EntityKey(MINING, LEFT), miningLeftAnimation);
-        map.put(new EntityKey(MINING, UP), miningUpAnimation);
+        map.put(new EntityKey("mine", RIGHT), miningRightAnimation);
+        map.put(new EntityKey("mine", DOWN), miningDownAnimation);
+        map.put(new EntityKey("mine", LEFT), miningLeftAnimation);
+        map.put(new EntityKey("mine", UP), miningUpAnimation);
 
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
         Animation walkingLeftAnimation = loadAnimation(atlas, "walking_left", 6);
         Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
         Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
 
-        map.put(new EntityKey(WALKING, RIGHT), walkingRightAnimation);
-        map.put(new EntityKey(WALKING, DOWN), walkingDownAnimation);
-        map.put(new EntityKey(WALKING, LEFT), walkingLeftAnimation);
-        map.put(new EntityKey(WALKING, UP), walkingUpAnimation);
+        map.put(new EntityKey("walk", RIGHT), walkingRightAnimation);
+        map.put(new EntityKey("walk", DOWN), walkingDownAnimation);
+        map.put(new EntityKey("walk", LEFT), walkingLeftAnimation);
+        map.put(new EntityKey("walk", UP), walkingUpAnimation);
 
         return map;
     }

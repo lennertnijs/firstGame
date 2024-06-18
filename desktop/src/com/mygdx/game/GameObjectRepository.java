@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.GameObject.NPC;
+import com.mygdx.game.npc.NPC;
 import com.mygdx.game.Map.Map;
 
 import java.util.List;

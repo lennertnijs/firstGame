@@ -1,9 +1,9 @@
 package com.mygdx.game.Rat;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.GameObject.Monster;
-import com.mygdx.game.Keys.ActivityType;
 import com.mygdx.game.Loot.LootTable;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Util.Dimensions;
@@ -21,12 +21,22 @@ public final class Rat extends Monster {
 
     public Rat(Point position, Dimensions dimensions, String map,
                Map<AnimationKey, Animation> animations, double delta,
-               Direction direction, List<ActivityType> activityTypes,
+               Direction direction,
                LootTable lootTable, Stats stats) {
-        super(position, dimensions, map, animations, delta, direction, activityTypes, lootTable, stats);
+        super(position, dimensions, map, animations, delta, direction, lootTable, stats);
     }
 
     public void setRatState(RatState ratState){
         this.ratState = ratState;
+    }
+
+    @Override
+    public TextureRegion getTexture() {
+        return null;
+    }
+
+    @Override
+    public Point getPosition() {
+        return null;
     }
 }

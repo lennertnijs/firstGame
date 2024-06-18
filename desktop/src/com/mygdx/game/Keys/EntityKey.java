@@ -7,15 +7,15 @@ import java.util.Objects;
 
 public final class EntityKey implements AnimationKey {
 
-    private final ActivityType activityType;
+    private final String activityType;
     private final Direction direction;
 
-    public EntityKey(ActivityType activityType, Direction direction){
+    public EntityKey(String activityType, Direction direction){
         this.activityType = Objects.requireNonNull(activityType, "Action is null.");
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
-    public ActivityType action(){
+    public String action(){
         return activityType;
     }
 
@@ -28,7 +28,7 @@ public final class EntityKey implements AnimationKey {
         if(!(other instanceof EntityKey))
             return false;
         EntityKey entityKey = (EntityKey) other;
-        return activityType == entityKey.activityType && direction == entityKey.direction;
+        return activityType.equals(entityKey.activityType) && direction == entityKey.direction;
     }
 
     @Override
