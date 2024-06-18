@@ -1,8 +1,9 @@
 package com.mygdx.game;
 
+import com.mygdx.game.Player.IdlePlayerState;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Input.MovementInputs;
-import com.mygdx.game.Player.PlayerState;
+import com.mygdx.game.Player.PlayerWalkState;
 import com.mygdx.game.Util.Direction;
 
 public final class PlayerController{
@@ -18,12 +19,19 @@ public final class PlayerController{
         return player;
     }
 
-    public void changePlayerState(PlayerState state){
-        player.changeState(state);
+
+    public void addDirection(Direction direction){
+        if(movementFlags.getCurrentDirection() == null){
+            player.changeState(new PlayerWalkState(player));
+        }
+        movementFlags.addDirection(direction);
     }
 
-    public MovementInputs getMovementFlags() {
-        return movementFlags;
+    public void removeDirection(Direction direction){
+        movementFlags.removeDirection(direction);
+        if(movementFlags.getCurrentDirection() == null){
+            player.changeState(new IdlePlayerState(player));
+        }
     }
 
     public void update(double delta, HitBoxSnapShot snapShot){

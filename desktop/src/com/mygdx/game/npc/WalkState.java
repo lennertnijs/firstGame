@@ -18,13 +18,12 @@ public final class WalkState implements NPCState{
     }
 
     public void progress(Day day, Time time, double delta){
-        int movement = (int) 5; // delta * speed
+        int movement = (int) 15; // delta * speed
         Location current = new Location(npc.getMap(), npc.getPosition());
         Location next = npc.getNavigationData().calculateNextLocation(current, movement);
         npc.setPosition(next.position());
         npc.setMap(next.mapName());
         npc.setDirection(DirectionCalculator.calculate(current.position(), next.position()));
-            // check if anything left. if not, pop the WALKING off
         updateState();
     }
 

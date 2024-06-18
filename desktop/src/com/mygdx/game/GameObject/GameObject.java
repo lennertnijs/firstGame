@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Rectangle;
+import com.mygdx.game.HitBox.Rectangle;
 
 import java.util.Objects;
 

@@ -5,32 +5,32 @@ import java.util.Objects;
 public class Item {
 
     private final String name;
-    private final int maxStackSize;
     private int amount;
+    private final int stackSize;
 
-    public Item(String name, int maxStackSize, int amount){
+    public Item(String name, int amount, int stackSize){
         Objects.requireNonNull(name, "Name is null.");
-        if(maxStackSize <= 0) {
-            throw new IllegalArgumentException("Max stack size is negative or 0.");
+        if(stackSize <= 0) {
+            throw new IllegalArgumentException("Stack size is negative or 0.");
         }
-        if(amount <= 0 || amount > maxStackSize) {
+        if(amount <= 0 || amount > stackSize) {
             throw new IllegalArgumentException("Amount is negative, zero or bigger than the max stack size..");
         }
         this.name = name;
-        this.maxStackSize = maxStackSize;
         this.amount = amount;
+        this.stackSize = stackSize;
     }
 
     public final String name(){
         return name;
     }
 
-    public final int maxStackSize(){
-        return maxStackSize;
-    }
-
     public final int getAmount(){
         return amount;
+    }
+
+    public final int stackSize(){
+        return stackSize;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Item {
         if(increase <= 0) {
             throw new IllegalArgumentException("Increase is negative or 0.");
         }
-        int actualIncrease = Math.min(increase, maxStackSize - amount);
+        int actualIncrease = Math.min(increase, stackSize - amount);
         this.amount += actualIncrease;
         return increase - actualIncrease;
     }
@@ -58,7 +58,7 @@ public class Item {
     }
 
     public Item copy(){
-        return new Item(name, maxStackSize, amount);
+        return new Item(name, amount, stackSize);
     }
 
     @Override
@@ -67,19 +67,19 @@ public class Item {
             return false;
         }
         Item item = (Item) other;
-        return name.equals(item.name) && maxStackSize == item.maxStackSize && amount == item.amount;
+        return name.equals(item.name) && stackSize == item.stackSize && amount == item.amount;
     }
 
     @Override
     public int hashCode(){
         int result = name.hashCode();
-        result = result * 31 + maxStackSize;
+        result = result * 31 + stackSize;
         result = result * 31 + amount;
         return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Item[name=%s, maxStackSize=%d, amount=%d]", name, maxStackSize, amount);
+        return String.format("Item[name=%s, amount=%d, stackSize=%d]", name, amount, stackSize);
     }
 }

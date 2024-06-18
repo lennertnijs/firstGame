@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
 
-    private final Item stone = new Item("Stone", 64, 48);
-    private final Item wood = new Item("Wood", 64, 16);
+    private final Item stone = new Item("Stone", 48, 64);
+    private final Item wood = new Item("Wood", 16, 64);
     private Inventory emptyInventory;
     private Inventory inventory;
 
@@ -94,11 +94,11 @@ public class InventoryTest {
 
     @Test
     public void testAddPartialStacks(){
-        Item stone = new Item("Stone", 64, 32);
+        Item stone = new Item("Stone", 32, 64);
         emptyInventory.addItem(stone);
         assertArrayEquals(new Item[]{stone, null, null, null}, emptyInventory.getItems());
 
-        Item moreStone = new Item("Stone", 64, 32);
+        Item moreStone = new Item("Stone", 32, 64);
         emptyInventory.addItem(moreStone);
         Item expectedStone = new Item("Stone", 64, 64);
         assertArrayEquals(new Item[]{expectedStone, null, null, null}, emptyInventory.getItems());
@@ -106,7 +106,7 @@ public class InventoryTest {
 
     @Test
     public void testAddToFullInventory(){
-        Item moreStone = new Item("Stone", 64, 48);
+        Item moreStone = new Item("Stone", 48, 64);
         int stoneLeft = inventory.addItem(moreStone);
         assertEquals(stoneLeft, 32);
     }
@@ -120,11 +120,11 @@ public class InventoryTest {
     @Test
     public void testRemove(){
         inventory.remove("Wood", 8);
-        Item woodLeft = new Item("Wood", 64, 8);
+        Item woodLeft = new Item("Wood", 8, 64);
         assertArrayEquals(new Item[]{woodLeft, stone, wood}, inventory.getItems());
 
         inventory.remove("Wood", 20);
-        Item woodLeft2 = new Item("Wood", 64, 4);
+        Item woodLeft2 = new Item("Wood", 4, 64);
         assertArrayEquals(new Item[]{null, stone, woodLeft2}, inventory.getItems());
     }
 
@@ -202,7 +202,10 @@ public class InventoryTest {
 
     @Test
     public void testToString(){
-        String expected = "Inventory{Items=[Item[name=Wood, maxStackSize=64, amount=16], Item[name=Stone, maxStackSize=64, amount=48], Item[name=Wood, maxStackSize=64, amount=16]]}";
+        String expected = "Inventory{Items=[" +
+                "Item[name=Wood, amount=16, stackSize=64], " +
+                "Item[name=Stone, amount=48, stackSize=64], " +
+                "Item[name=Wood, amount=16, stackSize=64]]}";
         assertEquals(expected, inventory.toString());
     }
 

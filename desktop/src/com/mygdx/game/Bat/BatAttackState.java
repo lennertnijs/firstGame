@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.UtilMethods.MovementUtil;
+import com.mygdx.game.UtilMethods.UtilMethods;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
 
@@ -17,7 +17,7 @@ public final class BatAttackState implements BatState{
             setGoal(data, bat);
         }
         int movement = (int) (data.movementSpeed() * data.delta());
-        return MovementUtil.calculateNextPosition(data.monsterPosition(), goal, movement);
+        return UtilMethods.calculateNextPosition(data.monsterPosition(), goal, movement);
     }
 
     private void setGoal(MonsterData data, Bat bat){

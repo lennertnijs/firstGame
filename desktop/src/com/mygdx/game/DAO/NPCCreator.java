@@ -64,10 +64,10 @@ public class NPCCreator {
     }
 
     private static Schedule loadSchedule(){
-        Activity activity1 = new Activity("mine", "main", new Point(0, 0), new Time(4, 50));
+        Activity activity1 = new Activity("mine", "main", new Point(1000, 1500), new Time(4, 50));
         Activity activity2 = new Activity("walk", "main", new Point(1000, 500), new Time(5, 50));
         Activity activity3 = new Activity("idle", "main", new Point(1000, 0), new Time(6, 50));
-        Activity activity4 = new Activity("idle", "main", new Point(0, 0), new Time(7, 50));
+        Activity activity4 = new Activity("idle", "main", new Point(1000, 1500), new Time(7, 50));
         return new Schedule(Arrays.asList(activity1, activity2, activity3, activity4));
     }
 

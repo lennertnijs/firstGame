@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.UtilMethods.MovementUtil;
+import com.mygdx.game.UtilMethods.UtilMethods;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.UtilMethods.RandomNumberGenerator;
 
@@ -30,7 +30,7 @@ public class BatRoamingState implements BatState{
             bat.setBatState(new BatRepositionState());
             return data.monsterPosition();
         }
-        return MovementUtil.calculateNextPosition(data.monsterPosition(), goal, movement);
+        return UtilMethods.calculateNextPosition(data.monsterPosition(), goal, movement);
     }
 
     private void setGoal(MonsterData data){

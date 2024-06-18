@@ -13,16 +13,16 @@ public final class DirectionCalculator {
     public static Direction calculate(Point start, Point end){
         Vector v = new Vector(end.x() - start.x(), end.y() - start.y());
         double angle = Math.atan((double) v.y() / v.x());
-        if(angle > 315 || angle < 45){
+        if(angle > -Math.PI/4 && angle < Math.PI/4){
             return Direction.RIGHT;
         }
-        if(angle >= 45 && angle <= 135){
+        if(angle >= Math.PI/4 && angle <= 3*Math.PI/4){
             return Direction.UP;
         }
-        if(angle > 135 && angle < 225){
+        if(angle > 3*Math.PI/4 && angle <= Math.PI || angle < -3*Math.PI/4 && angle >= -Math.PI || angle == -0){
             return Direction.LEFT;
         }
-        if(angle >= 225){
+        if(angle <= -Math.PI/4 || angle >= -3*Math.PI/4){
             return Direction.DOWN;
         }
         throw new IllegalStateException();

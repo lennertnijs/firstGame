@@ -9,49 +9,49 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ItemTest {
 
     private final String name = "Stone";
-    private final int stackSize = 64;
     private final int amount = 32;
+    private final int stackSize = 64;
     private Item item;
 
     @BeforeEach
     public void initialise(){
-        item = new Item(name, stackSize, amount);
+        item = new Item(name, amount, stackSize);
     }
 
     @Test
     public void testConstructorWithNullName(){
         assertThrows(NullPointerException.class,
-                () -> new Item(null, stackSize, amount));
-    }
-
-    @Test
-    public void testConstructorWithNegativeStackSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> new Item(name, -1, amount));
-    }
-
-    @Test
-    public void testConstructorWithZeroStackSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> new Item(name, 0, amount));
+                () -> new Item(null, amount, stackSize));
     }
 
     @Test
     public void testConstructorWithNegativeAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(name, stackSize, -1));
+                () -> new Item(name, -1, stackSize));
     }
 
     @Test
     public void testConstructorWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(name, stackSize, 0));
+                () -> new Item(name, 0, stackSize));
     }
 
     @Test
     public void testConstructorWithAmountTooBig(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Item(name, stackSize, 64 + 1));
+                () -> new Item(name, stackSize + 1, stackSize));
+    }
+
+    @Test
+    public void testConstructorWithNegativeStackSize(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Item(name, amount, -1));
+    }
+
+    @Test
+    public void testConstructorWithZeroStackSize(){
+        assertThrows(IllegalArgumentException.class,
+                () -> new Item(name, amount, 0));
     }
 
     @Test
@@ -60,13 +60,13 @@ public class ItemTest {
     }
 
     @Test
-    public void testGetStackSize(){
-        assertEquals(stackSize, item.maxStackSize());
+    public void testGetAmount(){
+        assertEquals(amount, item.getAmount());
     }
 
     @Test
-    public void testGetAmount(){
-        assertEquals(amount, item.getAmount());
+    public void testGetStackSize(){
+        assertEquals(stackSize, item.stackSize());
     }
 
     @Test
@@ -133,9 +133,9 @@ public class ItemTest {
 
     @Test
     public void testEquals(){
-        Item item1 = new Item(name, stackSize, amount);
-        Item item2 = new Item(name, stackSize, amount);
-        Item item3 = new Item(name, stackSize, amount);
+        Item item1 = new Item(name, amount, stackSize);
+        Item item2 = new Item(name, amount, stackSize);
+        Item item3 = new Item(name, amount, stackSize);
         // reflexive
         assertEquals(item1, item1);
         // symmetrical
@@ -147,21 +147,21 @@ public class ItemTest {
         assertEquals(item1, item3);
 
         // not equals
-        Item diffName = new Item("new name", stackSize, amount);
-        Item diffStackSize = new Item(name, 2 * stackSize, amount);
-        Item diffAmount = new Item(name, stackSize, 2 * amount);
+        Item diffName = new Item("new name", amount, stackSize);
+        Item diffAmount = new Item(name, 2 * amount, stackSize);
+        Item diffStackSize = new Item(name, amount, 2 * stackSize);
         assertNotEquals(item1, diffName);
-        assertNotEquals(item1, diffStackSize);
         assertNotEquals(item1, diffAmount);
+        assertNotEquals(item1, diffStackSize);
         assertNotEquals(item1, new Object());
         assertNotEquals(item1, null);
     }
 
     @Test
     public void testHashCode(){
-        Item item1 = new Item(name, stackSize, amount);
-        Item item2 = new Item(name, stackSize, amount);
-        Item item3 = new Item(name, stackSize, amount);
+        Item item1 = new Item(name, amount, stackSize);
+        Item item2 = new Item(name, amount, stackSize);
+        Item item3 = new Item(name, amount, stackSize);
         // reflexive
         assertEquals(item1.hashCode(), item1.hashCode());
         // symmetrical
@@ -171,10 +171,11 @@ public class ItemTest {
         assertEquals(item1.hashCode(), item2.hashCode());
         assertEquals(item2.hashCode(), item3.hashCode());
         assertEquals(item1.hashCode(), item3.hashCode());
+
         // not equals
-        Item diffName = new Item("new name", stackSize, amount);
-        Item diffStackSize = new Item(name, 2 * stackSize, amount);
-        Item diffAmount = new Item(name, stackSize, 2 * amount);
+        Item diffName = new Item("new name", amount, stackSize);
+        Item diffAmount = new Item(name, 2 * amount, stackSize);
+        Item diffStackSize = new Item(name, amount, 2 * stackSize);
         assertNotEquals(item1.hashCode(), diffName.hashCode());
         assertNotEquals(item1.hashCode(), diffStackSize.hashCode());
         assertNotEquals(item1.hashCode(), diffAmount.hashCode());
@@ -182,7 +183,7 @@ public class ItemTest {
 
     @Test
     public void testToString(){
-        String expected = "Item[name=Stone, maxStackSize=64, amount=32]";
+        String expected = "Item[name=Stone, amount=32, stackSize=64]";
         assertEquals(expected, item.toString());
     }
 }

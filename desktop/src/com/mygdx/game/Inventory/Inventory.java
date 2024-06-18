@@ -74,8 +74,8 @@ public final class Inventory {
 
         int indexOfEmpty = findIndexOfEmptySlot();
         while(indexOfEmpty != -1 && amount > 0) {
-            int itemAmount = Math.min(amount, item.maxStackSize());
-            items[indexOfEmpty] = new Item(name, item.maxStackSize(), itemAmount);
+            int itemAmount = Math.min(amount, item.stackSize());
+            items[indexOfEmpty] = new Item(name, itemAmount, item.stackSize());
             amount -= itemAmount;
         }
 
@@ -114,7 +114,7 @@ public final class Inventory {
 
     private int findIndexOfSlotNotFullyFilled(String name){
         for (int i = 0; i < items.length; i++) {
-            if(items[i] != null && items[i].name().equals(name) && items[i].getAmount() < items[i].maxStackSize()) {
+            if(items[i] != null && items[i].name().equals(name) && items[i].getAmount() < items[i].stackSize()) {
                 return i;
             }
         }

@@ -1,8 +1,6 @@
 package com.mygdx.game.Input;
 
 import com.badlogic.gdx.InputProcessor;
-import com.mygdx.game.Player.IdlePlayerState;
-import com.mygdx.game.Player.PlayerWalkState;
 import com.mygdx.game.PlayerController;
 import com.mygdx.game.Util.Direction;
 
@@ -22,28 +20,16 @@ public class KeyboardInputProcessor implements InputProcessor {
                 playerController.useActiveItem();
                 break;
             case UP:
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
-                }
-                playerController.getMovementFlags().addDirection(Direction.UP);
+                playerController.addDirection(Direction.UP);
                 break;
             case RIGHT:
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
-                }
-                playerController.getMovementFlags().addDirection(Direction.RIGHT);
+                playerController.addDirection(Direction.RIGHT);
                 break;
             case DOWN:
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
-                }
-                playerController.getMovementFlags().addDirection(Direction.DOWN);
+                playerController.addDirection(Direction.DOWN);
                 break;
             case LEFT:
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new PlayerWalkState(playerController.getPlayer()));
-                }
-                playerController.getMovementFlags().addDirection(Direction.LEFT);
+                playerController.addDirection(Direction.LEFT);
                 break;
         }
         return false;
@@ -53,28 +39,16 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyUp(int keycode) {
         switch(keycode){
             case UP:
-                playerController.getMovementFlags().removeDirection(Direction.UP);
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
-                }
+                playerController.removeDirection(Direction.UP);
                 break;
             case RIGHT:
-                playerController.getMovementFlags().removeDirection(Direction.RIGHT);
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
-                }
+                playerController.removeDirection(Direction.RIGHT);
                 break;
             case DOWN:
-                playerController.getMovementFlags().removeDirection(Direction.DOWN);
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
-                }
+                playerController.removeDirection(Direction.DOWN);
                 break;
             case LEFT:
-                playerController.getMovementFlags().removeDirection(Direction.LEFT);
-                if(playerController.getMovementFlags().getCurrentDirection() == null){
-                    playerController.changePlayerState(new IdlePlayerState(playerController.getPlayer()));
-                }
+                playerController.removeDirection(Direction.LEFT);
                 break;
         }
         return false;

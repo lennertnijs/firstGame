@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Rectangle;
+import com.mygdx.game.HitBox.Rectangle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

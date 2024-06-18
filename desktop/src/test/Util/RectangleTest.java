@@ -1,10 +1,9 @@
 package Util;
 
 import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Rectangle;
+import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Util.Point;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.css.Rect;
 
 import static org.junit.jupiter.api.Assertions.*;
 

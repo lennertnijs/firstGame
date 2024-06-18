@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public final class Location {
 
-    private final String mapName;
+    private final String map;
     private final Point position;
 
-    public Location(String mapName, Point position){
-        Objects.requireNonNull(mapName, "Map name is null.");
+    public Location(String map, Point position){
+        Objects.requireNonNull(map, "Map is null.");
         Objects.requireNonNull(position, "Position is null.");
-        this.mapName = mapName;
+        this.map = map;
         this.position = position;
     }
 
     public String mapName(){
-        return mapName;
+        return map;
     }
 
     public Point position(){
@@ -35,16 +35,16 @@ public final class Location {
         if(!(other instanceof Location))
             return false;
         Location location = (Location) other;
-        return mapName.equals(location.mapName) && position.equals(location.position);
+        return map.equals(location.map) && position.equals(location.position);
     }
 
     @Override
     public int hashCode(){
-        return mapName.hashCode() * 31 + position.hashCode();
+        return map.hashCode() * 31 + position.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("Location[mapName=%s, position=%s]", mapName, position);
+        return String.format("Location[mapName=%s, position=%s]", map, position);
     }
 }

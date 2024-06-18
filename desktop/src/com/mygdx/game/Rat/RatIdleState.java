@@ -1,7 +1,7 @@
 package com.mygdx.game.Rat;
 
 import com.mygdx.game.Bat.MonsterData;
-import com.mygdx.game.UtilMethods.MovementUtil;
+import com.mygdx.game.UtilMethods.UtilMethods;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.UtilMethods.RandomNumberGenerator;
 
@@ -34,7 +34,7 @@ public final class RatIdleState implements RatState{
             rat.setRatState(null);
             return data.monsterPosition();
         }
-        return MovementUtil.calculateNextPosition(data.monsterPosition(), goal, movement);
+        return UtilMethods.calculateNextPosition(data.monsterPosition(), goal, movement);
     }
 
     private void setGoal(MonsterData data){

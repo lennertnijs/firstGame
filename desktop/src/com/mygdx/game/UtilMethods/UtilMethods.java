@@ -1,13 +1,14 @@
 package com.mygdx.game.UtilMethods;
 
+import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 
-public final class MovementUtil {
+public final class UtilMethods {
 
-    private MovementUtil(){
+    private UtilMethods(){
     }
 
     public static Point calculateNextPosition(Point current, Point goal, int amountToMove){
@@ -24,5 +25,21 @@ public final class MovementUtil {
         }
         Vector movement = new Vector(x_diff, y_diff).scaleToSize(amountToMove);
         return current.add(movement);
+    }
+
+    public static Point calculateNextPosition(Point start, Direction direction, int amount){
+        Objects.requireNonNull(start, "Start point is null.");
+        Objects.requireNonNull(direction, "Direction is null.");
+        if(amount < 0){
+            throw new IllegalArgumentException("Amount is negative.");
+        }
+        Point next = null;
+        switch(direction){
+            case UP: next = new Point(start.x(), start.y() + amount); break;
+            case RIGHT: next = new Point(start.x() + amount, start.y()); break;
+            case DOWN: next = new Point(start.x(), start.y() - amount); break;
+            case LEFT: next = new Point(start.x() - amount, start.y()); break;
+        }
+        return next;
     }
 }
