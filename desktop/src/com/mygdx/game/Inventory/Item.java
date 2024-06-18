@@ -28,6 +28,13 @@ public class Item {
     }
 
     /**
+     * @return A copy of this item.
+     */
+    public Item copy(){
+        return new Item(name);
+    }
+
+    /**
      * Compares two item objects and returns true if they're equal. Returns false otherwise.
      *
      * @return True if equal, false otherwise.

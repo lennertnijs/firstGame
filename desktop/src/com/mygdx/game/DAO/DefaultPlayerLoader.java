@@ -55,7 +55,7 @@ public final class DefaultPlayerLoader {
         ItemStack stack1 = new ItemStack(pickaxe, 1, 1);
         Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
         ItemStack stack2 = new ItemStack(axe, 1, 1);
-        Inventory inventory = new Inventory(new ItemStack[]{stack1, stack2});
+        Inventory inventory = Inventory.createWithStacks(new ItemStack[]{stack1, stack2});
         return Player.builder()
                 .position(position)
                 .dimensions(dimensions)

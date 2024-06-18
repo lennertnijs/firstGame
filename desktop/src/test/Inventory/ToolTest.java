@@ -220,6 +220,14 @@ public class ToolTest {
     }
 
     @Test
+    public void testCopy(){
+        Tool copy = tool.copy();
+        assertEquals(copy, tool);
+        copy.setDurability(durability/2);
+        assertNotEquals(copy, tool);
+    }
+    
+    @Test
     public void testEquals(){
         Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();

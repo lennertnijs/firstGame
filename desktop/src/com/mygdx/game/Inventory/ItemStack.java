@@ -2,7 +2,7 @@ package com.mygdx.game.Inventory;
 
 import java.util.Objects;
 
-public class ItemStack {
+public final class ItemStack {
 
     /**
      * The name of the item.
@@ -36,22 +36,29 @@ public class ItemStack {
     /**
      * @return The name
      */
-    public final Item item(){
+    public Item item(){
         return item;
     }
 
     /**
      * @return The amount
      */
-    public final int getAmount(){
+    public int getAmount(){
         return amount;
     }
 
     /**
      * @return The stack size
      */
-    public final int stackSize(){
+    public int stackSize(){
         return stackSize;
+    }
+
+    /**
+     * @return True if this stack is full. False otherwise.
+     */
+    public boolean isFull(){
+        return amount == stackSize;
     }
 
     /**
@@ -61,7 +68,7 @@ public class ItemStack {
      *
      * @return The remainder. (0 if all was added)
      */
-    public final int increaseAmount(int increase){
+    public int increaseAmount(int increase){
         if(increase <= 0) {
             throw new IllegalArgumentException("Increase is negative or 0.");
         }
@@ -77,13 +84,20 @@ public class ItemStack {
      *
      * @return The remainder. (0 if all was removed)
      */
-    public final int decreaseAmount(int decrease){
+    public int decreaseAmount(int decrease){
         if(decrease <= 0) {
             throw new IllegalArgumentException("Decrease is negative or 0.");
         }
         int actualDecrease = Math.min(decrease, amount);
         this.amount -= actualDecrease;
         return decrease - actualDecrease;
+    }
+
+    /**
+     * @return A deep copy of this item stack.
+     */
+    public ItemStack copy(){
+        return new ItemStack(item.copy(), amount, stackSize);
     }
 
     /**

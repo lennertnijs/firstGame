@@ -46,6 +46,10 @@ public final class Tool extends Item {
         return durability;
     }
 
+    /**
+     * Sets the durability of this tool to the given amount.
+     * @param durability The new durability. Cannot be negative or bigger than maximum durability.
+     */
     public void setDurability(int durability){
         if(durability < 0){
             throw new IllegalArgumentException("Durability cannot be negative.");
@@ -68,6 +72,19 @@ public final class Tool extends Item {
      */
     public ToolType type(){
         return type;
+    }
+
+    /**
+     * @return A deep copy of this tool.
+     */
+    @Override
+    public Tool copy(){
+        return new Builder()
+                .name(super.name())
+                .efficiency(efficiency)
+                .durability(durability)
+                .maxDurability(maxDurability)
+                .toolType(type).build();
     }
 
     /**

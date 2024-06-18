@@ -22,6 +22,12 @@ public class ItemTest {
     }
 
     @Test
+    public void testCopy(){
+        Item copy = item.copy();
+        assertEquals(item, copy);
+    }
+
+    @Test
     public void testEquals(){
         Item item1 = new Item(name);
         Item item2 = new Item(name);

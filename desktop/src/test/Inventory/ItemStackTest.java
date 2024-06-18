@@ -20,7 +20,7 @@ public class ItemStackTest {
     }
 
     @Test
-    public void testConstructorWithNullitem(){
+    public void testConstructorWithNullItem(){
         assertThrows(NullPointerException.class,
                 () -> new ItemStack(null, amount, stackSize));
     }
@@ -56,7 +56,7 @@ public class ItemStackTest {
     }
 
     @Test
-    public void testGetitem(){
+    public void testGetItem(){
         assertEquals(item, itemStack.item());
     }
 
@@ -125,6 +125,21 @@ public class ItemStackTest {
     }
 
     @Test
+    public void testIsFull(){
+        assertFalse(itemStack.isFull());
+        itemStack.increaseAmount(64);
+        assertTrue(itemStack.isFull());
+    }
+
+    @Test
+    public void testCopy(){
+        ItemStack copy = itemStack.copy();
+        assertEquals(itemStack, copy);
+        copy.increaseAmount(1);
+        assertNotEquals(itemStack, copy);
+    }
+
+    @Test
     public void testEquals(){
         ItemStack itemStack1 = new ItemStack(item, amount, stackSize);
         ItemStack itemStack2 = new ItemStack(item, amount, stackSize);
@@ -140,10 +155,10 @@ public class ItemStackTest {
         assertEquals(itemStack1, itemStack3);
 
         // not equals
-        ItemStack diffitem = new ItemStack(new Item("diff"), amount, stackSize);
+        ItemStack diffItem = new ItemStack(new Item("diff"), amount, stackSize);
         ItemStack diffAmount = new ItemStack(item, 2 * amount, stackSize);
         ItemStack diffStackSize = new ItemStack(item, amount, 2 * stackSize);
-        assertNotEquals(itemStack1, diffitem);
+        assertNotEquals(itemStack1, diffItem);
         assertNotEquals(itemStack1, diffAmount);
         assertNotEquals(itemStack1, diffStackSize);
         assertNotEquals(itemStack1, new Object());
@@ -166,10 +181,10 @@ public class ItemStackTest {
         assertEquals(itemStack1.hashCode(), itemStack3.hashCode());
 
         // not equals
-        ItemStack diffitem = new ItemStack(new Item("diff"), amount, stackSize);
+        ItemStack diffItem = new ItemStack(new Item("diff"), amount, stackSize);
         ItemStack diffAmount = new ItemStack(item, 2 * amount, stackSize);
         ItemStack diffStackSize = new ItemStack(item, amount, 2 * stackSize);
-        assertNotEquals(itemStack1.hashCode(), diffitem.hashCode());
+        assertNotEquals(itemStack1.hashCode(), diffItem.hashCode());
         assertNotEquals(itemStack1.hashCode(), diffStackSize.hashCode());
         assertNotEquals(itemStack1.hashCode(), diffAmount.hashCode());
     }

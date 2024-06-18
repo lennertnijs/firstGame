@@ -5,47 +5,65 @@ import java.util.Objects;
 
 public final class Inventory {
 
-    private final ItemStack[] itemStacks;
+    private final ItemStack[] stacks;
 
-    public Inventory(int size){
+    private Inventory(ItemStack[] stacks){
+        this.stacks = stacks;
+    }
+
+    public static Inventory createWithStacks(ItemStack[] stacks){
+        Objects.requireNonNull(stacks, "List is null.");
+        if(stacks.length == 0) {
+            throw new IllegalArgumentException("Length of the array is 0.");
+        }
+        ItemStack[] copy = new ItemStack[stacks.length];
+        for(int i = 0; i < stacks.length; i++){
+            copy[i] = (stacks[i] == null) ? null : stacks[i].copy();
+        }
+        return new Inventory(copy);
+    }
+
+    public static Inventory createEmptyOfSize(int size){
         if(size <= 0) {
             throw new IllegalArgumentException("Size is negative or 0.");
         }
-        itemStacks = new ItemStack[size];
+        return new Inventory(new ItemStack[size]);
     }
 
-    public Inventory(ItemStack[] itemStacks){
-        Objects.requireNonNull(itemStacks, "List is null.");
-        if(Arrays.stream(itemStacks).anyMatch(Objects::isNull)){
-            throw new NullPointerException("List contains null.");
-        }
-        if(itemStacks.length == 0) {
-            throw new IllegalArgumentException("Length of the array is 0.");
-        }
-        this.itemStacks = new ItemStack[itemStacks.length];
-        System.arraycopy(itemStacks, 0, this.itemStacks, 0, itemStacks.length);
+    public int size(){
+        return stacks.length;
     }
 
     public ItemStack[] getItems(){
-        return Arrays.copyOf(itemStacks, itemStacks.length);
+        ItemStack[] copy = new ItemStack[stacks.length];
+        for(int i = 0; i < stacks.length; i++){
+            copy[i] = (stacks[i] == null) ? null : stacks[i].copy();
+        }
+        return copy;
     }
 
-    public ItemStack getActiveItem(int index){
-        return itemStacks[index];
+    public ItemStack getItem(int index){
+        if(index < 0){
+            throw new IllegalArgumentException("Index is negative.");
+        }
+        if(index >= stacks.length){
+            throw new IndexOutOfBoundsException("Index is out of bounds.");
+        }
+        return stacks[index].copy();
     }
 
-    public boolean contains(String name, int amount){
-        Objects.requireNonNull(name, "Name is null.");
+    public boolean contains(Item item, int amount){
+        Objects.requireNonNull(item, "Name is null.");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or 0.");
         }
         int count = 0;
-        for(ItemStack itemStack : itemStacks){
+        for(ItemStack stack : stacks){
             if(count >= amount){
                 return true;
             }
-            if(itemStack.item().name().equals(name)){
-                count += itemStack.getAmount();
+            if(stack.item().equals(item)){
+                count += stack.getAmount();
             }
         }
         return count >= amount;
@@ -56,76 +74,71 @@ public final class Inventory {
      *
      * @return The amount that could not be added to the inventory.
      */
-    public int addItem(ItemStack itemStack){
-        Objects.requireNonNull(itemStack, "Item is null.");
-        String name = itemStack.item().name();
-        int amount = itemStack.getAmount();
+    public int add(Item item, int amount, int stackSize){
+        Objects.requireNonNull(item, "Item stack is null.");
 
-        int index = findIndexOfSlotNotFullyFilled(name);
+        int index = findIndexOfSlotNotFullyFilled(item);
         while(index != -1 && amount > 0) {
-            amount = itemStacks[index].increaseAmount(amount);
-            index = findIndexOfSlotNotFullyFilled(name);
+            amount = stacks[index].increaseAmount(amount);
+            index = findIndexOfSlotNotFullyFilled(item);
         }
 
         int indexOfEmpty = findIndexOfEmptySlot();
         while(indexOfEmpty != -1 && amount > 0) {
-            int itemAmount = Math.min(amount, itemStack.stackSize());
-            itemStacks[indexOfEmpty] = new ItemStack(itemStack.item(), itemAmount, itemStack.stackSize());
-            amount -= itemAmount;
+            stacks[indexOfEmpty] = new ItemStack(item, Math.min(amount, stackSize), stackSize);
+            amount -= Math.min(amount, stackSize);
         }
 
         return amount;
     }
 
-    public void remove(String name, int amount){
-        Objects.requireNonNull(name, "Name is null");
+    public void remove(Item item, int amount){
+        Objects.requireNonNull(item, "Name is null");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or 0.");
         }
-        if(!contains(name, amount)){
+        if(!contains(item, amount)){
             throw new IllegalStateException("Cannot remove that amount, because the inventory does not contain it.");
         }
-        for(ItemStack itemStack : itemStacks){
+        for(ItemStack stack : stacks){
             if(amount == 0){
                 return;
             }
-            if(itemStack.item().name().equals(name)){
-                amount = itemStack.decreaseAmount(amount);
+            if(stack.item().equals(item)){
+                amount = stack.decreaseAmount(amount);
             }
         }
-        replaceEmptyItemsWithNull();
+        replaceEmptyStacksWithNull();
     }
 
 
 
     private int findIndexOfEmptySlot(){
-        for(int i = 0; i < itemStacks.length; i++){
-            if(itemStacks[i] == null) {
-                return i;
-            }
+        for(int i = 0; i < stacks.length; i++){
+            if(stacks[i] != null) continue;
+
+            return i;
         }
         return -1;
     }
 
-    private int findIndexOfSlotNotFullyFilled(String name){
-        for (int i = 0; i < itemStacks.length; i++) {
-            if(itemStacks[i] != null && itemStacks[i].item().name().equals(name) && itemStacks[i].getAmount() < itemStacks[i].stackSize()) {
-                return i;
-            }
+    private int findIndexOfSlotNotFullyFilled(Item item){
+        for (int i = 0; i < stacks.length; i++) {
+            if(stacks[i] == null) continue;
+            if(stacks[i].isFull()) continue;
+            if(!stacks[i].item().equals(item)) continue;
+
+            return i;
         }
         return -1;
     }
 
-    private void replaceEmptyItemsWithNull(){
-        for(int i = 0; i < itemStacks.length; i++){
-            if(itemStacks[i].getAmount() == 0) {
-                itemStacks[i] = null;
+    private void replaceEmptyStacksWithNull(){
+        for(int i = 0; i < stacks.length; i++){
+            if(stacks[i].getAmount() == 0) {
+                stacks[i] = null;
             }
         }
-    }
-
-    public Inventory copy(){
-        return new Inventory(itemStacks);
     }
 
     @Override
@@ -134,16 +147,16 @@ public final class Inventory {
             return false;
         }
         Inventory inventory = (Inventory) other;
-        return Arrays.equals(itemStacks, inventory.itemStacks);
+        return Arrays.equals(stacks, inventory.stacks);
     }
 
     @Override
     public int hashCode(){
-        return Arrays.hashCode(itemStacks);
+        return Arrays.hashCode(stacks);
     }
 
     @Override
     public String toString(){
-        return String.format("Inventory{Items=%s}", Arrays.toString(itemStacks));
+        return String.format("Inventory{Items=%s}", Arrays.toString(stacks));
     }
 }

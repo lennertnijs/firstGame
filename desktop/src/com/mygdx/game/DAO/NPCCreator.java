@@ -45,7 +45,7 @@ public class NPCCreator {
 
         Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
 
-        Inventory inventory = new Inventory(6);
+        Inventory inventory = Inventory.createEmptyOfSize(6);
 
         return NPC.builder()
                 .position(position)
