@@ -23,9 +23,7 @@ public final class Inventory {
             throw new IllegalArgumentException("Length of the array is 0.");
         }
         this.itemStacks = new ItemStack[itemStacks.length];
-        for(int i = 0; i < itemStacks.length; i++){
-            this.itemStacks[i] = itemStacks[i].copy();
-        }
+        System.arraycopy(itemStacks, 0, this.itemStacks, 0, itemStacks.length);
     }
 
     public ItemStack[] getItems(){

@@ -1,13 +1,11 @@
 package com.mygdx.game.Inventory;
 
-import com.mygdx.game.ItemTemplate.ItemTemplate;
-
 import java.util.Objects;
 
 public class ItemStack {
 
     /**
-     * The name of the item. Used to link it to it's {@link ItemTemplate}.
+     * The name of the item.
      */
     private final Item item;
     private int amount;
@@ -88,10 +86,11 @@ public class ItemStack {
         return decrease - actualDecrease;
     }
 
-    public ItemStack copy(){
-        return new ItemStack(item, amount, stackSize);
-    }
-
+    /**
+     * Compares two ItemStack objects and returns true if they're equal. Returns false otherwise.
+     *
+     * @return True if equal, false otherwise.
+     */
     @Override
     public boolean equals(Object other){
         if(!(other instanceof ItemStack)) {
@@ -101,6 +100,9 @@ public class ItemStack {
         return item.equals(itemStack.item) && stackSize == itemStack.stackSize && amount == itemStack.amount;
     }
 
+    /**
+     * @return The hash code.
+     */
     @Override
     public int hashCode(){
         int result = item.hashCode();
@@ -109,6 +111,9 @@ public class ItemStack {
         return result;
     }
 
+    /**
+     * @return The string representation.
+     */
     @Override
     public String toString(){
         return String.format("ItemStack[%s, amount=%d, stackSize=%d]", item, amount, stackSize);

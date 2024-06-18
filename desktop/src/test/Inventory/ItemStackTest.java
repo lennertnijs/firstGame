@@ -125,14 +125,6 @@ public class ItemStackTest {
     }
 
     @Test
-    public void testCopy(){
-        ItemStack copy = itemStack.copy();
-        assertEquals(itemStack, copy);
-        copy.increaseAmount(1);
-        assertNotEquals(itemStack, copy);
-    }
-
-    @Test
     public void testEquals(){
         ItemStack itemStack1 = new ItemStack(item, amount, stackSize);
         ItemStack itemStack2 = new ItemStack(item, amount, stackSize);
