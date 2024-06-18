@@ -35,7 +35,7 @@ public abstract class Character extends Entity {
 //        if(super.getAnimationDelta() < 1000f){
 //            return; SHOULD ONLY GO ONCE!
 //        }
-        inventory.use(activeIndex, object);
+        //inventory.use(activeIndex, object);
     }
 
     public void incrementActiveIndex(){

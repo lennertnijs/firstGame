@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class ItemTemplateRepositoryTest {
+public class ItemStackTemplateRepositoryTest {
 
     private ItemTemplate template1;
     private ItemTemplate template2;

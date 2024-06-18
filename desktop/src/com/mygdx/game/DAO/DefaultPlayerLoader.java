@@ -9,7 +9,7 @@ import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Animation.Frame;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.Inventory.ItemStack;
 import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Inventory.ToolType;
 import com.mygdx.game.Keys.EntityKey;
@@ -51,9 +51,11 @@ public final class DefaultPlayerLoader {
 
         String name = file.getString("name");
 
-        Tool pickaxe = new Tool("Pickaxe", 2000, 20000, 2500, ToolType.PICKAXE);
-        Tool axe = new Tool("Axe", 2000, 20000, 2500, ToolType.AXE);
-        Inventory inventory = new Inventory(new Item[]{pickaxe, axe});
+        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(2).maxDurability(2500).toolType(ToolType.PICKAXE).build();
+        ItemStack stack1 = new ItemStack(pickaxe, 1, 1);
+        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
+        ItemStack stack2 = new ItemStack(axe, 1, 1);
+        Inventory inventory = new Inventory(new ItemStack[]{stack1, stack2});
         return Player.builder()
                 .position(position)
                 .dimensions(dimensions)

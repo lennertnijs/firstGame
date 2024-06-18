@@ -1,84 +1,80 @@
 package com.mygdx.game.Inventory;
 
-import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.Breakables.BreakableType;
-
 import java.util.Objects;
 
-public final class Tool extends Item{
+/**
+ * Tool item. Has an efficiency, durability and max durability. Also holds a type (pickaxe, axe, ...)
+ */
+public final class Tool extends Item {
 
-
+    /**
+     * The tool's efficiency.
+     */
     private final int efficiency;
-    private final int maxDurability;
+    /**
+     * The tool's current durability.
+     */
     private int durability;
+    /**
+     * The tool's maximum durability.
+     */
+    private final int maxDurability;
+    /**
+     * The tool's type.
+     */
     private final ToolType type;
 
-    public Tool(String name, int efficiency, int maxDurability, int durability, ToolType type){
-        super(name, 1, 1);
-        if(efficiency < 0) {
-            throw new IllegalArgumentException("Efficiency is negative.");
-        }
-        if(maxDurability <= 0){
-            throw new IllegalArgumentException("Max durability is negative or zero.");
-        }
-        if(durability < 0) {
-            throw new IllegalArgumentException("Durability is negative.");
-        }
-        if(durability > maxDurability){
-            throw new IllegalArgumentException("Durability is bigger than the max durability.");
-        }
-        Objects.requireNonNull(type, "Type is null.");
-        this.efficiency = efficiency;
-        this.maxDurability = maxDurability;
-        this.durability = durability;
-        this.type = type;
+    private Tool(Builder builder){
+        super(builder.name);
+        this.efficiency = builder.efficiency;
+        this.maxDurability = builder.maxDurability;
+        this.durability = builder.durability;
+        this.type = builder.toolType;
     }
 
+    /**
+     * @return The efficiency.
+     */
     public int efficiency(){
         return efficiency;
     }
 
-    public int maxDurability(){
-        return maxDurability;
-    }
-
+    /**
+     * @return The current durability.
+     */
     public int getDurability(){
         return durability;
     }
 
     public void setDurability(int durability){
-        if(durability < 0 || durability > maxDurability){
-            throw new IllegalArgumentException("Durability is negative or bigger than the max durability.");
+        if(durability < 0){
+            throw new IllegalArgumentException("Durability cannot be negative.");
+        }
+        if(durability > maxDurability){
+            throw new IllegalArgumentException("Durability cannot exceed max durability.");
         }
         this.durability = durability;
     }
 
+    /**
+     * @return The maximum durability.
+     */
+    public int maxDurability(){
+        return maxDurability;
+    }
+
+    /**
+     * @return The tool type.
+     */
     public ToolType type(){
         return type;
     }
 
-    public void use(Breakable breakable){
-        if(durability == 0) return;
-
-        if(checkToolAndBreakableMatch(breakable)){
-            breakable.damage(efficiency);
-            durability--;
-        }
-        // strength
-        // handle monsters with sword.
-    }
-
-    private boolean checkToolAndBreakableMatch(Breakable b){
-        return b.getType() == BreakableType.TREE && type == ToolType.AXE ||
-                b.getType() == BreakableType.ROCK && type == ToolType.PICKAXE ||
-                b.getType() == BreakableType.SAND && type == ToolType.SHOVEL;
-    }
-
-    public Tool copy(){
-        return new Tool(super.name(), efficiency, maxDurability, durability, type);
-    }
-
-
+    /**
+     * Compares two tool objects and returns true if they're equal. Returns false otherwise.
+     *
+     * @return True if equal, false otherwise.
+     */
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Tool))
@@ -86,10 +82,13 @@ public final class Tool extends Item{
         if(!super.equals(other))
             return false;
         Tool tool = (Tool) other;
-        return efficiency == tool.efficiency && maxDurability == tool.maxDurability &&
-                durability == tool.durability && type == tool.type;
+        return efficiency == tool.efficiency && durability == tool.durability
+                && maxDurability == tool.maxDurability && type == tool.type;
     }
 
+    /**
+     * @return The hash code.
+     */
     @Override
     public int hashCode(){
         int result = super.hashCode();
@@ -98,5 +97,75 @@ public final class Tool extends Item{
         result = result * 31 + durability;
         result = result * 31 + type.hashCode();
         return result;
+    }
+
+    /**
+     * @return The string representation of this tool.
+     */
+    @Override
+    public String toString(){
+        return String.format("Tool[name=%s, efficiency=%d, durability=%d, maxDurability=%d, type=%s]",
+                super.name(), efficiency, durability, maxDurability, type);
+    }
+
+    /**
+     * @return A new builder to build a tool with.
+     */
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public final static class Builder{
+
+        private String name = null;
+        private int efficiency = -1;
+        private int durability = -1;
+        private int maxDurability = -1;
+        private ToolType toolType = null;
+
+        private Builder(){
+        }
+
+        public Builder name(String name){
+            this.name = name;
+            return this;
+        }
+
+        public Builder efficiency(int efficiency){
+            this.efficiency = efficiency;
+            return this;
+        }
+
+        public Builder durability(int durability){
+            this.durability = durability;
+            return this;
+        }
+
+        public Builder maxDurability(int maxDurability){
+            this.maxDurability = maxDurability;
+            return this;
+        }
+
+        public Builder toolType(ToolType toolType){
+            this.toolType = toolType;
+            return this;
+        }
+
+        public Tool build(){
+            if(efficiency < 0) {
+                throw new IllegalArgumentException("Efficiency is negative.");
+            }
+            if(maxDurability <= 0){
+                throw new IllegalArgumentException("Max durability is negative or zero.");
+            }
+            if(durability < 0) {
+                this.durability = maxDurability; // full durability
+            }
+            if(durability > maxDurability){
+                throw new IllegalArgumentException("Durability is bigger than the max durability.");
+            }
+            Objects.requireNonNull(toolType, "Tool type is null.");
+            return new Tool(this);
+        }
     }
 }

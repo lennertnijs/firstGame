@@ -1,42 +1,39 @@
 package com.mygdx.game.Inventory;
 
-import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.GameObject.GameObject;
-
 import java.util.Arrays;
 import java.util.Objects;
 
 public final class Inventory {
 
-    private final Item[] items;
+    private final ItemStack[] itemStacks;
 
     public Inventory(int size){
         if(size <= 0) {
             throw new IllegalArgumentException("Size is negative or 0.");
         }
-        items = new Item[size];
+        itemStacks = new ItemStack[size];
     }
 
-    public Inventory(Item[] items){
-        Objects.requireNonNull(items, "List is null.");
-        if(Arrays.stream(items).anyMatch(Objects::isNull)){
+    public Inventory(ItemStack[] itemStacks){
+        Objects.requireNonNull(itemStacks, "List is null.");
+        if(Arrays.stream(itemStacks).anyMatch(Objects::isNull)){
             throw new NullPointerException("List contains null.");
         }
-        if(items.length == 0) {
+        if(itemStacks.length == 0) {
             throw new IllegalArgumentException("Length of the array is 0.");
         }
-        this.items = new Item[items.length];
-        for(int i = 0; i < items.length; i++){
-            this.items[i] = items[i].copy();
+        this.itemStacks = new ItemStack[itemStacks.length];
+        for(int i = 0; i < itemStacks.length; i++){
+            this.itemStacks[i] = itemStacks[i].copy();
         }
     }
 
-    public Item[] getItems(){
-        return Arrays.copyOf(items, items.length);
+    public ItemStack[] getItems(){
+        return Arrays.copyOf(itemStacks, itemStacks.length);
     }
 
-    public Item getActiveItem(int index){
-        return items[index];
+    public ItemStack getActiveItem(int index){
+        return itemStacks[index];
     }
 
     public boolean contains(String name, int amount){
@@ -45,12 +42,12 @@ public final class Inventory {
             throw new IllegalArgumentException("Amount is negative or 0.");
         }
         int count = 0;
-        for(Item item : items){
+        for(ItemStack itemStack : itemStacks){
             if(count >= amount){
                 return true;
             }
-            if(item.name().equals(name)){
-                count += item.getAmount();
+            if(itemStack.item().name().equals(name)){
+                count += itemStack.getAmount();
             }
         }
         return count >= amount;
@@ -61,21 +58,21 @@ public final class Inventory {
      *
      * @return The amount that could not be added to the inventory.
      */
-    public int addItem(Item item){
-        Objects.requireNonNull(item, "Item is null.");
-        String name = item.name();
-        int amount = item.getAmount();
+    public int addItem(ItemStack itemStack){
+        Objects.requireNonNull(itemStack, "Item is null.");
+        String name = itemStack.item().name();
+        int amount = itemStack.getAmount();
 
         int index = findIndexOfSlotNotFullyFilled(name);
         while(index != -1 && amount > 0) {
-            amount = items[index].increaseAmount(amount);
+            amount = itemStacks[index].increaseAmount(amount);
             index = findIndexOfSlotNotFullyFilled(name);
         }
 
         int indexOfEmpty = findIndexOfEmptySlot();
         while(indexOfEmpty != -1 && amount > 0) {
-            int itemAmount = Math.min(amount, item.stackSize());
-            items[indexOfEmpty] = new Item(name, itemAmount, item.stackSize());
+            int itemAmount = Math.min(amount, itemStack.stackSize());
+            itemStacks[indexOfEmpty] = new ItemStack(itemStack.item(), itemAmount, itemStack.stackSize());
             amount -= itemAmount;
         }
 
@@ -90,12 +87,12 @@ public final class Inventory {
         if(!contains(name, amount)){
             throw new IllegalStateException("Cannot remove that amount, because the inventory does not contain it.");
         }
-        for(Item item : items){
+        for(ItemStack itemStack : itemStacks){
             if(amount == 0){
                 return;
             }
-            if(item.name().equals(name)){
-                amount = item.decreaseAmount(amount);
+            if(itemStack.item().name().equals(name)){
+                amount = itemStack.decreaseAmount(amount);
             }
         }
         replaceEmptyItemsWithNull();
@@ -104,8 +101,8 @@ public final class Inventory {
 
 
     private int findIndexOfEmptySlot(){
-        for(int i = 0; i < items.length; i++){
-            if(items[i] == null) {
+        for(int i = 0; i < itemStacks.length; i++){
+            if(itemStacks[i] == null) {
                 return i;
             }
         }
@@ -113,8 +110,8 @@ public final class Inventory {
     }
 
     private int findIndexOfSlotNotFullyFilled(String name){
-        for (int i = 0; i < items.length; i++) {
-            if(items[i] != null && items[i].name().equals(name) && items[i].getAmount() < items[i].stackSize()) {
+        for (int i = 0; i < itemStacks.length; i++) {
+            if(itemStacks[i] != null && itemStacks[i].item().name().equals(name) && itemStacks[i].getAmount() < itemStacks[i].stackSize()) {
                 return i;
             }
         }
@@ -122,27 +119,15 @@ public final class Inventory {
     }
 
     private void replaceEmptyItemsWithNull(){
-        for(int i = 0; i < items.length; i++){
-            if(items[i].getAmount() == 0) {
-                items[i] = null;
+        for(int i = 0; i < itemStacks.length; i++){
+            if(itemStacks[i].getAmount() == 0) {
+                itemStacks[i] = null;
             }
         }
     }
 
-    public void use(int index, GameObject object){
-        if(index < 0 || index >= items.length){
-            throw new IndexOutOfBoundsException("Index is out of inventory bounds.");
-        }
-        Item item = items[index];
-        if(item instanceof Tool && object instanceof Breakable){
-            Tool tool = (Tool) item;
-            Breakable breakable = (Breakable) object;
-            tool.use(breakable);
-        }
-    }
-
     public Inventory copy(){
-        return new Inventory(items);
+        return new Inventory(itemStacks);
     }
 
     @Override
@@ -151,16 +136,16 @@ public final class Inventory {
             return false;
         }
         Inventory inventory = (Inventory) other;
-        return Arrays.equals(items, inventory.items);
+        return Arrays.equals(itemStacks, inventory.itemStacks);
     }
 
     @Override
     public int hashCode(){
-        return Arrays.hashCode(items);
+        return Arrays.hashCode(itemStacks);
     }
 
     @Override
     public String toString(){
-        return String.format("Inventory{Items=%s}", Arrays.toString(items));
+        return String.format("Inventory{Items=%s}", Arrays.toString(itemStacks));
     }
 }

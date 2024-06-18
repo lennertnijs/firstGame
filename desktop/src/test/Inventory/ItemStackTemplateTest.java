@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ItemTemplateTest {
+public class ItemStackTemplateTest {
 
     private String name;
     private String description;

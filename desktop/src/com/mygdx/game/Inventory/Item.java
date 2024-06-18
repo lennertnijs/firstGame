@@ -2,84 +2,57 @@ package com.mygdx.game.Inventory;
 
 import java.util.Objects;
 
+/**
+ * Base item. Has no functionality, besides a name.
+ */
 public class Item {
 
+    /**
+     * Name of the item.
+     */
     private final String name;
-    private int amount;
-    private final int stackSize;
 
-    public Item(String name, int amount, int stackSize){
-        Objects.requireNonNull(name, "Name is null.");
-        if(stackSize <= 0) {
-            throw new IllegalArgumentException("Stack size is negative or 0.");
-        }
-        if(amount <= 0 || amount > stackSize) {
-            throw new IllegalArgumentException("Amount is negative, zero or bigger than the max stack size..");
-        }
-        this.name = name;
-        this.amount = amount;
-        this.stackSize = stackSize;
+    /**
+     * Creates a new IMMUTABLE {@link Item}.
+     * @param name The name. Cannot be null.
+     */
+    public Item(String name){
+        this.name = Objects.requireNonNull(name, "Item name is null.");
     }
 
-    public final String name(){
+    /**
+     * @return The name.
+     */
+    public String name(){
         return name;
     }
 
-    public final int getAmount(){
-        return amount;
-    }
-
-    public final int stackSize(){
-        return stackSize;
-    }
-
     /**
-     * @return The amount of increase left.
+     * Compares two item objects and returns true if they're equal. Returns false otherwise.
+     *
+     * @return True if equal, false otherwise.
      */
-    public final int increaseAmount(int increase){
-        if(increase <= 0) {
-            throw new IllegalArgumentException("Increase is negative or 0.");
-        }
-        int actualIncrease = Math.min(increase, stackSize - amount);
-        this.amount += actualIncrease;
-        return increase - actualIncrease;
-    }
-
-    /**
-     * @return The amount of decrease left.
-     */
-    public final int decreaseAmount(int decrease){
-        if(decrease <= 0) {
-            throw new IllegalArgumentException("Decrease is negative or 0.");
-        }
-        int actualDecrease = Math.min(decrease, amount);
-        this.amount -= actualDecrease;
-        return decrease - actualDecrease;
-    }
-
-    public Item copy(){
-        return new Item(name, amount, stackSize);
-    }
-
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Item)) {
+        if(!(other instanceof Item))
             return false;
-        }
         Item item = (Item) other;
-        return name.equals(item.name) && stackSize == item.stackSize && amount == item.amount;
+        return name.equals(item.name);
     }
 
+    /**
+     * @return The hash code.
+     */
     @Override
     public int hashCode(){
-        int result = name.hashCode();
-        result = result * 31 + stackSize;
-        result = result * 31 + amount;
-        return result;
+        return name.hashCode();
     }
 
+    /**
+     * @return The string representation.
+     */
     @Override
     public String toString(){
-        return String.format("Item[name=%s, amount=%d, stackSize=%d]", name, amount, stackSize);
+        return String.format("Item[name=%s]", name);
     }
 }

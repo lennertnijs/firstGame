@@ -9,50 +9,171 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ToolTest {
 
-    private final String name = "Stone";
+    private final String name = "Pickaxe";
     private final int efficiency = 15;
-    private final int maxDurability = 2500;
     private final int durability = 2000;
+    private final int maxDurability = 2500;
     private final ToolType type = ToolType.PICKAXE;
     private Tool tool;
 
     @BeforeEach
     public void initialise(){
-        tool = new Tool(name, efficiency, maxDurability, durability, type);
+        tool = Tool.builder()
+                .name(name)
+                .efficiency(efficiency)
+                .durability(durability)
+                .maxDurability(maxDurability)
+                .toolType(type)
+                .build();
     }
 
     @Test
-    public void testConstructorWithNullName(){
+    public void testBuilderWithNullName(){
         assertThrows(NullPointerException.class,
-                () -> new Tool(null, efficiency, maxDurability, durability, type));
+                () -> Tool.builder()
+                        .name(null)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .toolType(type)
+                        .build());
     }
 
     @Test
-    public void testConstructorWithNegativeEfficiency(){
+    public void testBuilderWithNegativeEfficiency(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Tool(name, -1, maxDurability, durability, type));
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(-1)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .toolType(type)
+                        .build());
     }
 
     @Test
-    public void testConstructorWithZeroEfficiency(){
-        new Tool(name, 0, maxDurability, durability, type); // allowed
+    public void testBuilderWithZeroEfficiency(){ // allowed
+        Tool.builder()
+                .name(name)
+                .efficiency(0)
+                .durability(durability)
+                .maxDurability(maxDurability)
+                .toolType(type)
+                .build();
     }
 
     @Test
-    public void testConstructorWithNegativeDurability(){
+    public void testBuilderWithZeroDurability(){ // allowed
+        Tool.builder()
+                .name(name)
+                .efficiency(efficiency)
+                .durability(0)
+                .maxDurability(maxDurability)
+                .toolType(type)
+                .build();
+    }
+
+    @Test
+    public void testBuilderWithDurabilityBiggerThanMax(){ // allowed
         assertThrows(IllegalArgumentException.class,
-                () -> new Tool(name, efficiency, maxDurability, -1, type));
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(maxDurability + 1)
+                        .maxDurability(maxDurability)
+                        .toolType(type)
+                        .build());
     }
 
     @Test
-    public void testConstructorWithZeroDurability(){
-        new Tool(name, efficiency, maxDurability,0, type); // allowed
+    public void testBuilderWithNegativeMaxDurability(){
+        assertThrows(IllegalArgumentException.class,
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(-1)
+                        .toolType(type)
+                        .build());
+    }
+
+    @Test
+    public void testBuilderWithZeroMaxDurability(){
+        assertThrows(IllegalArgumentException.class,
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(0)
+                        .toolType(type)
+                        .build());
     }
 
     @Test
     public void testConstructorWithNullType(){
         assertThrows(NullPointerException.class,
-                () -> new Tool(name, efficiency, maxDurability, durability, null));
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .toolType(null)
+                        .build());
+    }
+
+    @Test
+    public void testConstructorWithNameNotSet(){
+        assertThrows(NullPointerException.class,
+                () -> Tool.builder()
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .toolType(type)
+                        .build());
+    }
+
+    @Test
+    public void testConstructorWithEfficiencyNotSet(){
+        assertThrows(IllegalArgumentException.class,
+                () -> Tool.builder()
+                        .name(name)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .toolType(type)
+                        .build());
+    }
+
+    @Test
+    public void testConstructorWithDurabilityNotSet(){
+        Tool defaultDurabilityTool = Tool.builder()
+                                    .efficiency(efficiency)
+                                    .name(name)
+                                    .maxDurability(maxDurability)
+                                    .toolType(type)
+                                    .build();
+        assertEquals(maxDurability, defaultDurabilityTool.getDurability());
+    }
+
+    @Test
+    public void testConstructorWithMaxDurabilityNotSet(){
+        assertThrows(IllegalArgumentException.class,
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .toolType(type)
+                        .build());
+    }
+
+    @Test
+    public void testConstructorWithToolTypeNotSet(){
+        assertThrows(NullPointerException.class,
+                () -> Tool.builder()
+                        .name(name)
+                        .efficiency(efficiency)
+                        .durability(durability)
+                        .maxDurability(maxDurability)
+                        .build());
     }
 
     @Test
@@ -66,16 +187,9 @@ public class ToolTest {
     }
 
     @Test
-    public void testGetToolType(){
-        assertEquals(type, tool.type());
-    }
-
-    @Test
     public void testSetDurability(){
         tool.setDurability(1000);
         assertEquals(1000, tool.getDurability());
-        tool.setDurability(2000);
-        assertEquals(2000, tool.getDurability());
     }
 
     @Test
@@ -85,8 +199,103 @@ public class ToolTest {
     }
 
     @Test
-    public void testSetDurabilityToZero(){
+    public void testSetDurabilityToZero(){ // allowed
         tool.setDurability(0);
-        assertEquals(0, tool.getDurability());
+    }
+
+    @Test
+    public void testSetDurabilityToBiggerThanMaxDurability(){
+        assertThrows(IllegalArgumentException.class,
+                () -> tool.setDurability(maxDurability + 1));
+    }
+
+    @Test
+    public void testGetMaxDurability(){
+        assertEquals(maxDurability, tool.maxDurability());
+    }
+
+    @Test
+    public void testGetToolType(){
+        assertEquals(type, tool.type());
+    }
+
+    @Test
+    public void testEquals(){
+        Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool t3 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        // reflexive
+        assertEquals(t1, t1);
+        // symmetrical
+        assertEquals(t1, t2);
+        assertEquals(t2, t1);
+        // transitive
+        assertEquals(t1, t2);
+        assertEquals(t2, t3);
+        assertEquals(t1, t3);
+
+        // not equals
+        Tool diffName = Tool.builder().name("diff").efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffEfficiency = Tool.builder().name(name).efficiency(2*efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability+1)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffMaxDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(2*maxDurability).toolType(type).build();
+        Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(ToolType.AXE).build();
+        assertNotEquals(t1, diffName);
+        assertNotEquals(t1, diffEfficiency);
+        assertNotEquals(t1, diffDurability);
+        assertNotEquals(t1, diffMaxDurability);
+        assertNotEquals(t1, diffToolType);
+        assertNotEquals(t1, new Object());
+        assertNotEquals(t1, null);
+    }
+
+    @Test
+    public void testHashCode(){
+        Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool t3 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        // reflexive
+        assertEquals(t1.hashCode(), t1.hashCode());
+        // symmetrical
+        assertEquals(t1.hashCode(), t2.hashCode());
+        assertEquals(t2.hashCode(), t1.hashCode());
+        // transitive
+        assertEquals(t1.hashCode(), t2.hashCode());
+        assertEquals(t2.hashCode(), t3.hashCode());
+        assertEquals(t1.hashCode(), t3.hashCode());
+
+        // not equals
+        Tool diffName = Tool.builder().name("diff").efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffEfficiency = Tool.builder().name(name).efficiency(2*efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability+1)
+                .maxDurability(maxDurability).toolType(type).build();
+        Tool diffMaxDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(2*maxDurability).toolType(type).build();
+        Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+                .maxDurability(maxDurability).toolType(ToolType.AXE).build();
+        assertNotEquals(t1.hashCode(), diffName.hashCode());
+        assertNotEquals(t1.hashCode(), diffEfficiency.hashCode());
+        assertNotEquals(t1.hashCode(), diffDurability.hashCode());
+        assertNotEquals(t1.hashCode(), diffMaxDurability.hashCode());
+        assertNotEquals(t1.hashCode(), diffToolType.hashCode());
+    }
+
+    @Test
+    public void testToString(){
+        String expected = "Tool[name=Pickaxe, efficiency=15, durability=2000, maxDurability=2500, type=PICKAXE]";
+        assertEquals(expected, tool.toString());
     }
 }
