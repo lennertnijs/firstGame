@@ -49,7 +49,7 @@ public final class Inventory {
         if(index >= stacks.length){
             throw new IndexOutOfBoundsException("Index is out of bounds.");
         }
-        return stacks[index].copy();
+        return (stacks[index] == null) ? null : stacks[index].copy();
     }
 
     public boolean contains(Item item, int amount){
@@ -59,6 +59,8 @@ public final class Inventory {
         }
         int count = 0;
         for(ItemStack stack : stacks){
+            if(stack == null) continue;
+
             if(count >= amount){
                 return true;
             }
@@ -76,6 +78,12 @@ public final class Inventory {
      */
     public int add(Item item, int amount, int stackSize){
         Objects.requireNonNull(item, "Item stack is null.");
+        if(amount <= 0){
+            throw new IllegalArgumentException("Amount is negative or 0.");
+        }
+        if(stackSize <= 0){
+            throw new IllegalArgumentException("Stack size is negative or 0.");
+        }
 
         int index = findIndexOfSlotNotFullyFilled(item);
         while(index != -1 && amount > 0) {
@@ -87,6 +95,7 @@ public final class Inventory {
         while(indexOfEmpty != -1 && amount > 0) {
             stacks[indexOfEmpty] = new ItemStack(item, Math.min(amount, stackSize), stackSize);
             amount -= Math.min(amount, stackSize);
+            indexOfEmpty = findIndexOfEmptySlot();
         }
 
         return amount;
@@ -111,22 +120,20 @@ public final class Inventory {
         replaceEmptyStacksWithNull();
     }
 
-
-
-    private int findIndexOfEmptySlot(){
-        for(int i = 0; i < stacks.length; i++){
-            if(stacks[i] != null) continue;
+    private int findIndexOfSlotNotFullyFilled(Item item){
+        for (int i = 0; i < stacks.length; i++) {
+            if(stacks[i] == null) continue;
+            if(stacks[i].isFull()) continue;
+            if(!stacks[i].item().equals(item)) continue;
 
             return i;
         }
         return -1;
     }
 
-    private int findIndexOfSlotNotFullyFilled(Item item){
-        for (int i = 0; i < stacks.length; i++) {
-            if(stacks[i] == null) continue;
-            if(stacks[i].isFull()) continue;
-            if(!stacks[i].item().equals(item)) continue;
+    private int findIndexOfEmptySlot(){
+        for(int i = 0; i < stacks.length; i++){
+            if(stacks[i] != null) continue;
 
             return i;
         }

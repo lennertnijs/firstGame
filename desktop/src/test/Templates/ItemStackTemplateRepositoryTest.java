@@ -1,4 +1,4 @@
-package Inventory;
+package Templates;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.ItemTemplate.ItemTemplate;
