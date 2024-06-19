@@ -28,7 +28,7 @@ public final class Bat extends Monster{
 
     public void update(double delta, Point playerPosition){
         MonsterData monsterData = new MonsterData(playerPosition, getPosition(), getSpeed(),delta);
-        super.setPosition(batState.move(monsterData, this));
+        // move
         // update activity Type
     }
 

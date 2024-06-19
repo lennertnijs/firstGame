@@ -11,8 +11,8 @@ import java.util.Objects;
 public class GameObject {
 
     private final TextureRegion textureRegion;
-    protected Point position;
-    private Dimensions dimensions;
+    private final Point position;
+    private final Dimensions dimensions;
     private String map;
 
     public GameObject(TextureRegion textureRegion, Point position, Dimensions dimensions, String map){
@@ -37,16 +37,8 @@ public class GameObject {
         return position;
     }
 
-    public void setPosition(Point position){
-        this.position = Objects.requireNonNull(position, "Position is null.");
-    }
-
     public Dimensions getDimensions(){
         return dimensions;
-    }
-
-    public final void setDimensions(Dimensions dimensions){
-        this.dimensions = Objects.requireNonNull(dimensions, "Dimensions is null.");
     }
 
     public final String getMap(){

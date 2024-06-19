@@ -59,34 +59,8 @@ public class GameObjectTest {
     }
 
     @Test
-    public void testSetPosition(){
-        Point newPosition = new Point(100, 1);
-        gameObject.setPosition(newPosition);
-        assertEquals(newPosition, gameObject.getPosition());
-    }
-
-    @Test
-    public void testSetPositionToNull(){
-        assertThrows(NullPointerException.class,
-                () -> gameObject.setPosition(null));
-    }
-
-    @Test
     public void getDimensions(){
         assertEquals(dimensions, gameObject.getDimensions());
-    }
-
-    @Test
-    public void setDimensions(){
-        Dimensions newDimensions = new Dimensions(16, 17);
-        gameObject.setDimensions(newDimensions);
-        assertEquals(newDimensions, gameObject.getDimensions());
-    }
-
-    @Test
-    public void setDimensionsToNull(){
-        assertThrows(NullPointerException.class,
-                () -> gameObject.setDimensions(null));
     }
 
     @Test
