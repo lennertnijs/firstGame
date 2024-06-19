@@ -97,32 +97,7 @@ public final class ItemStack {
      * @return A deep copy of this item stack.
      */
     public ItemStack copy(){
-        return new ItemStack(item.copy(), amount, stackSize);
-    }
-
-    /**
-     * Compares two ItemStack objects and returns true if they're equal. Returns false otherwise.
-     *
-     * @return True if equal, false otherwise.
-     */
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof ItemStack)) {
-            return false;
-        }
-        ItemStack itemStack = (ItemStack) other;
-        return item.equals(itemStack.item) && stackSize == itemStack.stackSize && amount == itemStack.amount;
-    }
-
-    /**
-     * @return The hash code.
-     */
-    @Override
-    public int hashCode(){
-        int result = item.hashCode();
-        result = result * 31 + stackSize;
-        result = result * 31 + amount;
-        return result;
+        return new ItemStack(item, amount, stackSize);
     }
 
     /**

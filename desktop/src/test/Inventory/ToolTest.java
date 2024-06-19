@@ -224,11 +224,11 @@ public class ToolTest {
         Tool copy = tool.copy();
         assertEquals(copy, tool);
         copy.setDurability(durability/2);
-        assertNotEquals(copy, tool);
+        assertNotEquals(copy.getDurability(), tool.getDurability());
     }
     
     @Test
-    public void testEquals(){
+    public void testEquals(){ // equal if the same name
         Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
         Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
@@ -257,16 +257,18 @@ public class ToolTest {
         Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(ToolType.AXE).build();
         assertNotEquals(t1, diffName);
-        assertNotEquals(t1, diffEfficiency);
-        assertNotEquals(t1, diffDurability);
-        assertNotEquals(t1, diffMaxDurability);
-        assertNotEquals(t1, diffToolType);
+        // equal again, same name
+        assertEquals(t1, diffEfficiency);
+        assertEquals(t1, diffDurability);
+        assertEquals(t1, diffMaxDurability);
+        assertEquals(t1, diffToolType);
+        // more not equals
         assertNotEquals(t1, new Object());
         assertNotEquals(t1, null);
     }
 
     @Test
-    public void testHashCode(){
+    public void testHashCode(){ // not equals if different name
         Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
         Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
@@ -295,10 +297,11 @@ public class ToolTest {
         Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(ToolType.AXE).build();
         assertNotEquals(t1.hashCode(), diffName.hashCode());
-        assertNotEquals(t1.hashCode(), diffEfficiency.hashCode());
-        assertNotEquals(t1.hashCode(), diffDurability.hashCode());
-        assertNotEquals(t1.hashCode(), diffMaxDurability.hashCode());
-        assertNotEquals(t1.hashCode(), diffToolType.hashCode());
+        // equal again, same name
+        assertEquals(t1.hashCode(), diffEfficiency.hashCode());
+        assertEquals(t1.hashCode(), diffDurability.hashCode());
+        assertEquals(t1.hashCode(), diffMaxDurability.hashCode());
+        assertEquals(t1.hashCode(), diffToolType.hashCode());
     }
 
     @Test

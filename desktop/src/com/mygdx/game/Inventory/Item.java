@@ -31,7 +31,7 @@ public class Item {
      * @return A copy of this item.
      */
     public Item copy(){
-        return new Item(name);
+        return this;
     }
 
     /**

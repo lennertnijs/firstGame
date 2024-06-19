@@ -6,8 +6,6 @@ import com.mygdx.game.Inventory.ItemStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
@@ -56,24 +54,23 @@ public class InventoryTest {
 
     @Test
     public void testGetItems(){
-        assertArrayEquals(stacks, inventory.getItems());
+        assertTrue(areItemStackArraysEqual(stacks, inventory.getItems()));
     }
 
     @Test
-    public void testGetItemsHandsCopy(){
-        ItemStack[] shouldBeCopied = inventory.getItems();
-        assertArrayEquals(shouldBeCopied, inventory.getItems());
-        shouldBeCopied[1].increaseAmount(16);
-        assertFalse(Arrays.equals(shouldBeCopied, inventory.getItems()));
+    public void testGetItemsDoesDeepCopy(){
+        ItemStack[] copy = inventory.getItems();
+        copy[0].increaseAmount(16); // change one
+        assertFalse(areItemStackArraysEqual(copy, inventory.getItems()));
     }
 
     @Test
     public void testGetItem(){
-        assertEquals(inventory.getItem(0), stack1);
-        assertEquals(inventory.getItem(1), stack2);
-        assertNull(inventory.getItem(2));
-        assertNull(inventory.getItem(3));
-        assertEquals(inventory.getItem(4), stack3);
+        assertTrue(itemStacksAreEqual(inventory.getItem(0), stack1));
+        assertTrue(itemStacksAreEqual(inventory.getItem(1), stack2));
+        assertTrue(itemStacksAreEqual(inventory.getItem(2), null));
+        assertTrue(itemStacksAreEqual(inventory.getItem(3), null));
+        assertTrue(itemStacksAreEqual(inventory.getItem(4), stack3));
     }
 
     @Test
@@ -92,7 +89,8 @@ public class InventoryTest {
     public void testCreateEmpty(){
         Inventory emptyInventory = Inventory.createEmptyOfSize(6);
         assertEquals(6, emptyInventory.size());
-        assertArrayEquals(new ItemStack[]{null, null, null, null, null, null}, emptyInventory.getItems());
+        ItemStack[] emptyExpected = new ItemStack[]{null, null, null, null, null, null};
+        assertTrue(areItemStackArraysEqual(emptyExpected, emptyInventory.getItems()));
     }
 
     @Test
@@ -133,7 +131,7 @@ public class InventoryTest {
         expected[2] = null;
         expected[3] = null;
         expected[4] = new ItemStack(stone, 8 + 32, 64);
-        assertArrayEquals(expected, inventory.getItems());
+        assertTrue(areItemStackArraysEqual(expected, inventory.getItems()));
 
         inventory.add(stone, 128, 64);
         assertTrue(inventory.contains(stone, 40 + 64 + 128));
@@ -143,7 +141,7 @@ public class InventoryTest {
         expected2[2] = new ItemStack(stone, 64, 64);
         expected2[3] = new ItemStack(stone, 40, 64);
         expected2[4] = new ItemStack(stone, 64, 64);
-        assertArrayEquals(expected2, inventory.getItems());
+        assertTrue(areItemStackArraysEqual(expected2, inventory.getItems()));
 
         int remainder = inventory.add(stone, 64, 64);
         assertTrue(inventory.contains(stone, 256));
@@ -153,7 +151,7 @@ public class InventoryTest {
         expected3[2] = new ItemStack(stone, 64, 64);
         expected3[3] = new ItemStack(stone, 64, 64);
         expected3[4] = new ItemStack(stone, 64, 64);
-        assertArrayEquals(expected3, inventory.getItems());
+        assertTrue(areItemStackArraysEqual(expected3, inventory.getItems()));
         assertEquals(64 - 24, remainder);
     }
 
@@ -185,5 +183,80 @@ public class InventoryTest {
     public void testAddWithZeroStackSize(){
         assertThrows(IllegalArgumentException.class,
                 () -> inventory.add(stone, 64, 0));
+    }
+
+    @Test
+    public void testRemove(){
+        inventory.remove(stone, 16);
+        assertTrue(inventory.contains(stone, 40 - 16));
+        ItemStack[] expected = new ItemStack[5];
+        expected[0] = new ItemStack(stone, 16, 64);
+        expected[1] = new ItemStack(wood, 16, 64);
+        expected[2] = null;
+        expected[3] = null;
+        expected[4] = new ItemStack(stone, 8, 64);
+        assertTrue(areItemStackArraysEqual(expected, inventory.getItems()));
+
+        inventory.remove(stone, 20);
+        assertTrue(inventory.contains(stone, 40 - 16 - 20));
+        ItemStack[] expected2 = new ItemStack[5];
+        expected2[0] = null;
+        expected2[1] = new ItemStack(wood, 16, 64);
+        expected2[2] = null;
+        expected2[3] = null;
+        expected2[4] = new ItemStack(stone, 8 - 4, 64);
+        assertTrue(areItemStackArraysEqual(expected2, inventory.getItems()));
+    }
+
+    @Test
+    public void testRemoveWithNullItem(){
+        assertThrows(NullPointerException.class,
+                () -> inventory.remove(null, 10));
+    }
+
+    @Test
+    public void testRemoveWithNegativeAmount(){
+        assertThrows(IllegalArgumentException.class,
+                () -> inventory.remove(stone, -1));
+    }
+
+    @Test
+    public void testRemoveWithZeroAmount(){
+        assertThrows(IllegalArgumentException.class,
+                () -> inventory.remove(stone, 0));
+    }
+
+    @Test
+    public void testRemoveDoesNotContain(){
+        assertThrows(IllegalArgumentException.class,
+                () -> inventory.remove(stone, 32 + 8 + 1));
+    }
+
+    @Test
+    public void testToString(){
+        String expected = "Inventory[" + System.lineSeparator() +
+                "Slot 0: ItemStack[Item[name=Stone], amount=32, stackSize=64]"  + System.lineSeparator() +
+                "Slot 1: ItemStack[Item[name=Wood], amount=16, stackSize=64]"  + System.lineSeparator() +
+                "Slot 2: null"  + System.lineSeparator() +
+                "Slot 3: null"  + System.lineSeparator() +
+                "Slot 4: ItemStack[Item[name=Stone], amount=8, stackSize=64]"  + System.lineSeparator() +
+                "]";
+        assertEquals(expected, inventory.toString());
+    }
+
+    private boolean areItemStackArraysEqual(ItemStack[] array1, ItemStack[] array2){
+        boolean equal = true;
+        for(int i = 0; i < inventory.size(); i++){
+            equal = equal && itemStacksAreEqual(array1[i], array2[i]);
+        }
+        return equal;
+    }
+
+    private boolean itemStacksAreEqual(ItemStack stack1, ItemStack stack2){
+        if(stack1 == null && stack2 == null) return true;
+        if(stack1 == null || stack2 == null) return false;
+        return stack1.item().equals(stack2.item())
+                && stack1.getAmount() == stack2.getAmount()
+                && stack1.stackSize() == stack2.stackSize();
     }
 }

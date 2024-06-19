@@ -134,64 +134,20 @@ public class ItemStackTest {
     @Test
     public void testCopy(){
         ItemStack copy = itemStack.copy();
-        assertEquals(itemStack, copy);
+        assertTrue(itemStacksAreEqual(copy, itemStack));
         copy.increaseAmount(1);
-        assertNotEquals(itemStack, copy);
-    }
-
-    @Test
-    public void testEquals(){
-        ItemStack itemStack1 = new ItemStack(item, amount, stackSize);
-        ItemStack itemStack2 = new ItemStack(item, amount, stackSize);
-        ItemStack itemStack3 = new ItemStack(item, amount, stackSize);
-        // reflexive
-        assertEquals(itemStack1, itemStack1);
-        // symmetrical
-        assertEquals(itemStack1, itemStack2);
-        assertEquals(itemStack2, itemStack1);
-        // transitive
-        assertEquals(itemStack1, itemStack2);
-        assertEquals(itemStack2, itemStack3);
-        assertEquals(itemStack1, itemStack3);
-
-        // not equals
-        ItemStack diffItem = new ItemStack(new Item("diff"), amount, stackSize);
-        ItemStack diffAmount = new ItemStack(item, 2 * amount, stackSize);
-        ItemStack diffStackSize = new ItemStack(item, amount, 2 * stackSize);
-        assertNotEquals(itemStack1, diffItem);
-        assertNotEquals(itemStack1, diffAmount);
-        assertNotEquals(itemStack1, diffStackSize);
-        assertNotEquals(itemStack1, new Object());
-        assertNotEquals(itemStack1, null);
-    }
-
-    @Test
-    public void testHashCode(){
-        ItemStack itemStack1 = new ItemStack(item, amount, stackSize);
-        ItemStack itemStack2 = new ItemStack(item, amount, stackSize);
-        ItemStack itemStack3 = new ItemStack(item, amount, stackSize);
-        // reflexive
-        assertEquals(itemStack1.hashCode(), itemStack1.hashCode());
-        // symmetrical
-        assertEquals(itemStack1.hashCode(), itemStack2.hashCode());
-        assertEquals(itemStack2.hashCode(), itemStack1.hashCode());
-        // transitive
-        assertEquals(itemStack1.hashCode(), itemStack2.hashCode());
-        assertEquals(itemStack2.hashCode(), itemStack3.hashCode());
-        assertEquals(itemStack1.hashCode(), itemStack3.hashCode());
-
-        // not equals
-        ItemStack diffItem = new ItemStack(new Item("diff"), amount, stackSize);
-        ItemStack diffAmount = new ItemStack(item, 2 * amount, stackSize);
-        ItemStack diffStackSize = new ItemStack(item, amount, 2 * stackSize);
-        assertNotEquals(itemStack1.hashCode(), diffItem.hashCode());
-        assertNotEquals(itemStack1.hashCode(), diffStackSize.hashCode());
-        assertNotEquals(itemStack1.hashCode(), diffAmount.hashCode());
+        assertFalse(itemStacksAreEqual(copy, itemStack));
     }
 
     @Test
     public void testToString(){
         String expected = "ItemStack[Item[name=Stone], amount=32, stackSize=64]";
         assertEquals(expected, itemStack.toString());
+    }
+
+    private boolean itemStacksAreEqual(ItemStack stack1, ItemStack stack2){
+        return stack1.item().equals(stack2.item())
+                && stack1.getAmount() == stack2.getAmount()
+                && stack1.stackSize() == stack2.stackSize();
     }
 }

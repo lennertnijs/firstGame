@@ -88,35 +88,6 @@ public final class Tool extends Item {
     }
 
     /**
-     * Compares two tool objects and returns true if they're equal. Returns false otherwise.
-     *
-     * @return True if equal, false otherwise.
-     */
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Tool))
-            return false;
-        if(!super.equals(other))
-            return false;
-        Tool tool = (Tool) other;
-        return efficiency == tool.efficiency && durability == tool.durability
-                && maxDurability == tool.maxDurability && type == tool.type;
-    }
-
-    /**
-     * @return The hash code.
-     */
-    @Override
-    public int hashCode(){
-        int result = super.hashCode();
-        result = result * 31 + efficiency;
-        result = result * 31 + maxDurability;
-        result = result * 31 + durability;
-        result = result * 31 + type.hashCode();
-        return result;
-    }
-
-    /**
      * @return The string representation of this tool.
      */
     @Override
