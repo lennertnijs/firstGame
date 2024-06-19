@@ -11,7 +11,7 @@ public final class DirectionCalculator {
     }
 
     public static Direction calculate(Point start, Point end){
-        Vector v = new Vector(end.x() - start.x(), end.y() - start.y());
+        Vector v = new Vector(end.getX() - start.getX(), end.getY() - start.getY());
         double angle = Math.atan((double) v.y() / v.x());
         if(angle > -Math.PI/4 && angle < Math.PI/4){
             return Direction.RIGHT;

@@ -13,8 +13,8 @@ public class SpriteDrawer {
 
     public void draw(GameObject o){
         TextureRegion texture = o.getTexture();
-        int x = o.getPosition().x();
-        int y = o.getPosition().y();
+        int x = o.getPosition().getX();
+        int y = o.getPosition().getY();
         int width = o.getDimensions().width();
         int height = o.getDimensions().height();
         game.batch.draw(texture, x, y, width, height);

@@ -86,7 +86,7 @@ public class LocationTest {
 
     @Test
     public void testToString(){
-        String expected = "Location[mapName=Main, position=Point[x=0, y=0]]";
+        String expected = "Location[mapName=Main, position=(0, 0)]";
         assertEquals(expected, location.toString());
     }
 }

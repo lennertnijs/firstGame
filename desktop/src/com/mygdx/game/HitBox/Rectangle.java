@@ -15,8 +15,8 @@ public final class Rectangle implements HitBox {
     public Rectangle(Point position, Dimensions dimensions){
         Objects.requireNonNull(position, "Position is null.");
         Objects.requireNonNull(dimensions, "Dimensions is null.");
-        this.x = position.x();
-        this.y = position.y();
+        this.x = position.getX();
+        this.y = position.getY();
         this.width = dimensions.width();
         this.height = dimensions.height();
     }
@@ -44,7 +44,7 @@ public final class Rectangle implements HitBox {
 
     public boolean contains(Point point){
         Objects.requireNonNull(point, "Point is null.");
-        return x <= point.x() && point.x() < x + width && y <= point.y() && point.y() < y + height;
+        return x <= point.getX() && point.getX() < x + width && y <= point.getY() && point.getY() < y + height;
     }
 
     @Override

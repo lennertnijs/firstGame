@@ -169,7 +169,7 @@ public class GameObjectTest {
     @Test
     public void testToString(){
         String expected = "GameObject[textureRegion=" + textureRegion.toString() +", " +
-                "position=Point[x=0, y=0], " +
+                "position=(0, 0), " +
                 "dimensions=Dimensions[width=15, height=10], " +
                 "map=map]";
         assertEquals(expected, gameObject.toString());

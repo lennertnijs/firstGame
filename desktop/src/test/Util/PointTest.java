@@ -16,84 +16,78 @@ public class PointTest {
     }
 
     @Test
-    public void testConstructorWithNegativeX(){
-        assertThrows(IllegalArgumentException.class,
-                () -> new Point(-1, 10));
+    public void testGetX(){
+        assertEquals(5, point.getX());
     }
 
     @Test
-    public void testConstructorWithZeroX(){
-        new Point(0, 10); // allowed
+    public void testSetX(){
+        point.setX(105);
+        assertEquals(105, point.getX());
     }
 
     @Test
-    public void testConstructorWithNegativeCoordinateY(){
-        assertThrows(IllegalArgumentException.class,
-                () -> new Point(10, -1));
+    public void testGetY(){
+        assertEquals(10, point.getY());
     }
 
     @Test
-    public void testConstructorWithZeroY(){
-        new Point(5, 0); // allowed
-    }
-
-    @Test
-    public void testX(){
-        assertEquals(5, point.x());
-    }
-
-    @Test
-    public void testY(){
-        assertEquals(10, point.y());
+    public void testSetY(){
+        point.setY(110);
+        assertEquals(110, point.getY());
     }
 
     @Test
     public void testEquals(){
-        Point point1 = new Point(5, 10);
-        Point point2 = new Point(5, 10);
-        Point point3 = new Point(5, 10);
-        Point diffX = new Point(5, 20);
-        Point diffY = new Point(10, 10);
+        Point p1 = new Point(5, 10);
+        Point p2 = new Point(5, 10);
+        Point p3 = new Point(5, 10);
+
         // reflexive
-        assertEquals(point1, point1);
+        assertEquals(p1, p1);
         // symmetrical
-        assertEquals(point1, point2);
-        assertEquals(point2, point1);
+        assertEquals(p1, p2);
+        assertEquals(p2, p1);
         // transitive
-        assertEquals(point1, point2);
-        assertEquals(point2, point3);
-        assertEquals(point1, point3);
+        assertEquals(p1, p2);
+        assertEquals(p2, p3);
+        assertEquals(p1, p3);
+
         // not equals
-        assertNotEquals(point1, diffX);
-        assertNotEquals(point1, diffY);
-        assertNotEquals(point1, new Object());
-        assertNotEquals(point1, null);
+        Point differentX = new Point(15, 10);
+        Point differentY = new Point(5, 20);
+        assertNotEquals(p1, differentX);
+        assertNotEquals(p1, differentY);
+        assertNotEquals(p1, new Object());
+        assertNotEquals(p1, null);
     }
 
     @Test
     public void testHashCode(){
-        Point point1 = new Point(5, 10);
-        Point point2 = new Point(5, 10);
-        Point point3 = new Point(5, 10);
-        Point diffX = new Point(5, 20);
-        Point diffY = new Point(10, 10);
+        Point p1 = new Point(5, 10);
+        Point p2 = new Point(5, 10);
+        Point p3 = new Point(5, 10);
+
         // reflexive
-        assertEquals(point1.hashCode(), point1.hashCode());
+        assertEquals(p1.hashCode(), p1.hashCode());
         // symmetrical
-        assertEquals(point1.hashCode(), point2.hashCode());
-        assertEquals(point2.hashCode(), point1.hashCode());
+        assertEquals(p1.hashCode(), p2.hashCode());
+        assertEquals(p2.hashCode(), p1.hashCode());
         // transitive
-        assertEquals(point1.hashCode(), point2.hashCode());
-        assertEquals(point2.hashCode(), point3.hashCode());
-        assertEquals(point1.hashCode(), point3.hashCode());
+        assertEquals(p1.hashCode(), p2.hashCode());
+        assertEquals(p2.hashCode(), p3.hashCode());
+        assertEquals(p1.hashCode(), p3.hashCode());
+
         // not equals
-        assertNotEquals(point1.hashCode(), diffX.hashCode());
-        assertNotEquals(point1.hashCode(), diffY.hashCode());
+        Point differentX = new Point(15, 10);
+        Point differentY = new Point(5, 20);
+        assertNotEquals(p1.hashCode(), differentX.hashCode());
+        assertNotEquals(p1.hashCode(), differentY.hashCode());
     }
 
     @Test
     public void testToString(){
-        String expected = "Point[x=5, y=10]";
+        String expected = "(5, 10)";
         assertEquals(expected, point.toString());
     }
 }

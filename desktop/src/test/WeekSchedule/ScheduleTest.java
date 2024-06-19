@@ -94,8 +94,8 @@ public class ScheduleTest {
     @Test
     public void testToString(){
         String expected = "Schedule[Activities=[" +
-                "Activity[type=walk, map=main, position=Point[x=5, y=15], Time[hours=0, minutes=10]], " +
-                "Activity[type=walk, map=main, position=Point[x=15, y=25], Time[hours=0, minutes=15]]" +
+                "Activity[type=walk, map=main, position=(5, 15), Time[hours=0, minutes=10]], " +
+                "Activity[type=walk, map=main, position=(15, 25), Time[hours=0, minutes=15]]" +
                 "]]";
         assertEquals(expected, schedule.toString());
     }

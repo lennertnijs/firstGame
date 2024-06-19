@@ -37,7 +37,7 @@ public class BatRoamingState implements BatState{
         while(goal == null){
             int random_x = RandomNumberGenerator.generateBetween(-200, 200);
             int random_y = RandomNumberGenerator.generateBetween(-200, 200);
-            this.goal = new Point(data.monsterPosition().x() + random_x, data.monsterPosition().y() + random_y);
+            this.goal = new Point(data.monsterPosition().getX() + random_x, data.monsterPosition().getY() + random_y);
         }
     }
 }

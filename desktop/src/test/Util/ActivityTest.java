@@ -115,7 +115,7 @@ public class ActivityTest {
 
     @Test
     public void testToString(){
-        String expected = "Activity[type=run, map=main, position=Point[x=5, y=10], Time[hours=5, minutes=10]]";
+        String expected = "Activity[type=run, map=main, position=(5, 10), Time[hours=5, minutes=10]]";
         assertEquals(expected, activity.toString());
     }
 }

@@ -11,8 +11,8 @@ public final class Vector {
     }
 
     public static Vector createBetweenPoints(Point start, Point end){
-        int x_diff = end.x() - start.x();
-        int y_diff = end.y() - start.y();
+        int x_diff = end.getX() - start.getX();
+        int y_diff = end.getY() - start.getY();
         return new Vector(x_diff, y_diff);
     }
 

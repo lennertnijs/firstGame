@@ -2,7 +2,10 @@ package com.mygdx.game.GameObject;
 
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Util.*;
 
 import java.util.Map;
@@ -31,14 +34,15 @@ public abstract class Character extends Entity {
         return name;
     }
 
-    public void useActiveItem(GameObject object){
-//        if(super.getAnimationDelta() < 1000f){
-//            return; SHOULD ONLY GO ONCE!
-//        }
-        //inventory.use(activeIndex, object);
+    public Inventory getInventory(){
+        return inventory;
+    }
+
+    public int getActiveIndex(){
+        return activeIndex;
     }
 
     public void incrementActiveIndex(){
-        this.activeIndex = (this.activeIndex + 1) % inventory.getItems().length;
+        this.activeIndex = (activeIndex + 1) % inventory.size();
     }
 }

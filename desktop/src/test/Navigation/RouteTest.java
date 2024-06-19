@@ -149,9 +149,9 @@ public class RouteTest {
     @Test
     public void testToString(){
         String expected = "Route{locations=[" +
-                "Location[mapName=map1, position=Point[x=0, y=0]], " +
-                "Location[mapName=map1, position=Point[x=10, y=0]], " +
-                "Location[mapName=map1, position=Point[x=20, y=0]]" +
+                "Location[mapName=map1, position=(0, 0)], " +
+                "Location[mapName=map1, position=(10, 0)], " +
+                "Location[mapName=map1, position=(20, 0)]" +
                 "]}";
         assertEquals(expected, route.toString());
     }

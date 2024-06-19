@@ -23,9 +23,9 @@ public final class BatAttackState implements BatState{
     private void setGoal(MonsterData data, Bat bat){
         while(goal == null){
             float factor = 1.25f;
-            Vector vector = new Vector(data.playerPosition().x() - bat.getPosition().x(),
-                    data.playerPosition().y() - bat.getPosition().y()).scale(factor);
-            goal = new Point(vector.x() + bat.getPosition().x(), vector.y() + bat.getPosition().y());
+            Vector vector = new Vector(data.playerPosition().getX() - bat.getPosition().getX(),
+                    data.playerPosition().getY() - bat.getPosition().getY()).scale(factor);
+            goal = new Point(vector.x() + bat.getPosition().getX(), vector.y() + bat.getPosition().getY());
             // check within boundaries
             factor *= 0.95f;
         }

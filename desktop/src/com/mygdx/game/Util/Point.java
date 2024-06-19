@@ -2,25 +2,33 @@ package com.mygdx.game.Util;
 
 import java.util.Objects;
 
+/**
+ * A 2-dimensional point (x, y)
+ */
 public final class Point {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     public Point(int x, int y){
-        if(x < 0 || y < 0) {
-            throw new IllegalArgumentException("Coordinate is negative.");
-        }
         this.x = x;
         this.y = y;
     }
 
-    public int x(){
+    public int getX(){
         return x;
     }
 
-    public int y(){
+    public void setX(int x){
+        this.x = x;
+    }
+
+    public int getY(){
         return y;
+    }
+
+    public void setY(int y){
+        this.y = y;
     }
 
     public Point add(Vector vector){
@@ -38,11 +46,14 @@ public final class Point {
 
     @Override
     public int hashCode(){
-        return x * 31 + y;
+        int result = 17;
+        result = 31 * result + x;
+        result = 31 * result + y;
+        return result;
     }
 
     @Override
     public String toString(){
-        return String.format("Point[x=%d, y=%d]", x, y);
+        return String.format("(%d, %d)", x, y);
     }
 }

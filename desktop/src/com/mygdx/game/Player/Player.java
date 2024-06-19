@@ -3,9 +3,12 @@ package com.mygdx.game.Player;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
@@ -44,6 +47,18 @@ public final class Player extends Character {
 
     public void update(double delta, Direction direction, HitBoxSnapShot snapShot){
         playerState.progress(delta, direction, snapShot);
+    }
+
+
+    public void useActiveItem(Breakable breakable){
+//        if(super.getAnimationDelta() < 1000f){
+//            return; SHOULD ONLY GO ONCE!
+//        }
+        Item item = super.getInventory().getItem(super.getActiveIndex());
+        if(!(item instanceof Tool)){
+            return;
+        }
+        Tool tool = (Tool) item;
     }
 
     public static Builder builder(){
