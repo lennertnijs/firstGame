@@ -2,49 +2,54 @@ package Inventory;
 
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.ItemStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
 
-    private final Item stone = new Item("Stone");
-    private final Item wood = new Item("Wood");
-    private final ItemStack stack1 = new ItemStack(stone, 32, 64);
-    private final ItemStack stack2 = new ItemStack(wood, 16, 64);
-    private final ItemStack stack3 = new ItemStack(stone, 8, 64);
-    private final ItemStack[] stacks = new ItemStack[]{stack1, stack2, null, null, stack3};
+    private final Item stone1 = new Item("Stone", 32);
+    private final Item wood = new Item("Wood", 16);
+    private final Item stone2 = new Item("Stone", 8);
+    private final Item[] stacks = new Item[]{stone1, wood, null, null, stone2};
+    private final Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{
+        put("Stone", 64);
+        put("Wood", 64);
+    }};
     private Inventory inventory;
 
     @BeforeEach
     public void initialise(){
-        inventory = Inventory.createWithStacks(stacks);
+        inventory = Inventory.createWithItems(stacks, stackSizeMap);
     }
 
     @Test
     public void testStaticFactoryWithNullArray(){
         assertThrows(NullPointerException.class,
-                () -> Inventory.createWithStacks(null));
+                () -> Inventory.createWithItems(null, stackSizeMap));
     }
 
     @Test
     public void testStaticFactoryWithEmptyArray(){
         assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createWithStacks(new ItemStack[0]));
+                () -> Inventory.createWithItems(new Item[0], stackSizeMap));
     }
 
     @Test
     public void testStaticFactoryWithNegativeSize(){
         assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createEmptyOfSize(-1));
+                () -> Inventory.createEmptyOfSize(-1, stackSizeMap));
     }
 
     @Test
     public void testStaticFactoryWithZeroSize(){
         assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createEmptyOfSize(0));
+                () -> Inventory.createEmptyOfSize(0, stackSizeMap));
     }
 
     @Test
@@ -54,23 +59,23 @@ public class InventoryTest {
 
     @Test
     public void testGetItems(){
-        assertTrue(areItemStackArraysEqual(stacks, inventory.getItems()));
+        assertTrue(areItemArraysEqual(stacks, inventory.getItems()));
     }
 
     @Test
     public void testGetItemsDoesDeepCopy(){
-        ItemStack[] copy = inventory.getItems();
-        copy[0].increaseAmount(16); // change one
-        assertFalse(areItemStackArraysEqual(copy, inventory.getItems()));
+        Item[] copy = inventory.getItems();
+        copy[0].increaseAmount(16, 64); // change one
+        assertFalse(areItemArraysEqual(copy, inventory.getItems()));
     }
 
     @Test
     public void testGetItem(){
-        assertTrue(itemStacksAreEqual(inventory.getItem(0), stack1));
-        assertTrue(itemStacksAreEqual(inventory.getItem(1), stack2));
-        assertTrue(itemStacksAreEqual(inventory.getItem(2), null));
-        assertTrue(itemStacksAreEqual(inventory.getItem(3), null));
-        assertTrue(itemStacksAreEqual(inventory.getItem(4), stack3));
+        assertTrue(ItemsAreEqual(inventory.getItem(0), stone1));
+        assertTrue(ItemsAreEqual(inventory.getItem(1), wood));
+        assertTrue(ItemsAreEqual(inventory.getItem(2), null));
+        assertTrue(ItemsAreEqual(inventory.getItem(3), null));
+        assertTrue(ItemsAreEqual(inventory.getItem(4), stone2));
     }
 
     @Test
@@ -87,20 +92,20 @@ public class InventoryTest {
 
     @Test
     public void testCreateEmpty(){
-        Inventory emptyInventory = Inventory.createEmptyOfSize(6);
+        Inventory emptyInventory = Inventory.createEmptyOfSize(6, stackSizeMap);
         assertEquals(6, emptyInventory.size());
-        ItemStack[] emptyExpected = new ItemStack[]{null, null, null, null, null, null};
-        assertTrue(areItemStackArraysEqual(emptyExpected, emptyInventory.getItems()));
+        Item[] emptyExpected = new Item[]{null, null, null, null, null, null};
+        assertTrue(areItemArraysEqual(emptyExpected, emptyInventory.getItems()));
     }
 
     @Test
     public void testContains(){
-        assertTrue(inventory.contains(stone, 32));
-        assertTrue(inventory.contains(stone, 40));
-        assertFalse(inventory.contains(stone, 40 + 1));
+        assertTrue(inventory.contains("Stone", 32));
+        assertTrue(inventory.contains("Stone", 40));
+        assertFalse(inventory.contains("Stone", 40 + 1));
 
-        assertTrue(inventory.contains(wood, 16));
-        assertFalse(inventory.contains(wood, 17));
+        assertTrue(inventory.contains("Wood", 16));
+        assertFalse(inventory.contains("Wood", 17));
     }
 
     @Test
@@ -112,100 +117,94 @@ public class InventoryTest {
     @Test
     public void testContainsWithNegativeAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.contains(stone, -1));
+                () -> inventory.contains("Stone", -1));
     }
 
     @Test
     public void testContainsWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.contains(stone, 0));
+                () -> inventory.contains("Stone", 0));
     }
 
     @Test
     public void testAdd(){
-        inventory.add(stone, 64, 64);
-        assertTrue(inventory.contains(stone, 40 + 64));
-        ItemStack[] expected = new ItemStack[5];
-        expected[0] = new ItemStack(stone, 32 + 32, 64);
-        expected[1] = new ItemStack(wood, 16, 64);
+        inventory.add("Stone", 64);
+        assertTrue(inventory.contains("Stone", 40 + 64));
+        Item[] expected = new Item[5];
+        expected[0] = new Item("Stone", 32 + 32);
+        expected[1] = new Item("Wood", 16);
         expected[2] = null;
         expected[3] = null;
-        expected[4] = new ItemStack(stone, 8 + 32, 64);
-        assertTrue(areItemStackArraysEqual(expected, inventory.getItems()));
+        expected[4] = new Item("Stone", 8 + 32);
+        assertTrue(areItemArraysEqual(expected, inventory.getItems()));
 
-        inventory.add(stone, 128, 64);
-        assertTrue(inventory.contains(stone, 40 + 64 + 128));
-        ItemStack[] expected2 = new ItemStack[5];
-        expected2[0] = new ItemStack(stone, 64, 64);
-        expected2[1] = new ItemStack(wood, 16, 64);
-        expected2[2] = new ItemStack(stone, 64, 64);
-        expected2[3] = new ItemStack(stone, 40, 64);
-        expected2[4] = new ItemStack(stone, 64, 64);
-        assertTrue(areItemStackArraysEqual(expected2, inventory.getItems()));
+        inventory.add("Stone", 128);
+        assertTrue(inventory.contains("Stone", 40 + 64 + 128));
+        Item[] expected2 = new Item[5];
+        expected2[0] = new Item("Stone", 64);
+        expected2[1] = new Item("Wood", 16);
+        expected2[2] = new Item("Stone", 64);
+        expected2[3] = new Item("Stone", 40);
+        expected2[4] = new Item("Stone", 64);
+        assertTrue(areItemArraysEqual(expected2, inventory.getItems()));
 
-        int remainder = inventory.add(stone, 64, 64);
-        assertTrue(inventory.contains(stone, 256));
-        ItemStack[] expected3 = new ItemStack[5];
-        expected3[0] = new ItemStack(stone, 64, 64);
-        expected3[1] = new ItemStack(wood, 16, 64);
-        expected3[2] = new ItemStack(stone, 64, 64);
-        expected3[3] = new ItemStack(stone, 64, 64);
-        expected3[4] = new ItemStack(stone, 64, 64);
-        assertTrue(areItemStackArraysEqual(expected3, inventory.getItems()));
+        int remainder = inventory.add("Stone", 64);
+        assertTrue(inventory.contains("Stone", 256));
+        Item[] expected3 = new Item[5];
+        expected3[0] = new Item("Stone", 64);
+        expected3[1] = new Item("Wood", 16);
+        expected3[2] = new Item("Stone", 64);
+        expected3[3] = new Item("Stone", 64);
+        expected3[4] = new Item("Stone", 64);
+        assertTrue(areItemArraysEqual(expected3, inventory.getItems()));
         assertEquals(64 - 24, remainder);
     }
 
     @Test
     public void testAddWithNullItem(){
         assertThrows(NullPointerException.class,
-                () -> inventory.add(null, 64, 64));
+                () -> inventory.add(null, 64));
     }
 
     @Test
     public void testAddWithNegativeAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.add(stone, -1, 64));
+                () -> inventory.add("Stone", -1));
     }
 
     @Test
     public void testAddWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.add(stone, 0, 64));
+                () -> inventory.add("Stone", 0));
     }
 
     @Test
-    public void testAddWithNegativeStackSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> inventory.add(stone, 64, -1));
-    }
-
-    @Test
-    public void testAddWithZeroStackSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> inventory.add(stone, 64, 0));
+    public void testAddWithItemNameNotRegistered(){
+        assertThrows(NoSuchElementException.class,
+                () -> inventory.add("Rock", 32));
     }
 
     @Test
     public void testRemove(){
-        inventory.remove(stone, 16);
-        assertTrue(inventory.contains(stone, 40 - 16));
-        ItemStack[] expected = new ItemStack[5];
-        expected[0] = new ItemStack(stone, 16, 64);
-        expected[1] = new ItemStack(wood, 16, 64);
+        inventory.remove("Stone", 16);
+        assertTrue(inventory.contains("Stone", 40 - 16));
+        Item[] expected = new Item[5];
+        expected[0] = new Item("Stone", 16);
+        expected[1] = new Item("Wood", 16);
         expected[2] = null;
         expected[3] = null;
-        expected[4] = new ItemStack(stone, 8, 64);
-        assertTrue(areItemStackArraysEqual(expected, inventory.getItems()));
+        expected[4] = new Item("Stone", 8);
+        assertTrue(areItemArraysEqual(expected, inventory.getItems()));
 
-        inventory.remove(stone, 20);
-        assertTrue(inventory.contains(stone, 40 - 16 - 20));
-        ItemStack[] expected2 = new ItemStack[5];
+        inventory.remove("Stone", 20);
+        assertTrue(inventory.contains("Stone", 40 - 16 - 20));
+        Item[] expected2 = new Item[5];
         expected2[0] = null;
-        expected2[1] = new ItemStack(wood, 16, 64);
+        expected2[1] = new Item("Wood", 16);
         expected2[2] = null;
         expected2[3] = null;
-        expected2[4] = new ItemStack(stone, 8 - 4, 64);
-        assertTrue(areItemStackArraysEqual(expected2, inventory.getItems()));
+        expected2[4] = new Item("Stone", 8 - 4);
+        assertTrue(areItemArraysEqual(expected2, inventory.getItems()));
     }
 
     @Test
@@ -217,46 +216,45 @@ public class InventoryTest {
     @Test
     public void testRemoveWithNegativeAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.remove(stone, -1));
+                () -> inventory.remove("Stone", -1));
     }
 
     @Test
     public void testRemoveWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.remove(stone, 0));
+                () -> inventory.remove("Stone", 0));
     }
 
     @Test
     public void testRemoveDoesNotContain(){
         assertThrows(IllegalArgumentException.class,
-                () -> inventory.remove(stone, 32 + 8 + 1));
+                () -> inventory.remove("Stone", 32 + 8 + 1));
     }
 
     @Test
     public void testToString(){
         String expected = "Inventory[" + System.lineSeparator() +
-                "Slot 0: ItemStack[Item[name=Stone], amount=32, stackSize=64]"  + System.lineSeparator() +
-                "Slot 1: ItemStack[Item[name=Wood], amount=16, stackSize=64]"  + System.lineSeparator() +
+                "Slot 0: Item[name=Stone, amount=32]"  + System.lineSeparator() +
+                "Slot 1: Item[name=Wood, amount=16]"  + System.lineSeparator() +
                 "Slot 2: null"  + System.lineSeparator() +
                 "Slot 3: null"  + System.lineSeparator() +
-                "Slot 4: ItemStack[Item[name=Stone], amount=8, stackSize=64]"  + System.lineSeparator() +
+                "Slot 4: Item[name=Stone, amount=8]"  + System.lineSeparator() +
                 "]";
         assertEquals(expected, inventory.toString());
     }
 
-    private boolean areItemStackArraysEqual(ItemStack[] array1, ItemStack[] array2){
+    private boolean areItemArraysEqual(Item[] array1, Item[] array2){
         boolean equal = true;
         for(int i = 0; i < inventory.size(); i++){
-            equal = equal && itemStacksAreEqual(array1[i], array2[i]);
+            equal = equal && ItemsAreEqual(array1[i], array2[i]);
         }
         return equal;
     }
 
-    private boolean itemStacksAreEqual(ItemStack stack1, ItemStack stack2){
+    private boolean ItemsAreEqual(Item stack1, Item stack2){
         if(stack1 == null && stack2 == null) return true;
         if(stack1 == null || stack2 == null) return false;
-        return stack1.item().equals(stack2.item())
-                && stack1.getAmount() == stack2.getAmount()
-                && stack1.stackSize() == stack2.stackSize();
+        return stack1.name().equals(stack2.name())
+                && stack1.getAmount() == stack2.getAmount();
     }
 }

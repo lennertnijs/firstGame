@@ -7,11 +7,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Animation.Frame;
+import com.mygdx.game.Inventory.*;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.ItemStack;
-import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Inventory.ToolType;
 import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
@@ -52,10 +49,14 @@ public final class DefaultPlayerLoader {
         String name = file.getString("name");
 
         Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(2).maxDurability(2500).toolType(ToolType.PICKAXE).build();
-        ItemStack stack1 = new ItemStack(pickaxe, 1, 1);
         Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
-        ItemStack stack2 = new ItemStack(axe, 1, 1);
-        Inventory inventory = Inventory.createWithStacks(new ItemStack[]{stack1, stack2});
+
+        Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{
+            put("Pickaxe", 1);
+            put("Axe", 1);
+        }};
+
+        Inventory inventory = Inventory.createWithItems(new Item[]{pickaxe, axe}, stackSizeMap);
         return Player.builder()
                 .position(position)
                 .dimensions(dimensions)

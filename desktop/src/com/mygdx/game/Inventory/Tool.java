@@ -25,7 +25,7 @@ public final class Tool extends Item {
     private final ToolType type;
 
     private Tool(Builder builder){
-        super(builder.name);
+        super(builder.name, builder.amount);
         this.efficiency = builder.efficiency;
         this.maxDurability = builder.maxDurability;
         this.durability = builder.durability;
@@ -106,6 +106,7 @@ public final class Tool extends Item {
     public final static class Builder{
 
         private String name = null;
+        private final int amount = 1;
         private int efficiency = -1;
         private int durability = -1;
         private int maxDurability = -1;

@@ -45,7 +45,12 @@ public class NPCCreator {
 
         Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
 
-        Inventory inventory = Inventory.createEmptyOfSize(6);
+        Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{
+            put("Stone", 64);
+            put("Wood", 64);
+        }};
+
+        Inventory inventory = Inventory.createEmptyOfSize(6, stackSizeMap);
 
         return NPC.builder()
                 .position(position)

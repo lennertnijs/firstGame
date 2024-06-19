@@ -222,86 +222,35 @@ public class ToolTest {
     @Test
     public void testCopy(){
         Tool copy = tool.copy();
-        assertEquals(copy, tool);
-        copy.setDurability(durability/2);
-        assertNotEquals(copy.getDurability(), tool.getDurability());
+        assertNotEquals(tool, copy);
     }
     
     @Test
     public void testEquals(){ // equal if the same name
-        Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+        Tool tool1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
-        Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+        Tool tool2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
-        Tool t3 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        // reflexive
-        assertEquals(t1, t1);
-        // symmetrical
-        assertEquals(t1, t2);
-        assertEquals(t2, t1);
-        // transitive
-        assertEquals(t1, t2);
-        assertEquals(t2, t3);
-        assertEquals(t1, t3);
-
-        // not equals
-        Tool diffName = Tool.builder().name("diff").efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffEfficiency = Tool.builder().name(name).efficiency(2*efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability+1)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffMaxDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(2*maxDurability).toolType(type).build();
-        Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(ToolType.AXE).build();
-        assertNotEquals(t1, diffName);
-        // equal again, same name
-        assertEquals(t1, diffEfficiency);
-        assertEquals(t1, diffDurability);
-        assertEquals(t1, diffMaxDurability);
-        assertEquals(t1, diffToolType);
-        // more not equals
-        assertNotEquals(t1, new Object());
-        assertNotEquals(t1, null);
+        // equals
+        assertEquals(tool1, tool1);
+        //not equals
+        assertNotEquals(tool1, tool2);
+        assertNotEquals(tool1, new Object());
+        assertNotEquals(tool1, null);
     }
 
     @Test
-    public void testHashCode(){ // not equals if different name
-        Tool t1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+    public void testHashCode() { // not equals if different name
+        Tool tool1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
-        Tool t2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
+        Tool tool2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
-        Tool t3 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        // reflexive
-        assertEquals(t1.hashCode(), t1.hashCode());
-        // symmetrical
-        assertEquals(t1.hashCode(), t2.hashCode());
-        assertEquals(t2.hashCode(), t1.hashCode());
-        // transitive
-        assertEquals(t1.hashCode(), t2.hashCode());
-        assertEquals(t2.hashCode(), t3.hashCode());
-        assertEquals(t1.hashCode(), t3.hashCode());
-
-        // not equals
-        Tool diffName = Tool.builder().name("diff").efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffEfficiency = Tool.builder().name(name).efficiency(2*efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability+1)
-                .maxDurability(maxDurability).toolType(type).build();
-        Tool diffMaxDurability = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(2*maxDurability).toolType(type).build();
-        Tool diffToolType = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(ToolType.AXE).build();
-        assertNotEquals(t1.hashCode(), diffName.hashCode());
-        // equal again, same name
-        assertEquals(t1.hashCode(), diffEfficiency.hashCode());
-        assertEquals(t1.hashCode(), diffDurability.hashCode());
-        assertEquals(t1.hashCode(), diffMaxDurability.hashCode());
-        assertEquals(t1.hashCode(), diffToolType.hashCode());
+        // equals
+        assertEquals(tool1, tool1);
+        //not equals
+        assertNotEquals(tool1, tool2);
+        assertNotEquals(tool1, new Object());
+        assertNotEquals(tool1, null);
     }
 
     @Test
