@@ -17,24 +17,12 @@ public class PointTest {
 
     @Test
     public void testGetX(){
-        assertEquals(5, point.getX());
-    }
-
-    @Test
-    public void testSetX(){
-        point.setX(105);
-        assertEquals(105, point.getX());
+        assertEquals(5, point.x());
     }
 
     @Test
     public void testGetY(){
-        assertEquals(10, point.getY());
-    }
-
-    @Test
-    public void testSetY(){
-        point.setY(110);
-        assertEquals(110, point.getY());
+        assertEquals(10, point.y());
     }
 
     @Test

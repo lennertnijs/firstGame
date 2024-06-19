@@ -41,9 +41,7 @@ public abstract class Entity extends AnimatedGameObject{
     public abstract Point getPosition();
 
     public Point getPosition(EntityKey key){
-        Point pos  = super.getPosition();
-        Vector translation = getFrame(key).translation();
-        return pos.add(translation);
+        return super.getPosition().add(getFrame(key).translation());
     }
 
     @Override

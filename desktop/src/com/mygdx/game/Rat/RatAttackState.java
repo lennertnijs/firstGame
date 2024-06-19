@@ -11,8 +11,7 @@ public final class RatAttackState implements RatState{
     }
 
     @Override
-    public Point move(MonsterData data, Rat rat){
-        int movement = (int) (data.delta() * data.movementSpeed());
-        return UtilMethods.calculateNextPosition(data.monsterPosition(), data.playerPosition(), movement);
+    public void move(MonsterData data, Rat rat){
+
     }
 }

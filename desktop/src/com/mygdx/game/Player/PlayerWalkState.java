@@ -25,9 +25,7 @@ public class PlayerWalkState implements PlayerState{
         Point next = UtilMethods.calculateNextPosition(p, direction, m);
         // todo next not working on npc
         if(snapShot.isFree(next)){
-            Point current = player.getPosition();
-            current.setX(next.getX());
-            current.setY(next.getY());
+            player.setPosition(next);
             player.setDirection(DirectionCalculator.calculate(p, next));
         };
     }

@@ -23,7 +23,7 @@ public final class Bat extends Monster{
                Direction direction,
                Stats stats, LootTable lootTable) {
         super(position, dimensions, map, animations, delta, direction, lootTable, stats);
-        batState = new BatRoamingState();
+        batState = new BatRoamingState(this);
     }
 
     public void update(double delta, Point playerPosition){

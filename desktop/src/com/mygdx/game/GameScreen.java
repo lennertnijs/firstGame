@@ -52,8 +52,8 @@ public class GameScreen implements Screen {
         game.batch.begin();
         gameController.update();
         game.batch.end();
-        camera.position.set(playerController.getPlayer().getPosition().getX(),
-                playerController.getPlayer().getPosition().getY(),
+        camera.position.set(playerController.getPlayer().getPosition().x(),
+                playerController.getPlayer().getPosition().y(),
                 0);
     }
 

@@ -17,8 +17,8 @@ public final class UtilMethods {
         if(amountToMove <= 0){
             throw new IllegalArgumentException("Amount to move is negative or 0.");
         }
-        int x_diff = goal.getX() - current.getX();
-        int y_diff = goal.getY() - current.getY();
+        int x_diff = goal.x() - current.x();
+        int y_diff = goal.y() - current.y();
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
         if(amountToMove >= distanceBetweenPoints){
             return goal;
@@ -35,10 +35,10 @@ public final class UtilMethods {
         }
         Point next = null;
         switch(direction){
-            case UP: next = new Point(start.getX(), start.getY() + amount); break;
-            case RIGHT: next = new Point(start.getX() + amount, start.getY()); break;
-            case DOWN: next = new Point(start.getX(), start.getY() - amount); break;
-            case LEFT: next = new Point(start.getX() - amount, start.getY()); break;
+            case UP: next = new Point(start.x(), start.y() + amount); break;
+            case RIGHT: next = new Point(start.x() + amount, start.y()); break;
+            case DOWN: next = new Point(start.x(), start.y() - amount); break;
+            case LEFT: next = new Point(start.x() - amount, start.y()); break;
         }
         return next;
     }

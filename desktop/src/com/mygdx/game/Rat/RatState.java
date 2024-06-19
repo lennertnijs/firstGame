@@ -5,5 +5,5 @@ import com.mygdx.game.Util.Point;
 
 public interface RatState {
 
-    Point move(MonsterData data, Rat rat);
+    void move(MonsterData data, Rat rat);
 }

@@ -23,11 +23,11 @@ public final class Location {
     }
 
     public int x(){
-        return position.getX();
+        return position.x();
     }
 
     public int y(){
-        return position.getY();
+        return position.y();
     }
 
     @Override

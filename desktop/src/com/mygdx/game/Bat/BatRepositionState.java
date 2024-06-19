@@ -11,11 +11,7 @@ public final class BatRepositionState implements BatState{
     }
 
     @Override
-    public Point move(MonsterData data, Bat bat) {
-        if(goal == null){
-            Vector vector = Vector.createBetweenPoints(data.playerPosition(), data.monsterPosition()).scale(1.2f);
-            goal = data.monsterPosition().add(vector);
-        }
-        return goal; // return correct shizzle
+    public void move(Point playerPosition, double delta) {
+
     }
 }

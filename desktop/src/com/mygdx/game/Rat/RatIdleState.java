@@ -17,31 +17,16 @@ public final class RatIdleState implements RatState{
 
 
     @Override
-    public Point move(MonsterData data, Rat rat) {
+    public void move(MonsterData data, Rat rat) {
         this.delta = data.delta();
-        if(delta <= interval){
-            return data.monsterPosition();
-        }
-        delta = 0;
-        setGoal(data);
-        int movement = (int)(data.movementSpeed() * data.delta());
-        int distance = 200;
-        if(distance <= 1200){
-            rat.setRatState(null);
-            return data.monsterPosition();
-        }
-        if(distance <= 600){
-            rat.setRatState(null);
-            return data.monsterPosition();
-        }
-        return UtilMethods.calculateNextPosition(data.monsterPosition(), goal, movement);
+        // nothing
     }
 
     private void setGoal(MonsterData data){
         while(goal == null){
             int random_x = RandomNumberGenerator.generateBetween(-200, 200);
             int random_y = RandomNumberGenerator.generateBetween(-200, 200);
-            this.goal = new Point(data.monsterPosition().getX() + random_x, data.monsterPosition().getY() + random_y);
+            this.goal = new Point(data.monsterPosition().x() + random_x, data.monsterPosition().y() + random_y);
         }
     }
 

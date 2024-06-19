@@ -26,12 +26,12 @@ public class RectangleTest {
     }
 
     @Test
-    public void testGetX(){
+    public void testx(){
         assertEquals(0, rectangle.x());
     }
 
     @Test
-    public void testGetY(){
+    public void testy(){
         assertEquals(0, rectangle.y());
     }
 
