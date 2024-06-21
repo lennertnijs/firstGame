@@ -5,12 +5,14 @@ import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 
+import java.util.Objects;
+
 public final class IdleState implements NPCState{
 
     private final NPC npc;
 
     public IdleState(NPC npc){
-        this.npc = npc;
+        this.npc = Objects.requireNonNull(npc, "Npc is null.");
     }
 
     public String getState(){

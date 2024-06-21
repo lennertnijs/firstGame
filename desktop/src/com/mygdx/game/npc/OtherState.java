@@ -22,7 +22,7 @@ public class OtherState implements NPCState{
         updateState();
     }
 
-    public void updateState() {
+    public void updateState(){
         npc.changeState(new IdleState(npc));
     }
 }

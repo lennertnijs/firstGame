@@ -3,6 +3,7 @@ package com.mygdx.game.GameObject;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.HitBox.Rectangle;
 
@@ -51,6 +52,16 @@ public class GameObject {
 
     public final void setMap(String map){
         this.map = Objects.requireNonNull(map, "Map is null.");
+    }
+
+    public Location getLocation(){
+        return new Location(map, position);
+    }
+
+    public void setLocation(Location location){
+        Objects.requireNonNull(location, "Location is null.");
+        this.map = location.mapName();
+        this.position = location.position();
     }
 
     public HitBox getHitBox(){

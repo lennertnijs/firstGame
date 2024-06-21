@@ -7,5 +7,4 @@ public interface NPCState {
 
     String getState();
     void progress(Day day, Time time, double delta);
-    void updateState();
 }

@@ -7,6 +7,7 @@ import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.EntityKey;
+import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
@@ -24,6 +25,7 @@ public final class NPC extends Character {
     private final DialogueData dialogueData;
     private final Stats stats;
     private NPCState state = new IdleState(this);
+    private Route route;
     private Activity nextActivity;
 
     private NPC(Builder b){
@@ -46,6 +48,14 @@ public final class NPC extends Character {
     public Point getPosition() {
         EntityKey key = new EntityKey(state.getState(), super.getDirection());
         return super.getPosition(key);
+    }
+
+//    private void setRoute(Location next){
+//        this.route = navigationData.calculateAndStoreRoute(getLocation(), next);
+//    }
+
+    public Stats getStats(){
+        return stats;
     }
 
     public void update(Day day, Time time, double delta){

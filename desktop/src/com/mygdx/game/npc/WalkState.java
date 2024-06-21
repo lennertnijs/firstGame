@@ -5,31 +5,33 @@ import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 import com.mygdx.game.UtilMethods.DirectionCalculator;
 
+import java.util.Objects;
+
 public final class WalkState implements NPCState{
 
     private final NPC npc;
 
     public WalkState(NPC npc){
-        this.npc = npc;
+        this.npc = Objects.requireNonNull(npc, "Npc is null.");
     }
 
-    public String getState(){
-        return "walk";
-    }
-
-    public void progress(Day day, Time time, double delta){
-        int movement = (int) 15; // delta * speed
-        Location current = new Location(npc.getMap(), npc.getPosition());
+    public void progress(Day day, Time time, double deltaInMillis){
+        int movement = (int)(deltaInMillis * npc.getStats().getSpeed());
+        Location current = npc.getLocation();
         Location next = npc.getNavigationData().calculateNextLocation(current, movement);
-        npc.setPosition(next.position());
-        npc.setMap(next.mapName());
-        npc.setDirection(DirectionCalculator.calculate(current.position(), next.position()));
+        npc.setLocation(next);
+        npc.setDirection(DirectionCalculator.calculate(npc.getPosition(), next.position()));
         updateState();
     }
 
-    public void updateState() {
+    private void updateState() {
         if(npc.getNextActivity().position().equals(npc.getPosition())){
             npc.changeState(new OtherState(npc, npc.getNextActivity().type()));
         }
+    }
+
+    @Override
+    public String getState(){
+        return "walk";
     }
 }
