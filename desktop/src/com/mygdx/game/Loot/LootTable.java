@@ -2,7 +2,7 @@ package com.mygdx.game.Loot;
 
 import java.util.List;
 
-public final class LootTable {
+public final class LootTable implements ILootTable{
 
     private final static WalkersAlias<Loot> walkersAlias = new WalkersAlias<>();
     private final List<Bucket<Loot>> buckets;
