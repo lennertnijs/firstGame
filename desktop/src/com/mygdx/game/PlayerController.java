@@ -1,10 +1,9 @@
 package com.mygdx.game;
 
-import com.mygdx.game.Animation.Frame;
 import com.mygdx.game.Breakables.Breakable;
+import com.mygdx.game.Input.MovementInputs;
 import com.mygdx.game.Player.IdlePlayerState;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Input.MovementInputs;
 import com.mygdx.game.Player.PlayerOtherState;
 import com.mygdx.game.Player.PlayerWalkState;
 import com.mygdx.game.Util.Direction;

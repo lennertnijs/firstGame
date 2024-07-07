@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.Clock.CalendarClock;
 import com.mygdx.game.Clock.Clock;
@@ -20,6 +21,8 @@ public class GameScreen implements Screen {
     final OrthographicCamera camera;
     private final GameController gameController;
     private final PlayerController playerController;
+    private final Texture bar = new Texture(Gdx.files.internal("bar.png"));
+
 
     public GameScreen(MyGame game) {
         // to play music
@@ -51,6 +54,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         gameController.update();
+        game.batch.draw(bar, playerController.getPlayer().getPosition().x() - 72, playerController.getPlayer().getPosition().y() - 510);
         game.batch.end();
         camera.position.set(playerController.getPlayer().getPosition().x(),
                 playerController.getPlayer().getPosition().y(),
