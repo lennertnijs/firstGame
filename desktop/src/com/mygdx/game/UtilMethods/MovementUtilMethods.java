@@ -1,30 +1,32 @@
 package com.mygdx.game.UtilMethods;
 
+import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Util.Direction;
+import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
 
 import java.util.Objects;
 
-public final class UtilMethods {
+public final class MovementUtilMethods {
 
-    private UtilMethods(){
+    private MovementUtilMethods(){
     }
 
-    public static Point calculateNextPosition(Point current, Point goal, int amountToMove){
-        Objects.requireNonNull(current, "Current position is null.");
-        Objects.requireNonNull(goal, "Goal position is null.");
-        if(amountToMove <= 0){
-            throw new IllegalArgumentException("Amount to move is negative or 0.");
+    public static Location moveAlongRoute(Location start, Route route, int amount){
+        if(amount <= 0 || route.isEmpty()){
+            return start;
         }
-        int x_diff = goal.x() - current.x();
-        int y_diff = goal.y() - current.y();
+        Location goal = route.peek();
+        int x_diff = goal.x() - start.x();
+        int y_diff = goal.y() - start.y();
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
-        if(amountToMove >= distanceBetweenPoints){
-            return goal;
+        if (amount < distanceBetweenPoints) {
+            Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
+            return new Location(start.mapName(), new Point(start.x() + vector.x(), start.y() + vector.y()));
+        }else{
+            return moveAlongRoute(route.poll(), route, amount -  Point.distanceBetween(start.position(), goal.position()));
         }
-        Vector movement = new Vector(x_diff, y_diff).scaleToSize(amountToMove);
-        return current.add(movement);
     }
 
     public static Point calculateNextPosition(Point start, Direction direction, int amount){

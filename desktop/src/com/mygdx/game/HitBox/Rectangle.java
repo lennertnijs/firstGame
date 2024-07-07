@@ -47,6 +47,14 @@ public final class Rectangle implements HitBox {
         return x <= point.x() && point.x() < x + width && y <= point.y() && point.y() < y + height;
     }
 
+    public boolean overlaps(HitBox hitBox){
+        Point bottomRight = new Point(x + width, y);
+        Point bottomLeft = new Point(x, y);
+        Point topLeft = new Point(x, y + height);
+        Point topRight = new Point(x + width, y + height);
+        return hitBox.contains(bottomLeft) || hitBox.contains(bottomRight) || hitBox.contains(topLeft) || hitBox.contains(topRight);
+    }
+
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Rectangle))

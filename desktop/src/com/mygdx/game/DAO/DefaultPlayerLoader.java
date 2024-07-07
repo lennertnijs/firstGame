@@ -48,7 +48,7 @@ public final class DefaultPlayerLoader {
 
         String name = file.getString("name");
 
-        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(2).maxDurability(2500).toolType(ToolType.PICKAXE).build();
+        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).build();
         Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
 
         Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{

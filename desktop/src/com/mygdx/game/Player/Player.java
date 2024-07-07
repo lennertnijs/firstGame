@@ -41,7 +41,12 @@ public final class Player extends Character {
         return super.getPosition(key);
     }
 
+    public String getState(){
+        return playerState.getState();
+    }
+
     public void changeState(PlayerState playerState){
+        super.resetAnimationDelta();
         this.playerState = playerState;
     }
 
@@ -51,14 +56,12 @@ public final class Player extends Character {
 
 
     public void useActiveItem(Breakable breakable){
-//        if(super.getAnimationDelta() < 1000f){
-//            return; SHOULD ONLY GO ONCE!
-//        }
         Item item = super.getInventory().getItem(super.getActiveIndex());
         if(!(item instanceof Tool)){
             return;
         }
         Tool tool = (Tool) item;
+        breakable.damage(tool.efficiency());
     }
 
     public static Builder builder(){

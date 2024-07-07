@@ -15,5 +15,5 @@ public interface PathFinderStrategy<T> {
      * @throws NoSuchElementException If the start or goal object is not a vertex in the {@link IGraph}.
      * @throws NullPointerException If the start or goal object is null.
      */
-    List<T> findPath(T start, T goal);
+    List<T> findPath(T start, T goal, IGraph<T> graph);
 }

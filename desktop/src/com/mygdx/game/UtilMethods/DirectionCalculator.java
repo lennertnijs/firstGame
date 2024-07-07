@@ -10,21 +10,18 @@ public final class DirectionCalculator {
 
     }
 
-    public static Direction calculate(Point start, Point end){
-        Vector v = new Vector(end.x() - start.x(), end.y() - start.y());
-        double angle = Math.atan((double) v.y() / v.x());
-        if(angle > -Math.PI/4 && angle < Math.PI/4){
+    public static Direction calculateDir(Point start, Point end){
+        int x_diff = Math.abs(start.x() - end.x());
+        int y_diff = Math.abs(start.y() - end.y());
+        if(start.x() < end.x() && x_diff >= y_diff){
             return Direction.RIGHT;
         }
-        if(angle >= Math.PI/4 && angle <= 3*Math.PI/4){
-            return Direction.UP;
-        }
-        if(angle > 3*Math.PI/4 && angle <= Math.PI || angle < -3*Math.PI/4 && angle >= -Math.PI || angle == -0){
+        if(start.x() > end.x() && x_diff >= y_diff){
             return Direction.LEFT;
         }
-        if(angle <= -Math.PI/4 || angle >= -3*Math.PI/4){
-            return Direction.DOWN;
+        if(start.y() < end.y()){
+            return Direction.UP;
         }
-        throw new IllegalStateException();
+        return Direction.DOWN;
     }
 }

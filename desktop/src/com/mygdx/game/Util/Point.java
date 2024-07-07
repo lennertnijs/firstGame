@@ -51,6 +51,12 @@ public final class Point {
         return new Point(x + vector.x(), y + vector.y());
     }
 
+    public static int distanceBetween(Point a, Point b){
+        int x_diff = a.x - b.x;
+        int y_diff = a.y - b.y;
+        return (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
+    }
+
     /**
      * Compares two objects and returns true if they're equal points. Returns false otherwise.
      *

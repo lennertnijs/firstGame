@@ -33,10 +33,10 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 1920, 1080);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
-        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), HouseLoader.load());
+        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), BreakableCreator.getBreakables(), HouseLoader.load());
         playerController = new PlayerController(DefaultPlayerLoader.load());
         gameController = new GameController(repository, gameClock, new SpriteDrawer(game), playerController);
-        Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController));
+        Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController, gameController));
     }
 
     /**

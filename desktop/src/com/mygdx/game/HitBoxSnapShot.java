@@ -13,9 +13,9 @@ public final class HitBoxSnapShot {
         this.hitBoxes = hitBoxes;
     }
 
-    public boolean isFree(Point p){
+    public boolean isFree(HitBox h){
         for(HitBox hitBox : hitBoxes){
-            if(hitBox.contains(p))
+            if(hitBox.overlaps(h))
                 return false;
         }
         return true;

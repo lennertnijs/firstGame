@@ -39,7 +39,7 @@ public class NPCCreator {
         scheduleMap.put(Day.WEDNESDAY, loadSchedule());
         WeekSchedule weekSchedule = new WeekSchedule(scheduleMap);
 
-        NavigationData navigationData = new NavigationData(new BFSPathFinder<>(loadGraph()));
+        NavigationData navigationData = new NavigationData(loadGraph(), new BFSPathFinder<>());
 
         DialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 

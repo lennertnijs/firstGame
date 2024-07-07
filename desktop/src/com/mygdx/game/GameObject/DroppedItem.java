@@ -1,5 +1,6 @@
 package com.mygdx.game.GameObject;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 
@@ -10,9 +11,9 @@ public class DroppedItem extends GameObject{
     private final String name;
     private final int amount;
 
-    public DroppedItem(Point position, Dimensions dimensions, String map,
+    public DroppedItem(TextureRegion t, Point position, Dimensions dimensions, String map,
                        String name, int amount){
-        super(position, dimensions, map);
+        super(t, position, dimensions, map);
         this.name = Objects.requireNonNull(name, "Item name is null.");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or zero.");

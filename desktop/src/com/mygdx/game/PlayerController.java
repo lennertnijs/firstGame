@@ -1,8 +1,11 @@
 package com.mygdx.game;
 
+import com.mygdx.game.Animation.Frame;
+import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Player.IdlePlayerState;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Input.MovementInputs;
+import com.mygdx.game.Player.PlayerOtherState;
 import com.mygdx.game.Player.PlayerWalkState;
 import com.mygdx.game.Util.Direction;
 
@@ -37,15 +40,17 @@ public final class PlayerController{
     public void update(double delta, HitBoxSnapShot snapShot){
         player.increaseAnimationDelta(delta);
         Direction direction = movementFlags.getCurrentDirection();
-        if(direction == null){
-            return;
-        }
         player.update(delta, direction, snapShot);
     }
 
-    public void useActiveItem(){
-        // set the correct state
-        player.useActiveItem(null);
+    public void useActiveItem(Breakable breakable){
+        if(player.getState().equals("mine")){
+            return;
+        }
+        player.changeState(new PlayerOtherState(player));
+        if(breakable != null){
+            player.useActiveItem(breakable);
+        }
     }
 
     public void setNextActive(){

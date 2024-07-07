@@ -8,19 +8,11 @@ import java.util.*;
 public class BFSPathFinder<T> implements PathFinderStrategy<T> {
 
     /**
-     * The graph.
-     */
-    private final IGraph<T> graph;
-
-    /**
      * Creates a new, semi-immutable {@link BFSPathFinder}.
      * Note: it's semi-immutable because it copies the {@link IGraph}, but this means it relies on the immutability
      * of the objects in the {@link IGraph}.
-     * @param graph The {@link IGraph}. Cannot be null.
      */
-    public BFSPathFinder(IGraph<T> graph){
-        Objects.requireNonNull(graph, "Graph is null.");
-        this.graph = graph.copy();
+    public BFSPathFinder(){
     }
 
     /**
@@ -28,23 +20,17 @@ public class BFSPathFinder<T> implements PathFinderStrategy<T> {
      * Finds one of the shortest paths (in vertices).
      */
     @Override
-    public List<T> findPath(T start, T goal) {
+    public List<T> findPath(T start, T goal, IGraph<T> graph) {
         Objects.requireNonNull(start, "Start is null.");
         Objects.requireNonNull(goal, "Goal is null.");
-        if(!graph.hasVertex(start) || !graph.hasVertex(goal))
+        if(!graph.hasVertex(start) || !graph.hasVertex(goal)) {
             throw new NoSuchElementException("Start or goal is not part of the Graph.");
-        return BFS(start, goal);
+        }
+        Objects.requireNonNull(graph, "Graph is null.");
+        return BFS(start, goal, graph);
     }
 
-    /**
-     * Finds one of the shortest paths (in vertices) between start and goal, in the graph.
-     * @param start The start object. Cannot be null.
-     * @param goal The end object. Cannot be null.
-     *
-     * @return The path.
-     * @throws NoSuchElementException If no path was found.
-     */
-    private List<T> BFS(T start, T goal){
+    private List<T> BFS(T start, T goal, IGraph<T> graph){
         Queue<List<T>> queue = new LinkedList<>();
         queue.add(new LinkedList<>(Collections.singletonList(start)));
 

@@ -1,6 +1,7 @@
 package com.mygdx.game.Input;
 
 import com.badlogic.gdx.InputProcessor;
+import com.mygdx.game.GameController;
 import com.mygdx.game.PlayerController;
 import com.mygdx.game.Util.Direction;
 
@@ -9,15 +10,17 @@ import static com.badlogic.gdx.Input.Keys.*;
 public class KeyboardInputProcessor implements InputProcessor {
 
     private final PlayerController playerController;
+    private final GameController gameController;
 
-    public KeyboardInputProcessor(PlayerController playerController){
+    public KeyboardInputProcessor(PlayerController playerController, GameController gameController){
         this.playerController = playerController;
+        this.gameController = gameController;
     }
     @Override
     public boolean keyDown(int keycode) {
         switch(keycode){
             case Q:
-                playerController.useActiveItem();
+                gameController.playerUseActiveItem();
                 break;
             case UP:
                 playerController.addDirection(Direction.UP);

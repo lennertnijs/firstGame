@@ -70,17 +70,17 @@ public class DFSPathFinderTest {
         graph.connect(str13, str14);
         graph.connect(str14, str15);
 
-        dfsPathFinder = new DFSPathFinder<>(graph);
+        dfsPathFinder = new DFSPathFinder<>();
     }
 
     @Test
     public void testFindPath1(){
-        assertEquals(Arrays.asList(str1, str2, str3, str7), dfsPathFinder.findPath(str1, str7));
+        assertEquals(Arrays.asList(str1, str2, str3, str7), dfsPathFinder.findPath(str1, str7, graph));
     }
 
     @Test
     public void testFindPath2(){
-        assertEquals(Arrays.asList(str1, str2, str3, str7, str8, str12, str16), dfsPathFinder.findPath(str1, str16));
+        assertEquals(Arrays.asList(str1, str2, str3, str7, str8, str12, str16), dfsPathFinder.findPath(str1, str16, graph));
     }
 
     @Test
@@ -88,17 +88,17 @@ public class DFSPathFinderTest {
         List<List<String>> solutions = new ArrayList<>();
         solutions.add(Arrays.asList(str1, str2, str3, str7, str11, str10, str14, str13));
         solutions.add(Arrays.asList(str1, str2, str3, str7, str11, str10, str9, str13));
-        assertTrue(solutions.contains(dfsPathFinder.findPath(str1, str13)));
+        assertTrue(solutions.contains(dfsPathFinder.findPath(str1, str13, graph)));
     }
 
     @Test
     public void testFindPath4(){
-        assertEquals(Arrays.asList(str1, str2, str3, str7, str11, str10, str14, str15), dfsPathFinder.findPath(str1, str15));
+        assertEquals(Arrays.asList(str1, str2, str3, str7, str11, str10, str14, str15), dfsPathFinder.findPath(str1, str15, graph));
     }
 
     @Test
     public void testFindPath5(){
-        assertEquals(Arrays.asList(str15, str14, str10, str11, str7, str8, str12, str16), dfsPathFinder.findPath(str15, str16));
+        assertEquals(Arrays.asList(str15, str14, str10, str11, str7, str8, str12, str16), dfsPathFinder.findPath(str15, str16, graph));
     }
 
     @Test
@@ -106,49 +106,50 @@ public class DFSPathFinderTest {
         List<List<String>> solutions = new ArrayList<>();
         solutions.add(Arrays.asList(str10, str14, str13));
         solutions.add(Arrays.asList(str10, str9, str13));
-        assertTrue(solutions.contains(dfsPathFinder.findPath(str10, str13)));
+        assertTrue(solutions.contains(dfsPathFinder.findPath(str10, str13, graph)));
     }
 
     @Test
     public void testFindPath7(){
-        assertEquals(Arrays.asList(str4, str3, str7, str11, str10, str9), dfsPathFinder.findPath(str4, str9));
+        assertEquals(Arrays.asList(str4, str3, str7, str11, str10, str9), dfsPathFinder.findPath(str4, str9, graph));
     }
 
     @Test
     public void testFindPath8(){
-        assertEquals(Arrays.asList(str4, str3, str7, str6), dfsPathFinder.findPath(str4, str6));
+        assertEquals(Arrays.asList(str4, str3, str7, str6), dfsPathFinder.findPath(str4, str6, graph));
     }
 
     @Test
     public void testFindPathDoesNotExist(){
-        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str5, str1));
-        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, str5));
+        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str5, str1, graph));
+        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, str5, graph));
     }
 
     @Test
     public void testFindPathWithNullStart(){
-        assertThrows(NullPointerException.class, () -> dfsPathFinder.findPath(null, str1));
+        assertThrows(NullPointerException.class, () -> dfsPathFinder.findPath(null, str1, graph));
     }
 
     @Test
     public void testFindPathWithNullEnd(){
-        assertThrows(NullPointerException.class, () -> dfsPathFinder.findPath(str1, null));
+        assertThrows(NullPointerException.class,
+                () -> dfsPathFinder.findPath(str1, null, graph));
     }
 
     @Test
     public void testFindPathStartNotInGraph(){
-        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath("random", str1));
+        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath("random", str1, graph));
     }
 
     @Test
     public void testFindPathEndNotInGraph(){
-        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, "random"));
+        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, "random", graph));
     }
 
     @Test
     public void testGraphIsCopied(){
         graph.addVertex("17");
         assertTrue(graph.hasVertex("17"));
-        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, "17"));
+        assertThrows(NoSuchElementException.class, () -> dfsPathFinder.findPath(str1, "17", graph));
     }
 }

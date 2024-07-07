@@ -25,7 +25,7 @@ public final class NPC extends Character {
     private final DialogueData dialogueData;
     private final Stats stats;
     private NPCState state = new IdleState(this);
-    private Route route;
+    private final Route route;
     private Activity nextActivity;
 
     private NPC(Builder b){
@@ -36,6 +36,7 @@ public final class NPC extends Character {
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
         this.stats = b.stats;
+        route = new Route();
     }
 
     @Override
@@ -50,9 +51,10 @@ public final class NPC extends Character {
         return super.getPosition(key);
     }
 
-//    private void setRoute(Location next){
-//        this.route = navigationData.calculateAndStoreRoute(getLocation(), next);
-//    }
+    public void updateRoute(Activity activity){
+        Location next = new Location(activity.map(), activity.position());
+        route.add(navigationData.generateRoute(getLocation(), next));
+    }
 
     public Stats getStats(){
         return stats;
@@ -75,16 +77,16 @@ public final class NPC extends Character {
         this.nextActivity = activity;
     }
 
-    public NavigationData getNavigationData(){
-        return navigationData;
-    }
-
     public void changeState(NPCState state){
         this.state = state;
     }
 
     public void handleInputLine(String line){
         dialogueData.processInput(line);
+    }
+
+    public Route getRoute(){
+        return route;
     }
 
 
