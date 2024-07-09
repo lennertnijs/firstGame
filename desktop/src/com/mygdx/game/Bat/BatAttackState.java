@@ -15,7 +15,7 @@ public final class BatAttackState implements BatState{
 
     @Override
     public void handle(double delta, Point playerPosition) {
-        int movement = (int)(delta/1000 * bat.getSpeed());
+        int movement = (int)(delta * bat.getSpeed() / 100);
         Point next = MovementUtilMethods.moveToPoint(bat.getPosition(), playerPosition, movement);
         bat.setPosition(next);
         handleStateChange(playerPosition);

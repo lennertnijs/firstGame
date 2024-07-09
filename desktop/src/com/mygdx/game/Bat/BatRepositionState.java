@@ -26,7 +26,7 @@ public final class BatRepositionState implements BatState{
 
     @Override
     public void handle(double delta, Point playerPosition) {
-        int movement = (int) (delta/1000 * bat.getSpeed());
+        int movement = (int) (delta * bat.getSpeed() / 100);
         Point current = bat.getPosition();
         if(movement >= Point.distanceBetween(bat.getPosition(), goal)){
             bat.setPosition(goal);

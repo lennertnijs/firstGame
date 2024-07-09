@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.DroppedItem;
@@ -38,6 +39,9 @@ public class GameController {
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
         playerController.update(delta, getSnapShot());
+        for(Bat bat : gameObjectRepository.getBats()){
+            bat.update(delta, playerController.getPlayer().getPosition());
+        }
         checkDroppedItems();
         drawer.draw(gameObjectRepository.getMaps().get(0));
         for(GameObject o : gameObjectRepository.getMiscObjects()){
@@ -45,6 +49,9 @@ public class GameController {
         }
         for(Breakable b : gameObjectRepository.getBreakables()){
             drawer.draw(b);
+        }
+        for(Bat bat : gameObjectRepository.getBats()){
+            drawer.draw(bat);
         }
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);

@@ -25,6 +25,7 @@ public final class Bat extends Monster{
 
     public void update(double delta, Point playerPosition){
         state.handle(delta, playerPosition);
+        super.increaseAnimationDelta(delta);
     }
 
     public int aggressionRange(){
@@ -38,6 +39,10 @@ public final class Bat extends Monster{
     @Override
     public AnimationKey generateEntityKey() {
         return new BatKey(state.getState());
+    }
+
+    public static Builder builder(){
+        return new Builder();
     }
 
     public static class Builder {
