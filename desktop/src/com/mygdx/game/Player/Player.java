@@ -41,6 +41,12 @@ public final class Player extends Character {
         return super.getPosition(key);
     }
 
+    @Override
+    public Dimensions getDimensions(){
+        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
+        return super.getDimensions(key);
+    }
+
     public String getState(){
         return playerState.getState();
     }

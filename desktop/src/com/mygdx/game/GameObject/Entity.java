@@ -41,11 +41,13 @@ public abstract class Entity extends AnimatedGameObject{
     public abstract Point getPosition();
 
     public Point getPosition(EntityKey key){
-        return super.getPosition().add(getFrame(key).translation());
+        return super.getPosition().add(getFrame(key).textureTranslation());
     }
 
     @Override
-    public Dimensions getDimensions(){
-        return new Dimensions(getTexture().getRegionWidth(), getTexture().getRegionHeight());
+    public abstract Dimensions getDimensions();
+
+    public Dimensions getDimensions(EntityKey key){
+        return getFrame(key).dimensions();
     }
 }

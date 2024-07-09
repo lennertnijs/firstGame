@@ -15,9 +15,9 @@ public class HouseLoader {
     public static List<GameObject> load(){
         List<GameObject> houses = new ArrayList<>();
         houses.add(new GameObject(new TextureRegion(new Texture(Gdx.files.internal("houses/house1.png"))),
-                new Point(500, 500), new Dimensions(500, 500), "Main"));
+                new Point(500, 500), new Dimensions(250, 250), "Main"));
         houses.add(new GameObject(new TextureRegion(new Texture(Gdx.files.internal("houses/house2.jpg"))),
-                new Point(1000, 500), new Dimensions(500, 500), "Main"));
+                new Point(1000, 500), new Dimensions(250, 250), "Main"));
         return houses;
     }
 }

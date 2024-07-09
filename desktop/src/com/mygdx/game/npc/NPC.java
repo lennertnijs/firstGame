@@ -51,6 +51,12 @@ public final class NPC extends Character {
         return super.getPosition(key);
     }
 
+    @Override
+    public Dimensions getDimensions() {
+        EntityKey key = new EntityKey(state.getState(), super.getDirection());
+        return super.getDimensions(key);
+    }
+
     public void updateRoute(Activity activity){
         Location next = new Location(activity.map(), activity.position());
         route.add(navigationData.generateRoute(getLocation(), next));

@@ -10,7 +10,6 @@ import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
-import java.util.List;
 import java.util.Map;
 
 public final class Bat extends Monster{
@@ -43,6 +42,11 @@ public final class Bat extends Monster{
 
     @Override
     public Point getPosition() {
+        return null;
+    }
+
+    @Override
+    public Dimensions getDimensions() {
         return null;
     }
 }

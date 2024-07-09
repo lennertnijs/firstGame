@@ -72,10 +72,11 @@ public final class DefaultPlayerLoader {
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
         Map<AnimationKey, Animation> map = new HashMap<>();
 
-        Frame idleUpFrame = Frame.builder().textureRegion(atlas.findRegion("idle_up")).build();
-        Frame idleRightFrame = Frame.builder().textureRegion(atlas.findRegion("idle_right")).build();
-        Frame idleDownFrame = Frame.builder().textureRegion(atlas.findRegion("idle_down")).build();
-        Frame idleLeftFrame = Frame.builder().textureRegion(atlas.findRegion("idle_left")).build();
+
+        Frame idleUpFrame = Frame.builder().textureRegion(atlas.findRegion("idle_up")).dimensionsScale(2.5f).build();
+        Frame idleRightFrame = Frame.builder().textureRegion(atlas.findRegion("idle_right")).dimensionsScale(2.5f).build();
+        Frame idleDownFrame = Frame.builder().textureRegion(atlas.findRegion("idle_down")).dimensionsScale(2.5f).build();
+        Frame idleLeftFrame = Frame.builder().textureRegion(atlas.findRegion("idle_left")).dimensionsScale(2.5f).build();
 
         Animation idleUpAnimation = new Animation(Collections.singletonList(idleUpFrame), 1);
         Animation idleRightAnimation = new Animation(Collections.singletonList(idleRightFrame), 1);
@@ -87,10 +88,10 @@ public final class DefaultPlayerLoader {
         map.put(new EntityKey("idle", DOWN), idleDownAnimation);
         map.put(new EntityKey("idle", LEFT), idleLeftAnimation);
 
-        Frame mineRight1 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 1)).translation(new Vector(-12, 0)).build();
-        Frame mineRight2 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 2)).translation(new Vector(5, 0)).build();
-        Frame mineRight3 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 3)).translation(new Vector(5, 0)).build();
-        Frame mineRight4 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 4)).translation(new Vector(-4, 0)).build();
+        Frame mineRight1 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 1)).textureTranslation(new Vector(-12, 0)).dimensionsScale(2.5f).build();
+        Frame mineRight2 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 2)).textureTranslation(new Vector(5, 0)).dimensionsScale(2.5f).build();
+        Frame mineRight3 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 3)).textureTranslation(new Vector(5, 0)).dimensionsScale(2.5f).build();
+        Frame mineRight4 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 4)).textureTranslation(new Vector(-4, 0)).dimensionsScale(2.5f).build();
 
         Animation miningRightAnimation = new Animation(Arrays.asList(mineRight1, mineRight2, mineRight3, mineRight4), 1000f);
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
@@ -105,7 +106,7 @@ public final class DefaultPlayerLoader {
         Animation walkingRightAnimation = loadAnimation(atlas, "walking_right", 6);
         Animation walkingLeftAnimation = loadAnimation(atlas, "walking_left", 6);
         Animation walkingUpAnimation = loadAnimation(atlas, "walking_up", 6);
-        Animation walkingDownAnimation = loadAnimation(atlas,"walking_down", 6);
+        Animation walkingDownAnimation = loadAnimation(atlas, "walking_down", 6);
 
         map.put(new EntityKey("walk", RIGHT), walkingRightAnimation);
         map.put(new EntityKey("walk", DOWN), walkingDownAnimation);
@@ -118,7 +119,7 @@ public final class DefaultPlayerLoader {
     private static Animation loadAnimation(TextureAtlas atlas, String name, int amountOfFrames){
         List<Frame> frames = new ArrayList<>();
         for(int i = 1; i <= amountOfFrames; i++){
-            Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).build();
+            Frame frame = Frame.builder().textureRegion(atlas.findRegion(name, i)).dimensionsScale(2.5f).build();
             frames.add(frame);
         }
         return new Animation(frames, 1000f);

@@ -39,4 +39,9 @@ public final class Rat extends Monster {
     public Point getPosition() {
         return null;
     }
+
+    @Override
+    public Dimensions getDimensions() {
+        return null;
+    }
 }
