@@ -38,6 +38,11 @@ public final class BatMoveState implements BatState{
         handleStateChange(playerPosition);
     }
 
+    @Override
+    public String getState() {
+        return "move";
+    }
+
     private void handleStateChange(Point playerPosition){
         int distanceToPlayer = Point.distanceBetween(bat.getPosition(), playerPosition);
         if(distanceToPlayer <= bat.aggressionRange()){

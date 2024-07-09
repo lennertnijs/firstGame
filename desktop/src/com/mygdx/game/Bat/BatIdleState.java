@@ -19,6 +19,11 @@ public class BatIdleState implements BatState{
         handleStateChange(playerPosition);
     }
 
+    @Override
+    public String getState() {
+        return "idle";
+    }
+
     private void handleStateChange(Point playerPosition){
         int distanceToPlayer = Point.distanceBetween(playerPosition, bat.getPosition());
         if(distanceToPlayer <= bat.aggressionRange()){

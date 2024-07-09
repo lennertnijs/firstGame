@@ -3,7 +3,6 @@ package com.mygdx.game.GameObject;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
-import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
@@ -32,7 +31,7 @@ public abstract class Entity extends AnimatedGameObject{
     /**
      * @return The entity key.
      */
-    public abstract EntityKey generateEntityKey();
+    public abstract AnimationKey generateEntityKey();
 
     @Override
     public TextureRegion getTexture(){

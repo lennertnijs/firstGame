@@ -38,7 +38,7 @@ public final class NPC extends Character {
     }
 
     @Override
-    public EntityKey generateEntityKey() {
+    public AnimationKey generateEntityKey() {
         return new EntityKey(state.getState(), super.getDirection());
     }
 

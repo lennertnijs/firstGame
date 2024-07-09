@@ -29,6 +29,20 @@ public final class MovementUtilMethods {
         }
     }
 
+    public static Point moveToPoint(Point start, Point goal, int amount){
+        if(amount <= 0){
+            return start;
+        }
+        int x_diff = goal.x() - start.x();
+        int y_diff = goal.y() - start.y();
+        int distanceBetweenPoints = Point.distanceBetween(start, goal);
+        if(distanceBetweenPoints <= amount){
+            return goal;
+        }
+        Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
+        return new Point(start.x() + vector.x(), start.y() + vector.y());
+    }
+
     public static Point calculateNextPosition(Point start, Direction direction, int amount){
         Objects.requireNonNull(start, "Start point is null.");
         Objects.requireNonNull(direction, "Direction is null.");

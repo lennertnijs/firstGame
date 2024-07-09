@@ -29,7 +29,7 @@ public final class Player extends Character {
     }
 
     @Override
-    public EntityKey generateEntityKey() {
+    public AnimationKey generateEntityKey() {
         return new EntityKey(playerState.getState(), super.getDirection());
     }
 
