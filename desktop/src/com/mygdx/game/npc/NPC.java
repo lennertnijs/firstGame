@@ -1,17 +1,15 @@
 package com.mygdx.game.npc;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Keys.EntityKey;
+import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Stats;
-import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.Util.Activity;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
 import java.util.Map;
@@ -40,21 +38,8 @@ public final class NPC extends Character {
     }
 
     @Override
-    public TextureRegion getTexture(){
-        EntityKey key = new EntityKey(state.getState(), super.getDirection());
-        return super.getTexture(key);
-    }
-
-    @Override
-    public Point getPosition() {
-        EntityKey key = new EntityKey(state.getState(), super.getDirection());
-        return super.getPosition(key);
-    }
-
-    @Override
-    public Dimensions getDimensions() {
-        EntityKey key = new EntityKey(state.getState(), super.getDirection());
-        return super.getDimensions(key);
+    public EntityKey generateEntityKey() {
+        return new EntityKey(state.getState(), super.getDirection());
     }
 
     public void updateRoute(Activity activity){

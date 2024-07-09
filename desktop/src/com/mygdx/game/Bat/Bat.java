@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.GameObject.Monster;
+import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Loot.LootTable;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Util.Dimensions;
@@ -36,17 +37,7 @@ public final class Bat extends Monster{
     }
 
     @Override
-    public TextureRegion getTexture() {
-        return null;
-    }
-
-    @Override
-    public Point getPosition() {
-        return null;
-    }
-
-    @Override
-    public Dimensions getDimensions() {
+    public EntityKey generateEntityKey() {
         return null;
     }
 }

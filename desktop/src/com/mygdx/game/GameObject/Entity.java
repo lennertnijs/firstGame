@@ -7,7 +7,6 @@ import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
 
 import java.util.*;
 
@@ -30,24 +29,23 @@ public abstract class Entity extends AnimatedGameObject{
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
-    public TextureRegion getTexture(EntityKey key){
-        return getFrame(key).textureRegion();
+    /**
+     * @return The entity key.
+     */
+    public abstract EntityKey generateEntityKey();
+
+    @Override
+    public TextureRegion getTexture(){
+        return getFrame(generateEntityKey()).textureRegion();
     }
 
     @Override
-    public abstract TextureRegion getTexture();
-
-    @Override
-    public abstract Point getPosition();
-
-    public Point getPosition(EntityKey key){
-        return super.getPosition().add(getFrame(key).textureTranslation());
+    public Point getPosition(){
+        return super.getPosition().add(getFrame(generateEntityKey()).textureTranslation());
     }
 
     @Override
-    public abstract Dimensions getDimensions();
-
-    public Dimensions getDimensions(EntityKey key){
-        return getFrame(key).dimensions();
+    public Dimensions getDimensions(){
+        return getFrame(generateEntityKey()).dimensions();
     }
 }

@@ -1,6 +1,5 @@
 package com.mygdx.game.Player;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Breakables.Breakable;
@@ -30,21 +29,8 @@ public final class Player extends Character {
     }
 
     @Override
-    public TextureRegion getTexture(){
-        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
-        return super.getTexture(key);
-    }
-
-    @Override
-    public Point getPosition() {
-        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
-        return super.getPosition(key);
-    }
-
-    @Override
-    public Dimensions getDimensions(){
-        EntityKey key = new EntityKey(playerState.getState(), super.getDirection());
-        return super.getDimensions(key);
+    public EntityKey generateEntityKey() {
+        return new EntityKey(playerState.getState(), super.getDirection());
     }
 
     public String getState(){
