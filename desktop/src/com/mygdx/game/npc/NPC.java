@@ -72,8 +72,8 @@ public final class NPC extends Character {
         this.state = state;
     }
 
-    public void handleInputLine(String line){
-        dialogueData.processInput(line);
+    public String handleInputLine(String line){
+        return "response";
     }
 
     public Route getRoute(){

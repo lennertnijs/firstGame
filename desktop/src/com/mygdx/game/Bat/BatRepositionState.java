@@ -9,8 +9,9 @@ public final class BatRepositionState implements BatState{
     public BatRepositionState(){
     }
 
+
     @Override
-    public void move(Point playerPosition, double delta) {
+    public void handle(double delta, Point playerPosition) {
 
     }
 }

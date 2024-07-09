@@ -7,6 +7,7 @@ import com.mygdx.game.Map.Map;
 public class SpriteDrawer {
 
     private final MyGame game;
+    private String text;
     public SpriteDrawer(MyGame game){
         this.game = game;
     }
@@ -18,6 +19,7 @@ public class SpriteDrawer {
         int width = o.getDimensions().width();
         int height = o.getDimensions().height();
         game.batch.draw(texture, x, y, width, height);
+        drawText();
     }
 
     public void draw(Map map){
@@ -25,5 +27,16 @@ public class SpriteDrawer {
         int width = texture.getRegionWidth();
         int height = texture.getRegionHeight();
         game.batch.draw(texture, 0, 0, width, height);
+        drawText();
+    }
+
+    private void drawText(){
+        if(text != null){
+            game.font.draw(game.batch, text, 50, 50);
+        }
+    }
+
+    public void draw(String text){
+        this.text = text;
     }
 }

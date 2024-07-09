@@ -1,12 +1,17 @@
 package com.mygdx.game;
 
 import com.mygdx.game.Breakables.Breakable;
+import com.mygdx.game.HitBox.HitBox;
+import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Input.MovementInputs;
 import com.mygdx.game.Player.IdlePlayerState;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Player.PlayerOtherState;
 import com.mygdx.game.Player.PlayerWalkState;
+import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
+import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vector;
 
 public final class PlayerController{
 
@@ -47,8 +52,16 @@ public final class PlayerController{
             return;
         }
         player.changeState(new PlayerOtherState(player));
-        if(breakable != null){
-            player.useActiveItem(breakable);
+        if(breakable == null){
+            return;
+        }
+        if(player.getFrame(getPlayer().generateEntityKey()).damageBox() != null){
+            Vector translation = player.getFrame(getPlayer().generateEntityKey()).damageBoxTranslation();
+            Point point = player.getPosition().add(translation);
+            HitBox h = new Rectangle(point, new Dimensions(10, 20));
+            if(h.overlaps(breakable.getHitBox())){
+                player.useActiveItem(breakable);
+            }
         }
     }
 

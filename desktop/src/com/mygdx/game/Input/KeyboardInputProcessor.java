@@ -34,6 +34,8 @@ public class KeyboardInputProcessor implements InputProcessor {
             case LEFT:
                 playerController.addDirection(Direction.LEFT);
                 break;
+            case E:
+                gameController.interact();
         }
         return false;
     }

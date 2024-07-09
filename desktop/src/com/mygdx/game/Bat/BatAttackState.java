@@ -1,28 +1,19 @@
 package com.mygdx.game.Bat;
 
 import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+
+import java.util.Objects;
 
 public final class BatAttackState implements BatState{
 
-    public Point goal;
+    private final Bat bat;
 
-    public BatAttackState(){
+    public BatAttackState(Bat bat){
+        this.bat = Objects.requireNonNull(bat, "Bat is null.");
     }
 
     @Override
-    public void move(Point position, double d){
+    public void handle(double delta, Point playerPosition) {
 
-    }
-
-    private void setGoal(MonsterData data, Bat bat){
-        while(goal == null){
-            float factor = 1.25f;
-            Vector vector = new Vector(data.playerPosition().x() - bat.getPosition().x(),
-                    data.playerPosition().y() - bat.getPosition().y()).scale(factor);
-            goal = new Point(vector.x() + bat.getPosition().x(), vector.y() + bat.getPosition().y());
-            // check within boundaries
-            factor *= 0.95f;
-        }
     }
 }

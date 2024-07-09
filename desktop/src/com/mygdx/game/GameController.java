@@ -90,6 +90,15 @@ public class GameController {
         }
     }
 
+    public void interact(){
+        Point p = new Point(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
+        for(NPC npc : gameObjectRepository.getNpcs()){
+            if(npc.getHitBox().contains(p)){
+                drawer.draw(npc.handleInputLine("line"));
+            }
+        }
+    }
+
     public void checkDroppedItems(){
         //playerController.getPlayer().getInventory().add(droppedItem.name(), droppedItem.amount());
         droppedItems.removeIf(droppedItem -> droppedItem.getHitBox().contains(playerController.getPlayer().getPosition()));

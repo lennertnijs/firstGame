@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Animation.Animation;
 import com.mygdx.game.Animation.AnimationKey;
 import com.mygdx.game.Animation.Frame;
+import com.mygdx.game.HitBox.HitBox;
+import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Inventory.*;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Keys.EntityKey;
@@ -91,7 +93,8 @@ public final class DefaultPlayerLoader {
         Frame mineRight1 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 1)).textureTranslation(new Vector(-12, 0)).dimensionsScale(2.5f).build();
         Frame mineRight2 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 2)).textureTranslation(new Vector(5, 0)).dimensionsScale(2.5f).build();
         Frame mineRight3 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 3)).textureTranslation(new Vector(5, 0)).dimensionsScale(2.5f).build();
-        Frame mineRight4 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 4)).textureTranslation(new Vector(-4, 0)).dimensionsScale(2.5f).build();
+        HitBox rectangle = new Rectangle(new Point(0, 0), new Dimensions(5, 10));
+        Frame mineRight4 = Frame.builder().textureRegion(atlas.findRegion("mine_right", 4)).textureTranslation(new Vector(-4, 0)).damageBox(rectangle).damageBoxTranslation(new Vector(5, 15)).dimensionsScale(2.5f).build();
 
         Animation miningRightAnimation = new Animation(Arrays.asList(mineRight1, mineRight2, mineRight3, mineRight4), 1000f);
         Animation miningLeftAnimation = loadAnimation(atlas, "mine_left", 4);
