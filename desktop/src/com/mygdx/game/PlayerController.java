@@ -4,10 +4,8 @@ import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Input.MovementInputs;
-import com.mygdx.game.Player.IdlePlayerState;
-import com.mygdx.game.Player.Player;
-import com.mygdx.game.Player.PlayerOtherState;
-import com.mygdx.game.Player.PlayerWalkState;
+import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.Player.*;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
@@ -48,10 +46,19 @@ public final class PlayerController{
     }
 
     public void useActiveItem(Breakable breakable){
-        if(player.getState().equals("mine")){
+        if(!player.hasToolInActive()){
             return;
         }
-        player.changeState(new PlayerOtherState(player));
+        Tool activeTool = (Tool) player.getActiveItem();
+        if(!player.getState().equals("idle") && !player.getState().equals("move")){
+            return;
+        }
+        switch(activeTool.type()){
+            case PICKAXE: player.changeState(new PlayerMineState(player)); break;
+            case AXE: player.changeState(new PlayerAxeState(player)); break;
+            case SWORD: player.changeState(null); break;
+            case SHOVEL: player.changeState(null); break;
+        }
         if(breakable == null){
             return;
         }

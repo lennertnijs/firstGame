@@ -5,6 +5,6 @@ import com.mygdx.game.Util.Direction;
 
 public interface PlayerState {
 
-    String getState();
+    String getName();
     void progress(double delta, Direction direction, HitBoxSnapShot snapShot);
 }

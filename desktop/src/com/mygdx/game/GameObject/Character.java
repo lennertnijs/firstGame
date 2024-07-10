@@ -38,6 +38,14 @@ public abstract class Character extends Entity {
         return inventory;
     }
 
+    public Item getActiveItem(){
+        return inventory.getItem(activeIndex);
+    }
+
+    public boolean hasToolInActive(){
+        return inventory.getItem(activeIndex) instanceof Tool;
+    }
+
     public int getActiveIndex(){
         return activeIndex;
     }

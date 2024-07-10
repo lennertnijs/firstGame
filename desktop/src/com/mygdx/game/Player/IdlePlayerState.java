@@ -14,7 +14,7 @@ public class IdlePlayerState implements PlayerState {
     }
 
     @Override
-    public String getState() {
+    public String getName() {
         return "idle";
     }
 

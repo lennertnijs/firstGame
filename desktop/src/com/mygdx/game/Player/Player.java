@@ -30,16 +30,20 @@ public final class Player extends Character {
 
     @Override
     public AnimationKey generateEntityKey() {
-        return new EntityKey(playerState.getState(), super.getDirection());
+        return new EntityKey(playerState.getName(), super.getDirection());
     }
 
     public String getState(){
-        return playerState.getState();
+        return playerState.getName();
     }
 
     public void changeState(PlayerState playerState){
         super.resetAnimationDelta();
         this.playerState = playerState;
+    }
+
+    public int getSpeed(){
+        return 50;
     }
 
     public void update(double delta, Direction direction, HitBoxSnapShot snapShot){

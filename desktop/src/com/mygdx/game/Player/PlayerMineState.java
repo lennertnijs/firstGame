@@ -3,26 +3,28 @@ package com.mygdx.game.Player;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Util.Direction;
 
-public class PlayerOtherState implements PlayerState{
+import java.util.Objects;
+
+public final class PlayerMineState implements PlayerState {
 
     private final Player player;
     private double delta;
 
-    public PlayerOtherState(Player player){
-        this.player = player;
+    public PlayerMineState(Player player){
+        this.player = Objects.requireNonNull(player, "Player is null.");
     }
     @Override
-    public String getState() {
+    public String getName() {
         return "mine";
     }
 
     @Override
     public void progress(double delta, Direction direction, HitBoxSnapShot snapShot) {
         this.delta += delta;
-        updateState();
+        handleStateChange();
     }
 
-    private void updateState(){
+    private void handleStateChange(){
         if(delta >= 1000){
             player.changeState(new IdlePlayerState(player));
         }

@@ -5,7 +5,6 @@ import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
-import com.mygdx.game.UtilMethods.DirectionCalculator;
 import com.mygdx.game.UtilMethods.MovementUtilMethods;
 
 public class PlayerWalkState implements PlayerState{
@@ -17,18 +16,17 @@ public class PlayerWalkState implements PlayerState{
     }
 
     @Override
-    public String getState() {
+    public String getName() {
         return "walk";
     }
 
     public void progress(double delta, Direction direction, HitBoxSnapShot snapShot){
-        int m = (int) (10 * 0.4f);
-        Point p = player.getPosition();
-        Point next = MovementUtilMethods.calculateNextPosition(p, direction, m);
+        int movement = (int) (delta * player.getSpeed() / 250);
+        Point next = MovementUtilMethods.calculateNextPosition(player.getPosition(), direction, movement);
         HitBox hitBox = new Rectangle(next, player.getDimensions());
+        player.setDirection(direction);
         if(snapShot.isFree(hitBox)){
             player.setPosition(next);
-            player.setDirection(DirectionCalculator.calculateDir(p, next));
-        };
+        }
     }
 }
