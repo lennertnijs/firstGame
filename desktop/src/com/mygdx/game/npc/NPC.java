@@ -53,7 +53,12 @@ public final class NPC extends Character {
 
     public void update(Day day, Time time, double delta){
         super.increaseAnimationDelta(delta);
-        state.progress(day, time, delta);
+        Activity activity = weekSchedule.getActivity(day, time);
+        if(activity != null){
+            updateRoute(activity);
+            nextActivity = activity;
+        }
+        state.progress(delta);
     }
 
     public WeekSchedule getWeekSchedule(){
@@ -62,10 +67,6 @@ public final class NPC extends Character {
 
     public Activity getNextActivity(){
         return nextActivity;
-    }
-
-    public void setNextActivity(Activity activity){
-        this.nextActivity = activity;
     }
 
     public void changeState(NPCState state){

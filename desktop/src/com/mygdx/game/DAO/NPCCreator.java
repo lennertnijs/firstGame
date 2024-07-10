@@ -43,7 +43,7 @@ public class NPCCreator {
 
         DialogueData dialogueData = new DialogueData(new ArrayList<>(), new DialogueRepository(new HashMap<>()));
 
-        Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(10).build();
+        Stats stats = Stats.builder().health(500).defense(500).offense(500).speed(50).build();
 
         Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{
             put("Stone", 64);

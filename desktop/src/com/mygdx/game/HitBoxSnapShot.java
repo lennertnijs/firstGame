@@ -15,7 +15,7 @@ public final class HitBoxSnapShot {
 
     public boolean isFree(HitBox h){
         for(HitBox hitBox : hitBoxes){
-            if(hitBox.overlaps(h))
+            if(hitBox.overlaps(h) || h.overlaps(hitBox))
                 return false;
         }
         return true;

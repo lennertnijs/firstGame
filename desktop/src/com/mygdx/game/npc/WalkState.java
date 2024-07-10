@@ -1,8 +1,6 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Location;
-import com.mygdx.game.Util.Time;
 import com.mygdx.game.UtilMethods.DirectionCalculator;
 import com.mygdx.game.UtilMethods.MovementUtilMethods;
 
@@ -16,9 +14,10 @@ public final class WalkState implements NPCState{
         this.npc = Objects.requireNonNull(npc, "Npc is null.");
     }
 
-    public void progress(Day day, Time time, double deltaInMillis){
+    public void progress(double delta){
+        int movement = (int)(delta * npc.getStats().getSpeed() / 200);
         Location current = npc.getLocation();
-        Location next = MovementUtilMethods.moveAlongRoute(current, npc.getRoute(), 3);
+        Location next = MovementUtilMethods.moveAlongRoute(current, npc.getRoute(), movement);
         npc.setLocation(next);
         npc.setDirection(DirectionCalculator.calculateDir(current.position(), next.position()));
         updateState();

@@ -1,9 +1,5 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Util.Activity;
-import com.mygdx.game.Util.Day;
-import com.mygdx.game.Util.Time;
-
 import java.util.Objects;
 
 public final class IdleState implements NPCState{
@@ -15,12 +11,7 @@ public final class IdleState implements NPCState{
     }
 
     @Override
-    public void progress(Day day, Time time, double delta) {
-        Activity activity = npc.getWeekSchedule().getActivity(day, time);
-        if(activity == null)
-            return;
-        npc.setNextActivity(activity);
-        npc.updateRoute(activity);
+    public void progress(double delta) {
         updateState();
     }
 

@@ -1,8 +1,5 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Util.Day;
-import com.mygdx.game.Util.Time;
-
 public class OtherState implements NPCState{
 
     private final NPC npc;
@@ -18,7 +15,7 @@ public class OtherState implements NPCState{
     }
 
     @Override
-    public void progress(Day day, Time time, double delta) {
+    public void progress(double delta) {
         updateState();
     }
 
