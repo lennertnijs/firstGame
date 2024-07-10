@@ -26,31 +26,29 @@ public class BreakableTest {
 
     @BeforeEach
     public void initialise(){
-        breakable = new Breakable(textureRegion, position, dimensions, map, health, hardness, type , lootTable);
+        breakable = Breakable.builder().textureRegion(textureRegion).position(position).dimensions(dimensions)
+                .map(map).health(health).hardness(hardness).type(type).lootTable(lootTable).build();
     }
 
     @Test
     public void testConstructorWithNegativeHealth(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Breakable(textureRegion, position, dimensions, map, -1, hardness, type, lootTable));
+                () -> Breakable.builder().textureRegion(textureRegion).position(position).dimensions(dimensions)
+                        .map(map).health(-1).hardness(hardness).type(type).lootTable(lootTable).build());
     }
 
     @Test
     public void testConstructorWithZeroHealth(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Breakable(textureRegion, position, dimensions, map, 0, hardness, type, lootTable));
+                () -> Breakable.builder().textureRegion(textureRegion).position(position).dimensions(dimensions)
+                        .map(map).health(0).hardness(hardness).type(type).lootTable(lootTable).build());
     }
 
     @Test
     public void testConstructorWithNegativeHardness(){
         assertThrows(IllegalArgumentException.class,
-                () -> new Breakable(textureRegion, position, dimensions, map, health, -1, type, lootTable));
-    }
-
-    @Test
-    public void testConstructorWithZeroHardness(){
-        assertThrows(IllegalArgumentException.class,
-                () -> new Breakable(textureRegion, position, dimensions, map, health, 0, type, lootTable));
+                () -> Breakable.builder().textureRegion(textureRegion).position(position).dimensions(dimensions)
+                        .map(map).health(health).hardness(-1).type(type).lootTable(lootTable).build());
     }
 
     @Test

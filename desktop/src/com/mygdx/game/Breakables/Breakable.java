@@ -35,27 +35,13 @@ public final class Breakable extends GameObject{
     /**
      * Creates a new, damageable {@link Breakable} object.
      * Breakable objects can be damaged and, when fully broken,
-     * @param position The position. Cannot be null.
-     * @param dimensions The dimensions of object in the world. Cannot be null.
-     * @param map The map. Cannot be null.
-     * @param health The health. Cannot be negative or 0.
-     * @param hardness The hardness. Cannot be negative or 0.
-     * @param type The type. Cannot be null.
-     * @param lootTable The loot table. Cannot be null.
      */
-    public Breakable(TextureRegion t, Point position, Dimensions dimensions, String map,
-                     int health, int hardness, String type, ILootTable lootTable){
-        super(t, position, dimensions, map);
-        if(health <= 0){
-            throw new IllegalArgumentException("Health is negative or 0.");
-        }
-        if(hardness <= 0){
-            throw new IllegalArgumentException("Hardness is negative or 0.");
-        }
-        this.health = health;
-        this.hardness = hardness;
-        this.lootTable = Objects.requireNonNull(lootTable, "Loot table is null.");
-        this.type = Objects.requireNonNull(type, "Type is null.");
+    public Breakable(Builder builder){
+        super(builder.textureRegion, builder.position, builder.dimensions, builder.map);
+        this.health = builder.health;
+        this.hardness = builder.hardness;
+        this.lootTable = builder.lootTable;
+        this.type = builder.type;
     }
 
     /**
@@ -113,5 +99,83 @@ public final class Breakable extends GameObject{
     public String toString(){
         return String.format("Breakable[%s, health=%d, hardness=%d, lootTable=%s, type=%s]",
                 super.toString(), health, hardness, lootTable, type);
+    }
+
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        private TextureRegion textureRegion = null;
+        private Point position = null;
+        private Dimensions dimensions = null;
+        private String map = null;
+        private int health = -1;
+        private int hardness = -1;
+        private ILootTable lootTable = null;
+        private String type = null;
+
+        private Builder(){
+
+        }
+
+        public Builder textureRegion(TextureRegion textureRegion){
+            this.textureRegion = textureRegion;
+            return this;
+        }
+
+        public Builder position(Point position){
+            this.position = position;
+            return this;
+        }
+
+        public Builder dimensions(Dimensions dimensions){
+            this.dimensions = dimensions;
+            return this;
+        }
+
+        public Builder map(String map){
+            this.map = map;
+            return this;
+        }
+
+        public Builder health(int health){
+            this.health = health;
+            return this;
+        }
+
+        public Builder hardness(int hardness){
+            this.hardness = hardness;
+            return this;
+        }
+
+        public Builder lootTable(ILootTable lootTable){
+            this.lootTable = lootTable;
+            return this;
+        }
+
+        public Builder type(String type){
+            this.type = type;
+            return this;
+        }
+
+        public Breakable build(){
+            Objects.requireNonNull(textureRegion, "Texture region is null.");
+            Objects.requireNonNull(position, "Position is null.");
+            if(dimensions == null){
+                dimensions = new Dimensions(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
+            }
+            Objects.requireNonNull(map, "Map is null.");
+            if(health <= 0){
+                throw new IllegalArgumentException("Health is negative or zero.");
+            }
+            if(hardness < 0){
+                throw new IllegalArgumentException("Hardness is negative.");
+            }
+            Objects.requireNonNull(lootTable, "Loot table is null.");
+            Objects.requireNonNull(type, "Type is null.");
+            return new Breakable(this);
+        }
     }
 }
