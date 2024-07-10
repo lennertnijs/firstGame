@@ -29,7 +29,7 @@ public final class Bat extends Monster{
     }
 
     public int aggressionRange(){
-        return 1000;
+        return 750;
     }
 
     public void setState(BatState newState){
@@ -38,7 +38,7 @@ public final class Bat extends Monster{
 
     @Override
     public AnimationKey generateEntityKey() {
-        return new BatKey(state.getState());
+        return new BatKey(state.getName());
     }
 
     public static Builder builder(){

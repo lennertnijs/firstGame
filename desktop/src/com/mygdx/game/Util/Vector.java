@@ -10,7 +10,7 @@ public final class Vector {
         this.y = y;
     }
 
-    public static Vector createBetweenPoints(Point start, Point end){
+    public static Vector between(Point start, Point end){
         int x_diff = end.x() - start.x();
         int y_diff = end.y() - start.y();
         return new Vector(x_diff, y_diff);

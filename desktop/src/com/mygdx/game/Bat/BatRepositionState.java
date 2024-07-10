@@ -2,7 +2,7 @@ package com.mygdx.game.Bat;
 
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
-import com.mygdx.game.UtilMethods.RandomNumberGenerator;
+import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
@@ -11,37 +11,29 @@ public final class BatRepositionState implements BatState{
     private final Bat bat;
     private final Point goal;
 
-    public BatRepositionState(Bat bat){
+    public BatRepositionState(Bat bat) {
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
-        this.goal = generateRepositionPoint();
+        this.goal = RandomGenerator.generateAround(bat.getPosition(), 100, 250);
     }
 
-    private Point generateRepositionPoint(){
-        int x_extra = RandomNumberGenerator.generateBetween(-150, 150);
-        int y_extra = RandomNumberGenerator.generateBetween(-150, 150);
-        Point currentPosition = bat.getPosition();
-        return new Point(currentPosition.x() + x_extra, currentPosition.y() + y_extra);
+    @Override
+    public String getName() {
+        return "reposition";
     }
 
 
     @Override
     public void handle(double delta, Point playerPosition) {
-        int movement = (int) (delta * bat.getSpeed() / 100);
+        int movement = (int) (delta * bat.getSpeed() / 300);
         Point current = bat.getPosition();
         if(movement >= Point.distanceBetween(bat.getPosition(), goal)){
             bat.setPosition(goal);
         }else{
-            Vector movementVector = new Vector(goal.x() - current.x(), goal.y() - current.y());
-            Vector scaledMovementVector = movementVector.scaleToSize(movement);
-            Point next = current.add(scaledMovementVector);
-            bat.setPosition(next);
+            Vector scaledMovementVector = Vector.between(current, goal).scaleToSize(movement);
+            Point nextPosition = current.add(scaledMovementVector);
+            bat.setPosition(nextPosition);
         }
         handleStateChange();
-    }
-
-    @Override
-    public String getState() {
-        return "reposition";
     }
 
     private void handleStateChange(){

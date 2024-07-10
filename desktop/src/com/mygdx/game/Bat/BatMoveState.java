@@ -2,7 +2,7 @@ package com.mygdx.game.Bat;
 
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
-import com.mygdx.game.UtilMethods.RandomNumberGenerator;
+import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
@@ -13,33 +13,25 @@ public final class BatMoveState implements BatState{
 
     public BatMoveState(Bat bat){
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
-        this.goal = generateGoalPoint();
-    }
-
-    private Point generateGoalPoint(){
-        int x_extra = RandomNumberGenerator.generateBetween(-250, 250);
-        int y_extra = RandomNumberGenerator.generateBetween(-250, 250);
-        Point currentPosition = bat.getPosition();
-        return new Point(currentPosition.x() + x_extra, currentPosition.y() + y_extra);
+        this.goal = RandomGenerator.generateAround(bat.getPosition(), 150, 250);
     }
 
     @Override
     public void handle(double delta, Point playerPosition) {
-        int movement = (int) (delta/1000 * bat.getSpeed());
+        int movement = (int) (delta * bat.getSpeed() / 200);
         Point current = bat.getPosition();
-        if(movement >= Point.distanceBetween(bat.getPosition(), goal)){
+        if(movement >= Point.distanceBetween(current, goal)){
             bat.setPosition(goal);
         }else{
-            Vector movementVector = new Vector(goal.x() - current.x(), goal.y() - current.y());
-            Vector scaledMovementVector = movementVector.scaleToSize(movement);
-            Point next = current.add(scaledMovementVector);
-            bat.setPosition(next);
+            Vector scaledMovementVector = Vector.between(current, goal).scaleToSize(movement);
+            Point nextPosition = current.add(scaledMovementVector);
+            bat.setPosition(nextPosition);
         }
         handleStateChange(playerPosition);
     }
 
     @Override
-    public String getState() {
+    public String getName() {
         return "move";
     }
 

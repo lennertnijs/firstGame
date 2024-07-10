@@ -29,7 +29,7 @@ public final class BatLoader {
         Frame frame2 = Frame.builder().textureRegion(atlas.findRegion("idle_down", 2)).dimensions(dimensions).build();
         Frame frame3 = Frame.builder().textureRegion(atlas.findRegion("idle_down", 3)).dimensions(dimensions).build();
         Frame frame4 = Frame.builder().textureRegion(atlas.findRegion("idle_down", 2)).dimensions(dimensions).build();
-        Animation animation = new Animation(Arrays.asList(frame1, frame2, frame3, frame4), 2);
+        Animation animation = new Animation(Arrays.asList(frame1, frame2, frame3, frame4), 4);
         animationMap.put(new BatKey("idle"), animation);
         animationMap.put(new BatKey("move"), animation);
         animationMap.put(new BatKey("attack"), animation);
