@@ -1,5 +1,7 @@
 package com.mygdx.game.Util;
 
+import java.util.Objects;
+
 public final class Vector {
 
     private final int x;
@@ -11,6 +13,8 @@ public final class Vector {
     }
 
     public static Vector between(Point start, Point end){
+        Objects.requireNonNull(start, "Start is null.");
+        Objects.requireNonNull(end, "End is null.");
         int x_diff = end.x() - start.x();
         int y_diff = end.y() - start.y();
         return new Vector(x_diff, y_diff);

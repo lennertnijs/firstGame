@@ -1,35 +1,52 @@
 package Util;
 
+import com.mygdx.game.Util.Point;
 import com.mygdx.game.Util.Vector;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class VectorTest {
 
-    private Vector vector;
-
-    @BeforeEach
-    public void initialise(){
-        int x = -5;
-        int y = 10;
-        vector = new Vector(x, y);
-    }
+    private final Vector vector = new Vector(-5, 10);
 
     @Test
-    public void testX(){
+    public void testGetX(){
         assertEquals(-5, vector.x());
     }
 
     @Test
-    public void testY(){
+    public void testGetY(){
         assertEquals(10, vector.y());
     }
 
     @Test
     public void testSize(){
         assertEquals(11, vector.size());
+    }
+
+    @Test
+    public void testCreateBetweenPoints(){
+        Point start = new Point(5, 15);
+        Point goal = new Point(10, 10);
+        Vector v1 = Vector.between(start, goal);
+        assertEquals(new Vector(5, -5), v1);
+        Vector v2 = Vector.between(goal, start);
+        assertEquals(new Vector(-5, 5), v2);
+    }
+
+    @Test
+    public void testCreateBetweenPointsWithNullStart(){
+        Point goal = new Point(10, 10);
+        assertThrows(NullPointerException.class,
+                () -> Vector.between(null, goal));
+    }
+
+    @Test
+    public void testCreateBetweenPointsWithNullGoal(){
+        Point start = new Point(10, 10);
+        assertThrows(NullPointerException.class,
+                () -> Vector.between(start, null));
     }
 
     @Test

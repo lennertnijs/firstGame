@@ -22,14 +22,6 @@ public final class Location {
         return position;
     }
 
-    public int x(){
-        return position.x();
-    }
-
-    public int y(){
-        return position.y();
-    }
-
     @Override
     public boolean equals(Object other){
         if(!(other instanceof Location))

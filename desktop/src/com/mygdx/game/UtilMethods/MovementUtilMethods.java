@@ -18,12 +18,12 @@ public final class MovementUtilMethods {
             return start;
         }
         Location goal = route.peek();
-        int x_diff = goal.x() - start.x();
-        int y_diff = goal.y() - start.y();
+        int x_diff = goal.position().x() - start.position().x();
+        int y_diff = goal.position().y() - start.position().y();
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
         if (amount < distanceBetweenPoints) {
             Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
-            return new Location(start.mapName(), new Point(start.x() + vector.x(), start.y() + vector.y()));
+            return new Location(start.mapName(), new Point(start.position().x() + vector.x(), start.position().y() + vector.y()));
         }else{
             return moveAlongRoute(route.poll(), route, amount -  Point.distanceBetween(start.position(), goal.position()));
         }
