@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Clock.CalendarClock;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Clock.SystemTimeProvider;
@@ -30,17 +32,17 @@ public class GameScreen implements Screen {
         this.game = game;
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
         Clock gameClock = new Clock(calendarClock, new SystemTimeProvider());
-
-        // create the camera and the SpriteBatch
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 1920, 1080);
-        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-
         GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), BreakableCreator.getBreakables(),
                 Collections.singletonList(BatLoader.create()),HouseLoader.load());
         playerController = new PlayerController(DefaultPlayerLoader.load());
         gameController = new GameController(repository, gameClock, new SpriteDrawer(game), playerController);
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController, gameController));
+
+        // create the camera and the SpriteBatch
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 1920, 1080);
+        Viewport viewport = new ExtendViewport(1920, 1080, camera);
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
     }
 
     /**
@@ -57,9 +59,7 @@ public class GameScreen implements Screen {
         gameController.update();
         game.batch.draw(bar, playerController.getPlayer().getPosition().x() - 72, playerController.getPlayer().getPosition().y() - 510);
         game.batch.end();
-        camera.position.set(playerController.getPlayer().getPosition().x(),
-                playerController.getPlayer().getPosition().y(),
-                0);
+        camera.position.set(playerController.getPlayer().getPosition().x(), playerController.getPlayer().getPosition().y(), 0);
     }
 
 

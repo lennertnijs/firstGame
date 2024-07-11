@@ -27,9 +27,7 @@ public final class NPC extends Character {
     private Activity nextActivity;
 
     private NPC(Builder b){
-        super(b.position, b.dimensions, b.map,
-                b.animationMap, b.d, b.direction,
-                b.name, b.inventory);
+        super(b.position, b.dimensions, b.map, b.animationMap, b.d, b.direction, b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
