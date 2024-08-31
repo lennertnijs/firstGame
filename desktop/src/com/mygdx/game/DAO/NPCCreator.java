@@ -31,7 +31,7 @@ public class NPCCreator {
 
         String name = "Gilbert";
 
-        Map<AnimationKey, Animation> animationMap = AnimationMapLoader.load("player/Player.pack");
+        AnimationHolder animationHolder = load("player/Player.pack");
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -56,7 +56,7 @@ public class NPCCreator {
                 .position(position)
                 .dimensions(dimensions)
                 .map(map)
-                .animationMap(animationMap)
+                .animationHolder(animationHolder)
                 .direction(RIGHT)
                 .delta(0)
                 .name(name)
@@ -66,6 +66,20 @@ public class NPCCreator {
                 .dialogueData(dialogueData)
                 .stats(stats)
                 .build();
+    }
+
+    public static AnimationHolder load(String atlasPath){
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
+
+        AnimationFactory animationFactory = new AnimationFactory(atlas);
+        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
+        AnimationPack minePack = animationFactory.create4Directional("mine", 4);
+        AnimationPack walkPack = animationFactory.create4Directional("walking", 4);
+        AnimationHolder animationHolder = new AnimationHolder();
+        animationHolder.addAnimation("idle", idlePack);
+        animationHolder.addAnimation("mine", minePack);
+        animationHolder.addAnimation("walking", walkPack);
+        return animationHolder;
     }
 
     private static Schedule loadSchedule(){

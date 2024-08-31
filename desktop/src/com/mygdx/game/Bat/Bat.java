@@ -1,7 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Animation.Animation;
-import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.GameObject.Monster;
 import com.mygdx.game.Loot.LootTable;
 import com.mygdx.game.Stats;
@@ -9,8 +8,6 @@ import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public final class Bat extends Monster{
@@ -18,7 +15,7 @@ public final class Bat extends Monster{
     private BatState state;
 
     public Bat(Builder builder) {
-        super(builder.position, builder.dimensions, builder.map, builder.animationMap, builder.delta,
+        super(builder.position, builder.dimensions, builder.map, builder.animationHolder, builder.delta,
                 builder.direction, builder.lootTable, builder.stats);
         this.state = new BatIdleState(this);
     }
@@ -36,11 +33,6 @@ public final class Bat extends Monster{
         this.state = Objects.requireNonNull(newState, "New bat state is null.");
     }
 
-    @Override
-    public AnimationKey generateEntityKey() {
-        return new BatKey(state.getName());
-    }
-
     public static Builder builder(){
         return new Builder();
     }
@@ -50,7 +42,7 @@ public final class Bat extends Monster{
         private Point position = null;
         private Dimensions dimensions = null;
         private String map = null;
-        private Map<AnimationKey, Animation> animationMap = null;
+        private AnimationHolder animationHolder = null;
         private double delta = 0;
         private Direction direction = null;
         private LootTable lootTable = null;
@@ -74,8 +66,8 @@ public final class Bat extends Monster{
             return this;
         }
 
-        public Builder animationMap(Map<AnimationKey, Animation> map){
-            this.animationMap = new HashMap<>(map);
+        public Builder animationHolder(AnimationHolder animationHolder){
+            this.animationHolder = animationHolder;
             return this;
         }
 

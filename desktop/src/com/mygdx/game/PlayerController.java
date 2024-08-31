@@ -62,8 +62,8 @@ public final class PlayerController{
         if(breakable == null){
             return;
         }
-        if(player.getFrame(getPlayer().generateEntityKey()).damageBox() != null){
-            Vector translation = player.getFrame(getPlayer().generateEntityKey()).damageBoxTranslation();
+        if(player.getFrame("temp", player.getDirection()).damageBox() != null){
+            Vector translation = player.getFrame("temp", player.getDirection()).damageBoxTranslation();
             Point point = player.getPosition().add(translation);
             HitBox h = new Rectangle(point, new Dimensions(10, 20));
             if(h.overlaps(breakable.getHitBox())){

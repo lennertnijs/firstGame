@@ -1,19 +1,16 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Animation.Animation;
-import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
-import java.util.Map;
 import java.util.Objects;
 
 public final class Player extends Character {
@@ -23,14 +20,9 @@ public final class Player extends Character {
 
     private Player(Builder b){
         super(b.position, b.dimensions, b.map,
-                b.animationMap, 0,
+                b.animationHolder, 0,
                 b.direction,
                 b.name, b.inventory);
-    }
-
-    @Override
-    public AnimationKey generateEntityKey() {
-        return new EntityKey(playerState.getName(), super.getDirection());
     }
 
     public String getState(){
@@ -69,7 +61,7 @@ public final class Player extends Character {
         private Point position;
         private Dimensions dimensions;
         private String map;
-        private Map<AnimationKey, Animation> animationMap;
+        private AnimationHolder animationHolder;
         private Direction direction;
         private String name;
         private Inventory inventory;
@@ -93,8 +85,8 @@ public final class Player extends Character {
             return this;
         }
 
-        public Builder animationMap(Map<AnimationKey, Animation> animationMap){
-            this.animationMap = animationMap;
+        public Builder animationHolder(AnimationHolder animationHolder){
+            this.animationHolder = animationHolder;
             return this;
         }
 

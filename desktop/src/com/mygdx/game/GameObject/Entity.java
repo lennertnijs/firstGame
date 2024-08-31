@@ -1,8 +1,7 @@
 package com.mygdx.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Animation.Animation;
-import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
@@ -14,9 +13,9 @@ public abstract class Entity extends AnimatedGameObject{
     private Direction direction;
 
     public Entity(Point position, Dimensions dimensions, String map,
-                  Map<AnimationKey, Animation> animationMap, double delta,
+                  AnimationHolder animationHolder, double delta,
                   Direction direction){
-        super(position, dimensions, map, animationMap, delta);
+        super(position, dimensions, map, animationHolder, delta);
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
@@ -28,23 +27,18 @@ public abstract class Entity extends AnimatedGameObject{
         this.direction = Objects.requireNonNull(direction, "Direction is null.");
     }
 
-    /**
-     * @return The entity key.
-     */
-    public abstract AnimationKey generateEntityKey();
-
     @Override
     public TextureRegion getTexture(){
-        return getFrame(generateEntityKey()).textureRegion();
+        return getFrame("temp", direction).textureRegion();
     }
 
     @Override
     public Point getPosition(){
-        return super.getPosition().add(getFrame(generateEntityKey()).textureTranslation());
+        return super.getPosition().add(getFrame("temp", direction).textureTranslation());
     }
 
     @Override
     public Dimensions getDimensions(){
-        return getFrame(generateEntityKey()).dimensions();
+        return getFrame("temp", direction).dimensions();
     }
 }

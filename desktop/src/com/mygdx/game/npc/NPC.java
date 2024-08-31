@@ -1,18 +1,15 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Animation.Animation;
-import com.mygdx.game.Animation.AnimationKey;
+import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Keys.EntityKey;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -27,17 +24,12 @@ public final class NPC extends Character {
     private Activity nextActivity;
 
     private NPC(Builder b){
-        super(b.position, b.dimensions, b.map, b.animationMap, b.d, b.direction, b.name, b.inventory);
+        super(b.position, b.dimensions, b.map, b.animationHolder, b.d, b.direction, b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
         this.stats = b.stats;
         route = new Route();
-    }
-
-    @Override
-    public AnimationKey generateEntityKey() {
-        return new EntityKey(state.getState(), super.getDirection());
     }
 
     public void updateRoute(Activity activity){
@@ -90,7 +82,7 @@ public final class NPC extends Character {
         private Point position;
         private Dimensions dimensions;
         private String map;
-        private Map<AnimationKey, Animation> animationMap;
+        private AnimationHolder animationHolder;
         private Direction direction;
         private double d = -1;
         private String name;
@@ -118,8 +110,8 @@ public final class NPC extends Character {
             return this;
         }
 
-        public Builder animationMap(Map<AnimationKey, Animation> animationMap){
-            this.animationMap = animationMap;
+        public Builder animationHolder(AnimationHolder animationHolder){
+            this.animationHolder = animationHolder;
             return this;
         }
 
@@ -167,7 +159,7 @@ public final class NPC extends Character {
             Objects.requireNonNull(position, "Position is null.");
             Objects.requireNonNull(dimensions, "Dimensions is null.");
             Objects.requireNonNull(map, "Map is null.");
-            Objects.requireNonNull(animationMap, "Animation is null.");
+            Objects.requireNonNull(animationHolder, "Animation holder is null.");
             Objects.requireNonNull(direction, "Direction is null.");
             if(d < 0){
                 throw new IllegalArgumentException("Delta is negative.");
