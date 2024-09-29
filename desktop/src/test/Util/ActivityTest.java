@@ -39,7 +39,7 @@ public class ActivityTest {
 
     @Test
     public void testGetActivityType(){
-        assertEquals(activityType, activity.type());
+        assertEquals(activityType, activity.activityType());
     }
 
     @Test
