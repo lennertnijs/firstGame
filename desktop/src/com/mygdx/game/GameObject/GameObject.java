@@ -60,7 +60,7 @@ public class GameObject {
 
     public void setLocation(Location location){
         Objects.requireNonNull(location, "Location is null.");
-        this.map = location.mapName();
+        this.map = location.map();
         this.position = location.position();
     }
 

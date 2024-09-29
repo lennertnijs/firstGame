@@ -32,7 +32,7 @@ public class LocationTest {
 
     @Test
     public void testMapName(){
-        assertEquals(mapName, location.mapName());
+        assertEquals(mapName, location.map());
     }
 
     @Test

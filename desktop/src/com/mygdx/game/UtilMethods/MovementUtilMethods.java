@@ -23,7 +23,7 @@ public final class MovementUtilMethods {
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
         if (amount < distanceBetweenPoints) {
             Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
-            return new Location(start.mapName(), new Point(start.position().x() + vector.x(), start.position().y() + vector.y()));
+            return new Location(start.map(), new Point(start.position().x() + vector.x(), start.position().y() + vector.y()));
         }else{
             return moveAlongRoute(route.poll(), route, amount -  Point.distanceBetween(start.position(), goal.position()));
         }

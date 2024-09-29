@@ -2,31 +2,18 @@ package com.mygdx.game.Util;
 
 import java.util.Objects;
 
-public final class Location {
+public record Location(String map, Point position) {
 
-    private final String map;
-    private final Point position;
 
-    public Location(String map, Point position){
+    public Location {
         Objects.requireNonNull(map, "Map is null.");
         Objects.requireNonNull(position, "Position is null.");
-        this.map = map;
-        this.position = position;
-    }
-
-    public String mapName(){
-        return map;
-    }
-
-    public Point position(){
-        return position;
     }
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Location))
+        if(!(other instanceof Location location))
             return false;
-        Location location = (Location) other;
         return map.equals(location.map) && position.equals(location.position);
     }
 

@@ -2,17 +2,9 @@ package com.mygdx.game.Util;
 
 import java.util.Objects;
 
-public final class Vector {
+public record Vector(int x, int y) {
 
-    private final int x;
-    private final int y;
-
-    public Vector(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-
-    public static Vector between(Point start, Point end){
+    public static Vector between(Point start, Point end) {
         Objects.requireNonNull(start, "Start is null.");
         Objects.requireNonNull(end, "End is null.");
         int x_diff = end.x() - start.x();
@@ -20,53 +12,39 @@ public final class Vector {
         return new Vector(x_diff, y_diff);
     }
 
-    public int x(){
-        return x;
-    }
-
-    public int y(){
-        return y;
-    }
-
     /**
      * Rounds down/up to the nearest integer.
      */
-    public int size(){
-        return (int)Math.round(Math.sqrt(x * x + y * y));
+    public int size() {
+        return (int) Math.round(Math.sqrt(x * x + y * y));
     }
 
 
     /**
      * Rounds down/up to the nearest integer.
      */
-    public Vector scale(double factor){
-        int scaledX = (int)Math.round(x * factor);
-        int scaledY = (int)Math.round(y * factor);
+    public Vector scale(double factor) {
+        int scaledX = (int) Math.round(x * factor);
+        int scaledY = (int) Math.round(y * factor);
         return new Vector(scaledX, scaledY);
     }
 
-    public Vector scaleToSize(int length){
-        if(this.size() == 0)
+    public Vector scaleToSize(int length) {
+        if (this.size() == 0)
             throw new IllegalStateException("Vector size is 0. Scaling a 0 vector is nonsense.");
-        float factor = (float)length / (float)this.size();
+        float factor = (float) length / (float) this.size();
         return scale(factor);
     }
 
     @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Vector))
+    public boolean equals(Object other) {
+        if (!(other instanceof Vector vector))
             return false;
-        Vector vector = (Vector) other;
         return x == vector.x && y == vector.y;
     }
 
     @Override
-    public int hashCode(){
-        return x * 31 + y;
-    }
-
-    @Override
-    public String toString(){
+    public String toString() {
         return String.format("Vector[x=%d, y=%d]", x, y);
     }
 }

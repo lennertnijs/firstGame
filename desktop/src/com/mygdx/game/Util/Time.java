@@ -54,9 +54,8 @@ public final class Time implements Comparable<Time>{
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Time))
+        if(!(other instanceof Time time))
             return false;
-        Time time = (Time) other;
         return minutes == time.minutes;
     }
 
