@@ -20,7 +20,7 @@ public final class IdleState implements NPCState{
             return;
         }
         if(npc.getRoute().isEmpty()){
-            npc.changeState(new OtherState(npc, npc.getNextActivity().type()));
+            npc.changeState(new OtherState(npc, npc.getNextActivity().activityType()));
         }
         npc.changeState(new WalkState(npc));
     }
