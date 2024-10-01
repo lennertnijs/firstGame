@@ -24,12 +24,13 @@ public final class BatLoader {
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
 
         AnimationFactory animationFactory = new AnimationFactory(atlas);
-        AnimationPack idlePack = animationFactory.create4Directional("idle", 4);
+        Animation idlePack = animationFactory.createWithDirection("idle", "down", 3);
+        AnimationPack animationPack = new FourDirectionalAnimationPack(idlePack, idlePack, idlePack, idlePack);
 
         AnimationHolder animationHolder = new AnimationHolder();
-        animationHolder.addAnimation("idle", idlePack);
-        animationHolder.addAnimation("mine", idlePack);
-        animationHolder.addAnimation("walking", idlePack);
+        animationHolder.addAnimation("idle", animationPack);
+        animationHolder.addAnimation("mine", animationPack);
+        animationHolder.addAnimation("walking", animationPack);
         return animationHolder;
     }
 }

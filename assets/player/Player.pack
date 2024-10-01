@@ -149,28 +149,28 @@ idle_down
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
-  index: -1
+  index: 1
 idle_left
   rotate: false
   xy: 485, 31
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
-  index: -1
+  index: 1
 idle_right
   rotate: false
   xy: 503, 31
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
-  index: -1
+  index: 1
 idle_up
   rotate: false
   xy: 521, 31
   size: 16, 32
   orig: 16, 32
   offset: 0, 0
-  index: -1
+  index: 1
 mine_down
   rotate: false
   xy: 539, 26

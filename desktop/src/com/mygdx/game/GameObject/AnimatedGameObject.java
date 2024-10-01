@@ -18,7 +18,7 @@ public class AnimatedGameObject extends GameObject{
     }
 
     public Frame getFrame(String activity, Direction direction){
-        return animationHolder.getAnimation("activity", Direction.RIGHT).getFrame(animationDelta);
+        return animationHolder.getAnimation(activity, direction).getFrame(animationDelta);
     }
 
     public void increaseAnimationDelta(double increase){

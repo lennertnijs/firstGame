@@ -35,7 +35,7 @@ public final class DefaultPlayerLoader {
         String map = file.getString("map");
 
         String textureAtlas = file.getString("texture_atlas");
-        AnimationHolder animationHolder = load(path);
+        AnimationHolder animationHolder = load("player/Player.pack");
 
         Direction direction = Direction.valueOf(file.getString("direction"));
 

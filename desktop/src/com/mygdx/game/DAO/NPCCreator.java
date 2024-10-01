@@ -72,9 +72,9 @@ public class NPCCreator {
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
 
         AnimationFactory animationFactory = new AnimationFactory(atlas);
-        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
         AnimationPack minePack = animationFactory.create4Directional("mine", 4);
         AnimationPack walkPack = animationFactory.create4Directional("walking", 4);
+        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
         AnimationHolder animationHolder = new AnimationHolder();
         animationHolder.addAnimation("idle", idlePack);
         animationHolder.addAnimation("mine", minePack);

@@ -23,15 +23,15 @@ public final class AnimationFactory {
         return new FourDirectionalAnimationPack(animationRight, animationDown, animationLeft, animationUp);
     }
 
-    private Animation createWithDirection(String activity, String direction, int amountOfFrames){
-        List<Frame> framesRight = new ArrayList<>(amountOfFrames);
+    public Animation createWithDirection(String activity, String direction, int amountOfFrames){
+        List<Frame> frames = new ArrayList<>(amountOfFrames);
         for(int i = 1; i <= amountOfFrames; i++){
-            String name_right = activity + "_" + direction;
-            TextureRegion texture_right = atlas.findRegion(name_right, i); // one based indices
-            Frame frame = Frame.builder().textureRegion(texture_right).build();
-            framesRight.add(frame);
+            String name = activity + "_" + direction;
+            TextureRegion texture = atlas.findRegion(name, i); // one based indices
+            Frame frame = Frame.builder().textureRegion(texture).build();
+            frames.add(frame);
         }
-        return new Animation(framesRight, 2);
+        return new Animation(frames, 2);
     }
 
 }

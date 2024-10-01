@@ -29,16 +29,16 @@ public abstract class Entity extends AnimatedGameObject{
 
     @Override
     public TextureRegion getTexture(){
-        return getFrame("temp", direction).textureRegion();
+        return getFrame("idle", direction).textureRegion();
     }
 
     @Override
     public Point getPosition(){
-        return super.getPosition().add(getFrame("temp", direction).textureTranslation());
+        return super.getPosition().add(getFrame("idle", direction).textureTranslation());
     }
 
     @Override
     public Dimensions getDimensions(){
-        return getFrame("temp", direction).dimensions();
+        return getFrame("idle", direction).dimensions();
     }
 }
