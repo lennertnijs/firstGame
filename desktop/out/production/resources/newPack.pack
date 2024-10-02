@@ -3,7 +3,7 @@ newPack.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-map
+gameMap
   rotate: false
   xy: 1, 1095
   size: 5000, 2500

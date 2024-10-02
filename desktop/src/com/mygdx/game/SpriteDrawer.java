@@ -1,8 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.Map.Map;
+import com.mygdx.game.Util.GameMap;
 
 public class SpriteDrawer {
 
@@ -22,10 +23,10 @@ public class SpriteDrawer {
         drawText();
     }
 
-    public void draw(Map map){
-        TextureRegion texture = map.getTextureRegion();
-        int width = texture.getRegionWidth();
-        int height = texture.getRegionHeight();
+    public void draw(GameMap gameMap){
+        Texture texture = gameMap.texture();
+        int width = texture.getWidth();
+        int height = texture.getHeight();
         game.batch.draw(texture, 0, 0, width, height);
         drawText();
     }
