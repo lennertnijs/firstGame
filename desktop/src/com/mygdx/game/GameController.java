@@ -12,7 +12,7 @@ import com.mygdx.game.Loot.Loot;
 import com.mygdx.game.GameObject.Renderer;
 import com.mygdx.game.GameObject.StaticTexture;
 import com.mygdx.game.GameObject.Transform;
-import com.mygdx.game.Util.Vec2;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.npc.NPC;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Vec2;
+import com.mygdx.game.UpdatedUtil.Vec2;
 
 import java.util.Objects;
 

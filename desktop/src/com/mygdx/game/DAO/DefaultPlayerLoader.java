@@ -14,7 +14,7 @@ import com.mygdx.game.Inventory.ToolType;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Vec2;
+import com.mygdx.game.UpdatedUtil.Vec2;
 
 import java.util.HashMap;
 import java.util.Map;

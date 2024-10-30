@@ -1,6 +1,6 @@
 package com.mygdx.game.HitBox;
 
-import com.mygdx.game.Util.Vec2;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Dimensions;
 
 import java.util.Objects;
