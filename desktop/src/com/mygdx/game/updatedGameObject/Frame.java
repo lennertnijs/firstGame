@@ -1,10 +1,18 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.updatedGameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;
 
 import java.util.Objects;
 
+/**
+ * An immutable frame in an animation.
+ * A frame contains:
+ * - a texture (region)
+ * - an offset of this particular frame (to add to the global position)
+ * - the width and height of the frame's texture
+ * - the scaleX and scaleY representing the scaling factor of the width/height respectively
+ */
 public final class Frame {
 
     private final TextureRegion texture;
@@ -92,6 +100,7 @@ public final class Frame {
 
         public Frame build(){
             Objects.requireNonNull(texture);
+            Objects.requireNonNull(offset);
             if(width < 0 || height < 0){
                 throw new IllegalArgumentException("The width or height cannot be negative.");
             }

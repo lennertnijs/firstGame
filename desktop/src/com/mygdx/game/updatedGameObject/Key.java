@@ -1,9 +1,15 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.updatedGameObject;
 
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
 
+/**
+ * A mutable key that is used to identify animations.
+ * A key contains:
+ * - an activity
+ * - a direction (in which the activity is being performed)
+ */
 public final class Key {
 
     private String activity;
@@ -39,7 +45,10 @@ public final class Key {
 
     @Override
     public int hashCode(){
-        return activity.hashCode() * 31 + direction.hashCode();
+        int result = 17;
+        result = result * 31 + activity.hashCode();
+        result = result * 31 + direction.hashCode();
+        return result;
     }
 
     @Override

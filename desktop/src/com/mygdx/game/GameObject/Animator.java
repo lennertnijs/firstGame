@@ -3,6 +3,9 @@ package com.mygdx.game.GameObject;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
+import com.mygdx.game.updatedGameObject.Animation;
+import com.mygdx.game.updatedGameObject.Frame;
+import com.mygdx.game.updatedGameObject.Key;
 
 import java.util.Map;
 

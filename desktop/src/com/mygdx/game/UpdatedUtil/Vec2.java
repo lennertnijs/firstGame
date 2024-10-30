@@ -74,7 +74,10 @@ public record Vec2(int x, int y) {
 
     @Override
     public int hashCode(){
-        return 17 * (x * 31 + y);
+        int result = 17;
+        result = result * 31 + x;
+        result = result * 31 + y;
+        return result;
     }
 
     @Override
