@@ -6,8 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Loot.Loot;
 import com.mygdx.game.Loot.LootTable;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.StaticTexture;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.StaticRenderer;
+import com.mygdx.game.updatedGameObject.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +20,8 @@ public class BreakableCreator {
     public static List<Breakable> getBreakables(){
         TextureRegion texture = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
         LootTable lootTable = new LootTable(Collections.singletonList(new Loot("stone", 15)), Collections.singletonList(1.0));
-
-        Renderer renderer = new StaticTexture(texture);
+        Frame frame = Frame.builder().texture(texture).build();
+        Renderer renderer = new StaticRenderer(frame);
         Breakable stone1 = Breakable.builder().renderer(renderer).map("main").health(50).hardness(25)
                 .lootTable(lootTable).type("Stone").build();
 

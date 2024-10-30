@@ -10,14 +10,15 @@ import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.StaticTexture;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.StaticRenderer;
 import com.mygdx.game.Stats;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Schedule;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 import com.mygdx.game.npc.NPC;
+import com.mygdx.game.updatedGameObject.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +39,8 @@ public class NPCCreator {
         //Map<Key, Animation> animations = load("player/Player.pack");
 
         TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("npc/mining.png")));
-        Renderer renderer = new StaticTexture(tr);
+        Frame frame = Frame.builder().texture(tr).build();
+        Renderer renderer = new StaticRenderer(frame);
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());

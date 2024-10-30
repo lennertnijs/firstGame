@@ -6,17 +6,18 @@ import com.mygdx.game.Util.Direction;
 import com.mygdx.game.updatedGameObject.Animation;
 import com.mygdx.game.updatedGameObject.Frame;
 import com.mygdx.game.updatedGameObject.Key;
+import com.mygdx.game.updatedGameObject.Renderer;
 
 import java.util.Map;
 
-public final class Animator implements Renderer {
+public final class AnimatedRenderer implements Renderer {
 
     private final Map<Key, Animation> animations;
     private final Key key;
     private double delta;
     private Frame currentFrame;
 
-    public Animator(Map<Key, Animation> animations, Key key, double delta){
+    public AnimatedRenderer(Map<Key, Animation> animations, Key key, double delta){
         this.animations = animations;
         this.key = key;
         this.delta = delta;
@@ -24,7 +25,7 @@ public final class Animator implements Renderer {
     }
 
     @Override
-    public TextureRegion texture() {
+    public TextureRegion getTexture() {
         return currentFrame.texture();
     }
 

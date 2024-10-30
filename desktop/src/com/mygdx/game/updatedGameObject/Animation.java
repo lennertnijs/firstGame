@@ -44,21 +44,6 @@ public final class Animation {
     }
 
     @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Animation animation))
-            return false;
-        return Arrays.equals(frames, animation.frames) && durationInMillis == animation.durationInMillis;
-    }
-
-    @Override
-    public int hashCode(){
-        int result = 17;
-        result = result * 31 + Arrays.hashCode(frames);
-        result = result * 31 + Float.hashCode(durationInMillis);
-        return result;
-    }
-
-    @Override
     public String toString(){
         return String.format("Animation[frames=%s, durationInMillis=%f]", Arrays.toString(frames), durationInMillis);
     }

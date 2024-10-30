@@ -9,9 +9,10 @@ import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.StaticTexture;
-import com.mygdx.game.GameObject.Transform;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.StaticRenderer;
+import com.mygdx.game.updatedGameObject.Frame;
+import com.mygdx.game.updatedGameObject.Transform;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.npc.NPC;
 
@@ -94,8 +95,9 @@ public class GameController {
             gameObjectRepository.getBreakables().remove(breakable);
             Loot loot = breakable.getDrops();
             TextureRegion t = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
-            Renderer renderer = new StaticTexture(t);
-            Transform transform = new Transform(breakable.getPosition(), 0);
+            Frame frame = Frame.builder().texture(t).width(200).height(200).build();
+            Renderer renderer = new StaticRenderer(frame);
+            Transform transform = new Transform(breakable.getPosition());
             droppedItems.add(new DroppedItem(transform, renderer, "main", loot.name(), loot.amount()));
         }
     }

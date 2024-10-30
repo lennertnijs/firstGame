@@ -1,24 +1,37 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.updatedGameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
 
-public record StaticTexture(TextureRegion texture) implements Renderer {
+import java.util.Objects;
+
+public final class StaticRenderer implements Renderer {
+
+    private final Frame frame;
+
+    public StaticRenderer(Frame frame){
+        this.frame = Objects.requireNonNull(frame);
+    }
+
+    @Override
+    public TextureRegion getTexture(){
+        return frame.texture();
+    }
 
     @Override
     public Vec2 getOffSet() {
-        return new Vec2(0, 0);
+        return frame.offset();
     }
 
     @Override
     public int getWidth() {
-        return texture.getRegionWidth();
+        return frame.scaledWidth();
     }
 
     @Override
     public int getHeight() {
-        return texture.getRegionHeight();
+        return frame.scaledHeight();
     }
 
     @Override

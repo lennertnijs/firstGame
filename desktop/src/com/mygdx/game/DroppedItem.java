@@ -1,8 +1,8 @@
 package com.mygdx.game;
 
 import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.Transform;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.Transform;
 
 import java.util.Objects;
 

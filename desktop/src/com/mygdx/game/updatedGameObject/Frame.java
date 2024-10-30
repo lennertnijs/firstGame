@@ -53,6 +53,12 @@ public final class Frame {
         return (int) (height * scaleY);
     }
 
+    @Override
+    public String toString(){
+        return String.format("Frame[texture=%s, offset=%s, width=%d, height=%d, scaleX=%f, scaleY=%f]",
+                              texture, offset, width, height, scaleX, scaleY);
+    }
+
     public static Builder builder(){
         return new Builder();
     }

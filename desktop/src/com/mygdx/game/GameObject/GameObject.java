@@ -6,6 +6,8 @@ import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.Transform;
 
 import java.util.Objects;
 
@@ -42,7 +44,7 @@ public class GameObject {
     }
 
     public TextureRegion getTexture(){
-        return renderer.texture();
+        return renderer.getTexture();
     }
 
     public Dimensions getDimensions(){
@@ -59,18 +61,6 @@ public class GameObject {
 
     public HitBox getHitBox(){
         return new Rectangle(transform.getPosition(), new Dimensions(renderer.getWidth(), renderer.getHeight()));
-    }
-
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof GameObject object))
-            return false;
-        return  map.equals(object.map);
-    }
-
-    @Override
-    public int hashCode(){
-        return map.hashCode();
     }
 
     @Override

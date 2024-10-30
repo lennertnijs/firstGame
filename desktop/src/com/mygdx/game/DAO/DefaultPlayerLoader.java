@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.StaticTexture;
+import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.updatedGameObject.StaticRenderer;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
@@ -15,6 +15,7 @@ import com.mygdx.game.Player.Player;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.updatedGameObject.Frame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +44,8 @@ public final class DefaultPlayerLoader {
         String textureAtlas = file.getString("texture_atlas");
         //AnimationHolder animationHolder = load("player/Player.pack");
         TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("player/Player.png")));
-        Renderer renderer = new StaticTexture(tr);
+        Frame frame = Frame.builder().texture(tr).build();
+        Renderer renderer = new StaticRenderer(frame);
         Direction direction = Direction.valueOf(file.getString("direction"));
 
         String name = file.getString("name");

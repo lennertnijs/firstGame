@@ -2,9 +2,9 @@ package com.mygdx.game.Bat;
 
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Loot.LootTable;
-import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.updatedGameObject.Renderer;
 import com.mygdx.game.Stats;
-import com.mygdx.game.GameObject.Transform;
+import com.mygdx.game.updatedGameObject.Transform;
 
 public abstract class Monster extends GameObject {
 
