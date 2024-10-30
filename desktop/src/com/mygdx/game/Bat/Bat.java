@@ -19,7 +19,7 @@ public final class Bat extends Monster{
 
     public void update(double delta, Point playerPosition){
         state.handle(delta, playerPosition);
-        super.updateDelta(delta);
+        renderer.update(delta);
     }
 
     public int aggressionRange(){

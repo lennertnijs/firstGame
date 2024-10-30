@@ -7,7 +7,7 @@ import com.mygdx.game.Util.Vector;
 
 public interface Renderer {
 
-    TextureRegion getTexture();
+    TextureRegion texture();
     Vector getOffSet();
     Dimensions getDimensions();
     void setDirection(Direction direction);

@@ -42,7 +42,7 @@ public final class NPC extends Character {
     }
 
     public void update(Day day, Time time, double delta){
-        super.updateDelta(delta);
+        renderer.update(delta);
         Activity activity = weekSchedule.getActivity(day, time);
         if(activity != null){
             updateRoute(activity);

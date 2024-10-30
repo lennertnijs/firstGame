@@ -5,17 +5,7 @@ import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Vector;
 
-public final class StaticTexture implements Renderer{
-
-    private final TextureRegion texture;
-
-    public StaticTexture(TextureRegion texture){
-        this.texture = texture;
-    }
-    @Override
-    public TextureRegion getTexture() {
-        return texture;
-    }
+public record StaticTexture(TextureRegion texture) implements Renderer {
 
     @Override
     public Vector getOffSet() {
@@ -29,16 +19,13 @@ public final class StaticTexture implements Renderer{
 
     @Override
     public void setDirection(Direction direction) {
-        throw new IllegalStateException();
     }
 
     @Override
     public void setActivity(String activity) {
-        throw new IllegalStateException();
     }
 
     @Override
     public void update(double delta) {
-        throw new IllegalStateException("Updating a delta of a static texture is non sensical.");
     }
 }

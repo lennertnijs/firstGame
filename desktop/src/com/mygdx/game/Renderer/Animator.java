@@ -23,7 +23,7 @@ public final class Animator implements Renderer {
     }
 
     @Override
-    public TextureRegion getTexture() {
+    public TextureRegion texture() {
         return animationPacks.get(activity).get(direction).getFrame(delta).textureRegion();
     }
 

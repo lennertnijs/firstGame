@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Renderer.Animator;
 import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.Transform.Transform;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Location;
@@ -14,11 +15,13 @@ import java.util.Objects;
 
 public class GameObject {
 
+    protected final Transform transform;
     private Point position;
     private String map;
-    private Renderer renderer;
+    protected final Renderer renderer;
 
     public GameObject(Renderer renderer, Point position, String map){
+        this.transform = null;
         this.renderer = renderer;
         this.position = position;
         this.map = map;
@@ -43,7 +46,7 @@ public class GameObject {
     }
 
     public TextureRegion getTexture(){
-        return renderer.getTexture();
+        return renderer.texture();
     }
 
     public Point getPosition(){

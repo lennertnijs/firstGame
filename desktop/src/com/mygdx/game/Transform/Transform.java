@@ -21,18 +21,60 @@ public final class Transform {
     }
 
     public Vec2 getPosition(){
-        return position;
+        return position.add(offset);
     }
 
     public void setPosition(Vec2 updatedPosition){
-        Objects.requireNonNull(updatedPosition, "Updated position cannot be null.");
-        this.position = updatedPosition;
+        this.position = Objects.requireNonNull(updatedPosition);
     }
 
+    public void setOffset(Vec2 updatedOffset){
+        this.offset = Objects.requireNonNull(updatedOffset);
+    }
 
+    public int getWidth(){
+        return (int) (width * scaleX);
+    }
 
+    public void setWidth(int updatedWidth){
+        if(updatedWidth < 0){
+            throw new IllegalArgumentException("Width cannot be negative.");
+        }
+        this.width = updatedWidth;
+    }
 
+    public int getHeight(){
+        return (int) (height * scaleY);
+    }
 
+    public void setHeight(int updatedHeight){
+        if(updatedHeight < 0){
+            throw new IllegalArgumentException("Height cannot be negative.");
+        }
+        this.height = updatedHeight;
+    }
+
+    public void setScaleX(float updatedScaleX){
+        if(updatedScaleX < 0){
+            throw new IllegalArgumentException("ScaleX cannot be negative.");
+        }
+        this.scaleX = updatedScaleX;
+    }
+
+    public void setScaleY(float updatedScaleY){
+        if(updatedScaleY < 0){
+            throw new IllegalArgumentException("ScaleX cannot be negative.");
+        }
+        this.scaleY = updatedScaleY;
+    }
+
+    public float getRotation(){
+        return rotation;
+    }
+
+    public void setRotation(float updatedRotation){
+        this.rotation = updatedRotation;
+    }
 
     public static Builder builder(){
         return new Builder();
