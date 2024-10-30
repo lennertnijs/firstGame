@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.mygdx.game.HitBox.HitBox;
-import com.mygdx.game.Util.Point;
 
 import java.util.List;
 

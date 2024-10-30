@@ -9,9 +9,6 @@ import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.GameObject.Renderer;
 import com.mygdx.game.GameObject.Transform;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Point;
-
-import java.util.Objects;
 
 public final class Player extends Character {
 
@@ -57,7 +54,6 @@ public final class Player extends Character {
 
         private Transform transform;
         private Renderer renderer;
-        private Point position;
         private String map;
         private String name;
         private Inventory inventory;
@@ -72,11 +68,6 @@ public final class Player extends Character {
 
         public Builder renderer(Renderer renderer){
             this.renderer = renderer;
-            return this;
-        }
-
-        public Builder position(Point position){
-            this.position = position;
             return this;
         }
 
@@ -96,7 +87,6 @@ public final class Player extends Character {
         }
 
         public Player build(){
-            Objects.requireNonNull(position);
             return new Player(this);
         }
     }

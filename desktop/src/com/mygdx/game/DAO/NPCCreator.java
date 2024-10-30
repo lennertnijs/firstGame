@@ -28,7 +28,7 @@ public class NPCCreator {
     public static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("npc/mining.atlas"));
     public static NPC create() {
         TextureRegion idleDown = atlas.findRegion("idle_down");
-        Point position = new Point(500, 500);
+        Vec2 position = new Vec2(500, 500);
         Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
         String map = "main";
 

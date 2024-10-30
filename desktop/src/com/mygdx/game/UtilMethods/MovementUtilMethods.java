@@ -1,11 +1,9 @@
 package com.mygdx.game.UtilMethods;
 
 import com.mygdx.game.Navigation.Route;
-import com.mygdx.game.Util.Vec2;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Location;
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+import com.mygdx.game.Util.Vec2;
 
 import java.util.Objects;
 
@@ -23,7 +21,7 @@ public final class MovementUtilMethods {
         int y_diff = goal.position().y() - start.position().y();
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
         if (amount < distanceBetweenPoints) {
-            Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
+            Vec2 vector = new Vec2(x_diff, y_diff).scaleToSize(amount);
             return new Location(start.map(), new Vec2(start.position().x() + vector.x(), start.position().y() + vector.y()));
         }else{
             return moveAlongRoute(route.poll(), route, amount -  Vec2.distanceBetween(start.position(), goal.position()));
@@ -40,7 +38,7 @@ public final class MovementUtilMethods {
         if(distanceBetweenPoints <= amount){
             return goal;
         }
-        Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
+        Vec2 vector = new Vec2(x_diff, y_diff).scaleToSize(amount);
         return new Vec2(start.x() + vector.x(), start.y() + vector.y());
     }
 

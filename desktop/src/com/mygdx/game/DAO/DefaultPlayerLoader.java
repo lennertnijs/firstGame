@@ -5,16 +5,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.StaticTexture;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Inventory.ToolType;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.GameObject.Renderer;
-import com.mygdx.game.GameObject.StaticTexture;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vec2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ public final class DefaultPlayerLoader {
         JsonValue positionJson = file.get("position");
         int x = positionJson.getInt("x");
         int y = positionJson.getInt("y");
-        Point position = new Point(x, y);
+        Vec2 position = new Vec2(x, y);
 
         JsonValue dimensionsJson = file.get("dimensions");
         int width = dimensionsJson.getInt("width");
@@ -59,7 +59,6 @@ public final class DefaultPlayerLoader {
         Inventory inventory = Inventory.createWithItems(new Item[]{pickaxe, axe}, stackSizeMap);
         return Player.builder()
                 .renderer(renderer)
-                .position(position)
                 .map(map)
                 .name(name)
                 .inventory(inventory)
