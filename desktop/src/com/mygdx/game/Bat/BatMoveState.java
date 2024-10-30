@@ -22,7 +22,7 @@ public final class BatMoveState implements BatState{
         if(movement >= Vec2.distanceBetween(current, goal)){
             bat.setPosition(goal);
         }else{
-            Vec2 scaledMovementVector = Vec2.between(current, goal).scaleToSize(movement);
+            Vec2 scaledMovementVector = Vec2.createBetween(current, goal).scaleToSize(movement);
             Vec2 nextPosition = current.add(scaledMovementVector);
             bat.setPosition(nextPosition);
         }
