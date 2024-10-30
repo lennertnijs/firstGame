@@ -6,10 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Loot.Loot;
 import com.mygdx.game.Loot.LootTable;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Renderer.StaticTexture;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.StaticTexture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,10 +21,10 @@ public class BreakableCreator {
         LootTable lootTable = new LootTable(Collections.singletonList(new Loot("stone", 15)), Collections.singletonList(1.0));
 
         Renderer renderer = new StaticTexture(texture);
-        Breakable stone1 = Breakable.builder().renderer(renderer).position(new Point(50, 50)).map("main").health(50).hardness(25)
+        Breakable stone1 = Breakable.builder().renderer(renderer).map("main").health(50).hardness(25)
                 .lootTable(lootTable).type("Stone").build();
 
-        Breakable stone2 = Breakable.builder().renderer(renderer).position(new Point(350, 350)).map("main").health(50).hardness(25)
+        Breakable stone2 = Breakable.builder().renderer(renderer).map("main").health(50).hardness(25)
                 .lootTable(lootTable).type("Stone").build();
         return new ArrayList<>(Arrays.asList(stone1, stone2));
     }

@@ -1,19 +1,18 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.Transform;
 
 import java.util.Objects;
 
-public class DroppedItem extends GameObject{
+public class DroppedItem extends GameObject {
 
     private final String name;
     private final int amount;
 
-    public DroppedItem(Renderer renderer, Point position, String map, String name, int amount){
-        super(renderer, position, map);
+    public DroppedItem(Transform transform, Renderer renderer, String map, String name, int amount){
+        super(transform, renderer, map);
         this.name = Objects.requireNonNull(name, "Item name is null.");
         if(amount <= 0){
             throw new IllegalArgumentException("Amount is negative or zero.");
@@ -50,6 +49,6 @@ public class DroppedItem extends GameObject{
     @Override
     public String toString(){
         return String.format("DroppedItem[position=%s, dimensions=%s, map=%s, name=%s, amount =%d]",
-                super.getPosition(), super.getDimensions(), super.getMap(), name, amount);
+                super.getPosition(), super.getDimensions(), map, name, amount);
     }
 }

@@ -2,7 +2,7 @@ package com.mygdx.game.Util;
 
 import java.util.Objects;
 
-public record Activity(String activityType, String map, Point position, Time time){
+public record Activity(String activityType, String map, Vec2 position, Time time){
 
     public Activity {
         Objects.requireNonNull(activityType, "Activity type is null.");

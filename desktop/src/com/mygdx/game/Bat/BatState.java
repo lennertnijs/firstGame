@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vec2;
 
 public interface BatState {
 
@@ -12,5 +12,5 @@ public interface BatState {
     /**
      * Handles the update.
      */
-    void handle(double delta, Point playerPosition);
+    void handle(double delta, Vec2 playerPosition);
 }

@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vec2;
 import com.mygdx.game.UtilMethods.MovementUtilMethods;
 
 import java.util.Objects;
@@ -43,9 +43,9 @@ public final class BatAttackState implements BatState{
      * @param playerPosition The player position. Cannot be null.
      */
     @Override
-    public void handle(double delta, Point playerPosition) {
+    public void handle(double delta, Vec2 playerPosition) {
         int movement = (int)(delta * bat.getSpeed() / 200);
-        Point next = MovementUtilMethods.moveToPoint(bat.getPosition(), playerPosition, movement);
+        Vec2 next = MovementUtilMethods.moveToPoint(bat.getPosition(), playerPosition, movement);
         bat.setPosition(next);
         handleStateChange(playerPosition);
     }
@@ -55,7 +55,7 @@ public final class BatAttackState implements BatState{
      * More precisely, if the bat collided with the player, sets the bat's state to the {@link BatRepositionState}.
      * @param playerPosition The player position. Cannot be null.
      */
-    private void handleStateChange(Point playerPosition){
+    private void handleStateChange(Vec2 playerPosition){
         if(bat.getHitBox().contains(playerPosition)){
             bat.setState(new BatRepositionState(bat));
         }

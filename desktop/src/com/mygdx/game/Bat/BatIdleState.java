@@ -1,6 +1,6 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.Util.Vec2;
 
 import java.util.Objects;
 
@@ -47,7 +47,7 @@ public final class BatIdleState implements BatState{
      * @param playerPosition The player position. Cannot be null.
      */
     @Override
-    public void handle(double delta, Point playerPosition) {
+    public void handle(double delta, Vec2 playerPosition) {
         this.deltaSinceLastMove += delta;
         handleStateChange(playerPosition);
     }
@@ -58,8 +58,8 @@ public final class BatIdleState implements BatState{
      * If the internal delta counter goes over the threshold, swaps to the {@link BatMoveState} to move the idle bat
      * @param playerPosition The player position. Cannot be null.
      */
-    private void handleStateChange(Point playerPosition){
-        int distanceToPlayer = Point.distanceBetween(playerPosition, bat.getPosition());
+    private void handleStateChange(Vec2 playerPosition){
+        int distanceToPlayer = Vec2.distanceBetween(playerPosition, bat.getPosition());
         if(distanceToPlayer <= bat.aggressionRange()){
             bat.setState(new BatAttackState(bat));
         }

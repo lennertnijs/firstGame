@@ -3,8 +3,8 @@ package com.mygdx.game.Breakables;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Loot.ILootTable;
 import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.Transform;
 
 import java.util.Objects;
 
@@ -36,7 +36,7 @@ public final class Breakable extends GameObject{
      * Breakable objects can be damaged and, when fully broken,
      */
     public Breakable(Builder builder){
-        super(builder.renderer, builder.position, builder.map);
+        super(builder.transform, builder.renderer, builder.map);
         this.health = builder.health;
         this.hardness = builder.hardness;
         this.lootTable = builder.lootTable;
@@ -106,8 +106,8 @@ public final class Breakable extends GameObject{
 
     public static class Builder {
 
+        private Transform transform;
         private Renderer renderer;
-        private Point position = null;
         private String map = null;
         private int health = -1;
         private int hardness = -1;
@@ -118,13 +118,13 @@ public final class Breakable extends GameObject{
 
         }
 
-        public Builder renderer(Renderer renderer){
-            this.renderer = renderer;
+        public Builder transform(Transform transform){
+            this.transform = transform;
             return this;
         }
 
-        public Builder position(Point position){
-            this.position = position;
+        public Builder renderer(Renderer renderer){
+            this.renderer = renderer;
             return this;
         }
 
@@ -154,7 +154,6 @@ public final class Breakable extends GameObject{
         }
 
         public Breakable build(){
-            Objects.requireNonNull(position, "Position is null.");
             Objects.requireNonNull(map, "Map is null.");
             if(health <= 0){
                 throw new IllegalArgumentException("Health is negative or zero.");

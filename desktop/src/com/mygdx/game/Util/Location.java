@@ -2,7 +2,7 @@ package com.mygdx.game.Util;
 
 import java.util.Objects;
 
-public record Location(String map, Point position) {
+public record Location(String map, Vec2 position) {
 
 
     public Location {

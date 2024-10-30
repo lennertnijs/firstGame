@@ -6,15 +6,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.GameObject.DroppedItem;
 import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Renderer.StaticTexture;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.npc.NPC;
 import com.mygdx.game.HitBox.HitBox;
+import com.mygdx.game.Loot.Loot;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.StaticTexture;
+import com.mygdx.game.GameObject.Transform;
+import com.mygdx.game.Util.Vec2;
+import com.mygdx.game.npc.NPC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,8 +79,8 @@ public class GameController {
     }
 
     public void playerUseActiveItem(){
-        Point position = playerController.getPlayer().getPosition();
-        Point hit = new Point(position.x() + 30, position.y());
+        Vec2 position = playerController.getPlayer().getPosition();
+        Vec2 hit = new Vec2(position.x() + 30, position.y());
         List<Breakable> broken = new ArrayList<>();
         // if player frame has damage hit box -> check colisions
         for(Breakable breakable : gameObjectRepository.getBreakables()){
@@ -96,12 +95,13 @@ public class GameController {
             Loot loot = breakable.getDrops();
             TextureRegion t = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
             Renderer renderer = new StaticTexture(t);
-            droppedItems.add(new DroppedItem(renderer, breakable.getPosition(), "main", loot.name(), loot.amount()));
+            Transform transform = new Transform(breakable.getPosition(), 0);
+            droppedItems.add(new DroppedItem(transform, renderer, "main", loot.name(), loot.amount()));
         }
     }
 
     public void interact(){
-        Point p = new Point(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
+        Vec2 p = new Vec2(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
         for(NPC npc : gameObjectRepository.getNpcs()){
             if(npc.getHitBox().contains(p)){
                 drawer.draw(npc.handleInputLine("line"));

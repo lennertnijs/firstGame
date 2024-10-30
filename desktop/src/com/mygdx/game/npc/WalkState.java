@@ -16,9 +16,10 @@ public final class WalkState implements NPCState{
 
     public void progress(double delta){
         int movement = (int)(delta * npc.getStats().getSpeed() / 200);
-        Location current = npc.getLocation();
+        Location current = new Location(npc.getMap(), npc.getPosition());
         Location next = MovementUtilMethods.moveAlongRoute(current, npc.getRoute(), movement);
-        npc.setLocation(next);
+        npc.setPosition(null);
+        npc.setMap(next.map());
         npc.setDirection(DirectionCalculator.calculateDir(current.position(), next.position()));
         updateState();
     }

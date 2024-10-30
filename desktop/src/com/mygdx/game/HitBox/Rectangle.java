@@ -1,7 +1,7 @@
 package com.mygdx.game.HitBox;
 
+import com.mygdx.game.Util.Vec2;
 import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Point;
 
 import java.util.Objects;
 
@@ -12,7 +12,7 @@ public final class Rectangle implements HitBox {
     private final int width;
     private final int height;
 
-    public Rectangle(Point position, Dimensions dimensions){
+    public Rectangle(Vec2 position, Dimensions dimensions){
         Objects.requireNonNull(position, "Position is null.");
         Objects.requireNonNull(dimensions, "Dimensions is null.");
         this.x = position.x();
@@ -42,16 +42,16 @@ public final class Rectangle implements HitBox {
         return x < r.x + r.width && r.x < x + width && y < r.y + r.height && r.y < y + height;
     }
 
-    public boolean contains(Point point){
+    public boolean contains(Vec2 point){
         Objects.requireNonNull(point, "Point is null.");
         return x <= point.x() && point.x() < x + width && y <= point.y() && point.y() < y + height;
     }
 
     public boolean overlaps(HitBox hitBox){
-        Point bottomRight = new Point(x + width, y);
-        Point bottomLeft = new Point(x, y);
-        Point topLeft = new Point(x, y + height);
-        Point topRight = new Point(x + width, y + height);
+        Vec2 bottomRight = new Vec2(x + width, y);
+        Vec2 bottomLeft = new Vec2(x, y);
+        Vec2 topLeft = new Vec2(x, y + height);
+        Vec2 topRight = new Vec2(x + width, y + height);
         return hitBox.contains(bottomLeft) || hitBox.contains(bottomRight) || hitBox.contains(topLeft) || hitBox.contains(topRight);
     }
 

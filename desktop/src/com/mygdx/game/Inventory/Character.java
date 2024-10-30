@@ -1,10 +1,8 @@
-package com.mygdx.game.GameObject;
+package com.mygdx.game.Inventory;
 
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.Transform;
 
 import java.util.Objects;
 
@@ -14,8 +12,8 @@ public abstract class Character extends GameObject {
     private final Inventory inventory;
     private int activeIndex;
 
-    public Character(Renderer renderer, Point position, String map, String name, Inventory inventory) {
-        super(renderer, position, map);
+    public Character(Transform transform, Renderer renderer, String map, String name, Inventory inventory) {
+        super(transform, renderer, map);
         this.name = Objects.requireNonNull(name, "Name is null.");
         this.inventory = inventory;
     }

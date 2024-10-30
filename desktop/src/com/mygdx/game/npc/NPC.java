@@ -1,13 +1,17 @@
 package com.mygdx.game.npc;
 
 import com.mygdx.game.Dialogue.DialogueData;
-import com.mygdx.game.GameObject.Character;
+import com.mygdx.game.Inventory.Character;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
-import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.GameObject.Renderer;
 import com.mygdx.game.Stats;
-import com.mygdx.game.Util.*;
+import com.mygdx.game.GameObject.Transform;
+import com.mygdx.game.Util.Activity;
+import com.mygdx.game.Util.Day;
+import com.mygdx.game.Util.Location;
+import com.mygdx.game.Util.Time;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 
 import java.util.Objects;
@@ -24,7 +28,7 @@ public final class NPC extends Character {
     private Activity nextActivity;
 
     private NPC(Builder b){
-        super(b.renderer, b.position, b.map, b.name, b.inventory);
+        super(b.transform, b.renderer, b.map, b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
@@ -33,8 +37,9 @@ public final class NPC extends Character {
     }
 
     public void updateRoute(Activity activity){
+        Location current = new Location(map, getPosition());
         Location next = new Location(activity.map(), activity.position());
-        route.add(navigationData.generateRoute(getLocation(), next));
+        route.add(navigationData.generateRoute(current, next));
     }
 
     public Stats getStats(){
@@ -79,8 +84,8 @@ public final class NPC extends Character {
 
     public static class Builder{
 
+        private Transform transform;
         private Renderer renderer;
-        private Point position;
         private String map;
         private String name;
         private Inventory inventory;
@@ -92,15 +97,16 @@ public final class NPC extends Character {
         private Builder(){
         }
 
+        public Builder transform(Transform transform){
+            this.transform = transform;
+            return this;
+        }
+
         public Builder renderer(Renderer renderer){
             this.renderer = renderer;
             return this;
         }
 
-        public Builder position(Point position){
-            this.position = position;
-            return this;
-        }
 
         public Builder map(String map){
             this.map = map;
@@ -138,7 +144,6 @@ public final class NPC extends Character {
         }
 
         public NPC build(){
-            Objects.requireNonNull(position, "Position is null.");
             Objects.requireNonNull(map, "Map is null.");
             Objects.requireNonNull(name);
             Objects.requireNonNull(inventory);

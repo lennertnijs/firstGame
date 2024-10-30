@@ -1,12 +1,13 @@
 package com.mygdx.game.Player;
 
 import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.GameObject.Character;
+import com.mygdx.game.Inventory.Character;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.Transform;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
@@ -18,7 +19,7 @@ public final class Player extends Character {
 
 
     private Player(Builder b){
-        super(b.renderer, b.position, b.map, b.name, b.inventory);
+        super(b.transform, b.renderer, b.map, b.name, b.inventory);
     }
 
     public String getState(){
@@ -54,6 +55,7 @@ public final class Player extends Character {
 
     public static class Builder{
 
+        private Transform transform;
         private Renderer renderer;
         private Point position;
         private String map;
@@ -61,6 +63,11 @@ public final class Player extends Character {
         private Inventory inventory;
 
         private Builder(){
+        }
+
+        public Builder transform(Transform transform){
+            this.transform = transform;
+            return this;
         }
 
         public Builder renderer(Renderer renderer){

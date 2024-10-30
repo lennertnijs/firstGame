@@ -2,20 +2,22 @@ package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.Animation.*;
-import com.mygdx.game.Inventory.*;
+import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.Inventory.ToolType;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Renderer.StaticTexture;
+import com.mygdx.game.GameObject.Renderer;
+import com.mygdx.game.GameObject.StaticTexture;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class DefaultPlayerLoader {
 
@@ -39,7 +41,7 @@ public final class DefaultPlayerLoader {
         String map = file.getString("map");
 
         String textureAtlas = file.getString("texture_atlas");
-        AnimationHolder animationHolder = load("player/Player.pack");
+        //AnimationHolder animationHolder = load("player/Player.pack");
         TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("player/Player.png")));
         Renderer renderer = new StaticTexture(tr);
         Direction direction = Direction.valueOf(file.getString("direction"));
@@ -63,19 +65,4 @@ public final class DefaultPlayerLoader {
                 .inventory(inventory)
                 .build();
     }
-
-    public static AnimationHolder load(String atlasPath){
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
-
-        AnimationFactory animationFactory = new AnimationFactory(atlas);
-        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
-        AnimationPack minePack = animationFactory.create4Directional("mine", 4);
-        AnimationPack walkPack = animationFactory.create4Directional("walking", 4);
-        AnimationHolder animationHolder = new AnimationHolder();
-        animationHolder.addAnimation("idle", idlePack);
-        animationHolder.addAnimation("mine", minePack);
-        animationHolder.addAnimation("walking", walkPack);
-        return animationHolder;
-    }
-
 }

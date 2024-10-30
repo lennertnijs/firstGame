@@ -2,63 +2,51 @@ package com.mygdx.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.HitBox.HitBox;
-import com.mygdx.game.Renderer.Animator;
-import com.mygdx.game.Renderer.Renderer;
-import com.mygdx.game.Transform.Transform;
+import com.mygdx.game.HitBox.Rectangle;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Location;
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.HitBox.Rectangle;
+import com.mygdx.game.Util.Vec2;
 
 import java.util.Objects;
 
 public class GameObject {
 
     protected final Transform transform;
-    private Point position;
-    private String map;
     protected final Renderer renderer;
+    protected String map;
 
-    public GameObject(Renderer renderer, Point position, String map){
-        this.transform = null;
-        this.renderer = renderer;
-        this.position = position;
-        this.map = map;
+    public GameObject(Transform transform, Renderer renderer, String map){
+        this.transform = Objects.requireNonNull(transform);
+        this.renderer = Objects.requireNonNull(renderer);
+        this.map = Objects.requireNonNull(map);
+    }
+
+    public Vec2 getPosition(){
+        return transform.getPosition().add(renderer.getOffSet());
+    }
+
+    public void setPosition(Vec2 position){
+        transform.setPosition(position);
     }
 
     public void updateDelta(double delta){
-        if(renderer instanceof Animator){
-            renderer.update(delta);
-        }
+        renderer.update(delta);
     }
 
     public void setDirection(Direction direction){
-        if(renderer instanceof Animator) {
-            renderer.setDirection(direction);
-        }
+        renderer.setDirection(direction);
     }
 
     public void setActivity(String activity){
-        if(renderer instanceof Animator) {
-            renderer.setActivity(activity);
-        }
+        renderer.setActivity(activity);
     }
 
     public TextureRegion getTexture(){
         return renderer.texture();
     }
 
-    public Point getPosition(){
-        return position;
-    }
-
-    public void setPosition(Point position){
-        this.position = Objects.requireNonNull(position);
-    }
-
     public Dimensions getDimensions(){
-        return renderer.getDimensions();
+        return new Dimensions(renderer.getWidth(), renderer.getHeight());
     }
 
     public final String getMap(){
@@ -66,40 +54,27 @@ public class GameObject {
     }
 
     public final void setMap(String map){
-        this.map = Objects.requireNonNull(map, "Map is null.");
-    }
-
-    public Location getLocation(){
-        return new Location(map, position);
-    }
-
-    public void setLocation(Location location){
-        Objects.requireNonNull(location, "Location is null.");
-        this.map = location.map();
-        this.position = location.position();
+        this.map = map;
     }
 
     public HitBox getHitBox(){
-        return new Rectangle(position, new Dimensions(50, 50));
+        return new Rectangle(transform.getPosition(), new Dimensions(renderer.getWidth(), renderer.getHeight()));
     }
 
     @Override
     public boolean equals(Object other){
         if(!(other instanceof GameObject object))
             return false;
-        return  position.equals(object.position) &&
-                map.equals(object.map);
+        return  map.equals(object.map);
     }
 
     @Override
     public int hashCode(){
-        int result = position.hashCode();
-        result = result * 31 + map.hashCode();
-        return result;
+        return map.hashCode();
     }
 
     @Override
     public String toString(){
-        return String.format("GameObject[position=%s, map=%s]", position, map);
+        return String.format("GameObject[map=%s]", map);
     }
 }

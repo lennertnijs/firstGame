@@ -1,4 +1,4 @@
-package com.mygdx.game.Animation;
+package com.mygdx.game.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,8 @@ public final class Animation {
 
     @Override
     public boolean equals(Object other){
-        if(!(other instanceof Animation))
+        if(!(other instanceof Animation temp))
             return false;
-        Animation temp = (Animation) other;
         return frames.equals(temp.frames) && durationInMillis == temp.durationInMillis;
     }
 
