@@ -64,4 +64,21 @@ public record Vec2(int x, int y) {
         int y_diff = first.y - second.y;
         return (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(!(other instanceof Vec2 vector))
+            return false;
+        return x == vector.x && y == vector.y;
+    }
+
+    @Override
+    public int hashCode(){
+        return 17 * (x * 31 + y);
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Vec2[x=%d, y=%d]", x, y);
+    }
 }
