@@ -1,11 +1,14 @@
 package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
 import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.Renderer.StaticTexture;
 import com.mygdx.game.npc.NPC;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
@@ -33,6 +36,9 @@ public class NPCCreator {
 
         AnimationHolder animationHolder = load("player/Player.pack");
 
+        TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("npc/mining.png")));
+        Renderer renderer = new StaticTexture(tr);
+
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
         scheduleMap.put(Day.TUESDAY, loadSchedule());
@@ -53,12 +59,9 @@ public class NPCCreator {
         Inventory inventory = Inventory.createEmptyOfSize(6, stackSizeMap);
 
         return NPC.builder()
+                .renderer(renderer)
                 .position(position)
-                .dimensions(dimensions)
                 .map(map)
-                .animationHolder(animationHolder)
-                .direction(RIGHT)
-                .delta(0)
                 .name(name)
                 .inventory(inventory)
                 .weekSchedule(weekSchedule)

@@ -40,7 +40,7 @@ public final class PlayerController{
     }
 
     public void update(double delta, HitBoxSnapShot snapShot){
-        player.increaseAnimationDelta(delta);
+        player.updateDelta(delta);
         Direction direction = movementFlags.getCurrentDirection();
         player.update(delta, direction, snapShot);
     }
@@ -62,14 +62,14 @@ public final class PlayerController{
         if(breakable == null){
             return;
         }
-        if(player.getFrame("temp", player.getDirection()).damageBox() != null){
-            Vector translation = player.getFrame("temp", player.getDirection()).damageBoxTranslation();
-            Point point = player.getPosition().add(translation);
-            HitBox h = new Rectangle(point, new Dimensions(10, 20));
-            if(h.overlaps(breakable.getHitBox())){
-                player.useActiveItem(breakable);
-            }
-        }
+//        if(player.getFrame("temp", player.getDirection()).damageBox() != null){
+//            Vector translation = player.getFrame("temp", player.getDirection()).damageBoxTranslation();
+//            Point point = player.getPosition().add(translation);
+//            HitBox h = new Rectangle(point, new Dimensions(10, 20));
+//            if(h.overlaps(breakable.getHitBox())){
+//                player.useActiveItem(breakable);
+//            }
+//        }
     }
 
     public void setNextActive(){

@@ -1,12 +1,16 @@
 package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.Animation.*;
 import com.mygdx.game.Inventory.*;
 import com.mygdx.game.Player.Player;
+import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.Renderer.StaticTexture;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
@@ -36,7 +40,8 @@ public final class DefaultPlayerLoader {
 
         String textureAtlas = file.getString("texture_atlas");
         AnimationHolder animationHolder = load("player/Player.pack");
-
+        TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("player/Player.png")));
+        Renderer renderer = new StaticTexture(tr);
         Direction direction = Direction.valueOf(file.getString("direction"));
 
         String name = file.getString("name");
@@ -51,11 +56,9 @@ public final class DefaultPlayerLoader {
 
         Inventory inventory = Inventory.createWithItems(new Item[]{pickaxe, axe}, stackSizeMap);
         return Player.builder()
+                .renderer(renderer)
                 .position(position)
-                .dimensions(dimensions)
                 .map(map)
-                .animationHolder(animationHolder)
-                .direction(direction)
                 .name(name)
                 .inventory(inventory)
                 .build();

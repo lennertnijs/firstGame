@@ -1,10 +1,9 @@
 package com.mygdx.game.Breakables;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Loot.ILootTable;
 import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Renderer.Renderer;
 import com.mygdx.game.Util.Point;
 
 import java.util.Objects;
@@ -37,7 +36,7 @@ public final class Breakable extends GameObject{
      * Breakable objects can be damaged and, when fully broken,
      */
     public Breakable(Builder builder){
-        super(builder.textureRegion, builder.position, builder.dimensions, builder.map);
+        super(builder.renderer, builder.position, builder.map);
         this.health = builder.health;
         this.hardness = builder.hardness;
         this.lootTable = builder.lootTable;
@@ -107,9 +106,8 @@ public final class Breakable extends GameObject{
 
     public static class Builder {
 
-        private TextureRegion textureRegion = null;
+        private Renderer renderer;
         private Point position = null;
-        private Dimensions dimensions = null;
         private String map = null;
         private int health = -1;
         private int hardness = -1;
@@ -120,18 +118,13 @@ public final class Breakable extends GameObject{
 
         }
 
-        public Builder textureRegion(TextureRegion textureRegion){
-            this.textureRegion = textureRegion;
+        public Builder renderer(Renderer renderer){
+            this.renderer = renderer;
             return this;
         }
 
         public Builder position(Point position){
             this.position = position;
-            return this;
-        }
-
-        public Builder dimensions(Dimensions dimensions){
-            this.dimensions = dimensions;
             return this;
         }
 
@@ -161,11 +154,7 @@ public final class Breakable extends GameObject{
         }
 
         public Breakable build(){
-            Objects.requireNonNull(textureRegion, "Texture region is null.");
             Objects.requireNonNull(position, "Position is null.");
-            if(dimensions == null){
-                dimensions = new Dimensions(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
-            }
             Objects.requireNonNull(map, "Map is null.");
             if(health <= 0){
                 throw new IllegalArgumentException("Health is negative or zero.");

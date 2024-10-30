@@ -1,28 +1,21 @@
 package com.mygdx.game.GameObject;
 
-import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Util.*;
+import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.Util.Point;
 
 import java.util.Objects;
 
-public abstract class Character extends Entity {
+public abstract class Character extends GameObject {
 
     private final String name;
     private final Inventory inventory;
     private int activeIndex;
 
-    public Character(Point position,
-                     Dimensions dimensions,
-                     String map,
-                     AnimationHolder animationHolder,
-                     double delta,
-                     Direction direction,
-                     String name,
-                     Inventory inventory) {
-        super(position, dimensions, map, animationHolder, delta, direction);
+    public Character(Renderer renderer, Point position, String map, String name, Inventory inventory) {
+        super(renderer, position, map);
         this.name = Objects.requireNonNull(name, "Name is null.");
         this.inventory = inventory;
     }

@@ -1,13 +1,12 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Renderer.Renderer;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Point;
 
@@ -19,10 +18,7 @@ public final class Player extends Character {
 
 
     private Player(Builder b){
-        super(b.position, b.dimensions, b.map,
-                b.animationHolder, 0,
-                b.direction,
-                b.name, b.inventory);
+        super(b.renderer, b.position, b.map, b.name, b.inventory);
     }
 
     public String getState(){
@@ -30,7 +26,7 @@ public final class Player extends Character {
     }
 
     public void changeState(PlayerState playerState){
-        super.resetAnimationDelta();
+        super.setActivity(playerState.getName());
         this.playerState = playerState;
     }
 
@@ -58,40 +54,27 @@ public final class Player extends Character {
 
     public static class Builder{
 
+        private Renderer renderer;
         private Point position;
-        private Dimensions dimensions;
         private String map;
-        private AnimationHolder animationHolder;
-        private Direction direction;
         private String name;
         private Inventory inventory;
 
         private Builder(){
         }
 
+        public Builder renderer(Renderer renderer){
+            this.renderer = renderer;
+            return this;
+        }
 
         public Builder position(Point position){
             this.position = position;
             return this;
         }
 
-        public Builder dimensions(Dimensions dimensions){
-            this.dimensions = dimensions;
-            return this;
-        }
-
         public Builder map(String map){
             this.map = map;
-            return this;
-        }
-
-        public Builder animationHolder(AnimationHolder animationHolder){
-            this.animationHolder = animationHolder;
-            return this;
-        }
-
-        public Builder direction(Direction direction){
-            this.direction = direction;
             return this;
         }
 

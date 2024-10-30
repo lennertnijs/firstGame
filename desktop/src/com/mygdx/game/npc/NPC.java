@@ -1,11 +1,11 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Animation.AnimationHolder;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.GameObject.Character;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
+import com.mygdx.game.Renderer.Renderer;
 import com.mygdx.game.Stats;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
@@ -24,7 +24,7 @@ public final class NPC extends Character {
     private Activity nextActivity;
 
     private NPC(Builder b){
-        super(b.position, b.dimensions, b.map, b.animationHolder, b.d, b.direction, b.name, b.inventory);
+        super(b.renderer, b.position, b.map, b.name, b.inventory);
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
@@ -42,7 +42,7 @@ public final class NPC extends Character {
     }
 
     public void update(Day day, Time time, double delta){
-        super.increaseAnimationDelta(delta);
+        super.updateDelta(delta);
         Activity activity = weekSchedule.getActivity(day, time);
         if(activity != null){
             updateRoute(activity);
@@ -79,12 +79,9 @@ public final class NPC extends Character {
 
     public static class Builder{
 
+        private Renderer renderer;
         private Point position;
-        private Dimensions dimensions;
         private String map;
-        private AnimationHolder animationHolder;
-        private Direction direction;
-        private double d = -1;
         private String name;
         private Inventory inventory;
         private NavigationData navigationData;
@@ -95,33 +92,18 @@ public final class NPC extends Character {
         private Builder(){
         }
 
+        public Builder renderer(Renderer renderer){
+            this.renderer = renderer;
+            return this;
+        }
+
         public Builder position(Point position){
             this.position = position;
             return this;
         }
 
-        public Builder dimensions(Dimensions dimensions){
-            this.dimensions = dimensions;
-            return this;
-        }
-
         public Builder map(String map){
             this.map = map;
-            return this;
-        }
-
-        public Builder animationHolder(AnimationHolder animationHolder){
-            this.animationHolder = animationHolder;
-            return this;
-        }
-
-        public Builder direction(Direction direction){
-            this.direction = direction;
-            return this;
-        }
-
-        public Builder delta(double d){
-            this.d = d;
             return this;
         }
 
@@ -157,13 +139,7 @@ public final class NPC extends Character {
 
         public NPC build(){
             Objects.requireNonNull(position, "Position is null.");
-            Objects.requireNonNull(dimensions, "Dimensions is null.");
             Objects.requireNonNull(map, "Map is null.");
-            Objects.requireNonNull(animationHolder, "Animation holder is null.");
-            Objects.requireNonNull(direction, "Direction is null.");
-            if(d < 0){
-                throw new IllegalArgumentException("Delta is negative.");
-            }
             Objects.requireNonNull(name);
             Objects.requireNonNull(inventory);
             Objects.requireNonNull(navigationData);

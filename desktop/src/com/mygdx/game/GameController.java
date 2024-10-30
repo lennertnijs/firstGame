@@ -9,6 +9,8 @@ import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.GameObject.DroppedItem;
 import com.mygdx.game.GameObject.GameObject;
 import com.mygdx.game.Loot.Loot;
+import com.mygdx.game.Renderer.Renderer;
+import com.mygdx.game.Renderer.StaticTexture;
 import com.mygdx.game.Util.Dimensions;
 import com.mygdx.game.Util.Point;
 import com.mygdx.game.npc.NPC;
@@ -44,21 +46,21 @@ public class GameController {
         }
         checkDroppedItems();
         drawer.draw(gameObjectRepository.getMaps().get(0));
-        for(GameObject o : gameObjectRepository.getMiscObjects()){
-            drawer.draw(o);
-        }
-        for(Breakable b : gameObjectRepository.getBreakables()){
-            drawer.draw(b);
-        }
+//        for(GameObject o : gameObjectRepository.getMiscObjects()){
+//            drawer.draw(o);
+//        }
+//        for(Breakable b : gameObjectRepository.getBreakables()){
+//            drawer.draw(b);
+//        }
         for(Bat bat : gameObjectRepository.getBats()){
             drawer.draw(bat);
         }
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
-        for(GameObject o : droppedItems){
-            drawer.draw(o);
-        }
+//        for(GameObject o : droppedItems){
+//            drawer.draw(o);
+//        }
         drawer.draw(playerController.getPlayer());
     }
 
@@ -93,7 +95,8 @@ public class GameController {
             gameObjectRepository.getBreakables().remove(breakable);
             Loot loot = breakable.getDrops();
             TextureRegion t = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
-            droppedItems.add(new DroppedItem(t, breakable.getPosition(), new Dimensions(20, 20), "main", loot.name(), loot.amount()));
+            Renderer renderer = new StaticTexture(t);
+            droppedItems.add(new DroppedItem(renderer, breakable.getPosition(), "main", loot.name(), loot.amount()));
         }
     }
 
