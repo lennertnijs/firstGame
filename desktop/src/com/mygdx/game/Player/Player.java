@@ -6,8 +6,8 @@ import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.Util.Direction;
 
 public final class Player extends Character {

@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.npc.NPC;
 import com.mygdx.game.map.SingleTextureMap;
 

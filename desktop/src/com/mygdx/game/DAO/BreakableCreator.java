@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Loot.Loot;
 import com.mygdx.game.Loot.LootTable;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.StaticRenderer;
-import com.mygdx.game.updatedGameObject.Frame;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.StaticRenderer;
+import com.mygdx.game.game_object.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;

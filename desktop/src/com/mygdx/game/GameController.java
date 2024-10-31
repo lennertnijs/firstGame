@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.StaticRenderer;
-import com.mygdx.game.updatedGameObject.Frame;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.StaticRenderer;
+import com.mygdx.game.game_object.Frame;
+import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.npc.NPC;
 
@@ -67,15 +67,15 @@ public class GameController {
     // todo static objects dont need new snapshots, dynamic snapshots need updating
     private HitBoxSnapShot getSnapShot(){
         List<HitBox> hitBoxes = new ArrayList<>();
-        for(GameObject o : gameObjectRepository.getMiscObjects()){
-            hitBoxes.add(o.getHitBox());
-        }
-        for(GameObject o : gameObjectRepository.getNpcs()){
-            hitBoxes.add(o.getHitBox());
-        }
-        for(GameObject o : gameObjectRepository.getBreakables()){
-            hitBoxes.add(o.getHitBox());
-        }
+//        for(GameObject o : gameObjectRepository.getMiscObjects()){
+//            hitBoxes.add(o.getHitBox());
+//        }
+//        for(GameObject o : gameObjectRepository.getNpcs()){
+//            hitBoxes.add(o.getHitBox());
+//        }
+//        for(GameObject o : gameObjectRepository.getBreakables()){
+//            hitBoxes.add(o.getHitBox());
+//        }
         return new HitBoxSnapShot(hitBoxes);
     }
 
@@ -85,9 +85,9 @@ public class GameController {
         List<Breakable> broken = new ArrayList<>();
         // if player frame has damage hit box -> check colisions
         for(Breakable breakable : gameObjectRepository.getBreakables()){
-            if(breakable.getHitBox().contains(hit)){
-                broken.add(breakable);
-            }
+//            if(breakable.getHitBox().contains(hit)){
+//                broken.add(breakable);
+//            }
         }
         Breakable b = broken.size() > 0 ? broken.get(0) : null;
         playerController.useActiveItem(b);
@@ -105,14 +105,14 @@ public class GameController {
     public void interact(){
         Vec2 p = new Vec2(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
         for(NPC npc : gameObjectRepository.getNpcs()){
-            if(npc.getHitBox().contains(p)){
-                drawer.draw(npc.handleInputLine("line"));
-            }
+//            if(npc.getHitBox().contains(p)){
+//                drawer.draw(npc.handleInputLine("line"));
+//            }
         }
     }
 
     public void checkDroppedItems(){
         //playerController.getPlayer().getInventory().add(droppedItem.name(), droppedItem.amount());
-        droppedItems.removeIf(droppedItem -> droppedItem.getHitBox().contains(playerController.getPlayer().getPosition()));
+        //droppedItems.removeIf(droppedItem -> droppedItem.getHitBox().contains(playerController.getPlayer().getPosition()));
     }
 }

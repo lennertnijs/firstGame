@@ -1,4 +1,4 @@
-package com.mygdx.game.updatedGameObject;
+package com.mygdx.game.game_object;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;

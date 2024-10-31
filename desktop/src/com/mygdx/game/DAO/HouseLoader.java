@@ -1,6 +1,6 @@
 package com.mygdx.game.DAO;
 
-import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.game_object.GameObject;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Bat.Bat;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.StaticRenderer;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.StaticRenderer;
 import com.mygdx.game.Stats;
-import com.mygdx.game.updatedGameObject.Frame;
+import com.mygdx.game.game_object.Frame;
 
 public final class BatLoader {
 

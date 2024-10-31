@@ -1,8 +1,8 @@
 package com.mygdx.game.Inventory;
 
-import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
 

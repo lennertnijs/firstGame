@@ -1,4 +1,4 @@
-package com.mygdx.game.updatedGameObject;
+package com.mygdx.game.game_object;
 
 import com.mygdx.game.Util.Direction;
 

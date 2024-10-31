@@ -1,9 +1,9 @@
 package com.mygdx.game.Bat;
 
 import com.mygdx.game.Loot.LootTable;
-import com.mygdx.game.updatedGameObject.Renderer;
+import com.mygdx.game.game_object.Renderer;
 import com.mygdx.game.Stats;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.UpdatedUtil.Vec2;
 
 import java.util.Objects;

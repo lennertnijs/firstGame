@@ -1,8 +1,8 @@
 package com.mygdx.game;
 
-import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
 
@@ -48,7 +48,7 @@ public class DroppedItem extends GameObject {
 
     @Override
     public String toString(){
-        return String.format("DroppedItem[position=%s, dimensions=%s, map=%s, name=%s, amount =%d]",
-                super.getPosition(), super.getDimensions(), map, name, amount);
+        return String.format("DroppedItem[position=%s, width=%d, height=%d, map=%s, name=%s, amount =%d]",
+                super.getPosition(), getWidth(), getHeight(), map, name, amount);
     }
 }

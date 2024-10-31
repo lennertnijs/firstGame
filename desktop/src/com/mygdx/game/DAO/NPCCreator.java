@@ -10,15 +10,15 @@ import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.StaticRenderer;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.StaticRenderer;
 import com.mygdx.game.Stats;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Schedule;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 import com.mygdx.game.npc.NPC;
-import com.mygdx.game.updatedGameObject.Frame;
+import com.mygdx.game.game_object.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,10 +1,10 @@
 package com.mygdx.game.Breakables;
 
-import com.mygdx.game.GameObject.GameObject;
+import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.Loot.ILootTable;
 import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.updatedGameObject.Renderer;
-import com.mygdx.game.updatedGameObject.Transform;
+import com.mygdx.game.game_object.Renderer;
+import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
 

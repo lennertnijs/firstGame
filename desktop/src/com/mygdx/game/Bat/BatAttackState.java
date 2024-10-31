@@ -56,8 +56,8 @@ public final class BatAttackState implements BatState{
      * @param playerPosition The player position. Cannot be null.
      */
     private void handleStateChange(Vec2 playerPosition){
-        if(bat.getHitBox().contains(playerPosition)){
-            bat.setState(new BatRepositionState(bat));
-        }
+//        if(bat.getHitBox().contains(playerPosition)){
+//            bat.setState(new BatRepositionState(bat));
+//        }
     }
 }
