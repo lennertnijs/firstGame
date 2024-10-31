@@ -5,24 +5,18 @@ import com.mygdx.game.UtilMethods.MovementUtilMethods;
 
 import java.util.Objects;
 
-/**
- * The attacking state of the {@link Bat}.
- * In the attacking state, the bat will fly straight to the player position until hitting the player.
- *
- * If the {@link Bat} collides with the player position, it will change it's state to the {@link BatRepositionState}.
- */
-public final class BatAttackState implements BatState{
+public final class BatAttackState implements MonsterState{
 
     /**
      * The bat.
      */
-    private final Bat bat;
+    private final Monster bat;
 
     /**
      * Creates a new {@link BatAttackState} with the given bat.
      * @param bat The bat. Cannot be null.
      */
-    public BatAttackState(Bat bat){
+    public BatAttackState(Monster bat){
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
     }
 

@@ -1,24 +1,29 @@
 package com.mygdx.game.npc;
 
 import com.mygdx.game.Dialogue.DialogueData;
-import com.mygdx.game.Inventory.Character;
 import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.Inventory.Tool;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
-import com.mygdx.game.game_object.Renderer;
 import com.mygdx.game.Stats;
-import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.Util.Activity;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Location;
 import com.mygdx.game.Util.Time;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
 
 
-public final class NPC extends Character {
+public final class NPC extends GameObject {
 
+    private final String name;
+    private final Inventory inventory;
+    private int activeIndex;
     private final NavigationData navigationData;
     private final WeekSchedule weekSchedule;
     private final DialogueData dialogueData;
@@ -28,7 +33,10 @@ public final class NPC extends Character {
     private Activity nextActivity;
 
     private NPC(Builder b){
-        super(b.transform, b.renderer, b.map, b.name, b.inventory);
+        super(b.transform, b.renderer, b.map);
+        this.name = b.name;
+        this.inventory = b.inventory;
+        this.activeIndex = 0;
         this.weekSchedule = b.weekSchedule;
         this.navigationData = b.navigationData;
         this.dialogueData = b.dialogueData;
@@ -76,6 +84,30 @@ public final class NPC extends Character {
         return route;
     }
 
+
+    public String getName(){
+        return name;
+    }
+
+    public Inventory getInventory(){
+        return inventory;
+    }
+
+    public Item getActiveItem(){
+        return inventory.getItem(activeIndex);
+    }
+
+    public boolean hasToolInActive(){
+        return inventory.getItem(activeIndex) instanceof Tool;
+    }
+
+    public int getActiveIndex(){
+        return activeIndex;
+    }
+
+    public void incrementActiveIndex(){
+        this.activeIndex = (activeIndex + 1) % inventory.size();
+    }
 
     public static Builder builder(){
         return new Builder();

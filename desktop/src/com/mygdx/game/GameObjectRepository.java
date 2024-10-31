@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.npc.NPC;
@@ -13,14 +12,12 @@ public class GameObjectRepository {
     private final List<NPC> npcs;
     private final List<SingleTextureMap> gameMaps;
     private final List<Breakable> breakables;
-    private final List<Bat> bats;
     private final List<GameObject> miscObjects;
 
-    public GameObjectRepository(List<NPC> npcs, List<SingleTextureMap> gameMaps, List<Breakable> breakables, List<Bat> bats, List<GameObject> objects){
+    public GameObjectRepository(List<NPC> npcs, List<SingleTextureMap> gameMaps, List<Breakable> breakables, List<GameObject> objects){
         this.npcs = npcs;
         this.gameMaps = gameMaps;
         this.breakables = breakables;
-        this.bats = bats;
         this.miscObjects = objects;
     }
 
@@ -36,9 +33,6 @@ public class GameObjectRepository {
         return breakables;
     }
 
-    public List<Bat> getBats(){
-        return bats;
-    }
 
     public List<GameObject> getMiscObjects(){
         return miscObjects;

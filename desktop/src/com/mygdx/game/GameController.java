@@ -3,16 +3,15 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.Loot.Loot;
 import com.mygdx.game.UpdatedUtil.Vec2;
-import com.mygdx.game.game_object.Frame;
-import com.mygdx.game.game_object.Renderer;
-import com.mygdx.game.game_object.StaticRenderer;
 import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.npc.NPC;
+import com.mygdx.game.renderer.Frame;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.renderer.StaticRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +38,6 @@ public class GameController {
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
         playerController.update(delta);
-        for(Bat bat : gameObjectRepository.getBats()){
-            bat.update(delta, playerController.getPlayer().getPosition());
-        }
         checkDroppedItems();
         drawer.draw(gameObjectRepository.getMaps().get(0));
 //        for(GameObject o : gameObjectRepository.getMiscObjects()){
@@ -50,9 +46,6 @@ public class GameController {
 //        for(Breakable b : gameObjectRepository.getBreakables()){
 //            drawer.draw(b);
 //        }
-        for(Bat bat : gameObjectRepository.getBats()){
-            drawer.draw(bat);
-        }
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }

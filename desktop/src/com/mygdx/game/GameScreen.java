@@ -32,8 +32,7 @@ public class GameScreen implements Screen {
         this.game = game;
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
         Clock gameClock = new Clock(calendarClock, new SystemTimeProvider());
-        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), BreakableCreator.getBreakables(),
-                Collections.singletonList(BatLoader.create()),HouseLoader.load());
+        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), BreakableCreator.getBreakables(),HouseLoader.load());
         playerController = new PlayerController(DefaultPlayerLoader.load());
         gameController = new GameController(repository, gameClock, new SpriteDrawer(game), playerController);
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController, gameController));

@@ -3,3 +3,8 @@
 3) snapshot needs updating whenever movement occurs
 4) changes to the navigation data: should be a data container, providing routes to the outside. Route stored locally
 5) add hit boxes back into the game (in the Frame class)
+
+
+NEXT ON THE LIST:
+inventory and its related classes
+player and its related classes

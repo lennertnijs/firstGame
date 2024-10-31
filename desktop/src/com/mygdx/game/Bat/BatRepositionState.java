@@ -5,12 +5,12 @@ import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
-public final class BatRepositionState implements BatState{
+public final class BatRepositionState implements MonsterState{
 
-    private final Bat bat;
+    private final Monster bat;
     private final Vec2 goal;
 
-    public BatRepositionState(Bat bat) {
+    public BatRepositionState(Monster bat) {
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
         this.goal = RandomGenerator.generateAround(bat.getPosition(), 100, 250);
     }

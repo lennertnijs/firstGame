@@ -3,6 +3,7 @@ package com.mygdx.game.game_object;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
+import com.mygdx.game.renderer.Renderer;
 
 import java.util.Objects;
 

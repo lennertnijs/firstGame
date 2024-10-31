@@ -1,21 +1,27 @@
 package com.mygdx.game.Player;
 
 import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.Inventory.Character;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.game_object.Renderer;
-import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.Util.Direction;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.game_object.Transform;
 
-public final class Player extends Character {
+public final class Player extends GameObject {
 
+    private final String name;
+    private final Inventory inventory;
+    private int activeIndex;
     private PlayerState playerState = new IdlePlayerState(this);
 
 
     private Player(Builder b){
-        super(b.transform, b.renderer, b.map, b.name, b.inventory);
+        super(b.transform, b.renderer, b.map);
+        this.name = b.name;
+        this.inventory = b.inventory;
+        this.activeIndex = 0;
     }
 
     public String getState(){
@@ -35,9 +41,32 @@ public final class Player extends Character {
         playerState.progress(delta, direction);
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public Inventory getInventory(){
+        return inventory;
+    }
+
+    public Item getActiveItem(){
+        return inventory.getItem(activeIndex);
+    }
+
+    public boolean hasToolInActive(){
+        return inventory.getItem(activeIndex) instanceof Tool;
+    }
+
+    public int getActiveIndex(){
+        return activeIndex;
+    }
+
+    public void incrementActiveIndex(){
+        this.activeIndex = (activeIndex + 1) % inventory.size();
+    }
 
     public void useActiveItem(Breakable breakable){
-        Item item = super.getInventory().getItem(super.getActiveIndex());
+        Item item = inventory.getItem(activeIndex);
         if(!(item instanceof Tool)){
             return;
         }

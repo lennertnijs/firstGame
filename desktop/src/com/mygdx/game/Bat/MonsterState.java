@@ -2,8 +2,7 @@ package com.mygdx.game.Bat;
 
 import com.mygdx.game.UpdatedUtil.Vec2;
 
-public interface BatState {
-
+public interface MonsterState {
     /**
      * @return The state's name.
      */

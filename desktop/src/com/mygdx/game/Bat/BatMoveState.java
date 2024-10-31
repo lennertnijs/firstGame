@@ -5,12 +5,12 @@ import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
-public final class BatMoveState implements BatState{
+public final class BatMoveState implements MonsterState{
 
-    private final Bat bat;
+    private final Monster bat;
     private final Vec2 goal;
 
-    public BatMoveState(Bat bat){
+    public BatMoveState(Monster bat){
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
         this.goal = RandomGenerator.generateAround(bat.getPosition(), 150, 250);
     }
@@ -36,7 +36,7 @@ public final class BatMoveState implements BatState{
 
     private void handleStateChange(Vec2 playerPosition){
         int distanceToPlayer = Vec2.distanceBetween(bat.getPosition(), playerPosition);
-        if(distanceToPlayer <= bat.aggressionRange()){
+        if(distanceToPlayer <= bat.getAggressionRange()){
             bat.setState(new BatAttackState(bat));
         }
         boolean arrivedAtGoal = bat.getPosition().equals(goal);

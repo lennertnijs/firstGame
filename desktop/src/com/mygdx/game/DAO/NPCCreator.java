@@ -10,15 +10,15 @@ import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.game_object.Renderer;
-import com.mygdx.game.game_object.StaticRenderer;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.renderer.StaticRenderer;
 import com.mygdx.game.Stats;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Schedule;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 import com.mygdx.game.npc.NPC;
-import com.mygdx.game.game_object.Frame;
+import com.mygdx.game.renderer.Frame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,6 @@ public class NPCCreator {
     public static NPC create() {
         TextureRegion idleDown = atlas.findRegion("idle_down");
         Vec2 position = new Vec2(500, 500);
-        Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
         String map = "main";
 
         String name = "Gilbert";

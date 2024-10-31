@@ -1,4 +1,6 @@
-package com.mygdx.game.game_object;
+package com.mygdx.game.renderer;
+
+import com.mygdx.game.renderer.Frame;
 
 import java.util.Arrays;
 import java.util.Objects;
