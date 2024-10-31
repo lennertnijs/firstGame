@@ -2,7 +2,6 @@ package com.mygdx.game.Player;
 
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Inventory.Character;
-import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Inventory.Inventory;
 import com.mygdx.game.Inventory.Item;
 import com.mygdx.game.Inventory.Tool;
@@ -32,8 +31,8 @@ public final class Player extends Character {
         return 50;
     }
 
-    public void update(double delta, Direction direction, HitBoxSnapShot snapShot){
-        playerState.progress(delta, direction, snapShot);
+    public void update(double delta, Direction direction){
+        playerState.progress(delta, direction);
     }
 
 

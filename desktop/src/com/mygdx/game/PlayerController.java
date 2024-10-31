@@ -34,10 +34,10 @@ public final class PlayerController{
         }
     }
 
-    public void update(double delta, HitBoxSnapShot snapShot){
+    public void update(double delta){
         player.updateDelta(delta);
         Direction direction = movementFlags.getCurrentDirection();
-        player.update(delta, direction, snapShot);
+        player.update(delta, direction);
     }
 
     public void useActiveItem(Breakable breakable){

@@ -1,6 +1,5 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
@@ -18,7 +17,7 @@ public class IdlePlayerState implements PlayerState {
         return "idle";
     }
 
-    public void progress(double delta, Direction direction, HitBoxSnapShot snapShot){
+    public void progress(double delta, Direction direction){
 
     }
 }

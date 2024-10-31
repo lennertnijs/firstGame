@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Bat.Bat;
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.HitBox.HitBox;
 import com.mygdx.game.Loot.Loot;
+import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.game_object.Frame;
 import com.mygdx.game.game_object.Renderer;
 import com.mygdx.game.game_object.StaticRenderer;
-import com.mygdx.game.game_object.Frame;
 import com.mygdx.game.game_object.Transform;
-import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.npc.NPC;
 
 import java.util.ArrayList;
@@ -40,7 +38,7 @@ public class GameController {
         for(NPC npc : gameObjectRepository.getNpcs()){
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
-        playerController.update(delta, getSnapShot());
+        playerController.update(delta);
         for(Bat bat : gameObjectRepository.getBats()){
             bat.update(delta, playerController.getPlayer().getPosition());
         }
@@ -62,21 +60,6 @@ public class GameController {
 //            drawer.draw(o);
 //        }
         drawer.draw(playerController.getPlayer());
-    }
-
-    // todo static objects dont need new snapshots, dynamic snapshots need updating
-    private HitBoxSnapShot getSnapShot(){
-        List<HitBox> hitBoxes = new ArrayList<>();
-//        for(GameObject o : gameObjectRepository.getMiscObjects()){
-//            hitBoxes.add(o.getHitBox());
-//        }
-//        for(GameObject o : gameObjectRepository.getNpcs()){
-//            hitBoxes.add(o.getHitBox());
-//        }
-//        for(GameObject o : gameObjectRepository.getBreakables()){
-//            hitBoxes.add(o.getHitBox());
-//        }
-        return new HitBoxSnapShot(hitBoxes);
     }
 
     public void playerUseActiveItem(){

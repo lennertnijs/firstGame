@@ -1,6 +1,5 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.HitBoxSnapShot;
 import com.mygdx.game.Util.Direction;
 
 import java.util.Objects;
@@ -19,7 +18,7 @@ public final class PlayerMineState implements PlayerState {
     }
 
     @Override
-    public void progress(double delta, Direction direction, HitBoxSnapShot snapShot) {
+    public void progress(double delta, Direction direction) {
         this.delta += delta;
         handleStateChange();
     }
