@@ -7,10 +7,10 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.renderer.Renderer;
 import com.mygdx.game.renderer.StaticRenderer;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Inventory.ToolType;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.inventory.Item;
+import com.mygdx.game.inventory.Tool;
+import com.mygdx.game.inventory.ToolType;
 import com.mygdx.game.Player.Player;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.UpdatedUtil.Vec2;
@@ -56,7 +56,7 @@ public final class DefaultPlayerLoader {
             put("Axe", 1);
         }};
 
-        Inventory inventory = Inventory.createWithItems(new Item[]{pickaxe, axe}, stackSizeMap);
+        Inventory inventory = new Inventory(new Item[]{pickaxe, axe}, stackSizeMap);
         return Player.builder().renderer(renderer).map(map).name(name).inventory(inventory).build();
     }
 }

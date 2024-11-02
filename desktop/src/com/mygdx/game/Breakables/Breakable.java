@@ -12,7 +12,7 @@ import java.util.Objects;
  * Represents breakable objects in the game.
  * Examples are rocks, trees, and other various gemstones.
  */
-public final class Breakable extends GameObject{
+public final class Breakable extends GameObject {
 
     /**
      * The current health

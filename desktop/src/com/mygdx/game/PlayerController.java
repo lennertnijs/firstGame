@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Input.MovementInputs;
-import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.Player.*;
 import com.mygdx.game.Util.Direction;
 

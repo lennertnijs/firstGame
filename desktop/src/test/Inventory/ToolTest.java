@@ -1,7 +1,7 @@
 package Inventory;
 
-import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Inventory.ToolType;
+import com.mygdx.game.inventory.Tool;
+import com.mygdx.game.inventory.ToolType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -151,7 +151,7 @@ public class ToolTest {
                                     .maxDurability(maxDurability)
                                     .toolType(type)
                                     .build();
-        assertEquals(maxDurability, defaultDurabilityTool.getDurability());
+        assertEquals(maxDurability, defaultDurabilityTool.currentDurability());
     }
 
     @Test
@@ -183,30 +183,7 @@ public class ToolTest {
 
     @Test
     public void testGetDurability(){
-        assertEquals(2000, tool.getDurability());
-    }
-
-    @Test
-    public void testSetDurability(){
-        tool.setDurability(1000);
-        assertEquals(1000, tool.getDurability());
-    }
-
-    @Test
-    public void testSetDurabilityToNegative(){
-        assertThrows(IllegalArgumentException.class,
-                () -> tool.setDurability(-1));
-    }
-
-    @Test
-    public void testSetDurabilityToZero(){ // allowed
-        tool.setDurability(0);
-    }
-
-    @Test
-    public void testSetDurabilityToBiggerThanMaxDurability(){
-        assertThrows(IllegalArgumentException.class,
-                () -> tool.setDurability(maxDurability + 1));
+        assertEquals(2000, tool.currentDurability());
     }
 
     @Test
@@ -219,11 +196,6 @@ public class ToolTest {
         assertEquals(type, tool.type());
     }
 
-    @Test
-    public void testCopy(){
-        Tool copy = tool.copy();
-        assertNotEquals(tool, copy);
-    }
     
     @Test
     public void testEquals(){ // equal if the same name

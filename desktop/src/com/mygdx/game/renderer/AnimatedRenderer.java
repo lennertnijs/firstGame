@@ -12,7 +12,6 @@ public final class AnimatedRenderer implements Renderer {
     private final Map<Key, Animation> animations;
     private final Key key;
     private double delta;
-    private Frame currentFrame;
 
     public AnimatedRenderer(Map<Key, Animation> animations, Key key, double delta){
         Objects.requireNonNull(animations);
@@ -31,27 +30,26 @@ public final class AnimatedRenderer implements Renderer {
         if(!animations.containsKey(key)){
             throw new IllegalArgumentException("Key is not mapped.");
         }
-        this.currentFrame = animations.get(key).getFrame(delta);
     }
 
     @Override
     public TextureRegion getTexture() {
-        return currentFrame.texture();
+        return animations.get(key).getFrame(delta).texture();
     }
 
     @Override
     public Vec2 getOffSet() {
-        return currentFrame.offset();
+        return animations.get(key).getFrame(delta).offset();
     }
 
     @Override
     public int getWidth() {
-        return currentFrame.scaledWidth();
+        return animations.get(key).getFrame(delta).scaledWidth();
     }
 
     @Override
     public int getHeight(){
-        return currentFrame.scaledHeight();
+        return animations.get(key).getFrame(delta).scaledHeight();
     }
 
     @Override
@@ -61,7 +59,6 @@ public final class AnimatedRenderer implements Renderer {
             throw new IllegalArgumentException("Updated key is not mapped.");
         }
         this.delta = 0;
-        this.currentFrame = animations.get(key).getFrame(0);
     }
 
     @Override
@@ -71,14 +68,10 @@ public final class AnimatedRenderer implements Renderer {
             throw new IllegalArgumentException("Updated key is not mapped.");
         }
         this.delta = 0;
-        this.currentFrame = animations.get(key).getFrame(0);
     }
 
     @Override
     public void update(double delta) {
         this.delta += delta;
-        if(!currentFrame.equals(animations.get(key).getFrame(delta))){
-            currentFrame = animations.get(key).getFrame(delta);
-        }
     }
 }

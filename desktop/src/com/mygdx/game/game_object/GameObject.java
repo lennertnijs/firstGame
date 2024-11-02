@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.inventory.ItemVisitor;
 
 import java.util.Objects;
 
@@ -94,6 +95,11 @@ public class GameObject {
      */
     public final void setMap(String map){
         this.map = Objects.requireNonNull(map);
+    }
+
+
+    public void accept(ItemVisitor visitor){
+
     }
 
     @Override

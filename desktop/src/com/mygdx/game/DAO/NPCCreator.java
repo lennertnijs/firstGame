@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
-import com.mygdx.game.Inventory.Inventory;
+import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
@@ -19,6 +19,7 @@ import com.mygdx.game.WeekSchedule.Schedule;
 import com.mygdx.game.WeekSchedule.WeekSchedule;
 import com.mygdx.game.npc.NPC;
 import com.mygdx.game.renderer.Frame;
+import com.mygdx.game.inventory.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,8 +58,8 @@ public class NPCCreator {
             put("Stone", 64);
             put("Wood", 64);
         }};
-
-        Inventory inventory = Inventory.createEmptyOfSize(6, stackSizeMap);
+        Item[] items = new Item[6];
+        Inventory inventory = new Inventory(items, stackSizeMap);
 
         return NPC.builder()
                 .renderer(renderer)

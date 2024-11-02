@@ -1,9 +1,9 @@
 package com.mygdx.game.npc;
 
 import com.mygdx.game.Dialogue.DialogueData;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.inventory.Item;
+import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Stats;

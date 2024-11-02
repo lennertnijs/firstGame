@@ -1,13 +1,13 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.Tool;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.inventory.Item;
+import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.renderer.Renderer;
 import com.mygdx.game.game_object.Transform;
+import com.mygdx.game.inventory.ItemVisitor;
 
 public final class Player extends GameObject {
 
@@ -65,13 +65,8 @@ public final class Player extends GameObject {
         this.activeIndex = (activeIndex + 1) % inventory.size();
     }
 
-    public void useActiveItem(Breakable breakable){
-        Item item = inventory.getItem(activeIndex);
-        if(!(item instanceof Tool)){
-            return;
-        }
-        Tool tool = (Tool) item;
-        breakable.damage(tool.efficiency());
+    public void accept(ItemVisitor visitor){
+        visitor.visit(this);
     }
 
     public static Builder builder(){
