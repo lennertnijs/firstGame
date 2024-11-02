@@ -1,63 +1,43 @@
 package com.mygdx.game.Player;
 
 import com.mygdx.game.inventory.Inventory;
-import com.mygdx.game.inventory.Item;
-import com.mygdx.game.inventory.Tool;
-import com.mygdx.game.Util.Direction;
 import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.inventory.Item;
 import com.mygdx.game.renderer.Renderer;
 import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.inventory.ItemVisitor;
+
+import java.util.List;
+import java.util.Objects;
 
 public final class Player extends GameObject {
 
     private final String name;
     private final Inventory inventory;
     private int activeIndex;
-    private PlayerState playerState = new IdlePlayerState(this);
+    private final Stats stats;
+    private PlayerState playerState = new IdleState();
 
-
-    private Player(Builder b){
-        super(b.transform, b.renderer, b.map);
-        this.name = b.name;
-        this.inventory = b.inventory;
-        this.activeIndex = 0;
+    public Player(Transform transform, Renderer renderer, String map, String name, Inventory inventory, int activeIndex, Stats stats){
+        super(transform, renderer, map);
+        this.name = Objects.requireNonNull(name);
+        this.inventory = Objects.requireNonNull(inventory);
+        if(activeIndex < 0 || activeIndex >= inventory.size()){
+            throw new IndexOutOfBoundsException("Active index cannot be outside inventory bounds.");
+        }
+        this.activeIndex = activeIndex;
+        this.stats = Objects.requireNonNull(stats);
     }
 
-    public String getState(){
-        return playerState.getName();
-    }
-
-    public void changeState(PlayerState playerState){
-        super.setActivity(playerState.getName());
-        this.playerState = playerState;
-    }
-
-    public int getSpeed(){
-        return 50;
-    }
-
-    public void update(double delta, Direction direction){
-        playerState.progress(delta, direction);
-    }
-
-    public String getName(){
+    public String name(){
         return name;
     }
 
-    public Inventory getInventory(){
+    public Inventory inventory(){
         return inventory;
     }
 
-    public Item getActiveItem(){
-        return inventory.getItem(activeIndex);
-    }
-
-    public boolean hasToolInActive(){
-        return inventory.getItem(activeIndex) instanceof Tool;
-    }
-
-    public int getActiveIndex(){
+    public int activeIndex(){
         return activeIndex;
     }
 
@@ -65,52 +45,37 @@ public final class Player extends GameObject {
         this.activeIndex = (activeIndex + 1) % inventory.size();
     }
 
+    public void decrementActiveIndex(){
+        this.activeIndex = (activeIndex - 1) % inventory.size();
+    }
+
+    public Item getActiveItem(){
+        return inventory.getItem(activeIndex);
+    }
+
+    public void useActiveItem(List<GameObject> gameObjects){
+        for(GameObject gameObject : gameObjects){
+            inventory.getItem(activeIndex).use(gameObject);
+        }
+    }
+
+    public void changeState(PlayerState state){
+        Objects.requireNonNull(state);
+        this.playerState = state;
+    }
+
+    public Stats getStats(){
+        return stats;
+    }
+
+    public void update(double delta){
+        renderer.update(delta);
+        inventory.getItem(activeIndex).update(delta);
+        playerState.update(delta);
+    }
+
     public void accept(ItemVisitor visitor){
+        Objects.requireNonNull(visitor);
         visitor.visit(this);
-    }
-
-    public static Builder builder(){
-        return new Builder();
-    }
-
-    public static class Builder{
-
-        private Transform transform;
-        private Renderer renderer;
-        private String map;
-        private String name;
-        private Inventory inventory;
-
-        private Builder(){
-        }
-
-        public Builder transform(Transform transform){
-            this.transform = transform;
-            return this;
-        }
-
-        public Builder renderer(Renderer renderer){
-            this.renderer = renderer;
-            return this;
-        }
-
-        public Builder map(String map){
-            this.map = map;
-            return this;
-        }
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
-
-        public Builder inventory(Inventory inventory){
-            this.inventory = inventory;
-            return this;
-        }
-
-        public Player build(){
-            return new Player(this);
-        }
     }
 }

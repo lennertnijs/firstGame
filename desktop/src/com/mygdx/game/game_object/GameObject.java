@@ -63,10 +63,24 @@ public class GameObject {
     }
 
     /**
+     * Fetches and returns the direction of the game object, if applicable.
+     */
+    public final Direction getDirection(){
+        return renderer.getDirection();
+    }
+
+    /**
      * Updates the direction of the object to the given direction.
      */
     public final void setDirection(Direction direction){
         renderer.setDirection(direction);
+    }
+
+    /**
+     * Fetches and returns the activity of the game object, if applicable.
+     */
+    public final String getActivity(){
+        return renderer.getActivity();
     }
 
     /**

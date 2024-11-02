@@ -1,23 +1,24 @@
 package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.renderer.Renderer;
-import com.mygdx.game.renderer.StaticRenderer;
+import com.mygdx.game.Player.Player;
+import com.mygdx.game.Player.Stats;
+import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.inventory.Item;
 import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.inventory.ToolType;
-import com.mygdx.game.Player.Player;
-import com.mygdx.game.Util.Direction;
-import com.mygdx.game.UpdatedUtil.Vec2;
-import com.mygdx.game.renderer.Frame;
+import com.mygdx.game.renderer.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.mygdx.game.Util.Direction.DOWN;
 
 public final class DefaultPlayerLoader {
 
@@ -32,31 +33,49 @@ public final class DefaultPlayerLoader {
         int x = positionJson.getInt("x");
         int y = positionJson.getInt("y");
         Vec2 position = new Vec2(x, y);
-
-        JsonValue dimensionsJson = file.get("dimensions");
-        int width = dimensionsJson.getInt("width");
-        int height = dimensionsJson.getInt("height");
+        Transform transform = new Transform(position);
 
         String map = file.getString("map");
 
         String textureAtlas = file.getString("texture_atlas");
-        //AnimationHolder animationHolder = load("player/Player.pack");
-        TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("player/Player.png")));
-        Frame frame = Frame.builder().texture(tr).build();
-        Renderer renderer = new StaticRenderer(frame);
-        Direction direction = Direction.valueOf(file.getString("direction"));
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(textureAtlas));
+
+        Renderer renderer = new AnimatedRenderer(loadAnimations(atlas), new Key("walking", DOWN), 0);
 
         String name = file.getString("name");
 
-        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).build();
-        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
-
+        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).duration(2000).build();
+        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).duration(2000).build();
         Map<String, Integer> stackSizeMap = new HashMap<>() {{
             put("Pickaxe", 1);
             put("Axe", 1);
         }};
 
+        Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(50).build();
+
         Inventory inventory = new Inventory(new Item[]{pickaxe, axe}, stackSizeMap);
-        return Player.builder().renderer(renderer).map(map).name(name).inventory(inventory).build();
+        return new Player(transform, renderer, map, name, inventory, 0, stats);
+    }
+
+    private static Map<Key, Animation> loadAnimations(TextureAtlas atlas){
+        String[] activities = new String[]{"mine", "walking", "idle"};
+        int[] lengths = new int[]{4, 6, 1};
+        String[] directions = new String[]{"RIGHT", "LEFT", "UP", "DOWN"};
+        int lengthIndex = 0;
+        Map<Key, Animation> map = new HashMap<>();
+        for(String activity : activities){
+            for(String direction : directions){
+                Frame[] frames = new Frame[lengths[lengthIndex]];
+                for(int i = 1; i <= lengths[lengthIndex]; i++){
+                    Frame frame = Frame.builder().texture(atlas.findRegion(activity + "_" + direction.toLowerCase(), i)).width(200).height(200).build();
+                    frames[i - 1] = frame;
+                }
+                Key key = new Key(activity, Direction.valueOf(direction));
+                Animation animation = new Animation(frames, 2000);
+                map.put(key, animation);
+            }
+            lengthIndex++;
+        }
+        return map;
     }
 }

@@ -35,7 +35,17 @@ public final class StaticRenderer implements Renderer {
     }
 
     @Override
+    public Direction getDirection() {
+        throw new IllegalStateException("Cannot fetch the direction of a static texture.");
+    }
+
+    @Override
     public void setDirection(Direction direction) {
+    }
+
+    @Override
+    public String getActivity() {
+        throw new IllegalStateException("Cannot fetch the activity of a static texture.");
     }
 
     @Override

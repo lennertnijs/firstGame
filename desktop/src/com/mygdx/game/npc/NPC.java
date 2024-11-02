@@ -6,7 +6,7 @@ import com.mygdx.game.inventory.Item;
 import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.Navigation.Route;
-import com.mygdx.game.Stats;
+import com.mygdx.game.Player.Stats;
 import com.mygdx.game.Util.Activity;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Location;

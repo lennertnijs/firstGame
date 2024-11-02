@@ -53,6 +53,11 @@ public final class AnimatedRenderer implements Renderer {
     }
 
     @Override
+    public Direction getDirection() {
+        return key.getDirection();
+    }
+
+    @Override
     public void setDirection(Direction direction) {
         key.setDirection(direction);
         if(!animations.containsKey(key)){
@@ -62,8 +67,14 @@ public final class AnimatedRenderer implements Renderer {
     }
 
     @Override
+    public String getActivity() {
+        return key.getActivity();
+    }
+
+    @Override
     public void setActivity(String activity) {
         key.setActivity(activity);
+
         if(!animations.containsKey(key)){
             throw new IllegalArgumentException("Updated key is not mapped.");
         }

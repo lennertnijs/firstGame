@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Player;
 
 public final class Stats {
 
@@ -57,28 +57,6 @@ public final class Stats {
         if(speed < MIN_SPEED)
             throw new IllegalArgumentException("Cannot set an npc's speed to a value lower than MIN_NPC_SPEED.");
         this.speed = speed;
-    }
-
-
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof Stats)){
-            return false;
-        }
-        Stats stats = (Stats) other;
-        return health == stats.health &&
-                offense == stats.offense &&
-                defense == stats.defense &&
-                speed == stats.speed;
-    }
-
-    @Override
-    public int hashCode(){
-        int result = health;
-        result = 31 * result + offense;
-        result = 31 * result + defense;
-        result = 31 * result + speed;
-        return result;
     }
 
     @Override

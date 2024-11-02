@@ -12,7 +12,7 @@ import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
 import com.mygdx.game.renderer.Renderer;
 import com.mygdx.game.renderer.StaticRenderer;
-import com.mygdx.game.Stats;
+import com.mygdx.game.Player.Stats;
 import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.*;
 import com.mygdx.game.WeekSchedule.Schedule;
@@ -36,7 +36,7 @@ public class NPCCreator {
 
         String name = "Gilbert";
 
-        //Map<Key, Animation> animations = load("player/Player.pack");
+        //Map<Key, Animation> animations = load("player/player.pack");
 
         TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("npc/mining.png")));
         Frame frame = Frame.builder().texture(tr).build();

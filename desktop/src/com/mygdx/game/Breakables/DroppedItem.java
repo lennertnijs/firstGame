@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Breakables;
 
 import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.renderer.Renderer;
@@ -26,24 +26,6 @@ public class DroppedItem extends GameObject {
 
     public int amount(){
         return amount;
-    }
-
-    @Override
-    public boolean equals(Object other){
-        if(!(other instanceof DroppedItem))
-            return false;
-        if(!super.equals(other))
-            return false;
-        DroppedItem item = (DroppedItem) other;
-        return name.equals(item.name) &&    amount == item.amount;
-    }
-
-    @Override
-    public int hashCode(){
-        int result = super.hashCode();
-        result = result * 31 + name.hashCode();
-        result = result * 31 + amount;
-        return result;
     }
 
     @Override

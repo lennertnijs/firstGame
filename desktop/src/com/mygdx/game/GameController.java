@@ -3,92 +3,83 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Loot.Loot;
+import com.mygdx.game.DAO.DefaultPlayerLoader;
+import com.mygdx.game.Input.MovementInputs;
+import com.mygdx.game.Player.IdleState;
+import com.mygdx.game.Player.Player;
+import com.mygdx.game.Player.WalkState;
 import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.npc.NPC;
 import com.mygdx.game.renderer.Frame;
-import com.mygdx.game.renderer.Renderer;
 import com.mygdx.game.renderer.StaticRenderer;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class GameController {
 
     private final GameObjectRepository gameObjectRepository;
+    private final Player player;
+    private final MovementInputs movementFlags = new MovementInputs();
     private final Clock clock;
     private final SpriteDrawer drawer;
-    private final PlayerController playerController;
-    private final List<DroppedItem> droppedItems;
 
-    public GameController(GameObjectRepository gameObjectRepository, Clock clock, SpriteDrawer spriteDrawer, PlayerController playerController){
+    public GameController(GameObjectRepository gameObjectRepository, Player player, Clock clock, SpriteDrawer spriteDrawer){
         this.gameObjectRepository = gameObjectRepository;
+        this.player = player;
         this.clock = clock;
         this.drawer = spriteDrawer;
-        this.playerController = playerController;
-        droppedItems = new ArrayList<>();
     }
 
     public void update(){
         double delta = clock.update();
+
         for(NPC npc : gameObjectRepository.getNpcs()){
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
-        playerController.update(delta);
-        checkDroppedItems();
-        drawer.draw(gameObjectRepository.getMaps().get(0));
-//        for(GameObject o : gameObjectRepository.getMiscObjects()){
-//            drawer.draw(o);
-//        }
-//        for(Breakable b : gameObjectRepository.getBreakables()){
-//            drawer.draw(b);
-//        }
+        if(movementFlags.getCurrentDirection() != null){
+            player.setDirection(movementFlags.getCurrentDirection());
+        }
+        player.update(delta);
+
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
-//        for(GameObject o : droppedItems){
-//            drawer.draw(o);
-//        }
-        drawer.draw(playerController.getPlayer());
+        drawer.draw(player);
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     public void playerUseActiveItem(){
-        Vec2 position = playerController.getPlayer().getPosition();
-        Vec2 hit = new Vec2(position.x() + 30, position.y());
-        List<Breakable> broken = new ArrayList<>();
-        // if player frame has damage hit box -> check colisions
-        for(Breakable breakable : gameObjectRepository.getBreakables()){
-//            if(breakable.getHitBox().contains(hit)){
-//                broken.add(breakable);
-//            }
-        }
-        Breakable b = broken.size() > 0 ? broken.get(0) : null;
-        playerController.useActiveItem(b);
-        for(Breakable breakable : broken){
-            gameObjectRepository.getBreakables().remove(breakable);
-            Loot loot = breakable.getDrops();
-            TextureRegion t = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
-            Frame frame = Frame.builder().texture(t).width(200).height(200).build();
-            Renderer renderer = new StaticRenderer(frame);
-            Transform transform = new Transform(breakable.getPosition());
-            droppedItems.add(new DroppedItem(transform, renderer, "main", loot.name(), loot.amount()));
-        }
+        Player secondPlayer = DefaultPlayerLoader.load();
+        player.useActiveItem(Arrays.asList(secondPlayer));
+    }
+
+    public void playerSetNextActive(){
+        player.incrementActiveIndex();
+    }
+
+    public void addDirection(Direction direction){
+//        if(movementFlags.getCurrentDirection() == null){
+//            player.changeState(new WalkState(player));
+//        }
+        movementFlags.addDirection(direction);
+    }
+
+    public void removeDirection(Direction direction){
+        movementFlags.removeDirection(direction);
+//        if(movementFlags.getCurrentDirection() == null){
+//            player.changeState(new IdleState());
+//        }
     }
 
     public void interact(){
-        Vec2 p = new Vec2(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
-        for(NPC npc : gameObjectRepository.getNpcs()){
-//            if(npc.getHitBox().contains(p)){
-//                drawer.draw(npc.handleInputLine("line"));
-//            }
-        }
-    }
 
-    public void checkDroppedItems(){
-        //playerController.getPlayer().getInventory().add(droppedItem.name(), droppedItem.amount());
-        //droppedItems.removeIf(droppedItem -> droppedItem.getHitBox().contains(playerController.getPlayer().getPosition()));
     }
 }

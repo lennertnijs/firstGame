@@ -68,6 +68,10 @@ public class Item {
         // base class does nothing
     }
 
+    public int usageDuration(){
+        return 0;
+    }
+
     public void update(double delta){
         // base class does nothing
     }

@@ -20,15 +20,26 @@ public interface Renderer {
      * Fetches and returns the scaled width of the active Texture.
      */
     int getWidth();
+
     /**
      * Fetches and returns the scaled height of the active Texture.
      */
     int getHeight();
 
     /**
+     * Fetches and returns the direction.
+     */
+    Direction getDirection();
+
+    /**
      * Sets the direction in the Renderer.
      */
     void setDirection(Direction direction);
+
+    /**
+     * Fetches and returns the activity.
+     */
+    String getActivity();
 
     /**
      * Sets the activity in the Renderer.

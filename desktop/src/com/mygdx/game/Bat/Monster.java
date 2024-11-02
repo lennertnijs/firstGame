@@ -3,7 +3,7 @@ package com.mygdx.game.Bat;
 import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.Loot.LootTable;
 import com.mygdx.game.renderer.Renderer;
-import com.mygdx.game.Stats;
+import com.mygdx.game.Player.Stats;
 import com.mygdx.game.game_object.Transform;
 
 public class Monster extends GameObject {

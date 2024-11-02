@@ -73,6 +73,11 @@ public final class Tool extends Item {
     }
 
     @Override
+    public int usageDuration(){
+        return duration;
+    }
+
+    @Override
     public void update(double delta){
         this.delta = Math.max(0, this.delta - delta);
     }
