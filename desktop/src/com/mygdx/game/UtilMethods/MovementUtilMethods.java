@@ -3,8 +3,7 @@ package com.mygdx.game.UtilMethods;
 import com.mygdx.game.Navigation.Route;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.Util.Location;
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+import com.mygdx.game.UpdatedUtil.Vec2;
 
 import java.util.Objects;
 
@@ -22,39 +21,39 @@ public final class MovementUtilMethods {
         int y_diff = goal.position().y() - start.position().y();
         int distanceBetweenPoints = (int) Math.sqrt(x_diff * x_diff + y_diff * y_diff);
         if (amount < distanceBetweenPoints) {
-            Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
-            return new Location(start.map(), new Point(start.position().x() + vector.x(), start.position().y() + vector.y()));
+            Vec2 vector = new Vec2(x_diff, y_diff).scaleToSize(amount);
+            return new Location(start.map(), new Vec2(start.position().x() + vector.x(), start.position().y() + vector.y()));
         }else{
-            return moveAlongRoute(route.poll(), route, amount -  Point.distanceBetween(start.position(), goal.position()));
+            return moveAlongRoute(route.poll(), route, amount -  Vec2.distanceBetween(start.position(), goal.position()));
         }
     }
 
-    public static Point moveToPoint(Point start, Point goal, int amount){
+    public static Vec2 moveToPoint(Vec2 start, Vec2 goal, int amount){
         if(amount <= 0){
             return start;
         }
         int x_diff = goal.x() - start.x();
         int y_diff = goal.y() - start.y();
-        int distanceBetweenPoints = Point.distanceBetween(start, goal);
+        int distanceBetweenPoints = Vec2.distanceBetween(start, goal);
         if(distanceBetweenPoints <= amount){
             return goal;
         }
-        Vector vector = new Vector(x_diff, y_diff).scaleToSize(amount);
-        return new Point(start.x() + vector.x(), start.y() + vector.y());
+        Vec2 vector = new Vec2(x_diff, y_diff).scaleToSize(amount);
+        return new Vec2(start.x() + vector.x(), start.y() + vector.y());
     }
 
-    public static Point calculateNextPosition(Point start, Direction direction, int amount){
+    public static Vec2 calculateNextPosition(Vec2 start, Direction direction, int amount){
         Objects.requireNonNull(start, "Start point is null.");
         Objects.requireNonNull(direction, "Direction is null.");
         if(amount < 0){
             throw new IllegalArgumentException("Amount is negative.");
         }
-        Point next = null;
+        Vec2 next = null;
         switch(direction){
-            case UP: next = new Point(start.x(), start.y() + amount); break;
-            case RIGHT: next = new Point(start.x() + amount, start.y()); break;
-            case DOWN: next = new Point(start.x(), start.y() - amount); break;
-            case LEFT: next = new Point(start.x() - amount, start.y()); break;
+            case UP: next = new Vec2(start.x(), start.y() + amount); break;
+            case RIGHT: next = new Vec2(start.x() + amount, start.y()); break;
+            case DOWN: next = new Vec2(start.x(), start.y() - amount); break;
+            case LEFT: next = new Vec2(start.x() - amount, start.y()); break;
         }
         return next;
     }

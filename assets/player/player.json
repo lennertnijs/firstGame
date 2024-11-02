@@ -3,12 +3,8 @@
     "x": 200,
     "y": 200
   },
-  "dimensions": {
-    "width": 64,
-    "height": 128
-  },
   "map": "outside",
-  "texture_atlas": "player/Player.pack",
+  "texture_atlas": "player/player.pack",
   "direction": "RIGHT",
   "name": "player",
   "inventory": {

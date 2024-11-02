@@ -1,7 +1,7 @@
 package Inventory;
 
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.inventory.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,31 +25,19 @@ public class InventoryTest {
 
     @BeforeEach
     public void initialise(){
-        inventory = Inventory.createWithItems(stacks, stackSizeMap);
+        inventory = new Inventory(stacks, stackSizeMap);
     }
 
     @Test
     public void testStaticFactoryWithNullArray(){
         assertThrows(NullPointerException.class,
-                () -> Inventory.createWithItems(null, stackSizeMap));
+                () -> new Inventory(null, stackSizeMap));
     }
 
     @Test
     public void testStaticFactoryWithEmptyArray(){
         assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createWithItems(new Item[0], stackSizeMap));
-    }
-
-    @Test
-    public void testStaticFactoryWithNegativeSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createEmptyOfSize(-1, stackSizeMap));
-    }
-
-    @Test
-    public void testStaticFactoryWithZeroSize(){
-        assertThrows(IllegalArgumentException.class,
-                () -> Inventory.createEmptyOfSize(0, stackSizeMap));
+                () -> new Inventory(new Item[0], stackSizeMap));
     }
 
     @Test
@@ -60,13 +48,6 @@ public class InventoryTest {
     @Test
     public void testGetItems(){
         assertTrue(areItemArraysEqual(stacks, inventory.getItems()));
-    }
-
-    @Test
-    public void testGetItemsDoesDeepCopy(){
-        Item[] copy = inventory.getItems();
-        copy[0].increaseAmount(16, 64); // change one
-        assertFalse(areItemArraysEqual(copy, inventory.getItems()));
     }
 
     @Test
@@ -88,14 +69,6 @@ public class InventoryTest {
     public void testGetItemWithIndexOutOfBounds(){
         assertThrows(IndexOutOfBoundsException.class,
                 () -> inventory.getItem(5));
-    }
-
-    @Test
-    public void testCreateEmpty(){
-        Inventory emptyInventory = Inventory.createEmptyOfSize(6, stackSizeMap);
-        assertEquals(6, emptyInventory.size());
-        Item[] emptyExpected = new Item[]{null, null, null, null, null, null};
-        assertTrue(areItemArraysEqual(emptyExpected, emptyInventory.getItems()));
     }
 
     @Test

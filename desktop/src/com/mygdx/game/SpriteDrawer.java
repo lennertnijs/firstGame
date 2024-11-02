@@ -1,14 +1,16 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.Util.GameMap;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.map.SingleTextureMap;
 
 public class SpriteDrawer {
 
     private final MyGame game;
     private String text;
+    private Texture texture = new Texture(Gdx.files.internal("maps/map.png"));
     public SpriteDrawer(MyGame game){
         this.game = game;
     }
@@ -17,14 +19,13 @@ public class SpriteDrawer {
         TextureRegion texture = o.getTexture();
         int x = o.getPosition().x();
         int y = o.getPosition().y();
-        int width = o.getDimensions().width();
-        int height = o.getDimensions().height();
+        int width = o.getWidth();
+        int height = o.getHeight();
         game.batch.draw(texture, x, y, width, height);
         drawText();
     }
 
-    public void draw(GameMap gameMap){
-        Texture texture = gameMap.texture();
+    public void draw(SingleTextureMap gameMap){
         int width = texture.getWidth();
         int height = texture.getHeight();
         game.batch.draw(texture, 0, 0, width, height);

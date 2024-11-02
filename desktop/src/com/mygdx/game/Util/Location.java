@@ -1,8 +1,10 @@
 package com.mygdx.game.Util;
 
+import com.mygdx.game.UpdatedUtil.Vec2;
+
 import java.util.Objects;
 
-public record Location(String map, Point position) {
+public record Location(String map, Vec2 position) {
 
 
     public Location {

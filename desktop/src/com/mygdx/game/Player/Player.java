@@ -1,113 +1,81 @@
 package com.mygdx.game.Player;
 
-import com.mygdx.game.Animation.AnimationHolder;
-import com.mygdx.game.Breakables.Breakable;
-import com.mygdx.game.GameObject.Character;
-import com.mygdx.game.HitBoxSnapShot;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.Inventory.Item;
-import com.mygdx.game.Inventory.Tool;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.inventory.Item;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.game_object.Transform;
+import com.mygdx.game.inventory.ItemVisitor;
 
+import java.util.List;
 import java.util.Objects;
 
-public final class Player extends Character {
+public final class Player extends GameObject {
 
-    private PlayerState playerState = new IdlePlayerState(this);
+    private final String name;
+    private final Inventory inventory;
+    private int activeIndex;
+    private final Stats stats;
+    private PlayerState playerState = new IdleState();
 
-
-    private Player(Builder b){
-        super(b.position, b.dimensions, b.map,
-                b.animationHolder, 0,
-                b.direction,
-                b.name, b.inventory);
+    public Player(Transform transform, Renderer renderer, String map, String name, Inventory inventory, int activeIndex, Stats stats){
+        super(transform, renderer, map);
+        this.name = Objects.requireNonNull(name);
+        this.inventory = Objects.requireNonNull(inventory);
+        if(activeIndex < 0 || activeIndex >= inventory.size()){
+            throw new IndexOutOfBoundsException("Active index cannot be outside inventory bounds.");
+        }
+        this.activeIndex = activeIndex;
+        this.stats = Objects.requireNonNull(stats);
     }
 
-    public String getState(){
-        return playerState.getName();
+    public String name(){
+        return name;
     }
 
-    public void changeState(PlayerState playerState){
-        super.resetAnimationDelta();
-        this.playerState = playerState;
+    public Inventory inventory(){
+        return inventory;
     }
 
-    public int getSpeed(){
-        return 50;
+    public int activeIndex(){
+        return activeIndex;
     }
 
-    public void update(double delta, Direction direction, HitBoxSnapShot snapShot){
-        playerState.progress(delta, direction, snapShot);
+    public void incrementActiveIndex(){
+        this.activeIndex = (activeIndex + 1) % inventory.size();
     }
 
-
-    public void useActiveItem(Breakable breakable){
-        Item item = super.getInventory().getItem(super.getActiveIndex());
-        if(!(item instanceof Tool)){
-            return;
-        }
-        Tool tool = (Tool) item;
-        breakable.damage(tool.efficiency());
+    public void decrementActiveIndex(){
+        this.activeIndex = (activeIndex - 1) % inventory.size();
     }
 
-    public static Builder builder(){
-        return new Builder();
+    public Item getActiveItem(){
+        return inventory.getItem(activeIndex);
     }
 
-    public static class Builder{
-
-        private Point position;
-        private Dimensions dimensions;
-        private String map;
-        private AnimationHolder animationHolder;
-        private Direction direction;
-        private String name;
-        private Inventory inventory;
-
-        private Builder(){
+    public void useActiveItem(List<GameObject> gameObjects){
+        for(GameObject gameObject : gameObjects){
+            inventory.getItem(activeIndex).use(gameObject);
         }
+    }
 
+    public void changeState(PlayerState state){
+        Objects.requireNonNull(state);
+        this.playerState = state;
+    }
 
-        public Builder position(Point position){
-            this.position = position;
-            return this;
-        }
+    public Stats getStats(){
+        return stats;
+    }
 
-        public Builder dimensions(Dimensions dimensions){
-            this.dimensions = dimensions;
-            return this;
-        }
+    public void update(double delta){
+        renderer.update(delta);
+        inventory.getItem(activeIndex).update(delta);
+        playerState.update(delta);
+    }
 
-        public Builder map(String map){
-            this.map = map;
-            return this;
-        }
-
-        public Builder animationHolder(AnimationHolder animationHolder){
-            this.animationHolder = animationHolder;
-            return this;
-        }
-
-        public Builder direction(Direction direction){
-            this.direction = direction;
-            return this;
-        }
-
-        public Builder name(String name){
-            this.name = name;
-            return this;
-        }
-
-        public Builder inventory(Inventory inventory){
-            this.inventory = inventory;
-            return this;
-        }
-
-        public Player build(){
-            Objects.requireNonNull(position);
-            return new Player(this);
-        }
+    public void accept(ItemVisitor visitor){
+        Objects.requireNonNull(visitor);
+        visitor.visit(this);
     }
 }

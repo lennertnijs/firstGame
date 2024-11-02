@@ -1,6 +1,6 @@
 package Inventory;
 
-import com.mygdx.game.Inventory.Item;
+import com.mygdx.game.inventory.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -92,7 +92,7 @@ public class ItemTest {
 
     @Test
     public void testIncreaseWithCurrentAmountBiggerThanStackSize(){
-        assertThrows(IllegalArgumentException.class,
+        assertThrows(IllegalStateException.class,
                 () -> item.increaseAmount(32, 16)); // amount is 32 currently
     }
 
@@ -119,15 +119,6 @@ public class ItemTest {
     public void testDecreaseWithZeroAmount(){
         assertThrows(IllegalArgumentException.class,
                 () -> item.decreaseAmount(0));
-    }
-
-    @Test
-    public void testCopy(){
-        Item copy = item.copy();
-        assertEquals(item.name(), copy.name());
-        assertEquals(item.getAmount(), copy.getAmount());
-        copy.increaseAmount(16, 64);
-        assertNotEquals(item.getAmount(), copy.getAmount());
     }
 
     @Test

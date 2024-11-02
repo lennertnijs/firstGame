@@ -1,30 +1,29 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
-public final class BatMoveState implements BatState{
+public final class BatMoveState implements MonsterState{
 
-    private final Bat bat;
-    private final Point goal;
+    private final Monster bat;
+    private final Vec2 goal;
 
-    public BatMoveState(Bat bat){
+    public BatMoveState(Monster bat){
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
         this.goal = RandomGenerator.generateAround(bat.getPosition(), 150, 250);
     }
 
     @Override
-    public void handle(double delta, Point playerPosition) {
+    public void handle(double delta, Vec2 playerPosition) {
         int movement = (int) (delta * bat.getSpeed() / 200);
-        Point current = bat.getPosition();
-        if(movement >= Point.distanceBetween(current, goal)){
+        Vec2 current = bat.getPosition();
+        if(movement >= Vec2.distanceBetween(current, goal)){
             bat.setPosition(goal);
         }else{
-            Vector scaledMovementVector = Vector.between(current, goal).scaleToSize(movement);
-            Point nextPosition = current.add(scaledMovementVector);
+            Vec2 scaledMovementVector = Vec2.createBetween(current, goal).scaleToSize(movement);
+            Vec2 nextPosition = current.add(scaledMovementVector);
             bat.setPosition(nextPosition);
         }
         handleStateChange(playerPosition);
@@ -35,9 +34,9 @@ public final class BatMoveState implements BatState{
         return "move";
     }
 
-    private void handleStateChange(Point playerPosition){
-        int distanceToPlayer = Point.distanceBetween(bat.getPosition(), playerPosition);
-        if(distanceToPlayer <= bat.aggressionRange()){
+    private void handleStateChange(Vec2 playerPosition){
+        int distanceToPlayer = Vec2.distanceBetween(bat.getPosition(), playerPosition);
+        if(distanceToPlayer <= bat.getAggressionRange()){
             bat.setState(new BatAttackState(bat));
         }
         boolean arrivedAtGoal = bat.getPosition().equals(goal);

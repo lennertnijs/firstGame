@@ -4,14 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.Animation.*;
-import com.mygdx.game.Inventory.*;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Util.Dimensions;
+import com.mygdx.game.Player.Stats;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.game_object.Transform;
+import com.mygdx.game.inventory.Inventory;
+import com.mygdx.game.inventory.Item;
+import com.mygdx.game.inventory.Tool;
+import com.mygdx.game.inventory.ToolType;
+import com.mygdx.game.renderer.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.mygdx.game.Util.Direction.DOWN;
 
 public final class DefaultPlayerLoader {
 
@@ -25,54 +32,50 @@ public final class DefaultPlayerLoader {
         JsonValue positionJson = file.get("position");
         int x = positionJson.getInt("x");
         int y = positionJson.getInt("y");
-        Point position = new Point(x, y);
-
-        JsonValue dimensionsJson = file.get("dimensions");
-        int width = dimensionsJson.getInt("width");
-        int height = dimensionsJson.getInt("height");
-        Dimensions dimensions = new Dimensions(width, height);
+        Vec2 position = new Vec2(x, y);
+        Transform transform = new Transform(position);
 
         String map = file.getString("map");
 
         String textureAtlas = file.getString("texture_atlas");
-        AnimationHolder animationHolder = load("player/Player.pack");
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(textureAtlas));
 
-        Direction direction = Direction.valueOf(file.getString("direction"));
+        Renderer renderer = new AnimatedRenderer(loadAnimations(atlas), new Key("walking", DOWN), 0);
 
         String name = file.getString("name");
 
-        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).build();
-        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).build();
-
-        Map<String, Integer> stackSizeMap = new HashMap<String, Integer>(){{
+        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).duration(2000).build();
+        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).duration(2000).build();
+        Map<String, Integer> stackSizeMap = new HashMap<>() {{
             put("Pickaxe", 1);
             put("Axe", 1);
         }};
 
-        Inventory inventory = Inventory.createWithItems(new Item[]{pickaxe, axe}, stackSizeMap);
-        return Player.builder()
-                .position(position)
-                .dimensions(dimensions)
-                .map(map)
-                .animationHolder(animationHolder)
-                .direction(direction)
-                .name(name)
-                .inventory(inventory)
-                .build();
+        Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(50).build();
+
+        Inventory inventory = new Inventory(new Item[]{pickaxe, axe}, stackSizeMap);
+        return new Player(transform, renderer, map, name, inventory, 0, stats);
     }
 
-    public static AnimationHolder load(String atlasPath){
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
-
-        AnimationFactory animationFactory = new AnimationFactory(atlas);
-        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
-        AnimationPack minePack = animationFactory.create4Directional("mine", 4);
-        AnimationPack walkPack = animationFactory.create4Directional("walking", 4);
-        AnimationHolder animationHolder = new AnimationHolder();
-        animationHolder.addAnimation("idle", idlePack);
-        animationHolder.addAnimation("mine", minePack);
-        animationHolder.addAnimation("walking", walkPack);
-        return animationHolder;
+    private static Map<Key, Animation> loadAnimations(TextureAtlas atlas){
+        String[] activities = new String[]{"mine", "walking", "idle"};
+        int[] lengths = new int[]{4, 6, 1};
+        String[] directions = new String[]{"RIGHT", "LEFT", "UP", "DOWN"};
+        int lengthIndex = 0;
+        Map<Key, Animation> map = new HashMap<>();
+        for(String activity : activities){
+            for(String direction : directions){
+                Frame[] frames = new Frame[lengths[lengthIndex]];
+                for(int i = 1; i <= lengths[lengthIndex]; i++){
+                    Frame frame = Frame.builder().texture(atlas.findRegion(activity + "_" + direction.toLowerCase(), i)).width(200).height(200).build();
+                    frames[i - 1] = frame;
+                }
+                Key key = new Key(activity, Direction.valueOf(direction));
+                Animation animation = new Animation(frames, 2000);
+                map.put(key, animation);
+            }
+            lengthIndex++;
+        }
+        return map;
     }
-
 }

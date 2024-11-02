@@ -1,37 +1,46 @@
 package com.mygdx.game.DAO;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Dialogue.DialogueData;
 import com.mygdx.game.Dialogue.DialogueRepository;
-import com.mygdx.game.Inventory.Inventory;
-import com.mygdx.game.npc.NPC;
+import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.Navigation.BFSPathFinder;
 import com.mygdx.game.Navigation.Graph;
 import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.Animation.*;
-import com.mygdx.game.Stats;
+import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.renderer.StaticRenderer;
+import com.mygdx.game.Player.Stats;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.*;
-import com.mygdx.game.WeekSchedule.*;
+import com.mygdx.game.WeekSchedule.Schedule;
+import com.mygdx.game.WeekSchedule.WeekSchedule;
+import com.mygdx.game.npc.NPC;
+import com.mygdx.game.renderer.Frame;
+import com.mygdx.game.inventory.Item;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-
-import static com.mygdx.game.Util.Direction.*;
 
 public class NPCCreator {
 
     public static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("npc/mining.atlas"));
     public static NPC create() {
         TextureRegion idleDown = atlas.findRegion("idle_down");
-        Point position = new Point(500, 500);
-        Dimensions dimensions = new Dimensions(idleDown.getRegionWidth(), idleDown.getRegionHeight());
+        Vec2 position = new Vec2(500, 500);
         String map = "main";
 
         String name = "Gilbert";
 
-        AnimationHolder animationHolder = load("player/Player.pack");
+        //Map<Key, Animation> animations = load("player/player.pack");
+
+        TextureRegion tr = new TextureRegion(new Texture(Gdx.files.internal("npc/mining.png")));
+        Frame frame = Frame.builder().texture(tr).build();
+        Renderer renderer = new StaticRenderer(frame);
 
         Map<Day, Schedule> scheduleMap = new HashMap<>();
         scheduleMap.put(Day.MONDAY, loadSchedule());
@@ -49,16 +58,12 @@ public class NPCCreator {
             put("Stone", 64);
             put("Wood", 64);
         }};
-
-        Inventory inventory = Inventory.createEmptyOfSize(6, stackSizeMap);
+        Item[] items = new Item[6];
+        Inventory inventory = new Inventory(items, stackSizeMap);
 
         return NPC.builder()
-                .position(position)
-                .dimensions(dimensions)
-                .map(map)
-                .animationHolder(animationHolder)
-                .direction(RIGHT)
-                .delta(0)
+                .renderer(renderer)
+                .map(null)
                 .name(name)
                 .inventory(inventory)
                 .weekSchedule(weekSchedule)
@@ -68,34 +73,20 @@ public class NPCCreator {
                 .build();
     }
 
-    public static AnimationHolder load(String atlasPath){
-        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(atlasPath));
-
-        AnimationFactory animationFactory = new AnimationFactory(atlas);
-        AnimationPack minePack = animationFactory.create4Directional("mine", 4);
-        AnimationPack walkPack = animationFactory.create4Directional("walking", 4);
-        AnimationPack idlePack = animationFactory.create4Directional("idle", 1);
-        AnimationHolder animationHolder = new AnimationHolder();
-        animationHolder.addAnimation("idle", idlePack);
-        animationHolder.addAnimation("mine", minePack);
-        animationHolder.addAnimation("walking", walkPack);
-        return animationHolder;
-    }
-
     private static Schedule loadSchedule(){
-        Activity activity1 = new Activity("mine", "main", new Point(1000, 1500), new Time(4, 50));
-        Activity activity2 = new Activity("walk", "main", new Point(1000, 500), new Time(5, 50));
-        Activity activity3 = new Activity("idle", "main", new Point(1000, 0), new Time(6, 50));
-        Activity activity4 = new Activity("idle", "main", new Point(1000, 1500), new Time(7, 50));
+        Activity activity1 = new Activity("mine", "main", new Vec2(1000, 1500), new Time(4, 50));
+        Activity activity2 = new Activity("walk", "main", new Vec2(1000, 500), new Time(5, 50));
+        Activity activity3 = new Activity("idle", "main", new Vec2(1000, 0), new Time(6, 50));
+        Activity activity4 = new Activity("idle", "main", new Vec2(1000, 1500), new Time(7, 50));
         return new Schedule(Arrays.asList(activity1, activity2, activity3, activity4));
     }
 
     private static Graph<Location> loadGraph(){
-        Location l1 = new Location("main", new Point(0, 0));
-        Location l2 = new Location("main", new Point(500, 500));
-        Location l3 = new Location("main", new Point(1000, 500));
-        Location l4 = new Location("main", new Point(1000, 0));
-        Location l5 = new Location("main", new Point(1000, 1500));
+        Location l1 = new Location("main", new Vec2(0, 0));
+        Location l2 = new Location("main", new Vec2(500, 500));
+        Location l3 = new Location("main", new Vec2(1000, 500));
+        Location l4 = new Location("main", new Vec2(1000, 0));
+        Location l5 = new Location("main", new Vec2(1000, 1500));
         Graph<Location> g = new Graph<>();
         g.addVertices(Arrays.asList(l1, l2, l3, l4, l5));
         g.connect(l1, l2);

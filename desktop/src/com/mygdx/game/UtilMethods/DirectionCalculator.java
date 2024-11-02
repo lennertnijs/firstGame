@@ -1,8 +1,7 @@
 package com.mygdx.game.UtilMethods;
 
 import com.mygdx.game.Util.Direction;
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+import com.mygdx.game.UpdatedUtil.Vec2;
 
 public final class DirectionCalculator {
 
@@ -10,7 +9,7 @@ public final class DirectionCalculator {
 
     }
 
-    public static Direction calculateDir(Point start, Point end){
+    public static Direction calculateDir(Vec2 start, Vec2 end){
         int x_diff = Math.abs(start.x() - end.x());
         int y_diff = Math.abs(start.y() - end.y());
         if(start.x() < end.x() && x_diff >= y_diff){

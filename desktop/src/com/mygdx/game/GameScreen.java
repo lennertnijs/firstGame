@@ -15,6 +15,7 @@ import com.mygdx.game.Input.KeyboardInputProcessor;
 import com.mygdx.game.Util.Day;
 import com.mygdx.game.Util.Time;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 
@@ -22,7 +23,6 @@ public class GameScreen implements Screen {
     final MyGame game;
     final OrthographicCamera camera;
     private final GameController gameController;
-    private final PlayerController playerController;
     private final Texture bar = new Texture(Gdx.files.internal("bar.png"));
 
 
@@ -32,11 +32,9 @@ public class GameScreen implements Screen {
         this.game = game;
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
         Clock gameClock = new Clock(calendarClock, new SystemTimeProvider());
-        GameObjectRepository repository = new GameObjectRepository(Collections.singletonList(NPCCreator.create()), MapLoader.loadAll(), BreakableCreator.getBreakables(),
-                Collections.singletonList(BatLoader.create()),HouseLoader.load());
-        playerController = new PlayerController(DefaultPlayerLoader.load());
-        gameController = new GameController(repository, gameClock, new SpriteDrawer(game), playerController);
-        Gdx.input.setInputProcessor(new KeyboardInputProcessor(playerController, gameController));
+        GameObjectRepository repository = new GameObjectRepository(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),new ArrayList<>());
+        gameController = new GameController(repository, DefaultPlayerLoader.load(), gameClock, new SpriteDrawer(game));
+        Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
 
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
@@ -57,9 +55,9 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         gameController.update();
-        game.batch.draw(bar, playerController.getPlayer().getPosition().x() - 72, playerController.getPlayer().getPosition().y() - 510);
+        game.batch.draw(bar, gameController.getPlayer().getPosition().x() - 72, gameController.getPlayer().getPosition().y() - 510);
         game.batch.end();
-        camera.position.set(playerController.getPlayer().getPosition().x(), playerController.getPlayer().getPosition().y(), 0);
+        camera.position.set(gameController.getPlayer().getPosition().x(), gameController.getPlayer().getPosition().y(), 0);
     }
 
 

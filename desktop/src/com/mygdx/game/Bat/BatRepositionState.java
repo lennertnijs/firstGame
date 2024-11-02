@@ -1,17 +1,16 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
-import com.mygdx.game.Util.Vector;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.UtilMethods.RandomGenerator;
 
 import java.util.Objects;
 
-public final class BatRepositionState implements BatState{
+public final class BatRepositionState implements MonsterState{
 
-    private final Bat bat;
-    private final Point goal;
+    private final Monster bat;
+    private final Vec2 goal;
 
-    public BatRepositionState(Bat bat) {
+    public BatRepositionState(Monster bat) {
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
         this.goal = RandomGenerator.generateAround(bat.getPosition(), 100, 250);
     }
@@ -23,14 +22,14 @@ public final class BatRepositionState implements BatState{
 
 
     @Override
-    public void handle(double delta, Point playerPosition) {
+    public void handle(double delta, Vec2 playerPosition) {
         int movement = (int) (delta * bat.getSpeed() / 300);
-        Point current = bat.getPosition();
-        if(movement >= Point.distanceBetween(bat.getPosition(), goal)){
+        Vec2 current = bat.getPosition();
+        if(movement >= Vec2.distanceBetween(bat.getPosition(), goal)){
             bat.setPosition(goal);
         }else{
-            Vector scaledMovementVector = Vector.between(current, goal).scaleToSize(movement);
-            Point nextPosition = current.add(scaledMovementVector);
+            Vec2 scaledMovementVector = Vec2.createBetween(current, goal).scaleToSize(movement);
+            Vec2 nextPosition = current.add(scaledMovementVector);
             bat.setPosition(nextPosition);
         }
         handleStateChange();

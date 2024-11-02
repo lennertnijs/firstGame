@@ -1,28 +1,22 @@
 package com.mygdx.game.Bat;
 
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.UtilMethods.MovementUtilMethods;
 
 import java.util.Objects;
 
-/**
- * The attacking state of the {@link Bat}.
- * In the attacking state, the bat will fly straight to the player position until hitting the player.
- *
- * If the {@link Bat} collides with the player position, it will change it's state to the {@link BatRepositionState}.
- */
-public final class BatAttackState implements BatState{
+public final class BatAttackState implements MonsterState{
 
     /**
      * The bat.
      */
-    private final Bat bat;
+    private final Monster bat;
 
     /**
      * Creates a new {@link BatAttackState} with the given bat.
      * @param bat The bat. Cannot be null.
      */
-    public BatAttackState(Bat bat){
+    public BatAttackState(Monster bat){
         this.bat = Objects.requireNonNull(bat, "Bat is null.");
     }
 
@@ -43,9 +37,9 @@ public final class BatAttackState implements BatState{
      * @param playerPosition The player position. Cannot be null.
      */
     @Override
-    public void handle(double delta, Point playerPosition) {
+    public void handle(double delta, Vec2 playerPosition) {
         int movement = (int)(delta * bat.getSpeed() / 200);
-        Point next = MovementUtilMethods.moveToPoint(bat.getPosition(), playerPosition, movement);
+        Vec2 next = MovementUtilMethods.moveToPoint(bat.getPosition(), playerPosition, movement);
         bat.setPosition(next);
         handleStateChange(playerPosition);
     }
@@ -55,9 +49,9 @@ public final class BatAttackState implements BatState{
      * More precisely, if the bat collided with the player, sets the bat's state to the {@link BatRepositionState}.
      * @param playerPosition The player position. Cannot be null.
      */
-    private void handleStateChange(Point playerPosition){
-        if(bat.getHitBox().contains(playerPosition)){
-            bat.setState(new BatRepositionState(bat));
-        }
+    private void handleStateChange(Vec2 playerPosition){
+//        if(bat.getHitBox().contains(playerPosition)){
+//            bat.setState(new BatRepositionState(bat));
+//        }
     }
 }

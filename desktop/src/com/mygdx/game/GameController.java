@@ -3,111 +3,83 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Bat.Bat;
-import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.GameObject.DroppedItem;
-import com.mygdx.game.GameObject.GameObject;
-import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.Util.Dimensions;
-import com.mygdx.game.Util.Point;
+import com.mygdx.game.DAO.DefaultPlayerLoader;
+import com.mygdx.game.Input.MovementInputs;
+import com.mygdx.game.Player.IdleState;
+import com.mygdx.game.Player.Player;
+import com.mygdx.game.Player.WalkState;
+import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.Util.Direction;
+import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.npc.NPC;
-import com.mygdx.game.HitBox.HitBox;
+import com.mygdx.game.renderer.Frame;
+import com.mygdx.game.renderer.StaticRenderer;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class GameController {
 
     private final GameObjectRepository gameObjectRepository;
+    private final Player player;
+    private final MovementInputs movementFlags = new MovementInputs();
     private final Clock clock;
     private final SpriteDrawer drawer;
-    private final PlayerController playerController;
-    private final List<DroppedItem> droppedItems;
 
-    public GameController(GameObjectRepository gameObjectRepository, Clock clock, SpriteDrawer spriteDrawer, PlayerController playerController){
+    public GameController(GameObjectRepository gameObjectRepository, Player player, Clock clock, SpriteDrawer spriteDrawer){
         this.gameObjectRepository = gameObjectRepository;
+        this.player = player;
         this.clock = clock;
         this.drawer = spriteDrawer;
-        this.playerController = playerController;
-        droppedItems = new ArrayList<>();
     }
 
     public void update(){
         double delta = clock.update();
+
         for(NPC npc : gameObjectRepository.getNpcs()){
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
-        playerController.update(delta, getSnapShot());
-        for(Bat bat : gameObjectRepository.getBats()){
-            bat.update(delta, playerController.getPlayer().getPosition());
+        if(movementFlags.getCurrentDirection() != null){
+            player.setDirection(movementFlags.getCurrentDirection());
         }
-        checkDroppedItems();
-        drawer.draw(gameObjectRepository.getMaps().get(0));
-        for(GameObject o : gameObjectRepository.getMiscObjects()){
-            drawer.draw(o);
-        }
-        for(Breakable b : gameObjectRepository.getBreakables()){
-            drawer.draw(b);
-        }
-        for(Bat bat : gameObjectRepository.getBats()){
-            drawer.draw(bat);
-        }
+        player.update(delta);
+
         for(NPC npc : gameObjectRepository.getNpcs()){
             drawer.draw(npc);
         }
-        for(GameObject o : droppedItems){
-            drawer.draw(o);
-        }
-        drawer.draw(playerController.getPlayer());
+        drawer.draw(player);
     }
 
-    // todo static objects dont need new snapshots, dynamic snapshots need updating
-    private HitBoxSnapShot getSnapShot(){
-        List<HitBox> hitBoxes = new ArrayList<>();
-        for(GameObject o : gameObjectRepository.getMiscObjects()){
-            hitBoxes.add(o.getHitBox());
-        }
-        for(GameObject o : gameObjectRepository.getNpcs()){
-            hitBoxes.add(o.getHitBox());
-        }
-        for(GameObject o : gameObjectRepository.getBreakables()){
-            hitBoxes.add(o.getHitBox());
-        }
-        return new HitBoxSnapShot(hitBoxes);
+    public Player getPlayer(){
+        return player;
     }
 
     public void playerUseActiveItem(){
-        Point position = playerController.getPlayer().getPosition();
-        Point hit = new Point(position.x() + 30, position.y());
-        List<Breakable> broken = new ArrayList<>();
-        // if player frame has damage hit box -> check colisions
-        for(Breakable breakable : gameObjectRepository.getBreakables()){
-            if(breakable.getHitBox().contains(hit)){
-                broken.add(breakable);
-            }
-        }
-        Breakable b = broken.size() > 0 ? broken.get(0) : null;
-        playerController.useActiveItem(b);
-        for(Breakable breakable : broken){
-            gameObjectRepository.getBreakables().remove(breakable);
-            Loot loot = breakable.getDrops();
-            TextureRegion t = new TextureRegion(new Texture(Gdx.files.internal("images/stone.png")));
-            droppedItems.add(new DroppedItem(t, breakable.getPosition(), new Dimensions(20, 20), "main", loot.name(), loot.amount()));
-        }
+        Player secondPlayer = DefaultPlayerLoader.load();
+        player.useActiveItem(Arrays.asList(secondPlayer));
+    }
+
+    public void playerSetNextActive(){
+        player.incrementActiveIndex();
+    }
+
+    public void addDirection(Direction direction){
+//        if(movementFlags.getCurrentDirection() == null){
+//            player.changeState(new WalkState(player));
+//        }
+        movementFlags.addDirection(direction);
+    }
+
+    public void removeDirection(Direction direction){
+        movementFlags.removeDirection(direction);
+//        if(movementFlags.getCurrentDirection() == null){
+//            player.changeState(new IdleState());
+//        }
     }
 
     public void interact(){
-        Point p = new Point(playerController.getPlayer().getPosition().x() + 50, playerController.getPlayer().getPosition().y());
-        for(NPC npc : gameObjectRepository.getNpcs()){
-            if(npc.getHitBox().contains(p)){
-                drawer.draw(npc.handleInputLine("line"));
-            }
-        }
-    }
 
-    public void checkDroppedItems(){
-        //playerController.getPlayer().getInventory().add(droppedItem.name(), droppedItem.amount());
-        droppedItems.removeIf(droppedItem -> droppedItem.getHitBox().contains(playerController.getPlayer().getPosition()));
     }
 }
