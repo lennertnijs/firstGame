@@ -28,7 +28,7 @@ public final class BatIdleState implements MonsterState {
     }
 
     private void handleStateChange(Vec2 playerPosition){
-        int distanceToPlayer = Vec2.distanceBetween(playerPosition, monster.getPosition());
+        int distanceToPlayer = monster.getPosition().distanceTo(playerPosition);
         if(distanceToPlayer <= monster.getStats().aggressionRange()){
             monster.changeState(new BatAttackState(monster));
         }

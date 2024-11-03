@@ -23,11 +23,11 @@ public class RandomGenerator {
     public static Vec2 generateAround(Vec2 p, int minAmount, int maxAmount){
         int x_diff = generateBetween(-maxAmount, maxAmount);
         int y_diff = generateBetween(-maxAmount, maxAmount);
-        int distanceToNewPoint = Vec2.distanceBetween(p, new Vec2(p.x() + x_diff, p.y() + y_diff));
+        int distanceToNewPoint = p.distanceTo(new Vec2(p.x() + x_diff, p.y() + y_diff));
         while(distanceToNewPoint < minAmount || distanceToNewPoint > maxAmount){
             x_diff = generateBetween(-maxAmount, maxAmount);
             y_diff = generateBetween(-maxAmount, maxAmount);
-            distanceToNewPoint = Vec2.distanceBetween(p, new Vec2(p.x() + x_diff, p.y() + y_diff));
+            distanceToNewPoint = p.distanceTo(new Vec2(p.x() + x_diff, p.y() + y_diff));
         }
         return new Vec2(p.x() + x_diff, p.y() + y_diff);
     }

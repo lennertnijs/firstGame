@@ -21,10 +21,10 @@ public final class BatMoveState implements MonsterState {
     public void update(double delta, Vec2 playerPosition) {
         int movement = (int) (delta * bat.getStats().getSpeed() / 200);
         Vec2 current = bat.getPosition();
-        if(movement >= Vec2.distanceBetween(current, goal)){
+        if(movement >= current.distanceTo(goal)){
             bat.setPosition(goal);
         }else{
-            Vec2 scaledMovementVector = Vec2.createBetween(current, goal).scaleToSize(movement);
+            Vec2 scaledMovementVector = Vec2.createFromTo(current, goal).scaleToSize(movement);
             Vec2 nextPosition = current.add(scaledMovementVector);
             bat.setPosition(nextPosition);
         }
@@ -37,7 +37,7 @@ public final class BatMoveState implements MonsterState {
     }
 
     private void handleStateChange(Vec2 playerPosition){
-        int distanceToPlayer = Vec2.distanceBetween(bat.getPosition(), playerPosition);
+        int distanceToPlayer = bat.getPosition().distanceTo(playerPosition);
         if(distanceToPlayer <= bat.getStats().aggressionRange()){
             bat.changeState(new BatAttackState(bat));
         }

@@ -13,7 +13,6 @@ import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.inventory.Item;
 import com.mygdx.game.inventory.Tool;
 import com.mygdx.game.inventory.ToolType;
-import com.mygdx.game.renderer.*;
 
 import java.util.HashMap;
 import java.util.Map;

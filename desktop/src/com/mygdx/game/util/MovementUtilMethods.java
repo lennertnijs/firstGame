@@ -23,7 +23,7 @@ public final class MovementUtilMethods {
             Vec2 vector = new Vec2(x_diff, y_diff).scaleToSize(amount);
             return new Location(start.map(), new Vec2(start.position().x() + vector.x(), start.position().y() + vector.y()));
         }else{
-            return moveAlongRoute(route.poll(), route, amount -  Vec2.distanceBetween(start.position(), goal.position()));
+            return moveAlongRoute(route.poll(), route, amount -  start.position().distanceTo(goal.position()));
         }
     }
 
@@ -33,7 +33,7 @@ public final class MovementUtilMethods {
         }
         int x_diff = goal.x() - start.x();
         int y_diff = goal.y() - start.y();
-        int distanceBetweenPoints = Vec2.distanceBetween(start, goal);
+        int distanceBetweenPoints = start.distanceTo(goal);
         if(distanceBetweenPoints <= amount){
             return goal;
         }

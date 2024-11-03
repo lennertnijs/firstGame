@@ -27,10 +27,10 @@ public final class BatRepositionState implements MonsterState {
     public void update(double delta, Vec2 playerPosition) {
         int movement = (int) (delta * monster.getStats().getSpeed() / 300);
         Vec2 current = monster.getPosition();
-        if(movement >= Vec2.distanceBetween(monster.getPosition(), goal)){
+        if(movement >= monster.getPosition().distanceTo(goal)){
             monster.setPosition(goal);
         }else{
-            Vec2 scaledMovementVector = Vec2.createBetween(current, goal).scaleToSize(movement);
+            Vec2 scaledMovementVector = Vec2.createFromTo(current, goal).scaleToSize(movement);
             Vec2 nextPosition = current.add(scaledMovementVector);
             monster.setPosition(nextPosition);
         }
