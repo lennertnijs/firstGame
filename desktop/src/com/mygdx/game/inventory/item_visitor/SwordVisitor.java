@@ -14,7 +14,7 @@ public final class SwordVisitor implements ItemVisitor {
 
     @Override
     public void visit(Player player) {
-        player.changeState(new UseItemState(player));
+        player.changeState(new UseItemState(player, "sword"));
     }
 
     @Override

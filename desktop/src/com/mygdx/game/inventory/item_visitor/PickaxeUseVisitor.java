@@ -11,7 +11,7 @@ public final class PickaxeUseVisitor implements ItemVisitor {
 
     @Override
     public void visit(Player player) {
-        player.changeState(new UseItemState(player));
+        player.changeState(new UseItemState(player, "mine"));
         player.setActivity("mine");
     }
 

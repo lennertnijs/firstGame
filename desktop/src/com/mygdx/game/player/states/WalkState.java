@@ -20,4 +20,8 @@ public class WalkState implements PlayerState {
         Vec2 movement = MovementUtilMethods.calculateNextPosition(player.getPosition(), player.getDirection(), amount);
         player.setPosition(movement);
     }
+
+    public String getActivityName(){
+        return "walking";
+    }
 }

@@ -57,6 +57,7 @@ public final class Player extends GameObject {
 
     public void changeState(PlayerState state){
         this.playerState = Objects.requireNonNull(state);
+        renderer.setActivity(state.getActivityName());
     }
 
     public Stats getStats(){

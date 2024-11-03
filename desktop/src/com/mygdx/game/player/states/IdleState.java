@@ -1,7 +1,5 @@
 package com.mygdx.game.player.states;
 
-import com.mygdx.game.player.states.PlayerState;
-
 public class IdleState implements PlayerState {
 
 
@@ -10,5 +8,9 @@ public class IdleState implements PlayerState {
 
     public void update(double delta){
 
+    }
+
+    public String getActivityName(){
+        return "idle";
     }
 }

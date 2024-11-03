@@ -7,11 +7,13 @@ import com.mygdx.game.player.states.PlayerState;
 public final class UseItemState implements PlayerState {
 
     private final Player player;
+    private final String activity;
     private double delta;
 
-    public UseItemState(Player player){
+    public UseItemState(Player player, String activity){
         this.player = player;
         this.delta = 0;
+        this.activity = activity;
     }
 
     @Override
@@ -24,5 +26,9 @@ public final class UseItemState implements PlayerState {
         if(delta >= player.getActiveItem().usageDuration()){
             player.changeState(new IdleState());
         }
+    }
+
+    public String getActivityName(){
+        return activity;
     }
 }
