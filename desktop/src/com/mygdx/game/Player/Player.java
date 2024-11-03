@@ -54,6 +54,7 @@ public final class Player extends GameObject {
     }
 
     public void useActiveItem(List<GameObject> gameObjects){
+        gameObjects.add(this);
         for(GameObject gameObject : gameObjects){
             inventory.getItem(activeIndex).use(gameObject);
         }

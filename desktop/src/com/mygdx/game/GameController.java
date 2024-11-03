@@ -1,24 +1,14 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Clock.Clock;
 import com.mygdx.game.DAO.DefaultPlayerLoader;
 import com.mygdx.game.Input.MovementInputs;
-import com.mygdx.game.Player.IdleState;
 import com.mygdx.game.Player.Player;
-import com.mygdx.game.Player.WalkState;
-import com.mygdx.game.UpdatedUtil.Vec2;
 import com.mygdx.game.Util.Direction;
 import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.npc.NPC;
-import com.mygdx.game.renderer.Frame;
-import com.mygdx.game.renderer.StaticRenderer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameController {
 
@@ -58,7 +48,9 @@ public class GameController {
 
     public void playerUseActiveItem(){
         Player secondPlayer = DefaultPlayerLoader.load();
-        player.useActiveItem(Arrays.asList(secondPlayer));
+        ArrayList<GameObject> list = new ArrayList<>();
+        list.add(secondPlayer);
+        player.useActiveItem(list);
     }
 
     public void playerSetNextActive(){
