@@ -1,6 +1,6 @@
 package Loot;
 
-import com.mygdx.game.Loot.Loot;
+import com.mygdx.game.loot.Loot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -87,7 +87,7 @@ public class LootTest {
 
     @Test
     public void testToString(){
-        String expected = "Loot[name=Wood, amount=32]";
+        String expected = "loot[name=Wood, amount=32]";
         assertEquals(expected, loot.toString());
     }
 }

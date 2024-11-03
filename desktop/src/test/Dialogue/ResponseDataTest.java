@@ -2,7 +2,7 @@ package Dialogue;
 
 import com.mygdx.game.Action.Action;
 import com.mygdx.game.Action.MockAction;
-import com.mygdx.game.Dialogue.ResponseData;
+import com.mygdx.game.npc.dialogue.ResponseData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

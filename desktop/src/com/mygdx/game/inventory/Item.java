@@ -65,7 +65,11 @@ public class Item {
     }
 
     public void use(GameObject object){
-        // base class does nothing
+        // cant use so does nothing
+    }
+
+    public void useOn(GameObject object){
+        // can't be used on anything so does nothing
     }
 
     public int usageDuration(){

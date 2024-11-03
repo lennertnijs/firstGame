@@ -1,11 +1,11 @@
 package Clock;
 
-import com.mygdx.game.Clock.CalendarClock;
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.MockTimeProvider;
-import com.mygdx.game.Clock.TimeProvider;
-import com.mygdx.game.Util.Day;
-import com.mygdx.game.Util.Time;
+import com.mygdx.game.clock.CalendarClock;
+import com.mygdx.game.clock.Clock;
+import com.mygdx.game.clock.MockTimeProvider;
+import com.mygdx.game.clock.TimeProvider;
+import com.mygdx.game.npc.week_schedule.Day;
+import com.mygdx.game.npc.week_schedule.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

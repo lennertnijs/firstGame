@@ -1,7 +1,7 @@
 package com.mygdx.game.Breakables;
 
 import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.game_object.renderer.Renderer;
 import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;

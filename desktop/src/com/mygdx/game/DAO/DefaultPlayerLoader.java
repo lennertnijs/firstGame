@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.mygdx.game.Player.Player;
-import com.mygdx.game.Player.Stats;
-import com.mygdx.game.UpdatedUtil.Vec2;
-import com.mygdx.game.Util.Direction;
+import com.mygdx.game.game_object.renderer.*;
+import com.mygdx.game.player.Player;
+import com.mygdx.game.player.Stats;
+import com.mygdx.game.util.Vec2;
 import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.inventory.Item;
@@ -18,7 +18,7 @@ import com.mygdx.game.renderer.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.mygdx.game.Util.Direction.DOWN;
+import static com.mygdx.game.game_object.renderer.Direction.DOWN;
 
 public final class DefaultPlayerLoader {
 
@@ -40,7 +40,7 @@ public final class DefaultPlayerLoader {
         String textureAtlas = file.getString("texture_atlas");
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal(textureAtlas));
 
-        Renderer renderer = new AnimatedRenderer(loadAnimations(atlas), new Key("walking", DOWN), 0);
+        Renderer renderer = new AnimatedRenderer(loadAnimations(atlas), new Key("idle", DOWN), 0);
 
         String name = file.getString("name");
 

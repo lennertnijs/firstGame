@@ -1,7 +1,7 @@
 package Loot;
 
-import com.mygdx.game.Loot.Bucket;
-import com.mygdx.game.Loot.WalkersAlias;
+import com.mygdx.game.loot.Bucket;
+import com.mygdx.game.loot.WalkersAlias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

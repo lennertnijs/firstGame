@@ -1,6 +1,7 @@
 package com.mygdx.game.inventory;
 
 import com.mygdx.game.game_object.GameObject;
+import com.mygdx.game.inventory.item_visitor.*;
 
 import java.util.Objects;
 
@@ -63,6 +64,15 @@ public final class Tool extends Item {
             return;
         }
         this.delta = duration;
+        durability--;
+        switch(type){
+            case PICKAXE -> object.accept(new PickaxeUseVisitor());
+
+        }
+    }
+
+    @Override
+    public void useOn(GameObject object){
         switch(type){
             case PICKAXE -> object.accept(new PickaxeVisitor());
             case SWORD -> object.accept(new SwordVisitor());

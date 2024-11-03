@@ -1,19 +1,21 @@
 package com.mygdx.game.npc;
 
-import com.mygdx.game.Dialogue.DialogueData;
+import com.mygdx.game.npc.dialogue.DialogueData;
 import com.mygdx.game.inventory.Inventory;
 import com.mygdx.game.inventory.Item;
 import com.mygdx.game.inventory.Tool;
-import com.mygdx.game.Navigation.NavigationData;
-import com.mygdx.game.Navigation.Route;
-import com.mygdx.game.Player.Stats;
-import com.mygdx.game.Util.Activity;
-import com.mygdx.game.Util.Day;
-import com.mygdx.game.Util.Location;
-import com.mygdx.game.Util.Time;
-import com.mygdx.game.WeekSchedule.WeekSchedule;
+import com.mygdx.game.npc.navigation.NavigationData;
+import com.mygdx.game.npc.navigation.Route;
+import com.mygdx.game.npc.states.IdleState;
+import com.mygdx.game.npc.states.NPCState;
+import com.mygdx.game.player.Stats;
+import com.mygdx.game.npc.week_schedule.Activity;
+import com.mygdx.game.npc.week_schedule.Day;
+import com.mygdx.game.npc.navigation.Location;
+import com.mygdx.game.npc.week_schedule.Time;
+import com.mygdx.game.npc.week_schedule.WeekSchedule;
 import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.game_object.renderer.Renderer;
 import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
@@ -26,11 +28,11 @@ public final class NPC extends GameObject {
     private int activeIndex;
     private final NavigationData navigationData;
     private final WeekSchedule weekSchedule;
-    private final DialogueData dialogueData;
     private final Stats stats;
     private NPCState state = new IdleState(this);
-    private final Route route;
-    private Activity nextActivity;
+    private final Route route; // remove this
+    private Activity nextActivity; // remove this
+    private final DialogueData dialogueData;
 
     private NPC(Builder b){
         super(b.transform, b.renderer, b.map);

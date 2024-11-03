@@ -1,10 +1,10 @@
 package com.mygdx.game.game_object;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.UpdatedUtil.Vec2;
-import com.mygdx.game.Util.Direction;
-import com.mygdx.game.renderer.Renderer;
-import com.mygdx.game.inventory.ItemVisitor;
+import com.mygdx.game.util.Vec2;
+import com.mygdx.game.game_object.renderer.Direction;
+import com.mygdx.game.game_object.renderer.Renderer;
+import com.mygdx.game.inventory.item_visitor.ItemVisitor;
 
 import java.util.Objects;
 
@@ -88,13 +88,6 @@ public class GameObject {
      */
     public final void setActivity(String activity){
         renderer.setActivity(activity);
-    }
-
-    /**
-     * Updates the object's renderer with the given delta (in milliseconds).
-     */
-    public final void updateDelta(double deltaInMillis){
-        renderer.update(deltaInMillis);
     }
 
     /**

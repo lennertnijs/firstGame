@@ -1,7 +1,7 @@
 package Navigation;
 
-import com.mygdx.game.Navigation.Graph;
-import com.mygdx.game.Navigation.IGraph;
+import com.mygdx.game.npc.navigation.graph.Graph;
+import com.mygdx.game.npc.navigation.graph.IGraph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

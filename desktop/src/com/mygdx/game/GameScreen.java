@@ -7,16 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Clock.CalendarClock;
-import com.mygdx.game.Clock.Clock;
-import com.mygdx.game.Clock.SystemTimeProvider;
-import com.mygdx.game.DAO.*;
-import com.mygdx.game.Input.KeyboardInputProcessor;
-import com.mygdx.game.Util.Day;
-import com.mygdx.game.Util.Time;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import com.mygdx.game.clock.CalendarClock;
+import com.mygdx.game.clock.Clock;
+import com.mygdx.game.clock.SystemTimeProvider;
+import com.mygdx.game.DAO.DefaultPlayerLoader;
+import com.mygdx.game.input.KeyboardInputProcessor;
+import com.mygdx.game.npc.week_schedule.Day;
+import com.mygdx.game.npc.week_schedule.Time;
 
 
 public class GameScreen implements Screen {
@@ -32,8 +29,7 @@ public class GameScreen implements Screen {
         this.game = game;
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
         Clock gameClock = new Clock(calendarClock, new SystemTimeProvider());
-        GameObjectRepository repository = new GameObjectRepository(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),new ArrayList<>());
-        gameController = new GameController(repository, DefaultPlayerLoader.load(), gameClock, new SpriteDrawer(game));
+        gameController = new GameController(DefaultPlayerLoader.load(), gameClock, new SpriteDrawer(game));
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
 
         // create the camera and the SpriteBatch

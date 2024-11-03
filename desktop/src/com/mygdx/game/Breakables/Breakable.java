@@ -1,34 +1,18 @@
 package com.mygdx.game.Breakables;
 
 import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.Loot.ILootTable;
-import com.mygdx.game.Loot.Loot;
-import com.mygdx.game.renderer.Renderer;
+import com.mygdx.game.loot.ILootTable;
+import com.mygdx.game.loot.Loot;
+import com.mygdx.game.game_object.renderer.Renderer;
 import com.mygdx.game.game_object.Transform;
 
 import java.util.Objects;
 
-/**
- * Represents breakable objects in the game.
- * Examples are rocks, trees, and other various gemstones.
- */
 public final class Breakable extends GameObject {
 
-    /**
-     * The current health
-     */
     private int health;
-    /**
-     * The hardness.
-     */
     private final int hardness;
-    /**
-     * The loot table.
-     */
     private final ILootTable lootTable;
-    /**
-     * The type of breakable.
-     */
     private final String type;
 
     /**
@@ -161,7 +145,7 @@ public final class Breakable extends GameObject {
             if(hardness < 0){
                 throw new IllegalArgumentException("Hardness is negative.");
             }
-            Objects.requireNonNull(lootTable, "Loot table is null.");
+            Objects.requireNonNull(lootTable, "loot table is null.");
             Objects.requireNonNull(type, "Type is null.");
             return new Breakable(this);
         }

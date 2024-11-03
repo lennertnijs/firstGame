@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.game_object.GameObject;
-import com.mygdx.game.map.SingleTextureMap;
 
 public class SpriteDrawer {
 
@@ -22,13 +21,6 @@ public class SpriteDrawer {
         int width = o.getWidth();
         int height = o.getHeight();
         game.batch.draw(texture, x, y, width, height);
-        drawText();
-    }
-
-    public void draw(SingleTextureMap gameMap){
-        int width = texture.getWidth();
-        int height = texture.getHeight();
-        game.batch.draw(texture, 0, 0, width, height);
         drawText();
     }
 

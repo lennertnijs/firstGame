@@ -1,6 +1,6 @@
 package Util;
 
-import com.mygdx.game.Util.Time;
+import com.mygdx.game.npc.week_schedule.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package com.mygdx.game.game_object;
 
-import com.mygdx.game.UpdatedUtil.Vec2;
+import com.mygdx.game.util.Vec2;
 
 import java.util.Objects;
 
