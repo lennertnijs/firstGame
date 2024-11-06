@@ -50,7 +50,7 @@ public final class DefaultPlayerLoader {
             put("Axe", 1);
         }};
 
-        Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(50).build();
+        Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(3).build();
 
         Inventory inventory = new Inventory(new Item[]{pickaxe, axe}, stackSizeMap);
         return new Player(transform, renderer, map, name, inventory, 0, stats);
@@ -66,7 +66,7 @@ public final class DefaultPlayerLoader {
             for(String direction : directions){
                 Frame[] frames = new Frame[lengths[lengthIndex]];
                 for(int i = 1; i <= lengths[lengthIndex]; i++){
-                    Frame frame = Frame.builder().texture(atlas.findRegion(activity + "_" + direction.toLowerCase(), i)).width(200).height(200).build();
+                    Frame frame = Frame.builder().texture(atlas.findRegion(activity + "_" + direction.toLowerCase(), i)).scaleX(2).scaleY(2).build();
                     frames[i - 1] = frame;
                 }
                 Key key = new Key(activity, Direction.valueOf(direction));

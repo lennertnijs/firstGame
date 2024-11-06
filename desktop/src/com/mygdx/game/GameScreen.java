@@ -3,15 +3,11 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.DAO.DefaultPlayerLoader;
 import com.mygdx.game.clock.CalendarClock;
 import com.mygdx.game.clock.Clock;
 import com.mygdx.game.clock.SystemTimeProvider;
-import com.mygdx.game.DAO.DefaultPlayerLoader;
-import com.mygdx.game.input.KeyboardInputProcessor;
 import com.mygdx.game.npc.week_schedule.Day;
 import com.mygdx.game.npc.week_schedule.Time;
 
@@ -20,7 +16,6 @@ public class GameScreen implements Screen {
     final MyGame game;
     final OrthographicCamera camera;
     private final GameController gameController;
-    private final Texture bar = new Texture(Gdx.files.internal("bar.png"));
 
 
     public GameScreen(MyGame game) {
@@ -35,7 +30,6 @@ public class GameScreen implements Screen {
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
-        Viewport viewport = new ExtendViewport(1920, 1080, camera);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
     }
 
@@ -51,9 +45,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         gameController.update();
-        game.batch.draw(bar, gameController.getPlayer().getPosition().x() - 72, gameController.getPlayer().getPosition().y() - 510);
         game.batch.end();
-        camera.position.set(gameController.getPlayer().getPosition().x(), gameController.getPlayer().getPosition().y(), 0);
     }
 
 

@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.game_object.GameObject;
@@ -9,7 +8,7 @@ public class SpriteDrawer {
 
     private final MyGame game;
     private String text;
-    private Texture texture = new Texture(Gdx.files.internal("maps/map.png"));
+
     public SpriteDrawer(MyGame game){
         this.game = game;
     }
@@ -22,6 +21,10 @@ public class SpriteDrawer {
         int height = o.getHeight();
         game.batch.draw(texture, x, y, width, height);
         drawText();
+    }
+
+    public void draw(Texture texture){
+        game.batch.draw(texture, 0, 0, 1920, 1080);
     }
 
     private void drawText(){

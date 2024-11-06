@@ -107,8 +107,11 @@ public final class Frame {
         public Frame build(){
             Objects.requireNonNull(texture);
             Objects.requireNonNull(offset);
-            if(width < 0 || height < 0){
-                throw new IllegalArgumentException("The width or height cannot be negative.");
+            if(width < 0){
+                width = texture.getRegionWidth();
+            }
+            if(height < 0){
+                height = texture.getRegionHeight();
             }
             if(scaleX < 0 || scaleY < 0){
                 throw new IllegalArgumentException("The scaleX or scaleY cannot be negative.");

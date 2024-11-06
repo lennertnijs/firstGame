@@ -2,7 +2,7 @@ package com.mygdx.game.player;
 
 public final class Stats {
 
-    public static int MIN_SPEED = 10;
+    public static int MIN_SPEED = 1;
     private int health;
     private int offense;
     private int defense;

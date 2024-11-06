@@ -16,7 +16,7 @@ public class WalkState implements PlayerState {
     }
 
     public void update(double delta){
-        int amount = 5 * player.getStats().getSpeed();
+        int amount = player.getStats().getSpeed();
         Vec2 movement = MovementUtilMethods.calculateNextPosition(player.getPosition(), player.getDirection(), amount);
         player.setPosition(movement);
     }

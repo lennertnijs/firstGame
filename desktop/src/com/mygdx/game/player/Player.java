@@ -40,7 +40,7 @@ public final class Player extends GameObject {
     }
 
     public void decrementActiveIndex(){
-        this.activeIndex = (activeIndex - 1) % inventory.size();
+        this.activeIndex = (activeIndex - 1 + inventory.size()) % inventory.size();
     }
 
     public Item getActiveItem(){
