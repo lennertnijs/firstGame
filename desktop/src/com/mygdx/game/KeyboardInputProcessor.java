@@ -17,10 +17,10 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Q -> gameController.playerUseActiveItem();
-            case UP -> gameController.addDirection(Direction.UP);
-            case RIGHT -> gameController.addDirection(Direction.RIGHT);
-            case DOWN -> gameController.addDirection(Direction.DOWN);
-            case LEFT -> gameController.addDirection(Direction.LEFT);
+            case W -> gameController.addDirection(Direction.UP);
+            case D -> gameController.addDirection(Direction.RIGHT);
+            case S -> gameController.addDirection(Direction.DOWN);
+            case A -> gameController.addDirection(Direction.LEFT);
             case E -> gameController.interact();
         }
         return false;
@@ -29,10 +29,10 @@ public class KeyboardInputProcessor implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         switch (keycode) {
-            case UP -> gameController.removeDirection(Direction.UP);
-            case RIGHT -> gameController.removeDirection(Direction.RIGHT);
-            case DOWN -> gameController.removeDirection(Direction.DOWN);
-            case LEFT -> gameController.removeDirection(Direction.LEFT);
+            case W -> gameController.removeDirection(Direction.UP);
+            case D -> gameController.removeDirection(Direction.RIGHT);
+            case S -> gameController.removeDirection(Direction.DOWN);
+            case A -> gameController.removeDirection(Direction.LEFT);
         }
         return false;
     }

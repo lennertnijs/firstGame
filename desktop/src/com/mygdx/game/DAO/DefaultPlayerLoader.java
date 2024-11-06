@@ -43,8 +43,8 @@ public final class DefaultPlayerLoader {
 
         String name = file.getString("name");
 
-        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).duration(2000).build();
-        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).duration(2000).build();
+        Tool pickaxe = Tool.builder().name("Pickaxe").efficiency(1500).maxDurability(2500).toolType(ToolType.PICKAXE).duration(1250).build();
+        Tool axe = Tool.builder().name("Axe").efficiency(2).maxDurability(2500).toolType(ToolType.AXE).duration(1250).build();
         Map<String, Integer> stackSizeMap = new HashMap<>() {{
             put("Pickaxe", 1);
             put("Axe", 1);
@@ -52,7 +52,7 @@ public final class DefaultPlayerLoader {
 
         Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(3).build();
 
-        Inventory inventory = new Inventory(new Item[]{pickaxe, axe}, stackSizeMap);
+        Inventory inventory = new Inventory(new Item[]{pickaxe, axe, null, null, null, null, null, null, null}, stackSizeMap);
         return new Player(transform, renderer, map, name, inventory, 0, stats);
     }
 
@@ -70,7 +70,7 @@ public final class DefaultPlayerLoader {
                     frames[i - 1] = frame;
                 }
                 Key key = new Key(activity, Direction.valueOf(direction));
-                Animation animation = new Animation(frames, 2000);
+                Animation animation = new Animation(frames, 1250);
                 map.put(key, animation);
             }
             lengthIndex++;
