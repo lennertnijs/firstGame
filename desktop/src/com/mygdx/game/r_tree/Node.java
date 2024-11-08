@@ -45,4 +45,11 @@ public final class Node<T extends GameObject2D> {
     public boolean isLeaf(){
         return children.size() == 0;
     }
+
+    public void addObject(T object){
+        if(!isLeaf()){
+            throw new IllegalStateException();
+        }
+        objects.add(Objects.requireNonNull(object));
+    }
 }
