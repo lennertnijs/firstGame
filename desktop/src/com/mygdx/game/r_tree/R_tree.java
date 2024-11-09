@@ -7,16 +7,19 @@ import java.util.Objects;
 public final class R_tree<T extends GameObject2D> {
 
     private final Node<T> root;
-    private final int maxEntries;
+    private final int M;
+    private final int m;
     private int height;
     private int size;
 
     public R_tree(int x, int y, int width, int height, int maxEntries){
         this.root = new Node<>(x, y, width, height);
-        this.maxEntries = maxEntries;
+        this.M = maxEntries;
+        this.m = (int) (maxEntries * 0.40);
     }
 
     // m = 40% of M
+    // m = 8, M = 20
 
     public boolean isFree(Rectangle rectangle){
         Objects.requireNonNull(rectangle);
@@ -42,103 +45,82 @@ public final class R_tree<T extends GameObject2D> {
         return true;
     }
 
-    public void insert(T object){
-        Objects.requireNonNull(object);
-        Node<T> appropriateLeaf = chooseSubTree(object.getRectangle());
-        appropriateLeaf.addObject(object);
-        if(appropriateLeaf.getChildren().size() <= maxEntries){
-            return;
-        }
-        split(appropriateLeaf);
-    }
-
+    // updated
     public void split(Node<T> node){
-        List<T> objects = node.getObjects();
-        Pair<T> seeds = pickSeeds(node.getObjects());
-        List<T> group1 = new ArrayList<>();
-        group1.add(seeds.first());
-        List<T> group2 = new ArrayList<>();
-        group2.add(seeds.second());
-        distributeEntries(objects, group1, group2);
-        for(T object : objects){
-            if(group1.size() < maxEntries){
-                group1.add(object);
-            }else{
-                group2.add(object);
-            }
-        }
+        List<T> sortedThroughBestAxis = chooseSplitAxis(node.getObjects());
+        int index = chooseSplitIndex(sortedThroughBestAxis);
+        // split
     }
 
-    // pick the two objects that have the biggest area in their MBR, without including their own area
-    public Pair<T> pickSeeds(List<T> objects){
-        T first = null;
-        T second = null;
-        int value = Integer.MIN_VALUE;
-        for(T o1 : objects){
-            for(T o2 : objects){
-                Rectangle MBR = Rectangle.createMinimumBoundingRectangle(o1.getRectangle(), o2.getRectangle());
-                int d = MBR.area() - o1.getRectangle().area() - o2.getRectangle().area();
-                if(d > value){
-                    first = o1;
-                    second = o2;
+    public int chooseSplitIndex(List<T> objects){
+        // choose the distribution with the minimum overlap value (between group 1 and group 2)
+        // resolve ties with minimum area value
+        return 0;
+    }
+
+    // / M - 2m + 2 distributions, so 6 distributions
+    // k from 1 -> 6
+    // first group contains (m - 1)  + k entries, the second the other
+    public List<T> chooseSplitAxis(List<T> objects){
+        List<T> x_axis_sort = new ArrayList<>(objects.size());
+        x_axis_sort.add(objects.get(0));
+        List<T> y_axis_sort = new ArrayList<>(objects.size());
+        y_axis_sort.add(objects.get(0));
+        for(T object : objects){
+            int i = 0;
+            int j = 0;
+            while(object.getRectangle().x() < x_axis_sort.get(i).getRectangle().x() ||
+                    object.getRectangle().x() == x_axis_sort.get(i).getRectangle().x() && object.getRectangle().x() + object.getRectangle().width() < x_axis_sort.get(i).getRectangle().x() + x_axis_sort.get(i).getRectangle().width()){
+                i++;
+            }
+            while(object.getRectangle().y() < y_axis_sort.get(j).getRectangle().y() ||
+                    object.getRectangle().y() == y_axis_sort.get(j).getRectangle().y() && object.getRectangle().y() + object.getRectangle().height() < y_axis_sort.get(i).getRectangle().y() + y_axis_sort.get(i).getRectangle().height()){
+                j++;
+            }
+            x_axis_sort.add(i, object);
+        }
+        int horizontalMarginSum = 0;
+        int verticalMarginSum = 0;
+        List<T> first = new ArrayList<>();
+        List<T> second = new ArrayList<>();
+        for(int k = 1; k < (M - 2*m + 2); k++){
+            int firstGroupAmount = m - 1 + k;
+            for(int i = 0; i < x_axis_sort.size(); i++){
+                if(i < firstGroupAmount){
+                    first.add(x_axis_sort.get(i));
+                }else{
+                    second.add(x_axis_sort.get(i));
                 }
             }
+            Rectangle r1 = Rectangle.createMinimumBoundingRectangle(first);
+            Rectangle r2 = Rectangle.createMinimumBoundingRectangle(second);
+            horizontalMarginSum += r1.perimeter();
+            horizontalMarginSum += r2.perimeter();
+            first.clear();
+            second.clear();
         }
-        return new Pair<>(first, second);
-    }
 
-    // distribute all the objects in the two groups
-    // based on least area increase of MBR, then smallest area, then least entries. then just fuck it
-    public void distributeEntries(List<T> objects, List<T> group1, List<T> group2){
-        Rectangle r1 = group1.get(0).getRectangle();
-        Rectangle r2 = group2.get(0).getRectangle();
-        while(objects.size() > 0){
-            T next = pickNext(objects, r1, r2);
-            Rectangle newR1 = Rectangle.createMinimumBoundingRectangle(next.getRectangle(), r1);
-            Rectangle newR2 = Rectangle.createMinimumBoundingRectangle(next.getRectangle(), r2);
-            if(newR1.area() - r1.area() < newR2.area() - r2.area()){
-                group1.add(next);
-                r1 = newR1;
-            }else if(newR1.area() - r1.area() > newR2.area() - r2.area()){
-                group2.add(next);
-                r2 = newR2;
+        for(int k = 1; k < (M - 2*m + 2); k++){
+            int firstGroupAmount = m - 1 + k;
+            for(int i = 0; i < y_axis_sort.size(); i++){
+                if(i < firstGroupAmount){
+                    first.add(y_axis_sort.get(i));
+                }else{
+                    second.add(y_axis_sort.get(i));
+                }
             }
-            // area increase is equal;
-            if(newR1.area() < newR2.area()){
-                group1.add(next);
-                r1 = newR1;
-            }else if(newR1.area() > newR2.area()){
-                group2.add(next);
-                r2 = newR2;
-            }
-
-            // areas of groups are equal
-            if(group1.size() < group2.size()){
-                group1.add(next);
-                r1 = newR1;
-            }else{
-                group2.add(next);
-                r2 = newR2;
-            }
-            objects.remove(next);
+            Rectangle r1 = Rectangle.createMinimumBoundingRectangle(first);
+            Rectangle r2 = Rectangle.createMinimumBoundingRectangle(second);
+            verticalMarginSum += r1.perimeter();
+            verticalMarginSum += r2.perimeter();
+            first.clear();
+            second.clear();
         }
-    }
-
-    // picks the next object, such that the difference between the area increases for each group is maximal
-    public T pickNext(List<T> objects, Rectangle r1, Rectangle r2){
-        T next = objects.get(0);
-        int d = Integer.MIN_VALUE;
-        for(T object : objects){
-            Rectangle group1MBR = Rectangle.createMinimumBoundingRectangle(new Rectangle[]{r1, object.getRectangle()});
-            Rectangle group2MBR = Rectangle.createMinimumBoundingRectangle(new Rectangle[]{r2, object.getRectangle()});
-            int group1Diff = group1MBR.area() - r1.area();
-            int group2Diff = group2MBR.area() - r2.area();
-            if(Math.abs(group1Diff - group2Diff) > d){
-                d = Math.abs(group1Diff - group2Diff);
-                next = object;
-            }
+        if(horizontalMarginSum < verticalMarginSum){
+            return x_axis_sort;
+        }else{
+            return y_axis_sort;
         }
-        return next;
     }
 
     public Node<T> chooseSubTree(Rectangle rectangle){
@@ -146,6 +128,7 @@ public final class R_tree<T extends GameObject2D> {
         return chooseSubTree(root, rectangle);
     }
 
+    // updated
     private Node<T> chooseSubTree(Node<T> current, Rectangle rectangle){
         if(current.isLeaf()){
             return current;
