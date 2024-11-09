@@ -16,6 +16,8 @@ public final class R_tree<T extends GameObject2D> {
         this.maxEntries = maxEntries;
     }
 
+    // m = 40% of M
+
     public boolean isFree(Rectangle rectangle){
         Objects.requireNonNull(rectangle);
         return isFreeRecursive(root, rectangle);
@@ -141,24 +143,52 @@ public final class R_tree<T extends GameObject2D> {
 
     public Node<T> chooseSubTree(Rectangle rectangle){
         Objects.requireNonNull(rectangle);
-        return chooseSubTreeRecursive(root, rectangle);
+        return chooseSubTree(root, rectangle);
     }
 
-    private Node<T> chooseSubTreeRecursive(Node<T> current, Rectangle rectangle){
+    private Node<T> chooseSubTree(Node<T> current, Rectangle rectangle){
         if(current.isLeaf()){
             return current;
         }
-        Node<T> optimalNode = current.getChildren().get(0);
-        for(Node<T> child : current.getChildren()){
-            if(child.contains(rectangle)){
-                return chooseSubTreeRecursive(child, rectangle);
+        // leaf children
+        if(current.getChildren().get(0).isLeaf()){
+            Node<T> solution = current.getChildren().get(0);
+            int minimumOverlap = Integer.MAX_VALUE;
+            int minimumEnlargement = Integer.MAX_VALUE;
+            int minimumArea = Integer.MAX_VALUE;
+            for(Node<T> child : current.getChildren()){
+                Rectangle MBR = Rectangle.createMinimumBoundingRectangle(child.getRectangle(), rectangle);
+                int enlargement = MBR.area() - child.getRectangle().area();
+                int overlapSum = 0;
+                for(Node<T> otherChild : current.getChildren()){
+                    if(otherChild == child) continue;
+                    overlapSum += MBR.overlapWith(otherChild.getRectangle());
+                    if(overlapSum > minimumOverlap){
+                        break;
+                    }
+                }
+                if(overlapSum < minimumOverlap || overlapSum == minimumOverlap && enlargement < minimumEnlargement ||
+                        overlapSum == minimumOverlap && enlargement == minimumEnlargement && MBR.area() < minimumArea){
+                    solution = child;
+                    minimumOverlap = overlapSum;
+                    minimumEnlargement = enlargement;
+                    minimumArea = MBR.area();
+                }
             }
-            // MBR = minimum bounding rectangle
-            Rectangle MBR = Rectangle.createMinimumBoundingRectangle(new Rectangle[]{rectangle, child.getRectangle()});
-            if(MBR.area() < optimalNode.getArea() || MBR.area() == optimalNode.getArea() && MBR.perimeter() < optimalNode.getPerimeter()){
-                optimalNode = child;
+            return chooseSubTree(solution, rectangle);
+        }else{
+            Node<T> solution = current.getChildren().get(0);
+            int minimumEnlargement = Integer.MAX_VALUE;
+            for(Node<T> child : current.getChildren()){
+                Rectangle MBR = Rectangle.createMinimumBoundingRectangle(child.getRectangle(), rectangle);
+                int enlargement = MBR.area() - child.getRectangle().area();
+                if(enlargement < minimumEnlargement || enlargement == minimumEnlargement && MBR.area() < solution.getArea() ||
+                    enlargement == minimumEnlargement && MBR.area() == solution.getArea() && MBR.perimeter() < solution.getPerimeter()){
+                    minimumEnlargement = enlargement;
+                    solution = child;
+                }
             }
+            return chooseSubTree(solution, rectangle);
         }
-        return chooseSubTreeRecursive(optimalNode, rectangle);
     }
 }

@@ -35,4 +35,13 @@ public record Rectangle(int x, int y, int width, int height) {
     public int area(){
         return width * height;
     }
+
+    public int overlapWith(Rectangle r){
+        Objects.requireNonNull(r);
+        int min_x = Math.max(x, r.x);
+        int min_y = Math.max(y, r.y);
+        int max_x = Math.min(x + width, r.x + r.width);
+        int max_y = Math.min(y + height, r.y + r.height);
+        return (max_x - min_x) * (max_y - min_y);
+    }
 }
