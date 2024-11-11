@@ -1,11 +1,17 @@
 package com.mygdx.game.r_tree;
 
+import com.mygdx.game.util.Vec2;
+
+import java.util.List;
 import java.util.Objects;
 
 public record Rectangle(int x, int y, int width, int height) {
 
-    public static Rectangle createMinimumBoundingRectangle(Rectangle[] rectangles){
+    public static Rectangle createMinimumBounding(List<Rectangle> rectangles){
         Objects.requireNonNull(rectangles);
+        if(rectangles.size() == 0){
+            return new Rectangle(0, 0, 0, 0);
+        }
         int min_x = Integer.MAX_VALUE;
         int min_y = Integer.MAX_VALUE;
         int max_x = Integer.MIN_VALUE;
@@ -34,6 +40,10 @@ public record Rectangle(int x, int y, int width, int height) {
 
     public int area(){
         return width * height;
+    }
+
+    public Vec2 center(){
+        return new Vec2(x + width/2, y + height/2);
     }
 
     public int overlapWith(Rectangle r){

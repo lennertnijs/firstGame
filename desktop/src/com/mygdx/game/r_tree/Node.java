@@ -3,53 +3,64 @@ package com.mygdx.game.r_tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public final class Node<T extends GameObject2D> {
 
-    private final Rectangle area;
+    private Rectangle rectangle;
     private final List<T> objects;
+    private Node<T> parent;
     private final List<Node<T>> children;
 
-    public Node(int x, int y, int width, int height){
-        this.area = new Rectangle(x, y, width, height);
+    public Node(){
+        this.rectangle = new Rectangle(0, 0, 0, 0);
         this.objects = new ArrayList<>();
+        this.parent = null;
         this.children = new ArrayList<>();
     }
 
     public Rectangle getRectangle(){
-        return area;
-    }
-
-    public int getArea(){
-        return area.width() * area.height();
+        return rectangle;
     }
 
     public int getPerimeter(){
-        return 2 * area.width() + 2 * area.height();
+        return 2 * rectangle.width() + 2 * rectangle.height();
+    }
+
+    public int getArea(){
+        return rectangle.width() * rectangle.height();
+    }
+
+    public void updateRectangle(){
+        this.rectangle = Rectangle.createMinimumBounding(objects.stream().map(GameObject2D::getRectangle).collect(Collectors.toList()));
     }
 
     public List<T> getObjects(){
         return objects;
     }
 
+    public void addObject(T object){
+        if(children.size() != 0){
+            throw new IllegalStateException("Cannot store objects in internal nodes.");
+        }
+        objects.add(Objects.requireNonNull(object));
+        updateRectangle();
+    }
+
+    public Node<T> getParent(){
+        return parent;
+    }
+
     public List<Node<T>> getChildren(){
         return children;
     }
 
-    public boolean contains(Rectangle r){
-        Objects.requireNonNull(r);
-        return r.x() >= area.x() && r.x() + r.width() < area.x() + area.width() &&
-                r.y() >= area.y() && r.y() + r.height() < area.y() + area.height();
+    public void addChild(Node<T> node){
+        this.children.add(Objects.requireNonNull(node));
+        node.parent = this;
     }
 
     public boolean isLeaf(){
         return children.size() == 0;
-    }
-
-    public void addObject(T object){
-        if(!isLeaf()){
-            throw new IllegalStateException();
-        }
-        objects.add(Objects.requireNonNull(object));
     }
 }

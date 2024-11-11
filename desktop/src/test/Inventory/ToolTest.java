@@ -24,6 +24,7 @@ public class ToolTest {
                 .durability(durability)
                 .maxDurability(maxDurability)
                 .toolType(type)
+                .duration(1000)
                 .build();
     }
 
@@ -36,6 +37,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(maxDurability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -48,6 +50,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(maxDurability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -59,6 +62,7 @@ public class ToolTest {
                 .durability(durability)
                 .maxDurability(maxDurability)
                 .toolType(type)
+                .duration(1000)
                 .build();
     }
 
@@ -70,6 +74,7 @@ public class ToolTest {
                 .durability(0)
                 .maxDurability(maxDurability)
                 .toolType(type)
+                .duration(1000)
                 .build();
     }
 
@@ -82,6 +87,7 @@ public class ToolTest {
                         .durability(maxDurability + 1)
                         .maxDurability(maxDurability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -94,6 +100,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(-1)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -106,6 +113,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(0)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -118,6 +126,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(maxDurability)
                         .toolType(null)
+                        .duration(1000)
                         .build());
     }
 
@@ -129,6 +138,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(maxDurability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -140,6 +150,7 @@ public class ToolTest {
                         .durability(durability)
                         .maxDurability(maxDurability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -150,6 +161,7 @@ public class ToolTest {
                                     .name(name)
                                     .maxDurability(maxDurability)
                                     .toolType(type)
+                .duration(1000)
                                     .build();
         assertEquals(maxDurability, defaultDurabilityTool.currentDurability());
     }
@@ -162,6 +174,7 @@ public class ToolTest {
                         .efficiency(efficiency)
                         .durability(durability)
                         .toolType(type)
+                        .duration(1000)
                         .build());
     }
 
@@ -172,6 +185,7 @@ public class ToolTest {
                         .name(name)
                         .efficiency(efficiency)
                         .durability(durability)
+                        .duration(1000)
                         .maxDurability(maxDurability)
                         .build());
     }
@@ -200,7 +214,7 @@ public class ToolTest {
     @Test
     public void testEquals(){ // equal if the same name
         Tool tool1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
+                .maxDurability(maxDurability).toolType(type)                .duration(1000).build();
         Tool tool2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
         // equals
@@ -214,7 +228,7 @@ public class ToolTest {
     @Test
     public void testHashCode() { // not equals if different name
         Tool tool1 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
-                .maxDurability(maxDurability).toolType(type).build();
+                .maxDurability(maxDurability).toolType(type)                .duration(1000).build();
         Tool tool2 = Tool.builder().name(name).efficiency(efficiency).durability(durability)
                 .maxDurability(maxDurability).toolType(type).build();
         // equals
