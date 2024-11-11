@@ -74,8 +74,9 @@ public final class R_tree<T extends GameObject2D> {
         }
         this.overflowDepth = -1;
         Node<T> currentNode = leaf;
-        while(!currentNode.isRoot() && overflowTreatment(currentNode, currentDepth--) == Action.SPLIT){
+        while(!currentNode.isRoot() && currentNode.getParent().getChildren().size() > max){
             currentNode = currentNode.getParent();
+            overflowTreatment(currentNode, currentDepth--);
             this.overflowDepth = -1;
         }
     }
@@ -100,8 +101,8 @@ public final class R_tree<T extends GameObject2D> {
             this.overflowDepth = -1;
         }
     }
-    // current issue: the overflow treatment will try to re-insert the fourth entry, but because the heuristics
-    // keep picking the "filled" branch, it will perform a split on the node, when then means we get 3 children
+
+    // adding a 9th element is not working. at all.
     public Action overflowTreatment(Node<T> node, int depth){
         if(!node.isRoot() && overflowDepth != depth){
             this.overflowDepth = depth;
