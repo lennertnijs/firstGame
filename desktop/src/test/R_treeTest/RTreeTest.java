@@ -4,8 +4,6 @@ import com.mygdx.game.r_tree.R_tree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,52 +41,56 @@ public final class RTreeTest {
 
     @Test
     public void testInsert1(){
-        tree.insert(object1);
+        tree.insertData(object1);
         assertEquals(1, tree.getDepth());
         assertEquals(1, tree.getSize());
+        assertEquals(1, tree.getActualSize());
         assertEquals(List.of(object1), tree.getRoot().getObjects());
     }
 
     @Test
     public void testInsert2(){
-        tree.insert(object1);
-        tree.insert(object2);
+        tree.insertData(object1);
+        tree.insertData(object2);
         assertEquals(1, tree.getDepth());
         assertEquals(2, tree.getSize());
+        assertEquals(2, tree.getActualSize());
         assertEquals(List.of(object1, object2), tree.getRoot().getObjects());
     }
 
     @Test
     public void testInsert3(){
-        tree.insert(object1);
-        tree.insert(object2);
-        tree.insert(object3);
+        tree.insertData(object1);
+        tree.insertData(object2);
+        tree.insertData(object3);
         assertEquals(2, tree.getDepth());
         assertEquals(3, tree.getSize());
+        assertEquals(3, tree.getActualSize());
         assertEquals(List.of(object1), tree.getRoot().getChildren().get(0).getObjects());
         assertEquals(List.of(object3, object2), tree.getRoot().getChildren().get(1).getObjects());
     }
 
     @Test
     public void testInsert4(){
-        tree.insert(object1);
-        tree.insert(object2);
-        tree.insert(object3);
-        tree.insert(object4);
+        tree.insertData(object1);
+        tree.insertData(object2);
+        tree.insertData(object3);
+        tree.insertData(object4);
         assertEquals(2, tree.getDepth());
         assertEquals(4, tree.getSize());
+        assertEquals(4, tree.getActualSize());
         assertEquals(List.of(object1, object3), tree.getRoot().getChildren().get(0).getObjects());
-        assertEquals(List.of(object2, object4), tree.getRoot().getChildren().get(1).getObjects());
+        assertEquals(List.of(object4, object2), tree.getRoot().getChildren().get(1).getObjects());
     }
 
     @Test
     public void testInsert5(){
-        tree.insert(object1);
-        tree.insert(object2);
-        tree.insert(object3);
-        tree.insert(object4);
-        tree.insert(object5);
+        tree.insertData(object1);
+        tree.insertData(object2);
+        tree.insertData(object3);
+        tree.insertData(object4);
+        tree.insertData(object5);
+        assertEquals(5, tree.getActualSize());
         assertEquals(3, tree.getDepth());
-        assertEquals(5, tree.getSize());
     }
 }

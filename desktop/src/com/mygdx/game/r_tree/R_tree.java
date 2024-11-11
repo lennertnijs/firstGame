@@ -14,7 +14,7 @@ public final class R_tree<T extends GameObject2D> {
     private final int min;
     private int depth;
     private int size;
-    private int overflowCount;
+    private int overflowDepth;
 
     public R_tree(int maxEntries){
         this.root = new Node<>();
@@ -25,12 +25,7 @@ public final class R_tree<T extends GameObject2D> {
         this.min = (int) Math.ceil(maxEntries * 0.40);
         this.depth = 1;
         this.size = 0;
-        this.overflowCount = 0;
-    }
-
-    public enum Axis {
-        X_AXIS,
-        Y_AXIS
+        this.overflowDepth = -1;
     }
 
     public enum Action {
@@ -58,127 +53,197 @@ public final class R_tree<T extends GameObject2D> {
         return depth;
     }
 
-//    public boolean isFree(Rectangle rectangle){
-//        Objects.requireNonNull(rectangle);
-//        return isFreeRecursive(root, rectangle);
-//    }
-//
-//    private boolean isFreeRecursive(Node<T> current, Rectangle rectangle){
-//        for(Node<T> child : current.getChildren()){
-//            if(child.getRectangle().overlapWith(rectangle) == 0) continue;
-//
-//            if(child.isLeaf()){
-//                for(GameObject2D object : child.getObjects()){
-//                    if(rectangle.overlapWith(object.getRectangle()) != 0){
-//                        return false;
-//                    }
-//                }
-//            }else{
-//                if(!isFreeRecursive(child, rectangle)){
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
-
-    public void insert(T object){
-        Objects.requireNonNull(object);
-        Node<T> insertNode = chooseSubTree(object.getRectangle(), depth);
-
-        insertNode.addObject(object);
-        this.size++;
-        if(insertNode.getObjects().size() <= max){
-            return;
-        }
-        int currentDepth = this.depth;
-        if(overflowTreatment(insertNode, currentDepth--) == Action.SPLIT){
-            while(insertNode.getParent() != null && overflowTreatment(insertNode.getParent(), currentDepth--) == Action.SPLIT){
-                insertNode = insertNode.getParent();
-            }
-        }
-        this.overflowCount = 0;
+    public void insertData(T object){
+        insert(Objects.requireNonNull(object), this.depth);
     }
 
+
+    private void insert(T object, int depth){
+        Node<T> leaf = chooseSubTree(object.getRectangle(), depth);
+
+        leaf.addObject(object);
+        this.size++;
+
+        if(leaf.getObjects().size() <= max){
+            return;
+        }
+
+        int currentDepth = this.depth;
+        if(overflowTreatment(leaf, currentDepth--) != Action.SPLIT){
+            return;
+        }
+        this.overflowDepth = -1;
+        Node<T> currentNode = leaf;
+        while(!currentNode.isRoot() && overflowTreatment(currentNode, currentDepth--) == Action.SPLIT){
+            currentNode = currentNode.getParent();
+            this.overflowDepth = -1;
+        }
+    }
+
+    private void insertNode(Node<T> node){
+        Node<T> toInsert = chooseSubTree(node.getRectangle(), overflowDepth);
+        toInsert.addChild(node);
+        node.setParent(toInsert);
+
+        if(node.getChildren().size() <= max){
+            return;
+        }
+
+        int currentDepth = this.depth;
+        if(overflowTreatment(node, currentDepth--) != Action.SPLIT){
+            return;
+        }
+        this.overflowDepth = -1;
+        Node<T> currentNode = node;
+        while(!currentNode.isRoot() && overflowTreatment(currentNode, currentDepth--) == Action.SPLIT){
+            currentNode = currentNode.getParent();
+            this.overflowDepth = -1;
+        }
+    }
+    // current issue: the overflow treatment will try to re-insert the fourth entry, but because the heuristics
+    // keep picking the "filled" branch, it will perform a split on the node, when then means we get 3 children
     public Action overflowTreatment(Node<T> node, int depth){
-        overflowCount += 1;
-        if(depth != 1 && overflowCount == 1){
+        if(!node.isRoot() && overflowDepth != depth){
+            this.overflowDepth = depth;
             reInsert(node);
             return Action.REINSERT;
         }else{
+            this.overflowDepth = depth;
             split(node);
             return Action.SPLIT;
         }
+
     }
 
     public void reInsert(Node<T> node){
-        List<T> sorted = new ArrayList<>(node.getObjects().size());
-        Vec2 center = node.getRectangle().center();
-        for(T object : node.getObjects()){
-            if(sorted.isEmpty()){
-                sorted.add(object);
-            }
-            int index = 0;
-            for(T sortedObject : sorted){
-                if(object.getRectangle().center().distanceTo(center) > sortedObject.getRectangle().center().distanceTo(center)){
-                    sorted.add(index, object);
-                }
-                index++;
-            }
+        if(node.isLeaf()){
+            reInsertLeaf(node);
+            return;
         }
-        int p = min;
+        reInsertInternal(node);
+    }
+
+    private void reInsertLeaf(Node<T> leaf){
+        List<T> sorted = leaf.getObjects();
+        Vec2 center = leaf.getRectangle().center();
+        Comparator<T> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(center));
+        sorted.sort(comparator);
+        int p = min + 1;
         List<T> removed = new ArrayList<>(p);
         for(int i = 0; i < p; i++){
             removed.add(sorted.get(i));
             this.size--;
-            node.getObjects().remove(sorted.get(i));
+            leaf.getObjects().remove(sorted.get(i));
         }
-        node.updateRectangle();
+        leaf.updateRectangle(); // cascade upwards?
         for(T removedObject : removed){
-            insert(removedObject);
+            insert(removedObject, depth);
         }
     }
 
-    // updated
+    private void reInsertInternal(Node<T> internal){
+        List<Node<T>> sorted = internal.getChildren();
+        Vec2 center = internal.getRectangle().center();
+        Comparator<Node<T>> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(center));
+        sorted.sort(comparator);
+        int p = min;
+        List<Node<T>> removed = new ArrayList<>(p);
+        for(int i = 0; i < p; i++){
+            removed.add(sorted.get(i));
+            this.size--;
+            internal.remove(sorted.get(i));
+        }
+        internal.updateRectangle(); // cascade upwards?
+        for(Node<T> removedNode : removed){
+            insertNode(removedNode);
+        }
+    }
+
     private void split(Node<T> node){
         Objects.requireNonNull(node);
-        List<T> sortedThroughBestAxis = chooseSplitAxis(node.getObjects());
-        int index = chooseSplitIndex(sortedThroughBestAxis);
-        List<T> first = sortedThroughBestAxis.subList(0, index);
-        List<T> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
+        if(node.isLeaf()){
+            splitLeaf(node);
+            return;
+        }
+        splitInternal(node);
+    }
+
+    private void splitInternal(Node<T> internal){
+        Objects.requireNonNull(internal);
+        if(!internal.isInternal()){
+            throw new IllegalArgumentException("Cannot split the internal Node, as it is a leaf.");
+        }
+        List<Node<T>> sortedThroughBestAxis = chooseSplitAxisInternal(internal.getChildren());
+        int index = chooseSplitIndexInternal(sortedThroughBestAxis);
+        if(index < 0 || index > sortedThroughBestAxis.size()){
+            throw new IllegalStateException("Root split index is invalid.");
+        }
+        List<Node<T>> first = sortedThroughBestAxis.subList(0, index);
+        List<Node<T>> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
         Node<T> child1 = new Node<>();
-        for(T object : first){
-            child1.addObject(object);
+        for(Node<T> object : first){
+            child1.addChild(object);
         }
         Node<T> child2 = new Node<>();
-        for(T object : second){
-            child2.addObject(object);
+        for(Node<T> object : second){
+            child2.addChild(object);
         }
 
-        Node<T> possibleNewRoot;
-        if(node.equals(root)){
-            possibleNewRoot = new Node<>();
-            possibleNewRoot.addChild(child1);
-            possibleNewRoot.addChild(child2);
-            for(Node<T> child : node.getChildren()){
-                if(!child.equals(node)){
-                    possibleNewRoot.addChild(child);
-                }
-            }
-            this.root = possibleNewRoot;
+        Node<T> parent;
+        if(internal.isRoot()){
+            parent = new Node<>();
+            this.root = parent;
             this.depth++;
-            return;
         }else{
-            node.getParent().addChild(child1);
-            node.getParent().addChild(child2);
-            node.getParent().removeChild(node);
+            parent = internal.getParent();
         }
-        while(!node.equals(root)){
-            node.updateRectangle();
-            node = node.getParent();
-        }
-        node.updateRectangle();
+
+        parent.addChild(child1);
+        child1.setParent(parent);
+        parent.addChild(child2);
+        child2.setParent(parent);
+
+        child1.updateRectangle();
+        child2.updateRectangle();
+        parent.updateRectangle();
     }
+
+    private void splitLeaf(Node<T> leaf){
+        Objects.requireNonNull(leaf);
+        if(!leaf.isLeaf()){
+            throw new IllegalArgumentException("Cannot split the given node as it is not a leaf Node.");
+        }
+        List<T> sortedThroughBestAxis = chooseSplitAxisLeaf(leaf.getObjects());
+        int index = chooseSplitIndexLeaf(sortedThroughBestAxis);
+        if(index <= 0 || index >= sortedThroughBestAxis.size()){
+            throw new IllegalStateException("Root split index is invalid.");
+        }
+        List<T> first = sortedThroughBestAxis.subList(0, index);
+        List<T> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
+
+        Node<T> child1 = new Node<>(first);
+        Node<T> child2 = new Node<>(second);
+
+        Node<T> parent;
+        if(leaf.isRoot()){
+            parent = new Node<>();
+            this.root = parent;
+            this.depth++;
+        }else{
+            parent = leaf.getParent();
+            parent.remove(leaf);
+        }
+
+        parent.addChild(child1);
+        child1.setParent(parent);
+        parent.addChild(child2);
+        child2.setParent(parent);
+
+        child1.updateRectangle();
+        child2.updateRectangle();
+        parent.updateRectangle();
+    }
+
 
     /**
      * Attempts all possible splits, and picks the most optimal one. Returns this split index.
@@ -187,7 +252,7 @@ public final class R_tree<T extends GameObject2D> {
      * More specifically, attempts all possible split indices, and picks the split with the least area overlap.
      * (and smallest area, if area overlap is tied)
      */
-    private int chooseSplitIndex(List<T> objects){
+    private int chooseSplitIndexLeaf(List<T> objects){
         Objects.requireNonNull(objects);
         if(objects.contains(null)){
             throw new NullPointerException();
@@ -219,17 +284,56 @@ public final class R_tree<T extends GameObject2D> {
         return solutionIndex;
     }
 
-    /**
-     * Chooses the optimal axis to split along, and returns the list of objects sorted along the optimal axis.
-     * @param objects The list of objects to sort (and find the optimal axis for). Cannot be null. Cannot contain null.
-     */
-    private List<T> chooseSplitAxis(List<T> objects){
+    private int chooseSplitIndexInternal(List<Node<T>> objects){
         Objects.requireNonNull(objects);
         if(objects.contains(null)){
             throw new NullPointerException();
         }
-        List<T> x_axis_sort = mergeSort(objects, Axis.X_AXIS);
-        List<T> y_axis_sort = mergeSort(objects, Axis.Y_AXIS);
+        List<Node<T>> firstGroup = new ArrayList<>();
+        List<Node<T>> secondGroup = new ArrayList<>();
+        int minimumOverlap = Integer.MAX_VALUE;
+        int minimumArea = Integer.MAX_VALUE;
+        int solutionIndex = 0;
+        for(int k = 1; k < (max - 2 * min + 2); k++){
+            int firstGroupAmount = min - 1 + k;
+            for(int i = 0; i < objects.size(); i++){
+                if(i < firstGroupAmount){
+                    firstGroup.add(objects.get(i));
+                }else{
+                    secondGroup.add(objects.get(i));
+                }
+            }
+            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(Node::getRectangle).toList());
+            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(Node::getRectangle).toList());
+            int overlap = r1.overlapWith(r2);
+            int area = r1.area() + r2.area();
+            if(overlap < minimumOverlap || overlap == minimumOverlap && area < minimumArea){
+                solutionIndex = firstGroupAmount;
+                minimumOverlap = overlap;
+                minimumArea = area;
+            }
+        }
+        return solutionIndex;
+    }
+
+    /**
+     * Chooses the optimal axis to split along, and returns the list of objects sorted along the optimal axis.
+     * @param objects The list of objects to sort (and find the optimal axis for). Cannot be null. Cannot contain null.
+     */
+    private List<T> chooseSplitAxisLeaf(List<T> objects){
+        Objects.requireNonNull(objects);
+        if(objects.contains(null)){
+            throw new NullPointerException();
+        }
+        Comparator<T> xComparator = Comparator.comparing((T o) -> o.getRectangle().x())
+                                    .thenComparing((T o) -> o.getRectangle().x() + o.getRectangle().width());
+        List<T> x_axis_sort = new ArrayList<>(objects);
+        x_axis_sort.sort(xComparator);
+
+        Comparator<T> yComparator = Comparator.comparing((T o) -> o.getRectangle().y())
+                                    .thenComparing((T o) -> o.getRectangle().y() + o.getRectangle().height());
+        List<T> y_axis_sort = new ArrayList<>(objects);
+        y_axis_sort.sort(yComparator);
         int horizontalMarginSum = calculateMarginSum(x_axis_sort);
         int verticalMarginSum = calculateMarginSum(y_axis_sort);
         if(horizontalMarginSum < verticalMarginSum){
@@ -238,6 +342,53 @@ public final class R_tree<T extends GameObject2D> {
             return y_axis_sort;
         }
     }
+
+    private List<Node<T>> chooseSplitAxisInternal(List<Node<T>> nodes){
+        Objects.requireNonNull(nodes);
+        if(nodes.contains(null)){
+            throw new NullPointerException();
+        }
+        Comparator<Node<T>> xComp = Comparator.comparing((Node<T> n) -> n.getRectangle().x())
+                .thenComparing((Node<T> n) -> n.getRectangle().x() + n.getRectangle().width());
+        List<Node<T>> sortedAlongX = new ArrayList<>(nodes);
+        sortedAlongX.sort(xComp);
+
+        Comparator<Node<T>> yComp = Comparator.comparing((Node<T> n) -> n.getRectangle().y())
+                .thenComparing((Node<T> n) -> n.getRectangle().y() + n.getRectangle().height());
+        List<Node<T>> sortedAlongY = new ArrayList<>(nodes);
+        sortedAlongY.sort(yComp);
+
+        int horizontalMarginSum = calculateMarginSumInternal(sortedAlongX);
+        int verticalMarginSum = calculateMarginSumInternal(sortedAlongY);
+        if(horizontalMarginSum <= verticalMarginSum){
+            return sortedAlongX;
+        }
+        return sortedAlongY;
+    }
+
+    private int calculateMarginSumInternal(List<Node<T>> objects){
+        int marginSum = 0;
+        List<Node<T>> firstGroup = new ArrayList<>();
+        List<Node<T>> secondGroup = new ArrayList<>();
+        for(int k = 1; k < (max - 2 * min + 2); k++){
+            int firstGroupAmount = min - 1 + k;
+            for(int i = 0; i < objects.size(); i++){
+                if(i < firstGroupAmount){
+                    firstGroup.add(objects.get(i));
+                }else{
+                    secondGroup.add(objects.get(i));
+                }
+            }
+            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(Node::getRectangle).toList());
+            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(Node::getRectangle).toList());
+            marginSum += r1.perimeter();
+            marginSum += r2.perimeter();
+            firstGroup.clear();
+            secondGroup.clear();
+        }
+        return marginSum;
+    }
+
 
     /**
      * Calculates the margin sum of all predefined distributions of the list of objects along a given axis.
@@ -271,48 +422,6 @@ public final class R_tree<T extends GameObject2D> {
             secondGroup.clear();
         }
         return marginSum;
-    }
-
-    /**
-     * Sorts the given list using merge sort. The Axis parameter provides the axis to sort along.
-     * --
-     * More specifically, sorts by left side, and if tied, sorts by right side. If both are equal, sorts in order.
-     */
-    private List<T> mergeSort(List<T> list, Axis axis){
-        Objects.requireNonNull(list);
-        Comparator<Rectangle> comparator;
-        switch(axis){
-            case X_AXIS -> comparator = Comparator.comparing(Rectangle::x).thenComparing(rect -> rect.x() + rect.width());
-            case Y_AXIS -> comparator = Comparator.comparing(Rectangle::y).thenComparing(rect -> rect.y() + rect.height());
-            default -> throw new IllegalStateException("Should be unreachable");
-        }
-        if(list.contains(null)){
-            throw new NullPointerException();
-        }
-        if(list.size() <= 1){
-            return list;
-        }else{
-            int splitIndex = list.size() / 2;
-            List<T> left = mergeSort(list.subList(0, splitIndex), axis);
-            List<T> right = mergeSort(list.subList(splitIndex, list.size()), axis);
-            List<T> sorted = new ArrayList<>(left.size() + right.size());
-            int leftIndex = 0;
-            int rightIndex = 0;
-            while(leftIndex < left.size() && rightIndex < right.size()){
-                if(comparator.compare(left.get(leftIndex).getRectangle(), right.get(rightIndex).getRectangle()) <= 0){
-                    sorted.add(left.get(leftIndex++));
-                }else{
-                    sorted.add(right.get(rightIndex++));
-                }
-            }
-            while(leftIndex < left.size()){
-                sorted.add(left.get(leftIndex++));
-            }
-            while(rightIndex < right.size()){
-                sorted.add(right.get(rightIndex++));
-            }
-            return sorted;
-        }
     }
 
     /**
@@ -413,5 +522,21 @@ public final class R_tree<T extends GameObject2D> {
             }
             return chooseSubTree(solution, rectangle, targetDepth, depth + 1);
         }
+    }
+
+    public int getActualSize(){
+        return getActualSizeDFS(root);
+    }
+
+    private int getActualSizeDFS(Node<T> node){
+        int count = 0;
+        if(node.isLeaf()){
+            count += node.getObjects().size();
+        }else{
+            for(Node<T> child : node.getChildren()){
+                count += getActualSizeDFS(child);
+            }
+        }
+        return count;
     }
 }

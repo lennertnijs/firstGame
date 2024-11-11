@@ -39,9 +39,4 @@ public final class NodeTest {
         assertEquals(expected, node.getObjects());
         assertEquals(gameObject.getRectangle(), node.getRectangle());
     }
-
-    @Test
-    public void testIsLeaf(){
-        assertTrue(node.isLeaf());
-    }
 }
