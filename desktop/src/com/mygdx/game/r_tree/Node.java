@@ -55,6 +55,10 @@ public final class Node<T extends GameObject2D> {
         return children;
     }
 
+    public void removeChild(Node<T> child){
+        this.children.remove(Objects.requireNonNull(child));
+    }
+
     public void addChild(Node<T> node){
         this.children.add(Objects.requireNonNull(node));
         node.parent = this;

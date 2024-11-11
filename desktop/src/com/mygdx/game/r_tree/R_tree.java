@@ -18,12 +18,12 @@ public final class R_tree<T extends GameObject2D> {
 
     public R_tree(int maxEntries){
         this.root = new Node<>();
-        if(maxEntries < 5){
-            throw new IllegalArgumentException("Maximum entry count must be 5 or larger for any functional R*-tree.");
+        if(maxEntries < 2){
+            throw new IllegalArgumentException("Maximum entry count must be 2 or larger for any functional R*-tree.");
         }
         this.max = maxEntries;
-        this.min = (int) (maxEntries * 0.40);
-        this.depth = 0;
+        this.min = (int) Math.ceil(maxEntries * 0.40);
+        this.depth = 1;
         this.size = 0;
         this.overflowCount = 0;
     }
@@ -36,6 +36,10 @@ public final class R_tree<T extends GameObject2D> {
     public enum Action {
         SPLIT,
         REINSERT
+    }
+
+    public Node<T> getRoot(){
+        return root;
     }
 
     public int getMaxEntries(){
@@ -54,44 +58,42 @@ public final class R_tree<T extends GameObject2D> {
         return depth;
     }
 
-    public boolean isFree(Rectangle rectangle){
-        Objects.requireNonNull(rectangle);
-        return isFreeRecursive(root, rectangle);
-    }
-
-    private boolean isFreeRecursive(Node<T> current, Rectangle rectangle){
-        for(Node<T> child : current.getChildren()){
-            if(child.getRectangle().overlapWith(rectangle) == 0) continue;
-
-            if(child.isLeaf()){
-                for(GameObject2D object : child.getObjects()){
-                    if(rectangle.overlapWith(object.getRectangle()) != 0){
-                        return false;
-                    }
-                }
-            }else{
-                if(!isFreeRecursive(child, rectangle)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    public boolean isFree(Rectangle rectangle){
+//        Objects.requireNonNull(rectangle);
+//        return isFreeRecursive(root, rectangle);
+//    }
+//
+//    private boolean isFreeRecursive(Node<T> current, Rectangle rectangle){
+//        for(Node<T> child : current.getChildren()){
+//            if(child.getRectangle().overlapWith(rectangle) == 0) continue;
+//
+//            if(child.isLeaf()){
+//                for(GameObject2D object : child.getObjects()){
+//                    if(rectangle.overlapWith(object.getRectangle()) != 0){
+//                        return false;
+//                    }
+//                }
+//            }else{
+//                if(!isFreeRecursive(child, rectangle)){
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
     public void insert(T object){
         Objects.requireNonNull(object);
-        Node<T> insertNode = chooseSubTree(object.getRectangle(), this.depth);
-        if(insertNode.getObjects().size() < max){
-            insertNode.addObject(object);
-            this.size++;
+        Node<T> insertNode = chooseSubTree(object.getRectangle(), depth);
+
+        insertNode.addObject(object);
+        this.size++;
+        if(insertNode.getObjects().size() <= max){
             return;
         }
-        int depth = this.depth;
-        if(overflowTreatment(insertNode, depth) == Action.SPLIT){
-            depth -= 1;
-            insertNode = insertNode.getParent();
-            while(!insertNode.equals(root) && overflowTreatment(insertNode.getParent(), depth) == Action.SPLIT){
-                depth--;
+        int currentDepth = this.depth;
+        if(overflowTreatment(insertNode, currentDepth--) == Action.SPLIT){
+            while(insertNode.getParent() != null && overflowTreatment(insertNode.getParent(), currentDepth--) == Action.SPLIT){
                 insertNode = insertNode.getParent();
             }
         }
@@ -100,7 +102,7 @@ public final class R_tree<T extends GameObject2D> {
 
     public Action overflowTreatment(Node<T> node, int depth){
         overflowCount += 1;
-        if(depth != 0 && overflowCount == 1){
+        if(depth != 1 && overflowCount == 1){
             reInsert(node);
             return Action.REINSERT;
         }else{
@@ -128,6 +130,7 @@ public final class R_tree<T extends GameObject2D> {
         List<T> removed = new ArrayList<>(p);
         for(int i = 0; i < p; i++){
             removed.add(sorted.get(i));
+            this.size--;
             node.getObjects().remove(sorted.get(i));
         }
         node.updateRectangle();
@@ -139,9 +142,6 @@ public final class R_tree<T extends GameObject2D> {
     // updated
     private void split(Node<T> node){
         Objects.requireNonNull(node);
-        if(root.equals(node)){
-            depth++;
-        }
         List<T> sortedThroughBestAxis = chooseSplitAxis(node.getObjects());
         int index = chooseSplitIndex(sortedThroughBestAxis);
         List<T> first = sortedThroughBestAxis.subList(0, index);
@@ -154,20 +154,25 @@ public final class R_tree<T extends GameObject2D> {
         for(T object : second){
             child2.addObject(object);
         }
-        child1.updateRectangle();
-        child2.updateRectangle();
 
         Node<T> possibleNewRoot;
         if(node.equals(root)){
             possibleNewRoot = new Node<>();
             possibleNewRoot.addChild(child1);
             possibleNewRoot.addChild(child2);
+            for(Node<T> child : node.getChildren()){
+                if(!child.equals(node)){
+                    possibleNewRoot.addChild(child);
+                }
+            }
             this.root = possibleNewRoot;
+            this.depth++;
+            return;
         }else{
             node.getParent().addChild(child1);
             node.getParent().addChild(child2);
+            node.getParent().removeChild(node);
         }
-        // remove old child!
         while(!node.equals(root)){
             node.updateRectangle();
             node = node.getParent();
@@ -192,9 +197,10 @@ public final class R_tree<T extends GameObject2D> {
         int minimumOverlap = Integer.MAX_VALUE;
         int minimumArea = Integer.MAX_VALUE;
         int solutionIndex = 0;
-        for(int splitIndex = 0; splitIndex < objects.size(); splitIndex++){
+        for(int k = 1; k < (max - 2 * min + 2); k++){
+            int firstGroupAmount = min - 1 + k;
             for(int i = 0; i < objects.size(); i++){
-                if(i < splitIndex){
+                if(i < firstGroupAmount){
                     firstGroup.add(objects.get(i));
                 }else{
                     secondGroup.add(objects.get(i));
@@ -205,7 +211,7 @@ public final class R_tree<T extends GameObject2D> {
             int overlap = r1.overlapWith(r2);
             int area = r1.area() + r2.area();
             if(overlap < minimumOverlap || overlap == minimumOverlap && area < minimumArea){
-                solutionIndex = splitIndex;
+                solutionIndex = firstGroupAmount;
                 minimumOverlap = overlap;
                 minimumArea = area;
             }
@@ -317,7 +323,7 @@ public final class R_tree<T extends GameObject2D> {
         if(targetDepth < 0 || targetDepth > this.depth){
             throw new IllegalArgumentException("The max tree depth to search cannot be negative or larger than the tree's height.");
         }
-        return chooseSubTree(root, rectangle, targetDepth, 0); // 0 for root
+        return chooseSubTree(root, rectangle, targetDepth, 1); // 1 for root
     }
 
     /**
