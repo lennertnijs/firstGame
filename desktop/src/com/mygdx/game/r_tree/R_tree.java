@@ -91,14 +91,14 @@ public final class R_tree<T extends GameObject2D> {
             return;
         }
 
-        int currentDepth = this.depth;
-        if(overflowTreatment(node, currentDepth--) != Action.SPLIT){
+        int currentDepth = this.depth - 1; // node's are in the second lowest depth
+        if(overflowTreatment(toInsert, currentDepth--) != Action.SPLIT){
             return;
         }
         this.overflowDepth = -1;
-        Node<T> currentNode = node;
+        Node<T> currentNode = toInsert;
         while(!currentNode.isRoot() && currentNode.getParent().getChildren().size() > max){
-            currentNode = currentNode.getParent();
+            currentNode = currentNode.getParent(); // we move to the NEW root node, if a new one is added?
             overflowTreatment(currentNode, currentDepth--);
             this.overflowDepth = -1;
         }
@@ -153,7 +153,6 @@ public final class R_tree<T extends GameObject2D> {
         List<Node<T>> removed = new ArrayList<>(p);
         for(int i = 0; i < p; i++){
             removed.add(sorted.get(i));
-            this.size--;
             internal.remove(sorted.get(i));
         }
         internal.updateRectangle(); // cascade upwards?
@@ -199,6 +198,7 @@ public final class R_tree<T extends GameObject2D> {
             this.depth++;
         }else{
             parent = internal.getParent();
+            parent.remove(internal);
         }
 
         parent.addChild(child1);

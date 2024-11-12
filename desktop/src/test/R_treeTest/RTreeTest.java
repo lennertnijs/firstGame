@@ -96,9 +96,9 @@ public final class RTreeTest {
 
         DummyGameObject object9 = new DummyGameObject(500, 500, 10, 10);
         tree.insertData(object8);
-        // tree.insertData(object9);
-        assertEquals(8, tree.getSize());
-        assertEquals(8, tree.getActualSize());
-        assertEquals(3, tree.getDepth());
+        tree.insertData(object9);
+        assertEquals(9, tree.getActualSize());
+        assertEquals(9, tree.getSize());
+        assertEquals(4, tree.getDepth());
     }
 }

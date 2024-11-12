@@ -63,28 +63,11 @@ public final class Node<T extends GameObject2D>{
     }
 
     public void setParent(Node<T> parent){
-        this.parent = Objects.requireNonNull(parent);
+        this.parent = parent;
     }
 
     public List<Node<T>> getChildren(){
         return children;
-    }
-
-    public void replaceChild(Node<T> toReplace, Node<T> child1, Node<T> child2){
-        Objects.requireNonNull(toReplace);
-        Objects.requireNonNull(child1);
-        Objects.requireNonNull(child2);
-        if(!this.children.contains(toReplace)){
-            throw new IllegalArgumentException("Cannot replace the given Node, as it's not part of the children.");
-        }
-        this.children.remove(toReplace);
-        this.children.add(child1);
-        child1.parent = this;
-        child1.updateRectangle();
-        this.children.add(child2);
-        child2.parent = this;
-        child2.updateRectangle();
-        updateRectangle();
     }
 
     public void remove(Node<T> node){
