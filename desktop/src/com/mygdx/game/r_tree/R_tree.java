@@ -86,7 +86,8 @@ public final class R_tree<T extends GameObject2D> {
         toInsert.addChild(node);
         node.setParent(toInsert);
 
-        if(node.getChildren().size() <= max){
+        // update size!
+        if(node.getParent().getChildren().size() <= max){
             return;
         }
 
@@ -96,8 +97,9 @@ public final class R_tree<T extends GameObject2D> {
         }
         this.overflowDepth = -1;
         Node<T> currentNode = node;
-        while(!currentNode.isRoot() && overflowTreatment(currentNode, currentDepth--) == Action.SPLIT){
+        while(!currentNode.isRoot() && currentNode.getParent().getChildren().size() > max){
             currentNode = currentNode.getParent();
+            overflowTreatment(currentNode, currentDepth--);
             this.overflowDepth = -1;
         }
     }
