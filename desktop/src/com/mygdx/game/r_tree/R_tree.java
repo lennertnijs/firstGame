@@ -3,6 +3,7 @@ package com.mygdx.game.r_tree;
 import com.mygdx.game.util.Vec2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class R_tree<T extends GameObject2D> {
 
@@ -148,77 +149,28 @@ public final class R_tree<T extends GameObject2D> {
     }
 
     private void split(Node<T> node){
-        if(node.isLeaf()){
-            splitLeaf(node);
-        }else{
-            splitInternal(node);
-        }
-    }
-
-    private void splitInternal(Node<T> internal){
-        if(!internal.isInternal()){
-            throw new IllegalArgumentException("Cannot split the internal Node, as it is a leaf.");
-        }
-        List<Node<T>> sortedThroughBestAxis = chooseSplitAxisNode(internal.getChildren());
-        int index = chooseSplitIndexNode(sortedThroughBestAxis);
-        List<Node<T>> first = sortedThroughBestAxis.subList(0, index);
-        List<Node<T>> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
         Node<T> child1 = new Node<>();
-        for(Node<T> object : first){
-            child1.addChild(object);
-        }
         Node<T> child2 = new Node<>();
-        for(Node<T> object : second){
-            child2.addChild(object);
+        if(node.isLeaf()){
+            List<T> sortedAlongBestAxis = chooseSplitAxisData(node.getObjects());
+            int splitIndex = chooseSplitIndex(sortedAlongBestAxis.stream().map(GameObject2D::getRectangle).toList());
+            child1.addObjects(sortedAlongBestAxis.subList(0, splitIndex));
+            child2.addObjects(sortedAlongBestAxis.subList(splitIndex, sortedAlongBestAxis.size()));
+        }else{
+            List<Node<T>> sortedAlongBestAxis = chooseSplitAxisNode(node.getChildren());
+            int splitIndex = chooseSplitIndex(sortedAlongBestAxis.stream().map(Node::getRectangle).toList());
+            child1.addChildren(sortedAlongBestAxis.subList(0, splitIndex));
+            child2.addChildren(sortedAlongBestAxis.subList(splitIndex, sortedAlongBestAxis.size()));
         }
-        updateSplit(internal, child1, child2);
-    }
-
-    private void splitLeaf(Node<T> leaf){
-        Objects.requireNonNull(leaf);
-        if(!leaf.isLeaf()){
-            throw new IllegalArgumentException("Cannot split the given node as it is not a leaf Node.");
-        }
-        List<T> sortedThroughBestAxis = chooseSplitAxisData(leaf.getObjects());
-        int index = chooseSplitIndexData(sortedThroughBestAxis);
-        if(index < 0 || index > sortedThroughBestAxis.size()){
-            throw new IllegalStateException("Root split index is invalid.");
-        }
-        List<T> first = sortedThroughBestAxis.subList(0, index);
-        List<T> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
-
-        Node<T> child1 = new Node<>(first);
-        Node<T> child2 = new Node<>(second);
-        updateSplit(leaf, child1, child2);
-    }
-
-    private void updateSplit(Node<T> node, Node<T> child1, Node<T> child2){
-        Node<T> parent;
-        if(node.isRoot()){
-            parent = new Node<>();
+        Node<T> parent = node.getParent() != null ? node.getParent() : new Node<>();
+        if(node.getParent() == null){
             this.root = parent;
             this.depth++;
         }else{
-            parent = node.getParent();
             parent.remove(node);
         }
-
         parent.addChild(child1);
-        child1.setParent(parent);
         parent.addChild(child2);
-        child2.setParent(parent);
-
-        child1.updateRectangle();
-        child2.updateRectangle();
-        parent.updateRectangle();
-    }
-
-    private int chooseSplitIndexData(List<T> objects){
-        return chooseSplitIndex(objects.stream().map(GameObject2D::getRectangle).toList());
-    }
-
-    private int chooseSplitIndexNode(List<Node<T>> objects){
-        return chooseSplitIndex(objects.stream().map(Node::getRectangle).toList());
     }
 
     /**
@@ -263,8 +215,8 @@ public final class R_tree<T extends GameObject2D> {
                                     .thenComparing((T o) -> o.getRectangle().y() + o.getRectangle().height());
         List<T> y_axis_sort = new ArrayList<>(objects);
         y_axis_sort.sort(yComparator);
-        int horizontalMarginSum = calculateMarginSumData(x_axis_sort);
-        int verticalMarginSum = calculateMarginSumData(y_axis_sort);
+        int horizontalMarginSum = calculateMarginSum(x_axis_sort.stream().map(GameObject2D::getRectangle).toList());
+        int verticalMarginSum = calculateMarginSum(y_axis_sort.stream().map(GameObject2D::getRectangle).toList());
         if(horizontalMarginSum < verticalMarginSum){
             return x_axis_sort;
         }else{
@@ -284,20 +236,12 @@ public final class R_tree<T extends GameObject2D> {
         List<Node<T>> sortedAlongY = new ArrayList<>(nodes);
         sortedAlongY.sort(yComp);
 
-        int horizontalMarginSum = calculateMarginSumNode(sortedAlongX);
-        int verticalMarginSum = calculateMarginSumNode(sortedAlongY);
+        int horizontalMarginSum = calculateMarginSum(sortedAlongX.stream().map(Node::getRectangle).toList());
+        int verticalMarginSum = calculateMarginSum(sortedAlongY.stream().map(Node::getRectangle).toList());
         if(horizontalMarginSum <= verticalMarginSum){
             return sortedAlongX;
         }
         return sortedAlongY;
-    }
-
-    private int calculateMarginSumNode(List<Node<T>> objects){
-        return calculateMarginSum(objects.stream().map(Node::getRectangle).toList());
-    }
-
-    private int calculateMarginSumData(List<T> objects){
-       return calculateMarginSum(objects.stream().map(GameObject2D::getRectangle).toList());
     }
 
     /**

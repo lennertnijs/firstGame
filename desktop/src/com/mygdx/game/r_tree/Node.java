@@ -83,6 +83,17 @@ public final class Node<T extends GameObject2D> {
         updateRectangle();
     }
 
+    public void addChildren(List<Node<T>> children){
+        for(Node<T> child : children){
+            addChild(child);
+        }
+    }
+
+    public void addObjects(List<T> objects){
+        this.objects.addAll(objects);
+        updateRectangle();
+    }
+
     public boolean isLeaf(){
         return children.isEmpty();
     }
