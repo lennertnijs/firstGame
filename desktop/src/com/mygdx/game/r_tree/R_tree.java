@@ -1,7 +1,5 @@
 package com.mygdx.game.r_tree;
 
-import com.mygdx.game.util.Vec2;
-
 import java.util.*;
 
 public final class R_tree<T extends GameObject2D> {
@@ -50,36 +48,42 @@ public final class R_tree<T extends GameObject2D> {
         return depth;
     }
 
-    public void insertData(T object){
-        insertObject(Objects.requireNonNull(object));
+    public void insert(T t){
+        insertData(Objects.requireNonNull(t, "Cannot insert null."));
     }
 
 
-    private void insertObject(T object){
-        Node<T> leaf = chooseSubTree(object.getRectangle(), this.depth);
-        leaf.addObject(object);
+    private void insertData(T t){
+        Node<T> leafNode = chooseSubTree(t.getRectangle(), depth);
+        leafNode.addObject(t);
         this.size++;
-        if(leaf.getObjects().size() > max){
-            propagateUpwards(leaf, this.depth);
+        if(leafNode.getObjects().size() <= max){
+            return;
+        }
+        int currentDepth = this.depth;
+        if(overflowTreatment(leafNode, currentDepth--) != Action.SPLIT){
+            return;
+        }
+        this.overflowDepth = -1;
+        while(!leafNode.isRoot() && leafNode.getParent().getChildren().size() > max){
+            leafNode = leafNode.getParent();
+            overflowTreatment(leafNode, currentDepth--);
+            this.overflowDepth = -1;
         }
     }
 
     private void insertNode(Node<T> node){
         int depth = 1;
         Node<T> current = node;
-        while(current.isInternal()){
+        while(current.getParent() != null){
+            current = current.getParent();
             depth++;
-            current = current.getChildren().get(0);
         }
-        Node<T> internal = chooseSubTree(node.getRectangle(), this.depth - depth + 1);
+        Node<T> internal = chooseSubTree(node.getRectangle(), depth);
         internal.addChild(node);
-        node.setParent(internal);
-        if(node.getParent().getChildren().size() > max){
-            propagateUpwards(node, this.depth - depth + 1);
+        if(node.getParent().getChildren().size() <= max){
+            return;
         }
-    }
-
-    private void propagateUpwards(Node<T> node, int depth){
         if(overflowTreatment(node, depth--) != Action.SPLIT){
             return;
         }
@@ -104,46 +108,36 @@ public final class R_tree<T extends GameObject2D> {
 
     }
 
-    public void reInsert(Node<T> node){
+    private void reInsert(Node<T> node){
         if(node.isLeaf()){
-            reInsertLeaf(node);
-            return;
-        }
-        reInsertInternal(node);
-    }
-
-    private void reInsertLeaf(Node<T> leaf){
-        List<T> sorted = leaf.getObjects();
-        Vec2 center = leaf.getRectangle().center();
-        Comparator<T> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(center));
-        sorted.sort(comparator);
-        int p = min + 1;
-        List<T> removed = new ArrayList<>(p);
-        for(int i = 0; i < p; i++){
-            leaf.getObjects().remove(sorted.get(i));
-            this.size--;
-            removed.add(sorted.get(i));
-        }
-        leaf.updateRectangle();
-        for(T removedObject : removed){
-            insertObject(removedObject);
-        }
-    }
-
-    private void reInsertInternal(Node<T> internal){
-        List<Node<T>> sorted = internal.getChildren();
-        Vec2 center = internal.getRectangle().center();
-        Comparator<Node<T>> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(center));
-        sorted.sort(comparator);
-        int p = min;
-        List<Node<T>> removed = new ArrayList<>(p);
-        for(int i = 0; i < p; i++){
-            internal.remove(sorted.get(i));
-            removed.add(sorted.get(i));
-        }
-        internal.updateRectangle();
-        for(Node<T> removedNode : removed){
-            insertNode(removedNode);
+            List<T> sorted = node.getObjects();
+            Comparator<T> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(node.getRectangle().center()));
+            sorted.sort(comparator);
+            int p = min + 1;
+            List<T> removed = new ArrayList<>(p);
+            for(int i = 0; i < p; i++){
+                node.getObjects().remove(sorted.get(i));
+                this.size--;
+                removed.add(sorted.get(i));
+            }
+            node.updateRectangle();
+            for(T removedObject : removed){
+                insertData(removedObject);
+            }
+        }else{
+            List<Node<T>> sorted = node.getChildren();
+            Comparator<Node<T>> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(node.getRectangle().center()));
+            sorted.sort(comparator);
+            int p = min + 1;
+            List<Node<T>> removed = new ArrayList<>(p);
+            for(int i = 0; i < p; i++){
+                node.remove(sorted.get(i));
+                removed.add(sorted.get(i));
+            }
+            node.updateRectangle();
+            for(Node<T> removedNode : removed){
+                insertNode(removedNode);
+            }
         }
     }
 
@@ -237,11 +231,9 @@ public final class R_tree<T extends GameObject2D> {
     }
 
     private List<Node<T>> chooseSplitAxisNode(List<Node<T>> nodes){
-        Comparator<Node<T>> xComp = Comparator
-                .comparing((Node<T> n) -> n.getRectangle().x())
+        Comparator<Node<T>> xComp = Comparator.comparing((Node<T> n) -> n.getRectangle().x())
                 .thenComparing((Node<T> n) -> n.getRectangle().x() + n.getRectangle().width());
-        Comparator<Node<T>> yComp = Comparator
-                .comparing((Node<T> n) -> n.getRectangle().y())
+        Comparator<Node<T>> yComp = Comparator.comparing((Node<T> n) -> n.getRectangle().y())
                 .thenComparing((Node<T> n) -> n.getRectangle().y() + n.getRectangle().height());
         List<Node<T>> sortedAlongX = new ArrayList<>(nodes);
         sortedAlongX.sort(xComp);

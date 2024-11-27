@@ -54,7 +54,7 @@ public final class RTree3Test {
 
     @Test
     public void testInsert1(){
-        tree.insertData(object1);
+        tree.insert(object1);
         assertEquals(1, tree.getDepth());
         assertEquals(1, tree.getSize());
         assertEquals(1, tree.getActualSize());
@@ -64,8 +64,8 @@ public final class RTree3Test {
 
     @Test
     public void testInsert2(){
-        tree.insertData(object1);
-        tree.insertData(object2);
+        tree.insert(object1);
+        tree.insert(object2);
         assertEquals(1, tree.getDepth());
         assertEquals(2, tree.getSize());
         assertEquals(2, tree.getActualSize());
@@ -75,9 +75,9 @@ public final class RTree3Test {
 
     @Test
     public void testInsert3(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
         assertEquals(1, tree.getDepth());
         assertEquals(3, tree.getSize());
         assertEquals(3, tree.getActualSize());
@@ -87,10 +87,10 @@ public final class RTree3Test {
 
     @Test
     public void testInsert4(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
         assertEquals(2, tree.getDepth());
         assertEquals(4, tree.getSize());
         assertEquals(4, tree.getActualSize());
@@ -104,11 +104,11 @@ public final class RTree3Test {
 
     @Test
     public void testInsert5(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
         assertEquals(2, tree.getDepth());
         assertEquals(5, tree.getSize());
         assertEquals(5, tree.getActualSize());
@@ -125,12 +125,12 @@ public final class RTree3Test {
 
     @Test
     public void testInsert6(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
         assertEquals(2, tree.getDepth());
         assertEquals(6, tree.getSize());
         assertEquals(6, tree.getActualSize());
@@ -147,13 +147,13 @@ public final class RTree3Test {
 
     @Test
     public void testInsert7(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
         assertEquals(2, tree.getDepth());
         assertEquals(7, tree.getSize());
         assertEquals(7, tree.getActualSize());
@@ -170,14 +170,14 @@ public final class RTree3Test {
 
     @Test
     public void testInsert8(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
-        tree.insertData(object8);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
+        tree.insert(object8);
         assertEquals(2, tree.getDepth());
         assertEquals(8, tree.getSize());
         assertEquals(8, tree.getActualSize());
@@ -194,15 +194,15 @@ public final class RTree3Test {
 
     @Test
     public void testInsert9(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
-        tree.insertData(object8);
-        tree.insertData(object9);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
+        tree.insert(object8);
+        tree.insert(object9);
         assertEquals(2, tree.getDepth());
         assertEquals(9, tree.getSize());
         assertEquals(9, tree.getActualSize());
@@ -219,16 +219,16 @@ public final class RTree3Test {
 
     @Test
     public void testInsert10(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
-        tree.insertData(object8);
-        tree.insertData(object9);
-        tree.insertData(object10);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
+        tree.insert(object8);
+        tree.insert(object9);
+        tree.insert(object10);
         assertEquals(3, tree.getDepth());
         assertEquals(10, tree.getSize());
         assertEquals(10, tree.getActualSize());
@@ -250,17 +250,17 @@ public final class RTree3Test {
 
     @Test
     public void testInsert11(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
-        tree.insertData(object8);
-        tree.insertData(object9);
-        tree.insertData(object10);
-        tree.insertData(object11); // removes a few elements for some reason, presumably from a reinsert
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
+        tree.insert(object8);
+        tree.insert(object9);
+        tree.insert(object10);
+        tree.insert(object11); // removes a few elements for some reason, presumably from a reinsert
         assertEquals(3, tree.getDepth());
         assertEquals(11, tree.getSize());
         assertEquals(11, tree.getActualSize());
@@ -286,18 +286,18 @@ public final class RTree3Test {
 
     @Test
     public void testInsert12(){
-        tree.insertData(object1);
-        tree.insertData(object2);
-        tree.insertData(object3);
-        tree.insertData(object4);
-        tree.insertData(object5);
-        tree.insertData(object6);
-        tree.insertData(object7);
-        tree.insertData(object8);
-        tree.insertData(object9);
-        tree.insertData(object10);
-        tree.insertData(object11);
-        tree.insertData(object12);
+        tree.insert(object1);
+        tree.insert(object2);
+        tree.insert(object3);
+        tree.insert(object4);
+        tree.insert(object5);
+        tree.insert(object6);
+        tree.insert(object7);
+        tree.insert(object8);
+        tree.insert(object9);
+        tree.insert(object10);
+        tree.insert(object11);
+        tree.insert(object12);
         assertEquals(3, tree.getDepth()); // first moment the depth is changed to 5 instead of 3
         assertEquals(11, tree.getSize());
         assertEquals(11, tree.getActualSize());
@@ -331,7 +331,7 @@ public final class RTree3Test {
 //            int h = (int)(Math.random()*25);
 //            DummyGameObject object = new DummyGameObject(x, y, w, h);
 //            System.out.println(i);
-//            tree.insertData(object);
+//            tree.insert(object);
 //        }
 //        assertEquals(1000, tree.getSize());
 //        assertEquals(1000, tree.getActualSize());

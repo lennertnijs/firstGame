@@ -53,11 +53,11 @@ public final class Node<T extends GameObject2D> {
         return objects;
     }
 
-    public void addObject(T object){
+    public void addObject(T t){
         if(children.size() != 0){
             throw new IllegalStateException("Cannot store objects in internal nodes.");
         }
-        objects.add(Objects.requireNonNull(object));
+        objects.add(Objects.requireNonNull(t));
         updateRectangle();
     }
 
