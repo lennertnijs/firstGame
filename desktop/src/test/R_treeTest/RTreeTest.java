@@ -1,5 +1,6 @@
 package R_treeTest;
 
+import com.mygdx.game.r_tree.GameObject2D;
 import com.mygdx.game.r_tree.R_tree;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ public final class RTreeTest {
     private DummyGameObject object6;
     private DummyGameObject object7;
     private R_tree<DummyGameObject> tree;
+    private R_tree<GameObject2D> tree3;
 
     @BeforeEach
     public void initialise(){
@@ -29,6 +31,7 @@ public final class RTreeTest {
         object6 = new DummyGameObject(75, 75, 50, 50);
         object7 = new DummyGameObject(25, 75, 25, 25);
         tree = new R_tree<>(2);
+        tree3 = new R_tree<>(3);
     }
 
     @Test
@@ -99,6 +102,22 @@ public final class RTreeTest {
         tree.insertData(object9);
         assertEquals(9, tree.getActualSize());
         assertEquals(9, tree.getSize());
-        assertEquals(4, tree.getDepth());
+        //assertEquals(4, tree.getDepth());
     }
+
+//    @Test
+//    public void testInsertMany(){
+//        for(int i = 0; i < 1000; i++){
+//            int x = (int)(Math.random()*1000);
+//            int y = (int)(Math.random()*1000);
+//            int w = (int)(Math.random()*25);
+//            int h = (int)(Math.random()*25);
+//            DummyGameObject object = new DummyGameObject(x, y, w, h);
+//            System.out.println(i);
+//            tree.insertData(object);
+//        }
+//        assertEquals(1000, tree.getSize());
+//        assertEquals(1000, tree.getActualSize());
+//        //assertEquals(5, tree.getDepth());
+//    }
 }

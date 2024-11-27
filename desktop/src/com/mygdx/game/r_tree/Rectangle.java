@@ -54,4 +54,10 @@ public record Rectangle(int x, int y, int width, int height) {
         int max_y = Math.min(y + height, r.y + r.height);
         return (max_x - min_x) * (max_y - min_y);
     }
+
+    public boolean equals(Object other){
+        if(!(other instanceof Rectangle r))
+            return false;
+        return x == r.x && y == r.y && width == r.width && height == r.height;
+    }
 }

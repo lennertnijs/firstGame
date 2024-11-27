@@ -3,9 +3,8 @@ package com.mygdx.game.r_tree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
-public final class Node<T extends GameObject2D>{
+public final class Node<T extends GameObject2D> {
 
     private Rectangle rectangle;
     private final List<T> objects;
@@ -43,7 +42,11 @@ public final class Node<T extends GameObject2D>{
     }
 
     public void updateRectangle(){
-        this.rectangle = Rectangle.createMinimumBounding(objects.stream().map(GameObject2D::getRectangle).collect(Collectors.toList()));
+        if(this.isInternal()){
+            this.rectangle = Rectangle.createMinimumBounding(children.stream().map(Node::getRectangle).toList());
+        }else {
+            this.rectangle = Rectangle.createMinimumBounding(objects.stream().map(GameObject2D::getRectangle).toList());
+        }
     }
 
     public List<T> getObjects(){
