@@ -2,10 +2,7 @@ package com.mygdx.game.r_tree;
 
 import com.mygdx.game.util.Vec2;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class R_tree<T extends GameObject2D> {
 
@@ -78,7 +75,7 @@ public final class R_tree<T extends GameObject2D> {
         internal.addChild(node);
         node.setParent(internal);
         if(node.getParent().getChildren().size() > max){
-            propagateUpwards(node, this.depth - depth + 1);;
+            propagateUpwards(node, this.depth - depth + 1);
         }
     }
 
@@ -162,8 +159,8 @@ public final class R_tree<T extends GameObject2D> {
         if(!internal.isInternal()){
             throw new IllegalArgumentException("Cannot split the internal Node, as it is a leaf.");
         }
-        List<Node<T>> sortedThroughBestAxis = chooseSplitAxisInternal(internal.getChildren());
-        int index = chooseSplitIndexInternal(sortedThroughBestAxis);
+        List<Node<T>> sortedThroughBestAxis = chooseSplitAxisNode(internal.getChildren());
+        int index = chooseSplitIndexNode(sortedThroughBestAxis);
         List<Node<T>> first = sortedThroughBestAxis.subList(0, index);
         List<Node<T>> second = sortedThroughBestAxis.subList(index, sortedThroughBestAxis.size());
         Node<T> child1 = new Node<>();
@@ -182,8 +179,8 @@ public final class R_tree<T extends GameObject2D> {
         if(!leaf.isLeaf()){
             throw new IllegalArgumentException("Cannot split the given node as it is not a leaf Node.");
         }
-        List<T> sortedThroughBestAxis = chooseSplitAxisLeaf(leaf.getObjects());
-        int index = chooseSplitIndexLeaf(sortedThroughBestAxis);
+        List<T> sortedThroughBestAxis = chooseSplitAxisData(leaf.getObjects());
+        int index = chooseSplitIndexData(sortedThroughBestAxis);
         if(index < 0 || index > sortedThroughBestAxis.size()){
             throw new IllegalStateException("Root split index is invalid.");
         }
@@ -216,6 +213,13 @@ public final class R_tree<T extends GameObject2D> {
         parent.updateRectangle();
     }
 
+    private int chooseSplitIndexData(List<T> objects){
+        return chooseSplitIndex(objects.stream().map(GameObject2D::getRectangle).toList());
+    }
+
+    private int chooseSplitIndexNode(List<Node<T>> objects){
+        return chooseSplitIndex(objects.stream().map(Node::getRectangle).toList());
+    }
 
     /**
      * Attempts all possible splits, and picks the most optimal one. Returns this split index.
@@ -224,51 +228,16 @@ public final class R_tree<T extends GameObject2D> {
      * More specifically, attempts all possible split indices, and picks the split with the least area overlap.
      * (and smallest area, if area overlap is tied)
      */
-    private int chooseSplitIndexLeaf(List<T> objects){
-        List<T> firstGroup = new ArrayList<>();
-        List<T> secondGroup = new ArrayList<>();
+    private int chooseSplitIndex(List<Rectangle> rectangles){
         int minimumOverlap = Integer.MAX_VALUE;
         int minimumArea = Integer.MAX_VALUE;
         int solutionIndex = 0;
         for(int k = 1; k < (max - 2 * min + 2); k++){
             int firstGroupAmount = min - 1 + k;
-            for(int i = 0; i < objects.size(); i++){
-                if(i < firstGroupAmount){
-                    firstGroup.add(objects.get(i));
-                }else{
-                    secondGroup.add(objects.get(i));
-                }
-            }
-            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(GameObject2D::getRectangle).toList());
-            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(GameObject2D::getRectangle).toList());
-            int overlap = r1.overlapWith(r2);
-            int area = r1.area() + r2.area();
-            if(overlap < minimumOverlap || overlap == minimumOverlap && area < minimumArea){
-                solutionIndex = firstGroupAmount;
-                minimumOverlap = overlap;
-                minimumArea = area;
-            }
-        }
-        return solutionIndex;
-    }
-
-    private int chooseSplitIndexInternal(List<Node<T>> objects){
-        List<Node<T>> firstGroup = new ArrayList<>();
-        List<Node<T>> secondGroup = new ArrayList<>();
-        int minimumOverlap = Integer.MAX_VALUE;
-        int minimumArea = Integer.MAX_VALUE;
-        int solutionIndex = 0;
-        for(int k = 1; k < (max - 2 * min + 2); k++){
-            int firstGroupAmount = min - 1 + k;
-            for(int i = 0; i < objects.size(); i++){
-                if(i < firstGroupAmount){
-                    firstGroup.add(objects.get(i));
-                }else{
-                    secondGroup.add(objects.get(i));
-                }
-            }
-            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(Node::getRectangle).toList());
-            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(Node::getRectangle).toList());
+            List<Rectangle> first = rectangles.subList(0, firstGroupAmount);
+            List<Rectangle> second = rectangles.subList(firstGroupAmount, rectangles.size());
+            Rectangle r1 = Rectangle.createMinimumBounding(first);
+            Rectangle r2 = Rectangle.createMinimumBounding(second);
             int overlap = r1.overlapWith(r2);
             int area = r1.area() + r2.area();
             if(overlap < minimumOverlap || overlap == minimumOverlap && area < minimumArea){
@@ -284,11 +253,7 @@ public final class R_tree<T extends GameObject2D> {
      * Chooses the optimal axis to split along, and returns the list of objects sorted along the optimal axis.
      * @param objects The list of objects to sort (and find the optimal axis for). Cannot be null. Cannot contain null.
      */
-    private List<T> chooseSplitAxisLeaf(List<T> objects){
-        Objects.requireNonNull(objects);
-        if(objects.contains(null)){
-            throw new NullPointerException();
-        }
+    private List<T> chooseSplitAxisData(List<T> objects){
         Comparator<T> xComparator = Comparator.comparing((T o) -> o.getRectangle().x())
                                     .thenComparing((T o) -> o.getRectangle().x() + o.getRectangle().width());
         List<T> x_axis_sort = new ArrayList<>(objects);
@@ -298,8 +263,8 @@ public final class R_tree<T extends GameObject2D> {
                                     .thenComparing((T o) -> o.getRectangle().y() + o.getRectangle().height());
         List<T> y_axis_sort = new ArrayList<>(objects);
         y_axis_sort.sort(yComparator);
-        int horizontalMarginSum = calculateMarginSum(x_axis_sort);
-        int verticalMarginSum = calculateMarginSum(y_axis_sort);
+        int horizontalMarginSum = calculateMarginSumData(x_axis_sort);
+        int verticalMarginSum = calculateMarginSumData(y_axis_sort);
         if(horizontalMarginSum < verticalMarginSum){
             return x_axis_sort;
         }else{
@@ -307,52 +272,33 @@ public final class R_tree<T extends GameObject2D> {
         }
     }
 
-    private List<Node<T>> chooseSplitAxisInternal(List<Node<T>> nodes){
-        Objects.requireNonNull(nodes);
-        if(nodes.contains(null)){
-            throw new NullPointerException();
-        }
-        Comparator<Node<T>> xComp = Comparator.comparing((Node<T> n) -> n.getRectangle().x())
+    private List<Node<T>> chooseSplitAxisNode(List<Node<T>> nodes){
+        Comparator<Node<T>> xComp = Comparator
+                .comparing((Node<T> n) -> n.getRectangle().x())
                 .thenComparing((Node<T> n) -> n.getRectangle().x() + n.getRectangle().width());
+        Comparator<Node<T>> yComp = Comparator
+                .comparing((Node<T> n) -> n.getRectangle().y())
+                .thenComparing((Node<T> n) -> n.getRectangle().y() + n.getRectangle().height());
         List<Node<T>> sortedAlongX = new ArrayList<>(nodes);
         sortedAlongX.sort(xComp);
-
-        Comparator<Node<T>> yComp = Comparator.comparing((Node<T> n) -> n.getRectangle().y())
-                .thenComparing((Node<T> n) -> n.getRectangle().y() + n.getRectangle().height());
         List<Node<T>> sortedAlongY = new ArrayList<>(nodes);
         sortedAlongY.sort(yComp);
 
-        int horizontalMarginSum = calculateMarginSumInternal(sortedAlongX);
-        int verticalMarginSum = calculateMarginSumInternal(sortedAlongY);
+        int horizontalMarginSum = calculateMarginSumNode(sortedAlongX);
+        int verticalMarginSum = calculateMarginSumNode(sortedAlongY);
         if(horizontalMarginSum <= verticalMarginSum){
             return sortedAlongX;
         }
         return sortedAlongY;
     }
 
-    private int calculateMarginSumInternal(List<Node<T>> objects){
-        int marginSum = 0;
-        List<Node<T>> firstGroup = new ArrayList<>();
-        List<Node<T>> secondGroup = new ArrayList<>();
-        for(int k = 1; k < (max - 2 * min + 2); k++){
-            int firstGroupAmount = min - 1 + k;
-            for(int i = 0; i < objects.size(); i++){
-                if(i < firstGroupAmount){
-                    firstGroup.add(objects.get(i));
-                }else{
-                    secondGroup.add(objects.get(i));
-                }
-            }
-            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(Node::getRectangle).toList());
-            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(Node::getRectangle).toList());
-            marginSum += r1.perimeter();
-            marginSum += r2.perimeter();
-            firstGroup.clear();
-            secondGroup.clear();
-        }
-        return marginSum;
+    private int calculateMarginSumNode(List<Node<T>> objects){
+        return calculateMarginSum(objects.stream().map(Node::getRectangle).toList());
     }
 
+    private int calculateMarginSumData(List<T> objects){
+       return calculateMarginSum(objects.stream().map(GameObject2D::getRectangle).toList());
+    }
 
     /**
      * Calculates the margin sum of all predefined distributions of the list of objects along a given axis.
@@ -363,27 +309,18 @@ public final class R_tree<T extends GameObject2D> {
      * - group 2 will contain all the other elements
      * The MBR for both these groups will then be calculated, and the margins added to the result.
      *
-     * @param objects The list of objects. MUST BE SORTED!
+     * @param rectangles The list of objects. MUST BE SORTED!
      */
-    private int calculateMarginSum(List<T> objects){
+    public int calculateMarginSum(List<Rectangle> rectangles){
         int marginSum = 0;
-        List<T> firstGroup = new ArrayList<>();
-        List<T> secondGroup = new ArrayList<>();
         for(int k = 1; k < (max - 2 * min + 2); k++){
             int firstGroupAmount = min - 1 + k;
-            for(int i = 0; i < objects.size(); i++){
-                if(i < firstGroupAmount){
-                    firstGroup.add(objects.get(i));
-                }else{
-                    secondGroup.add(objects.get(i));
-                }
-            }
-            Rectangle r1 = Rectangle.createMinimumBounding(firstGroup.stream().map(GameObject2D::getRectangle).toList());
-            Rectangle r2 = Rectangle.createMinimumBounding(secondGroup.stream().map(GameObject2D::getRectangle).toList());
+            List<Rectangle> first = rectangles.subList(0, firstGroupAmount);
+            List<Rectangle> second = rectangles.subList(firstGroupAmount, rectangles.size());
+            Rectangle r1 = Rectangle.createMinimumBounding(first);
+            Rectangle r2 = Rectangle.createMinimumBounding(second);
             marginSum += r1.perimeter();
             marginSum += r2.perimeter();
-            firstGroup.clear();
-            secondGroup.clear();
         }
         return marginSum;
     }
@@ -406,11 +343,6 @@ public final class R_tree<T extends GameObject2D> {
      * To select the most appropriate Node, we use multiple LEXICOGRAPHIC metrics, depending on the current depth.
      * In each metric, we add the Rectangle to its current MBR (Minimum Bounding Rectangle) to create a new, usually
      * larger MBR, which we use to rank Nodes.
-     *
-     * @param current The current Node in the tree. Cannot be null.
-     * @param rectangle The Rectangle of the soon-to-be added element in the tree. Cannot be null.
-     * @param targetDepth The target depth to look for an appropriate Node. Should be the tree's depth if looking for a leaf.
-     * @param depth The current depth in the tree. Cannot be negative or larger than the tree's depth.
      *
      * @return The appropriate node to insert into, at the provided depth.
      */
