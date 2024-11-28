@@ -54,7 +54,7 @@ public final class R_tree<T extends GameObject2D> {
 
 
     private void insertData(T t){
-        Node<T> leafNode = chooseSubTree(t.getRectangle(), depth);
+        Node<T> leafNode = chooseSubTree(t.getRectangle(), this.depth);
         leafNode.addObject(t);
         this.size++;
         if(leafNode.getObjects().size() <= max){
@@ -73,24 +73,24 @@ public final class R_tree<T extends GameObject2D> {
     }
 
     private void insertNode(Node<T> node){
-        int depth = 1;
+        int depth = 0;
         Node<T> current = node;
         while(current.getParent() != null){
             current = current.getParent();
             depth++;
         }
-        Node<T> internal = chooseSubTree(node.getRectangle(), depth);
+        Node<T> internal = chooseSubTree(node.getRectangle(), depth); // picks a full subtree AGAIN
         internal.addChild(node);
-        if(node.getParent().getChildren().size() <= max){
+        if(internal.getChildren().size() <= max){
             return;
         }
-        if(overflowTreatment(node, depth--) != Action.SPLIT){
+        if(overflowTreatment(internal, depth--) != Action.SPLIT){
             return;
         }
         this.overflowDepth = -1;
-        while(!node.isRoot() && node.getParent().getChildren().size() > max){
-            node = node.getParent();
-            overflowTreatment(node, depth--);
+        while(!internal.isRoot() && internal.getParent().getChildren().size() > max){
+            internal = internal.getParent();
+            overflowTreatment(internal, depth--);
             this.overflowDepth = -1;
         }
     }
@@ -110,7 +110,7 @@ public final class R_tree<T extends GameObject2D> {
 
     private void reInsert(Node<T> node){
         if(node.isLeaf()){
-            List<T> sorted = node.getObjects();
+            List<T> sorted = new ArrayList<>(node.getObjects());
             Comparator<T> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(node.getRectangle().center()));
             sorted.sort(comparator);
             int p = min + 1;
@@ -125,7 +125,7 @@ public final class R_tree<T extends GameObject2D> {
                 insertData(removedObject);
             }
         }else{
-            List<Node<T>> sorted = node.getChildren();
+            List<Node<T>> sorted = new ArrayList<>(node.getChildren());
             Comparator<Node<T>> comparator = Comparator.comparing(r -> r.getRectangle().center().distanceTo(node.getRectangle().center()));
             sorted.sort(comparator);
             int p = min + 1;
@@ -256,9 +256,8 @@ public final class R_tree<T extends GameObject2D> {
         if(depth == targetDepth){
             return current;
         }
-        if(current.getChildren().size() == 0){
+        for(int i = current.getChildren().size(); i < max; i++){
             Node<T> node = new Node<>();
-            node.setParent(current);
             current.addChild(node);
         }
         Node<T> optimalChild;

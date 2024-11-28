@@ -241,9 +241,9 @@ public final class RTree3Test {
         assertEquals(List.of(object2, object5, object6), child1.getChildren().get(1).getObjects());
         assertEquals(List.of(object3, object4, object8), child1.getChildren().get(2).getObjects());
 
-//        assertEquals(new Rectangle(0, 0, 50, 250), tree.getRoot().getChildren().get(0).getRectangle());
-//        assertEquals(new Rectangle(150, 0, 100, 250), tree.getRoot().getChildren().get(1).getRectangle());
-//        assertEquals(new Rectangle(25, 25, 125, 225), tree.getRoot().getChildren().get(2).getRectangle());
+        assertEquals(new Rectangle(0, 0, 50, 250), tree.getRoot().getChildren().get(0).getRectangle());
+        assertEquals(new Rectangle(150, 0, 100, 250), tree.getRoot().getChildren().get(1).getRectangle());
+        assertEquals(new Rectangle(25, 25, 125, 225), tree.getRoot().getChildren().get(2).getRectangle());
 
         assertEquals(new Rectangle(0, 0, 250, 300), tree.getRoot().getRectangle());
     }
@@ -277,9 +277,9 @@ public final class RTree3Test {
         assertEquals(List.of(object2, object5, object6), child2.getChildren().get(1).getObjects());
         assertEquals(List.of(object3, object4, object8), child2.getChildren().get(0).getObjects());
 
-//        assertEquals(new Rectangle(0, 0, 50, 250), tree.getRoot().getChildren().get(0).getRectangle());
-//        assertEquals(new Rectangle(150, 0, 100, 250), tree.getRoot().getChildren().get(1).getRectangle());
-//        assertEquals(new Rectangle(25, 25, 125, 225), tree.getRoot().getChildren().get(2).getRectangle());
+        assertEquals(new Rectangle(0, 0, 50, 250), tree.getRoot().getChildren().get(0).getRectangle());
+        assertEquals(new Rectangle(150, 0, 100, 250), tree.getRoot().getChildren().get(1).getRectangle());
+        assertEquals(new Rectangle(25, 25, 125, 225), tree.getRoot().getChildren().get(2).getRectangle());
 
         assertEquals(new Rectangle(0, 0, 250, 300), tree.getRoot().getRectangle());
     }

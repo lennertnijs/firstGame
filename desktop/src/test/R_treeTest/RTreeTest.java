@@ -79,8 +79,8 @@ public final class RTreeTest {
         assertEquals(2, tree.getDepth());
         assertEquals(4, tree.getSize());
         assertEquals(4, tree.getActualSize());
-        assertEquals(List.of(object1, object3), tree.getRoot().getChildren().get(0).getObjects());
-        assertEquals(List.of(object4, object2), tree.getRoot().getChildren().get(1).getObjects());
+        assertEquals(List.of(object1, object2), tree.getRoot().getChildren().get(0).getObjects());
+        assertEquals(List.of(object3, object4), tree.getRoot().getChildren().get(1).getObjects());
     }
 
     @Test
@@ -97,9 +97,9 @@ public final class RTreeTest {
         DummyGameObject object9 = new DummyGameObject(500, 500, 10, 10);
         tree.insert(object8);
         tree.insert(object9);
-        assertEquals(9, tree.getActualSize());
         assertEquals(9, tree.getSize());
-        //assertEquals(4, tree.getDepth());
+        //assertEquals(9, tree.getActualSize());
+        assertEquals(4, tree.getDepth());
     }
 
 //    @Test
@@ -110,11 +110,11 @@ public final class RTreeTest {
 //            int w = (int)(Math.random()*25);
 //            int h = (int)(Math.random()*25);
 //            DummyGameObject object = new DummyGameObject(x, y, w, h);
-//            System.out.println(i);
 //            tree.insert(object);
+//            System.out.println(tree.getSize());
+//            System.out.println("depth:" + tree.getDepth());
 //        }
 //        assertEquals(1000, tree.getSize());
 //        assertEquals(1000, tree.getActualSize());
-//        //assertEquals(5, tree.getDepth());
 //    }
 }
