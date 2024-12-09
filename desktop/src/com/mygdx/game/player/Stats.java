@@ -1,5 +1,12 @@
 package com.mygdx.game.player;
 
+import com.mygdx.game.effect.Effect;
+import com.mygdx.game.effect.Stat;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public final class Stats {
 
     public static int MIN_SPEED = 1;
@@ -7,58 +14,83 @@ public final class Stats {
     private int offense;
     private int defense;
     private int speed;
+    private List<Effect> effects;
 
     private Stats(Builder builder){
         this.health = builder.health;
         this.offense = builder.offense;
         this.defense = builder.defense;
         this.speed = builder.speed;
+        this.effects = new ArrayList<>();
     }
 
     public int getHealth(){
-        return health;
+        return applyEffects(health, Stat.HEALTH);
     }
 
     public void setHealth(int health){
-        if(health < 0)
-            throw new IllegalArgumentException("Cannot set an npc's health to a negative value.");
+        if(health < 0){
+            throw new IllegalArgumentException("Health cannot be negative.");
+        }
         this.health = health;
 
     }
 
     public int getOffense(){
-        return offense;
+        return applyEffects(offense, Stat.OFFENSE);
     }
 
     public void setOffense(int offense){
-        if(offense < 0)
-            throw new IllegalArgumentException("Cannot set an npc's offense to a negative value.");
+        if(offense < 0){
+            throw new IllegalArgumentException("Offense cannot be negative.");
+        }
         this.offense = offense;
     }
 
     public int getDefense(){
-        return defense;
+        return applyEffects(defense, Stat.DEFENSE);
     }
 
     public void setDefense(int defense){
-        if(defense < 0)
-            throw new IllegalArgumentException("Cannot set an npc's defense to a negative value.");
+        if(defense < 0){
+            throw new IllegalArgumentException("Defense cannot be negative.");
+        }
         this.defense = defense;
     }
 
     public int getSpeed(){
-        return speed;
+        return applyEffects(speed, Stat.SPEED);
     }
 
     public void setSpeed(int speed){
-        if(speed < MIN_SPEED)
-            throw new IllegalArgumentException("Cannot set an npc's speed to a value lower than MIN_NPC_SPEED.");
+        if(speed < 0){
+            throw new IllegalArgumentException("Speed cannot be negative.");
+        }
         this.speed = speed;
+    }
+
+    public void addEffect(Effect effect){
+        this.effects.add(Objects.requireNonNull(effect));
+    }
+
+    public void clearEffects(){
+        this.effects = new ArrayList<>();
+    }
+
+    public int applyEffects(int baseValue, Stat stat){
+        for(Effect effect : effects){
+            if(effect.stat() != stat) continue;
+            switch(effect.type()){
+                case FLAT -> baseValue += effect.amount();
+                case PERCENT -> baseValue *= effect.amount();
+            }
+        }
+        return baseValue;
     }
 
     @Override
     public String toString(){
-        return String.format("NPCStats[health=%d, offense=%d, defense=%d, speed=%d]", health, offense, defense, speed);
+        return String.format("Stats[health=%d, offense=%d, defense=%d, speed=%d]", health, offense, defense, speed);
     }
 
     public static Builder builder(){
