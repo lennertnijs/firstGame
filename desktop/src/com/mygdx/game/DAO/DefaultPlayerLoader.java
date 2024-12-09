@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.game_object.renderer.*;
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.Stats;
+import com.mygdx.game.effect.Stats;
 import com.mygdx.game.r_tree.GameListener;
 import com.mygdx.game.util.Vec2;
 import com.mygdx.game.game_object.Transform;

@@ -1,7 +1,4 @@
-package com.mygdx.game.player;
-
-import com.mygdx.game.effect.Effect;
-import com.mygdx.game.effect.Stat;
+package com.mygdx.game.effect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +6,6 @@ import java.util.Objects;
 
 public final class Stats {
 
-    public static int MIN_SPEED = 1;
     private int health;
     private int offense;
     private int defense;
@@ -128,14 +124,17 @@ public final class Stats {
         }
 
         public Stats build(){
-            if(health <= 0)
-                throw new IllegalArgumentException("The health of an npc cannot be negative or 0.");
-            if(offense < 0)
-                throw new IllegalArgumentException("The offense of an npc cannot be negative.");
-            if(defense < 0)
-                throw new IllegalArgumentException("The defense of an npc cannot be negative");
-            if(speed < MIN_SPEED){
-                throw new IllegalArgumentException("The speed of an npc cannot be smaller than MIN_NPC_SPEED.");
+            if(health < 0){
+                throw new IllegalArgumentException("Health cannot be negative.");
+            }
+            if(offense < 0){
+                throw new IllegalArgumentException("Offense cannot be negative.");
+            }
+            if(defense < 0){
+                throw new IllegalArgumentException("Defense cannot be negative.");
+            }
+            if(speed < 0){
+                throw new IllegalArgumentException("Speed cannot be negative.");
             }
             return new Stats(this);
         }

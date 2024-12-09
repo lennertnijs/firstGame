@@ -8,7 +8,7 @@ import com.mygdx.game.npc.navigation.NavigationData;
 import com.mygdx.game.npc.navigation.Route;
 import com.mygdx.game.npc.states.IdleState;
 import com.mygdx.game.npc.states.NPCState;
-import com.mygdx.game.player.Stats;
+import com.mygdx.game.effect.Stats;
 import com.mygdx.game.npc.week_schedule.Activity;
 import com.mygdx.game.npc.week_schedule.Day;
 import com.mygdx.game.npc.navigation.Location;

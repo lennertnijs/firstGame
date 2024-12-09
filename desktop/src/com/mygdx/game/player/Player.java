@@ -1,5 +1,6 @@
 package com.mygdx.game.player;
 
+import com.mygdx.game.effect.Stats;
 import com.mygdx.game.player.states.IdleState;
 import com.mygdx.game.player.states.PlayerState;
 import com.mygdx.game.game_object.renderer.Renderer;
