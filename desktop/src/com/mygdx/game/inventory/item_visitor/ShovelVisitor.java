@@ -14,7 +14,7 @@ public class ShovelVisitor implements ItemVisitor {
 
     @Override
     public void visit(Player player) {
-        player.changeState(new UseItemState(player, "shovel"));
+        player.changeState(new UseItemState(player, "shovel", player.getState()));
     }
 
     @Override

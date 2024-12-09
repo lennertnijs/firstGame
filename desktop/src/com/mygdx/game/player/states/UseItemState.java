@@ -1,34 +1,34 @@
 package com.mygdx.game.player.states;
 
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.states.IdleState;
-import com.mygdx.game.player.states.PlayerState;
+
+import java.util.Objects;
 
 public final class UseItemState implements PlayerState {
 
     private final Player player;
     private final String activity;
-    private double delta;
+    private final PlayerState fallbackState;
+    private final int duration;
+    private double passedDelta;
 
-    public UseItemState(Player player, String activity){
-        this.player = player;
-        this.delta = 0;
-        this.activity = activity;
+    public UseItemState(Player player, String activity, PlayerState fallbackState){
+        this.player = Objects.requireNonNull(player);
+        this.activity = Objects.requireNonNull(activity);
+        this.fallbackState = Objects.requireNonNull(fallbackState);
+        this.duration = player.getActiveItem().usageDuration();
+        this.passedDelta = 0;
     }
 
-    @Override
-    public void update(double delta) {
-        this.delta += delta;
-        handleStateChange();
-    }
-
-    private void handleStateChange(){
-        if(delta >= player.getActiveItem().usageDuration()){
-            player.changeState(new IdleState());
-        }
-    }
-
-    public String getActivityName(){
+    public String getName(){
         return activity;
+    }
+
+    public void update(double delta) {
+        this.passedDelta += delta;
+        if(passedDelta < duration){
+            return;
+        }
+        player.changeState(fallbackState);
     }
 }

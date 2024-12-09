@@ -47,13 +47,11 @@ public final class MovementUtilMethods {
         if(amount < 0){
             throw new IllegalArgumentException("Amount is negative.");
         }
-        Vec2 next = null;
-        switch(direction){
-            case UP: next = new Vec2(start.x(), start.y() + amount); break;
-            case RIGHT: next = new Vec2(start.x() + amount, start.y()); break;
-            case DOWN: next = new Vec2(start.x(), start.y() - amount); break;
-            case LEFT: next = new Vec2(start.x() - amount, start.y()); break;
-        }
-        return next;
+        return switch (direction) {
+            case UP -> new Vec2(start.x(), start.y() + amount);
+            case RIGHT -> new Vec2(start.x() + amount, start.y());
+            case DOWN -> new Vec2(start.x(), start.y() - amount);
+            case LEFT -> new Vec2(start.x() - amount, start.y());
+        };
     }
 }

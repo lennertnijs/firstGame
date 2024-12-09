@@ -1,13 +1,11 @@
 package com.mygdx.game.player.states;
 
 import com.mygdx.game.player.Player;
-import com.mygdx.game.player.states.PlayerState;
 import com.mygdx.game.util.Vec2;
-import com.mygdx.game.util.MovementUtilMethods;
 
 import java.util.Objects;
 
-public class WalkState implements PlayerState {
+public final class WalkState implements PlayerState {
 
     private final Player player;
 
@@ -15,13 +13,22 @@ public class WalkState implements PlayerState {
         this.player = Objects.requireNonNull(player);
     }
 
-    public void update(double delta){
-        int amount = player.getStats().getSpeed();
-        Vec2 movement = MovementUtilMethods.calculateNextPosition(player.getPosition(), player.getDirection(), amount);
-        player.setPosition(movement);
+    public String getName(){
+        return "walk";
     }
 
-    public String getActivityName(){
-        return "walking";
+    public void update(double delta){
+        Vec2 current = player.getPosition();
+        int movement = player.getStats().getSpeed();
+        Vec2 next = switch(player.getDirection()){
+            case UP -> new Vec2(current.x(), current.y() + movement);
+            case RIGHT -> new Vec2(current.x() + movement, current.y());
+            case DOWN -> new Vec2(current.x(), current.y() - movement);
+            case LEFT -> new Vec2(current.x() - movement, current.y());
+        };
+        if(!player.getGameListener().isFree(next, player.getWidth(), player.getHeight())){
+            return;
+        }
+        player.setPosition(next);
     }
 }

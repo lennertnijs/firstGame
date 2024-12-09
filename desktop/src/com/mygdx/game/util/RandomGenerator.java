@@ -1,7 +1,5 @@
 package com.mygdx.game.util;
 
-import com.mygdx.game.util.Vec2;
-
 import java.util.Random;
 
 public class RandomGenerator {

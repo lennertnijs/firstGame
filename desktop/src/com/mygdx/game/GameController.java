@@ -43,7 +43,7 @@ public class GameController {
     }
 
     public void playerSetNextActive(){
-        player.incrementActiveIndex();
+        player.incrementActiveItemIndex();
     }
 
     public void playerSetPreviousActive(){

@@ -19,9 +19,6 @@ public final class Stats {
         return health;
     }
 
-    /**
-     * @param health The new health. Can be 0 on death.
-     */
     public void setHealth(int health){
         if(health < 0)
             throw new IllegalArgumentException("Cannot set an npc's health to a negative value.");

@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.mygdx.game.game_object.renderer.*;
 import com.mygdx.game.player.Player;
 import com.mygdx.game.player.Stats;
+import com.mygdx.game.r_tree.GameListener;
 import com.mygdx.game.util.Vec2;
 import com.mygdx.game.game_object.Transform;
 import com.mygdx.game.inventory.Inventory;
@@ -53,7 +54,7 @@ public final class DefaultPlayerLoader {
         Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(3).build();
 
         Inventory inventory = new Inventory(new Item[]{pickaxe, axe, null, null, null, null, null, null, null}, stackSizeMap);
-        return new Player(transform, renderer, map, name, inventory, 0, stats);
+        return new Player(transform, renderer, map, name, inventory, 0, stats, new GameListener(null));
     }
 
     private static Map<Key, Animation> loadAnimations(TextureAtlas atlas){
@@ -69,6 +70,7 @@ public final class DefaultPlayerLoader {
                     Frame frame = Frame.builder().texture(atlas.findRegion(activity + "_" + direction.toLowerCase(), i)).scaleX(2).scaleY(2).build();
                     frames[i - 1] = frame;
                 }
+                activity = activity.equals("walking") ? "walk" : activity;
                 Key key = new Key(activity, Direction.valueOf(direction));
                 Animation animation = new Animation(frames, 1250);
                 map.put(key, animation);

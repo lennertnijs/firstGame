@@ -14,7 +14,7 @@ public final class AxeVisitor implements ItemVisitor {
 
     @Override
     public void visit(Player player) {
-        player.changeState(new UseItemState(player, "axe"));
+        player.changeState(new UseItemState(player, "axe", player.getState()));
     }
 
     @Override
