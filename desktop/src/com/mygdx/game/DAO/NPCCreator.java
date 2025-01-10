@@ -14,7 +14,7 @@ import com.mygdx.game.npc.navigation.NavigationData;
 import com.mygdx.game.npc.week_schedule.*;
 import com.mygdx.game.game_object.renderer.Renderer;
 import com.mygdx.game.game_object.renderer.StaticRenderer;
-import com.mygdx.game.effect.Stats;
+import com.mygdx.game.stats.Stats;
 import com.mygdx.game.util.Vec2;
 import com.mygdx.game.npc.NPC;
 import com.mygdx.game.game_object.renderer.Frame;

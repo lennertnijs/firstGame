@@ -1,5 +1,6 @@
 package com.mygdx.game.inventory;
 
+import com.mygdx.game.Breakables.Breakable;
 import com.mygdx.game.game_object.GameObject;
 import com.mygdx.game.inventory.item_visitor.*;
 

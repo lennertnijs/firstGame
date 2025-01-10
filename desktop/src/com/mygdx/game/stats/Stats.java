@@ -1,4 +1,4 @@
-package com.mygdx.game.effect;
+package com.mygdx.game.stats;
 
 import java.util.ArrayList;
 import java.util.List;

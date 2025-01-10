@@ -42,5 +42,6 @@ public final class Transform {
     @Override
     public String toString(){
         return String.format("Transform[position=%s]", position);
+    
     }
 }

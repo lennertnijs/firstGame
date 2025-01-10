@@ -1,6 +1,6 @@
 package com.mygdx.game.player;
 
-import com.mygdx.game.effect.Stats;
+import com.mygdx.game.stats.Stats;
 import com.mygdx.game.player.states.IdleState;
 import com.mygdx.game.player.states.PlayerState;
 import com.mygdx.game.game_object.renderer.Renderer;
@@ -71,6 +71,17 @@ public final class Player extends GameObject {
         for(GameObject gameObject : gameObjects){
             Objects.requireNonNull(gameObject);
             activeItem.useOn(gameObject);
+        }
+    }
+
+    public void useActiveItemDirect(List<GameObject> objects){
+        com.mygdx.game.UpdatedItem.Item item = new com.mygdx.game.UpdatedItem.Item(null);
+        item.decrementDurability();
+        for(GameObject object : objects){
+            // get the object's type
+            // do a map search with key <item type, object type>
+            // this will return an integer that is to be used on the tool's damage type
+            // damage object
         }
     }
 

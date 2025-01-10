@@ -1,4 +1,4 @@
-package com.mygdx.game.effect;
+package com.mygdx.game.stats;
 
 public enum Stat {
     HEALTH,
