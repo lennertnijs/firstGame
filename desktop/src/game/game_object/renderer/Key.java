@@ -1,5 +1,7 @@
 package game.game_object.renderer;
 
+import game.util.Direction;
+
 import java.util.Objects;
 
 /**

@@ -1,6 +1,7 @@
 package game.game_object.renderer;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import game.util.Direction;
 import game.util.Vec2;
 
 import java.util.Objects;

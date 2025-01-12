@@ -1,4 +1,4 @@
-package game.game_object.renderer;
+package game.util;
 
 public enum Direction {
     UP,

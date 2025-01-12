@@ -1,7 +1,7 @@
 package game.game_object;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import game.game_object.renderer.Direction;
+import game.util.Direction;
 import game.game_object.renderer.Renderer;
 import game.util.Vec2;
 

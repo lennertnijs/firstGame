@@ -10,13 +10,14 @@ import game.inventory.Item;
 import game.inventory.ItemType;
 import game.player.Player;
 import game.stats.Stats;
+import game.util.Direction;
 import game.util.Vec2;
 import game.game_object.Transform;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static game.game_object.renderer.Direction.DOWN;
+import static game.util.Direction.DOWN;
 
 public final class DefaultPlayerLoader {
 

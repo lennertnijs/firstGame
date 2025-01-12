@@ -1,7 +1,5 @@
 package game.util;
 
-import game.game_object.renderer.Direction;
-
 public final class DirectionCalculator {
 
     private DirectionCalculator(){

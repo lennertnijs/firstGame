@@ -6,7 +6,7 @@ import game.clock.Clock;
 import game.game_object.GameObject;
 import game.inventory.Item;
 import game.game_object.GameObjectType;
-import game.game_object.renderer.Direction;
+import game.util.Direction;
 import game.npc.NPC;
 import game.player.Player;
 import game.player.states.IdleState;

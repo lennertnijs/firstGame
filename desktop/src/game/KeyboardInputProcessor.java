@@ -1,7 +1,7 @@
 package game;
 
 import com.badlogic.gdx.InputProcessor;
-import game.game_object.renderer.Direction;
+import game.util.Direction;
 
 import static com.badlogic.gdx.Input.Keys.*;
 
