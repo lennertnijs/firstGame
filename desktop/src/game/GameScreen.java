@@ -1,6 +1,6 @@
 package game;
 
-import game.DAO.DefaultPlayerLoader;
+import game.DAO.PlayerLoader;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
         this.game = game;
         CalendarClock calendarClock = new CalendarClock(Day.MONDAY, new Time(4, 30));
         Clock gameClock = new Clock(calendarClock, new SystemTimeProvider());
-        gameController = new GameController(DefaultPlayerLoader.load(), gameClock, new SpriteDrawer(game));
+        gameController = new GameController(PlayerLoader.load(), gameClock, new SpriteDrawer(game));
         Gdx.input.setInputProcessor(new KeyboardInputProcessor(gameController));
 
         // create the camera and the SpriteBatch

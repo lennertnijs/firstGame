@@ -34,14 +34,11 @@ public final class Transform {
 
     @Override
     public int hashCode(){
-        int result = 17;
-        result = result * 31 + position.hashCode();
-        return result;
+        return 17 * 31 + position.hashCode();
     }
 
     @Override
     public String toString(){
         return String.format("Transform[position=%s]", position);
-    
     }
 }

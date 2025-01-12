@@ -4,7 +4,6 @@
     "y": 200
   },
   "map": "outside",
-  "texture_atlas": "player/player.pack",
   "direction": "RIGHT",
   "name": "player",
   "inventory": {
