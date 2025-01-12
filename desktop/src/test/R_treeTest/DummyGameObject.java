@@ -1,7 +1,7 @@
 package R_treeTest;
 
-import com.mygdx.game.r_tree.GameObject2D;
-import com.mygdx.game.r_tree.Rectangle;
+import game.r_tree.GameObject2D;
+import game.r_tree.Rectangle;
 
 public final class DummyGameObject implements GameObject2D {
 

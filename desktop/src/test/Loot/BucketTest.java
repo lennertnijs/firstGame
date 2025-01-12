@@ -1,6 +1,6 @@
 package Loot;
 
-import com.mygdx.game.loot.Bucket;
+import game.loot.Bucket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

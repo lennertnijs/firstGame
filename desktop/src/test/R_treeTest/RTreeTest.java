@@ -1,6 +1,6 @@
 //package R_treeTest;
 //
-//import com.mygdx.game.r_tree.R_tree;
+//import r_tree.game.R_tree;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //

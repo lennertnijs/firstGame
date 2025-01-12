@@ -1,6 +1,6 @@
 package Loot;
 
-import com.mygdx.game.loot.Loot;
+import game.loot.Loot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

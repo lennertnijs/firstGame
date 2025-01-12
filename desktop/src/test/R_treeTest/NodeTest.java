@@ -1,7 +1,7 @@
 package R_treeTest;
 
-import com.mygdx.game.r_tree.Node;
-import com.mygdx.game.r_tree.Rectangle;
+import game.r_tree.Node;
+import game.r_tree.Rectangle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

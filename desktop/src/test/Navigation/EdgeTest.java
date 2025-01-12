@@ -1,7 +1,7 @@
 package Navigation;
 
-import com.mygdx.game.npc.navigation.graph.Edge;
-import com.mygdx.game.npc.navigation.graph.Vertex;
+import game.npc.navigation.graph.Edge;
+import game.npc.navigation.graph.Vertex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

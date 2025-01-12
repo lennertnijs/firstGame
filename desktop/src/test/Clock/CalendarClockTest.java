@@ -1,8 +1,8 @@
 package Clock;
 
-import com.mygdx.game.clock.CalendarClock;
-import com.mygdx.game.npc.week_schedule.Day;
-import com.mygdx.game.npc.week_schedule.Time;
+import game.clock.CalendarClock;
+import game.util.Day;
+import game.npc.week_schedule.Time;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

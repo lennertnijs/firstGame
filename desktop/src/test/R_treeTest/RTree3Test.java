@@ -1,9 +1,9 @@
 //package R_treeTest;
 //
-//import com.mygdx.game.r_tree.GameObject2D;
-//import com.mygdx.game.r_tree.Node;
-//import com.mygdx.game.r_tree.R_tree;
-//import com.mygdx.game.r_tree.Rectangle;
+//import r_tree.game.GameObject2D;
+//import r_tree.game.Node;
+//import r_tree.game.R_tree;
+//import r_tree.game.Rectangle;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //
