@@ -5,28 +5,35 @@ import game.util.Vec2;
 
 import java.util.Objects;
 
-public final class WalkState implements PlayerState {
+public final class WalkState implements PlayerState{
 
     private final Player player;
+    private final Vec2 goal;
 
-    public WalkState(Player player){
+    public WalkState(Player player, Vec2 goal){
         this.player = Objects.requireNonNull(player);
+        this.goal = Objects.requireNonNull(goal);
     }
 
-    public String getName(){
+    @Override
+    public String getName() {
         return "walk";
     }
 
-    public void update(double delta){
-        Vec2 current = player.getPosition();
+    @Override
+    public void update(double delta) {
         int movement = player.getStats().getSpeed();
-        Vec2 next = switch(player.getDirection()){
-            case UP -> new Vec2(current.x(), current.y() + movement);
-            case RIGHT -> new Vec2(current.x() + movement, current.y());
-            case DOWN -> new Vec2(current.x(), current.y() - movement);
-            case LEFT -> new Vec2(current.x() - movement, current.y());
-        };
+        int xDiff = player.getPosition().x() - goal.x();
+        int yDiff = player.getPosition().y() - goal.y();
+        if(Math.sqrt(xDiff * xDiff + yDiff * yDiff) <= movement){
+            player.setPosition(goal);
+        }else{
+            Vec2 movementVector = Vec2.createFromTo(player.getPosition(), goal).scaleToSize(movement);
+            player.setPosition(player.getPosition().add(movementVector));
+        }
         // check for free
-        player.setPosition(next);
+        if(player.getPosition().equals(goal)){
+            player.changeState(new IdleState());
+        }
     }
 }

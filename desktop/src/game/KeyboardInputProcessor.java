@@ -2,6 +2,7 @@ package game;
 
 import com.badlogic.gdx.InputProcessor;
 import game.util.Direction;
+import game.util.Vec2;
 
 import static com.badlogic.gdx.Input.Keys.*;
 
@@ -17,10 +18,6 @@ public class KeyboardInputProcessor implements InputProcessor {
     public boolean keyDown(int keycode) {
         switch (keycode) {
             case Q -> gameController.playerUseActiveItem();
-            case W -> gameController.addDirection(Direction.UP);
-            case D -> gameController.addDirection(Direction.RIGHT);
-            case S -> gameController.addDirection(Direction.DOWN);
-            case A -> gameController.addDirection(Direction.LEFT);
             case E -> gameController.interact();
         }
         return false;
@@ -28,12 +25,6 @@ public class KeyboardInputProcessor implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        switch (keycode) {
-            case W -> gameController.removeDirection(Direction.UP);
-            case D -> gameController.removeDirection(Direction.RIGHT);
-            case S -> gameController.removeDirection(Direction.DOWN);
-            case A -> gameController.removeDirection(Direction.LEFT);
-        }
         return false;
     }
 
@@ -44,6 +35,7 @@ public class KeyboardInputProcessor implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        gameController.moveWithClick(new Vec2(screenX, 1080 - screenY));
         return false;
     }
 

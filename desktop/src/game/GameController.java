@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import game.clock.Clock;
 import game.game_object.GameObject;
-import game.inventory.Item;
 import game.game_object.GameObjectType;
-import game.util.Direction;
+import game.inventory.Item;
 import game.npc.NPC;
 import game.player.Player;
-import game.player.states.IdleState;
 import game.player.states.WalkState;
 import game.stats.Stat;
+import game.util.Direction;
+import game.util.Vec2;
 
 import java.util.*;
 
@@ -21,7 +21,6 @@ public class GameController {
     private final Clock clock;
     private final SpriteDrawer drawer;
     private final Texture map = new Texture(Gdx.files.internal("background.png"));
-    private final Deque<Direction> directions = new LinkedList<>();
     private final List<GameObject> gameObjects = new ArrayList<>();
     private final Map<DamageAmpKey, Float> damageAmps = new HashMap<>();
     private final List<NPC> npcs = new ArrayList<>();
@@ -97,24 +96,9 @@ public class GameController {
         }
     }
 
-    public void addDirection(Direction direction){
-        if(directions.size() == 0){
-            player.changeState(new WalkState(player));
-        }
-        if(directions.contains(direction)){
-            return;
-        }
-        directions.add(direction);
-        player.setDirection(direction);
-    }
-
-    public void removeDirection(Direction direction){
-        directions.removeIf(d -> d == direction);
-        if(directions.size() == 0){
-            player.changeState(new IdleState());
-            return;
-        }
-        player.setDirection(directions.getLast());
+    public void moveWithClick(Vec2 goal){
+        Vec2 updated = new Vec2(goal.x() - player.getWidth() / 2, goal.y());
+        player.changeState(new WalkState(player, updated));
     }
 
     public void interact(){
