@@ -12,7 +12,6 @@ import java.util.Map;
 public class SpriteDrawer {
 
     private final MyGame game;
-    private String text;
 
     public SpriteDrawer(MyGame game){
         this.game = game;
@@ -25,7 +24,6 @@ public class SpriteDrawer {
         int width = o.getWidth();
         int height = o.getHeight();
         game.batch.draw(texture, x, y, width, height);
-        drawText();
     }
 
     public void draw(Texture texture){
@@ -50,12 +48,6 @@ public class SpriteDrawer {
                 }
                 count++;
             }
-        }
-    }
-
-    private void drawText(){
-        if(text != null){
-            game.font.draw(game.batch, text, 50, 50);
         }
     }
 }
