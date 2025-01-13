@@ -19,6 +19,7 @@ public class KeyboardInputProcessor implements InputProcessor {
         switch (keycode) {
             case Q -> gameController.playerUseActiveItem();
             case E -> gameController.interact();
+            case I -> gameController.drawInventory();
         }
         return false;
     }

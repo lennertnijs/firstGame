@@ -36,8 +36,9 @@ public final class PlayerLoader {
         Renderer renderer = new AnimatedRenderer(loadAnimations(), new Key("idle", DOWN), 0);
         String name = file.getString("name");
         Item pickaxe = Item.builder().itemType(ItemType.PICKAXE).amount(1).durability(2500).maxDurability(2500).damage(5).build();
+        Item axe = Item.builder().itemType(ItemType.AXE).amount(1).durability(2500).maxDurability(2500).damage(5).build();
         Stats stats = Stats.builder().health(500).offense(25).defense(25).speed(3).build();
-        Inventory inventory = new Inventory(new Item[]{pickaxe, null, null, null, null, null, null, null, null});
+        Inventory inventory = new Inventory(new Item[]{pickaxe, pickaxe, axe, axe, pickaxe, pickaxe, axe, axe, pickaxe, pickaxe});
         return new Player(transform, renderer, map, name, inventory, 0, stats);
     }
 

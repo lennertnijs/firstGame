@@ -2,10 +2,13 @@ package game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import game.DAO.ItemLoader;
 import game.clock.Clock;
 import game.game_object.GameObject;
 import game.game_object.GameObjectType;
 import game.inventory.Item;
+import game.inventory.ItemType;
 import game.npc.NPC;
 import game.player.Player;
 import game.player.states.WalkState;
@@ -24,6 +27,8 @@ public class GameController {
     private final List<GameObject> gameObjects = new ArrayList<>();
     private final Map<DamageAmpKey, Float> damageAmps = new HashMap<>();
     private final List<NPC> npcs = new ArrayList<>();
+    private final Map<ItemType, TextureRegion> itemTextures = ItemLoader.loadItemTextures();
+    private boolean drawInventory = false;
 
     public GameController(Player player, Clock clock, SpriteDrawer spriteDrawer){
         this.player = player;
@@ -36,6 +41,9 @@ public class GameController {
         double delta = clock.update();
         player.update(delta);
         drawer.draw(player);
+        if(drawInventory){
+            drawer.drawInventory(player.getInventory(), itemTextures);
+        }
     }
 
     private List<GameObject> getCollidingGameObjects(){
@@ -103,5 +111,9 @@ public class GameController {
 
     public void interact(){
 
+    }
+
+    public void drawInventory(){
+        this.drawInventory = !drawInventory;
     }
 }
