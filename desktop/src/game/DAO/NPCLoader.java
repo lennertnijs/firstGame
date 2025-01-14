@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static game.util.Direction.*;
-import static game.util.Direction.LEFT;
 
 public class NPCLoader {
 
