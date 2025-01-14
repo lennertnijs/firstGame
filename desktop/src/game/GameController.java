@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import game.DAO.ItemLoader;
+import game.DAO.NPCLoader;
 import game.clock.Clock;
 import game.game_object.GameObject;
 import game.game_object.GameObjectType;
@@ -26,7 +27,7 @@ public class GameController {
     private final Texture map = new Texture(Gdx.files.internal("background.png"));
     private final List<GameObject> gameObjects = new ArrayList<>();
     private final Map<DamageAmpKey, Float> damageAmps = new HashMap<>();
-    private final List<NPC> npcs = new ArrayList<>();
+    private final List<NPC> npcs;
     private final Map<ItemType, TextureRegion> itemTextures = ItemLoader.loadItemTextures();
     private boolean drawInventory = false;
 
@@ -34,13 +35,20 @@ public class GameController {
         this.player = player;
         this.clock = clock;
         this.drawer = spriteDrawer;
+        this.npcs = new ArrayList<>(List.of(NPCLoader.create()));
     }
 
     public void update(){
         drawer.draw(map);
         double delta = clock.update();
         player.update(delta);
+        for(NPC npc : npcs){
+            npc.update(clock.getDay(), clock.getTime(), delta);
+        }
         drawer.draw(player);
+        for(NPC npc : npcs){
+            drawer.draw(npc);
+        }
         if(drawInventory){
             drawer.drawInventory(player.getInventory(), itemTextures);
         }

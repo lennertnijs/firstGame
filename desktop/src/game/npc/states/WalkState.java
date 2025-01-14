@@ -3,6 +3,8 @@ package game.npc.states;
 import game.npc.navigation.Location;
 import game.npc.NPC;
 import game.npc.week_schedule.Activity;
+import game.npc.week_schedule.Time;
+import game.util.Day;
 import game.util.DirectionCalculator;
 import game.util.MovementUtilMethods;
 
@@ -21,7 +23,7 @@ public final class WalkState implements NPCState {
         this.activity = activity;
     }
 
-    public void progress(double delta){
+    public void progress(double delta, Day day, Time time){
         int movement = (int)(delta * npc.getStats().getSpeed() / 200);
         Location current = new Location(npc.getMap(), npc.getPosition());
         Location next = MovementUtilMethods.moveAlongRoute(current, route, movement);

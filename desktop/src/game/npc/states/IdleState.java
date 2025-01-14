@@ -3,6 +3,8 @@ package game.npc.states;
 import game.npc.NPC;
 import game.npc.navigation.Location;
 import game.npc.week_schedule.Activity;
+import game.npc.week_schedule.Time;
+import game.util.Day;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,12 +18,8 @@ public final class IdleState implements NPCState {
     }
 
     @Override
-    public void progress(double delta) {
-        updateState();
-    }
-
-    public void updateState(){
-        Activity nextActivity = npc.getWeekSchedule().getActivity(null, null); // todo
+    public void progress(double delta, Day day, Time time) {
+        Activity nextActivity = npc.getWeekSchedule().getActivity(day, time);
         if(nextActivity == null){
             return;
         }

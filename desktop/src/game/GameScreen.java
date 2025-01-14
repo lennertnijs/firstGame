@@ -45,6 +45,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         gameController.update();
+        game.font.draw(game.batch, String.format("fps: %d", Gdx.graphics.getFramesPerSecond()), 50, 50);
         game.batch.end();
     }
 

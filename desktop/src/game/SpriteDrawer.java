@@ -31,8 +31,8 @@ public class SpriteDrawer {
     }
 
     public void drawInventory(Inventory inventory, Map<ItemType, TextureRegion> textures){
-        int startX = 530;
-        int startY = 400;
+        int startX = 250;
+        int startY = 900;
         int inventorySize = inventory.size();
         int count = 1;
         for(int i = 0; i < 4; i++){

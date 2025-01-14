@@ -3,7 +3,6 @@ package game.npc;
 import game.game_object.GameObject;
 import game.game_object.GameObjectType;
 import game.game_object.Transform;
-import game.inventory.Inventory;
 import game.game_object.renderer.Renderer;
 
 import game.npc.dialogue.DialogueData;
@@ -11,6 +10,7 @@ import game.npc.navigation.NavigationData;
 import game.npc.states.IdleState;
 import game.npc.states.NPCState;
 import game.stats.Stats;
+import game.inventory.Inventory;
 import game.npc.week_schedule.Time;
 import game.npc.week_schedule.WeekSchedule;
 import game.util.Day;
@@ -81,6 +81,6 @@ public final class NPC extends GameObject {
 
     public void update(Day day, Time time, double delta) {
         renderer.update(delta);
-        state.progress(delta); // todo send the day and time to the update
+        state.progress(delta, day, time);
     }
 }

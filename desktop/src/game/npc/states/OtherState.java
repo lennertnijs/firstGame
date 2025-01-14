@@ -1,6 +1,8 @@
 package game.npc.states;
 
 import game.npc.NPC;
+import game.npc.week_schedule.Time;
+import game.util.Day;
 
 public class OtherState implements NPCState {
 
@@ -17,7 +19,7 @@ public class OtherState implements NPCState {
     }
 
     @Override
-    public void progress(double delta) {
+    public void progress(double delta, Day day, Time time) {
         updateState();
     }
 
