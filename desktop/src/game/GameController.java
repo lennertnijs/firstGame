@@ -41,7 +41,10 @@ public class GameController {
     public void update(){
         drawer.draw(map);
         double delta = clock.update();
-        player.update(delta);
+        Vec2 nextPlayerPos = player.getState().getNextPosition();
+        if(getCollidingGameObjects(nextPlayerPos, player.getWidth(), player.getHeight()).isEmpty()){
+            player.update(delta);
+        }
         for(NPC npc : npcs){
             npc.update(clock.getDay(), clock.getTime(), delta);
         }
@@ -54,8 +57,21 @@ public class GameController {
         }
     }
 
-    private List<GameObject> getCollidingGameObjects(){
-        return gameObjects;
+    private List<GameObject> getCollidingGameObjects(Vec2 position, int width, int height){
+        List<GameObject> collidingObjects = new ArrayList<>();
+        for(NPC npc : npcs){
+            if(overlaps(position, width, height, npc)){
+                collidingObjects.add(npc);
+            }
+        }
+        return collidingObjects;
+    }
+
+    private boolean overlaps(Vec2 position, int width, int height, GameObject o2){
+        return !(position.x() >= o2.getPosition().x() + o2.getWidth() ||
+                position.x() + width <= o2.getPosition().x() ||
+                position.y() >= o2.getPosition().y() + o2.getHeight() ||
+                position.y() + height <= o2.getPosition().y());
     }
 
     public void playerUseActiveItem(){
@@ -66,7 +82,7 @@ public class GameController {
                 if(durability <= 0){
                     return;
                 }
-                List<GameObject> objects = getCollidingGameObjects();
+                List<GameObject> objects = getCollidingGameObjects(player.getPosition(), player.getWidth(), player.getHeight());
                 for(GameObject object : objects) {
                     if (object.type == GameObjectType.BORING) {
                         continue;

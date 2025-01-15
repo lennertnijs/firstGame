@@ -20,6 +20,17 @@ public final class WalkState implements PlayerState{
         return "walk";
     }
 
+    public Vec2 getNextPosition(){
+        int movement = player.getStats().getSpeed();
+        int xDiff = player.getPosition().x() - goal.x();
+        int yDiff = player.getPosition().y() - goal.y();
+        if(Math.sqrt(xDiff * xDiff + yDiff * yDiff) <= movement){
+            return goal;
+        }else{
+            Vec2 movementVector = Vec2.createFromTo(player.getPosition(), goal).scaleToSize(movement);
+            return player.getPosition().add(movementVector);
+        }
+    }
     @Override
     public void update(double delta) {
         int movement = player.getStats().getSpeed();
@@ -33,7 +44,7 @@ public final class WalkState implements PlayerState{
         }
         // check for free
         if(player.getPosition().equals(goal)){
-            player.changeState(new IdleState());
+            player.changeState(new IdleState(player));
         }
     }
 }

@@ -30,7 +30,7 @@ public final class Player extends GameObject {
         }
         this.activeItemIndex = activeItemIndex;
         this.stats = Objects.requireNonNull(stats);
-        this.state = new IdleState();
+        this.state = new IdleState(this);
     }
 
     public String getName(){
@@ -54,6 +54,10 @@ public final class Player extends GameObject {
 
     public Stats getStats(){
         return stats;
+    }
+
+    public PlayerState getState(){
+        return state;
     }
 
     public void changeState(PlayerState state){

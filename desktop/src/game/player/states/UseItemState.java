@@ -1,6 +1,7 @@
 package game.player.states;
 
 import game.player.Player;
+import game.util.Vec2;
 
 import java.util.Objects;
 
@@ -22,6 +23,10 @@ public final class UseItemState implements PlayerState {
 
     public String getName(){
         return activity;
+    }
+
+    public Vec2 getNextPosition(){
+        return player.getPosition();
     }
 
     public void update(double delta) {
