@@ -43,6 +43,7 @@ public final class Breakable extends GameObject {
             throw new IllegalArgumentException("Damage is negative.");
         }
         this.health = Math.max(health - damage, 0);
+        System.out.println(health);
     }
 
     @Override
@@ -112,7 +113,7 @@ public final class Breakable extends GameObject {
             if(hardness < 0){
                 throw new IllegalArgumentException("Hardness is negative.");
             }
-            Objects.requireNonNull(lootTable, "loot table is null.");
+            // Objects.requireNonNull(lootTable, "loot table is null.");
             Objects.requireNonNull(type, "Type is null.");
             return new Breakable(this);
         }

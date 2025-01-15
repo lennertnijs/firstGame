@@ -98,6 +98,9 @@ public class GameObject {
         this.map = Objects.requireNonNull(map);
     }
 
+    public void damage(int damage){
+
+    }
     @Override
     public String toString(){
         return String.format("GameObject[transform=%s, renderer=%s, map=%s]", transform, renderer, map);

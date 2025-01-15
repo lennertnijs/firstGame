@@ -6,5 +6,7 @@ public enum GameObjectType {
     PLAYER,
     NPC,
     DROPPED,
-    MONSTER
+    MONSTER,
+    TREE,
+    ROCK
 }

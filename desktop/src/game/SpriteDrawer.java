@@ -50,4 +50,12 @@ public class SpriteDrawer {
             }
         }
     }
+
+    public void drawActiveItem(Item item, Map<ItemType, TextureRegion> textures){
+        game.batch.draw(textures.get(item.type), 950, 50, 100, 100);
+    }
+
+    public void drawText(String text){
+        game.font.draw(game.batch, text, 400, 250);
+    }
 }
