@@ -3,6 +3,7 @@ package game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import game.game_object.GameObject;
+import game.game_object.renderer.Renderer;
 import game.inventory.Inventory;
 import game.inventory.Item;
 import game.inventory.ItemType;
@@ -18,11 +19,12 @@ public class SpriteDrawer {
     }
 
     public void draw(GameObject o){
-        TextureRegion texture = o.getTexture();
+        Renderer renderer = o.getRenderer();
+        TextureRegion texture = renderer.getTexture();
         int x = o.getPosition().x();
         int y = o.getPosition().y();
-        int width = o.getWidth();
-        int height = o.getHeight();
+        int width = renderer.getWidth();
+        int height = renderer.getHeight();
         game.batch.draw(texture, x, y, width, height);
     }
 

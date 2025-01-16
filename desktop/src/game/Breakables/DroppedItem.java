@@ -31,6 +31,6 @@ public class DroppedItem extends GameObject {
     @Override
     public String toString(){
         return String.format("DroppedItem[position=%s, width=%d, height=%d, map=%s, name=%s, amount =%d]",
-                super.getPosition(), getWidth(), getHeight(), map, name, amount);
+                super.getPosition(), renderer.getWidth(), renderer.getHeight(), map, name, amount);
     }
 }

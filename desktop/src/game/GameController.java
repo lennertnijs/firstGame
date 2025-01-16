@@ -47,7 +47,7 @@ public class GameController {
         drawer.draw(map);
         double delta = clock.update();
         Vec2 nextPlayerPos = player.getState().getNextPosition();
-        if(getCollidingGameObjects(nextPlayerPos, player.getWidth(), player.getHeight()).isEmpty()){
+        if(getCollidingGameObjects(nextPlayerPos, player.getRenderer().getWidth(), player.getRenderer().getHeight()).isEmpty()){
             player.update(delta);
         }
         for(NPC npc : npcs){
@@ -85,9 +85,9 @@ public class GameController {
     }
 
     private boolean overlaps(Vec2 position, int width, int height, GameObject o2){
-        return !(position.x() >= o2.getPosition().x() + o2.getWidth() ||
+        return !(position.x() >= o2.getPosition().x() + o2.getRenderer().getWidth() ||
                 position.x() + width <= o2.getPosition().x() ||
-                position.y() >= o2.getPosition().y() + o2.getHeight() ||
+                position.y() >= o2.getPosition().y() + o2.getRenderer().getHeight() ||
                 position.y() + height <= o2.getPosition().y());
     }
 
@@ -149,7 +149,7 @@ public class GameController {
     }
 
     public void moveWithClick(Vec2 goal){
-        Vec2 updated = new Vec2(goal.x() - player.getWidth() / 2, goal.y());
+        Vec2 updated = new Vec2(goal.x() - player.getRenderer().getWidth() / 2, goal.y());
         player.changeState(new WalkState(player, updated));
     }
 

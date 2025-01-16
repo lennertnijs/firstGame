@@ -4,11 +4,6 @@ import game.util.Vec2;
 
 import java.util.Objects;
 
-/**
- * A Transform class encapsulating any game object data related to its position in the world.
- * A transform contains:
- * - a position (as a vector)
- */
 public final class Transform {
 
     private Vec2 position;

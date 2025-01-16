@@ -29,7 +29,7 @@ public final class WalkState implements NPCState {
         Location next = MovementUtilMethods.moveAlongRoute(current, route, movement);
         npc.setPosition(next.position());
         npc.setMap(next.map());
-        npc.setDirection(DirectionCalculator.calculateDir(current.position(), next.position()));
+        npc.getRenderer().setDirection(DirectionCalculator.calculateDir(current.position(), next.position()));
         updateState();
     }
 
